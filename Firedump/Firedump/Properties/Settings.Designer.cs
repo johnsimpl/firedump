@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IntroForm.Properties
+namespace Firedump.Properties
 {
 
 
