@@ -11,7 +11,7 @@ namespace FiredumpTest
         [TestMethod]
         public void TestDbConnection()
         {
-            MySqlConnection con = new MySqlConnection("Server=192.168.2.5;UID=newroot;password=1zeronerone");
+            MySqlConnection con = new MySqlConnection("Server=192.168.2.5;UID=root;password=password");
             con.Open();
             
             Console.WriteLine(con.ServerVersion);
