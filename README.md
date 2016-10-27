@@ -11,4 +11,6 @@ chenyang ji <br>
 Ioannis Deliveis<br>
 <br>
 
-mysqlftp backup .net desktop app
+mysqlftp backup .net desktop app <br>
+####Usefull links/libs for  project
+http://mysqlbackupnet.codeplex.com/ <br>
