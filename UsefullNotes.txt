@@ -1,0 +1,31 @@
+--->mysql to xml<---
+For a single table
+mysql --xml -u username -p database_name table_name > table_name.xml
+
+For a query
+mysql --xml -u username -p database_name -e 'select * from table_name' > query.xml
+
+For the whole database
+mysqldump --xml -u username -p database_name > database.xml
+
+
+
+--->xirokiniti metatropi sql se json me sql<---
+select 
+	concat("[",
+		
+	group_concat(
+			
+		concat("{personid}'",personid,"' \n"),
+			
+		concat("{name}'",name,"' \n"),
+			
+		concat("{lastname}'",lastname,"' \n"),
+			
+		concat("{birth}'",birth,"' \n")
+            
+		)
+    
+	,"]")  
+from persons limit 100
+
