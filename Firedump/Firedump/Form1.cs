@@ -27,5 +27,11 @@ namespace Firedump
             Console.WriteLine(s.Count);
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("yo");
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+        }
     }
 }
