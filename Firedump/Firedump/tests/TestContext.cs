@@ -35,6 +35,8 @@ namespace Firedump.tests
             return SaveChangesCount;
         }
 
+       
+
 
 
        public class TestDbSet<TEntity> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>, IDbAsyncEnumerable<TEntity>
@@ -48,14 +50,14 @@ namespace Firedump.tests
                 _data = new ObservableCollection<TEntity>();
                 _query = _data.AsQueryable();
             }
-
-           
+            
 
             public override TEntity Add(TEntity item)
             {               
                 _data.Add(item);
                 return item;
             }
+            
 
             public override TEntity Remove(TEntity item)
             {

@@ -23,7 +23,7 @@ namespace Firedump.tests
 
         //return the new id
         public int saveMysqlServer(mysql_servers server)
-        {                 
+        {          
             contextdb.mysql_servers.Add(server);
             contextdb.SaveChanges();
             return (int)server.id;          
