@@ -21,7 +21,10 @@ namespace Firedump
         private void button1_Click(object sender, EventArgs e)
         {
 
-           
+            FiredumpContext f = new FiredumpContext();
+            List<mysql_servers> s = f.getAllMySqlServers();
+            //string newdpath = Environment.GetFolderPath(Environment.SpecialFolder.Da);
+            Console.WriteLine(s.Count);
             
         }
     }
