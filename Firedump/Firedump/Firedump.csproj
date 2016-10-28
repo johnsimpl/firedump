@@ -113,7 +113,7 @@
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="models\FiredumpContext.cs" />
-    <Compile Include="MysqlDump.cs" />
+    <Compile Include="models\MysqlDump.cs" />
     <Compile Include="mysql\DbConnection.cs" />
     <Compile Include="mysql_servers.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
