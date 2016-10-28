@@ -8,7 +8,7 @@ http://system.data.sqlite.org/downloads/1.0.103.0/sqlite-netFx46-setup-bundle-x8
 <br>
 Avraam Piperidis<br>
 Valantis Pitsas<br>
-chenyang ji <br>
+Chenyang Ji <br>
 Ioannis Deliveis<br>
 <br>
 
