@@ -14,6 +14,7 @@ namespace Firedump
         public String username { set; get; }
         public String password { set; get; }
         public String database { set; get; }
+        public String savepath { set; get; }
 
         public MysqlDump(){}
         public String executeDump()
@@ -41,6 +42,9 @@ namespace Firedump
             if (!String.IsNullOrEmpty(database))
             {
                 arguments.Append(database);
+            }else
+            {
+                arguments.Append("--all-databases");
             }
 
             Console.WriteLine(arguments.ToString());
@@ -60,12 +64,32 @@ namespace Firedump
             Console.WriteLine("asdasdas");
             proc.Start();
 
-            
 
-            while (!proc.StandardOutput.EndOfStream)
+            if (String.IsNullOrEmpty(savepath))
             {
-                //xeirismos output edw 
-                output.Append(proc.StandardOutput.ReadLine());
+                while (!proc.StandardOutput.EndOfStream)
+                {
+                    //xeirismos output edw 
+                    output.Append(proc.StandardOutput.ReadLine());
+                }
+            }else
+            {
+                String filename="unknown.sql";
+                if (!String.IsNullOrEmpty(database))
+                {
+                    filename = savepath + "\\" + database + ".sql";
+                }else
+                {
+                    filename = savepath + "\\AllDatabases.sql";
+                }
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@filename))
+                {
+                    while (!proc.StandardOutput.EndOfStream)
+                    {
+                        file.WriteLine(proc.StandardOutput.ReadLine());
+                    }
+                }
+                    
             }
 
             Console.WriteLine(output.ToString());

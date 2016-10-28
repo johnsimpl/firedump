@@ -13,6 +13,7 @@ namespace Firedump
 {
     public partial class Form1 : Form
     {
+        private string savepath = "";
         public Form1()
         {
             InitializeComponent();
@@ -40,7 +41,21 @@ namespace Firedump
             mysqldump.username = txtUsername.Text;
             mysqldump.password = txtPassword.Text;
             mysqldump.database = txtDatabase.Text;
+            if (!string.IsNullOrEmpty(savepath))
+            {
+                mysqldump.savepath = savepath;
+            }
             mysqldump.executeDump();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult result = fbd.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+            {
+                savepath = fbd.SelectedPath;
+            }
         }
     }
 }
