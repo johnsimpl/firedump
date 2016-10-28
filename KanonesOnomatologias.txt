@@ -1,0 +1,19 @@
+Oi kanones onomatologias gia components tha einai oi eksis:
+
+Button: bName
+RadioButton: rbName
+TextBox: tbName
+RichTextBox: rtbName
+CheckBox: cbName
+ComboBox: cmbName
+CheckedListBox: clbName
+Label: lName
+ListBox: lbName
+ListView: lvName
+TreeView: tvName
+ToolTip: tpName
+ProgressBar: pbName
+
+Components pou den prokeitai na xrisimpoiithoun se kwdika opws stathera labels dipla apo textboxes
+den xreiazetai na akolouthoun tous kanones onomatologias. As einai px Label1,Label2 klp.
+
