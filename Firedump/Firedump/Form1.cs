@@ -30,8 +30,17 @@ namespace Firedump
 
         private void button2_Click(object sender, EventArgs e)
         {
+            /*
             Console.WriteLine("yo");
             Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe"));*/
+            MysqlDump mysqldump = new MysqlDump();
+            mysqldump.host = txtHost.Text;
+            mysqldump.port = txtPort.Text;
+            mysqldump.username = txtUsername.Text;
+            mysqldump.password = txtPassword.Text;
+            mysqldump.database = txtDatabase.Text;
+            mysqldump.executeDump();
         }
     }
 }
