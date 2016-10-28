@@ -49,7 +49,7 @@ namespace Firedump
 
             Console.WriteLine(arguments.ToString());
 
-            var proc = new Process
+            Process proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {

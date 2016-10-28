@@ -108,12 +108,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ItemC.cs" />
     <Compile Include="logs.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="models\FiredumpContext.cs" />
+    <Compile Include="models\IDumpProgressListener.cs" />
     <Compile Include="models\MysqlDump.cs" />
+    <Compile Include="models\MySqlDumpAdapter.cs" />
+    <Compile Include="models\MySqlDumpOptions.cs" />
     <Compile Include="mysql\DbConnection.cs" />
     <Compile Include="mysql_servers.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
