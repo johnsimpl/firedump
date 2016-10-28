@@ -53,7 +53,7 @@ namespace Firedump
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
+                    FileName = "mysqldump.exe",//AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
                     Arguments = arguments.ToString(),
                     UseShellExecute = false,
                     RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop
