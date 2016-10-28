@@ -41,7 +41,12 @@ namespace Firedump.models
         async void DumpMysqlTaskExecutor()
         {
             Task<bool> isConnected = connect();
-            listener.onProgress("connecting...");
+            //if the form closes listener will be null
+            if(listener != null)
+            {
+                listener.onProgress("connecting...");
+            }
+            
 
             bool successCon = await isConnected;
 
