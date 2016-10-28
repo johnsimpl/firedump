@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,27 +39,64 @@ namespace Firedump.mysql
 
         public MySqlConnection Connection { get; }
 
-        public bool IsConnect()
+        public bool testConnection()
         {
-            if(connection == null)
+            string connectionString;
+            if (!String.IsNullOrEmpty(database))
             {
-                string connectionString;
-                if(!String.IsNullOrEmpty(database))
-                {
-                    connectionString = string.Format("Server=" + Host + "database={0};UID=" + username + ";password=" + password,database);
-                } else
-                {
-                    connectionString = "Server=" + Host + ";UID=" + username + ";password=" + password;
-                }              
+                connectionString = string.Format("Server=" + Host + "database={0};UID=" + username + ";password=" + password, database);
+            }
+            else
+            {
+                connectionString = "Server=" + Host + ";UID=" + username + ";password=" + password;
+            }
+            try
+            {
                 connection = new MySqlConnection(connectionString);
                 connection.Open();
-                return true;
             }
-            return false;
+            catch(ArgumentException a_ex)
+            {
+                Console.WriteLine("Check the connection string");
+                Console.WriteLine(a_ex.Message);
+                Console.WriteLine(a_ex.ToString());
+                return false;
+            }
+            catch(MySqlException ex)
+            {
+                string sqlErrorMessage = "Message: " + ex.Message + "\n" +"Source: " + ex.Source + "\n" +"Number: " + ex.Number;
+                Console.WriteLine(sqlErrorMessage);
+                switch (ex.Number)
+                {
+                    //http://dev.mysql.com/doc/refman/5.0/en/error-messages-server.html
+                    case 1042: 
+                        Console.WriteLine("Unable to connect to any of the specified MySQL hosts (Check Server,Port)");
+                        break;
+                    case 0: // 
+                        Console.WriteLine("Access denied (Check DB name,username,password)");
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+            return true;
         }
 
+        /// <summary>
+        /// Must be connected to a server and not to a database
+        /// </summary>
+        /// <returns></returns>
         public List<string> getDatabases()
         {
+            connection.Open();
             List<string> databases = new List<string>();
 
             string query = "show databases;";
@@ -69,15 +107,25 @@ namespace Firedump.mysql
                 databases.Add(reader.GetString(0));
             }
 
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+
             return databases;
         }
 
-        //before IsConnect database name must been set
-        public List<string> getTables()
+        /// <summary>
+        /// Must be connected to a server and not to a database
+        /// </summary>
+        /// <param name="database">The database name</param>
+        /// <returns>A list of the tables in the database</returns>
+        public List<string> getTables(String database)
         {
+            connection.Open();
             List<string> tables = new List<string>();
 
-            string query = "show tables;";
+            string query = "show tables from "+database+";";
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
@@ -85,12 +133,45 @@ namespace Firedump.mysql
                 tables.Add(reader.GetString(0));
             }
 
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+
+            return tables;
+        }
+
+        /// <summary>
+        ///  Must be connected to database and not to server
+        /// </summary>
+        /// <returns>A list of the tables in the database</returns>
+        public List<string> getTables()
+        {
+            connection.Open();
+            List<string> tables = new List<string>();
+
+            string query = "show tables from " + database + ";";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                tables.Add(reader.GetString(0));
+            }
+
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+
             return tables;
         }
 
         public void Close()
         {
-            connection.Close();
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
         }
 
     }
