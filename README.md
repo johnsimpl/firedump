@@ -8,7 +8,7 @@ http://system.data.sqlite.org/downloads/1.0.103.0/sqlite-netFx46-setup-bundle-x8
 otan einai neo clone sto visual studio 2015 xriazete afto gia na traviksei ta references apo nuget <br>
 
 Visual studio 2015 -> Tools->Nuget Package Manager->Package Manager Console
-Nuget reinstall Command:  Update-Package –reinstall
+Nuget reinstall Command:<br>  Update-Package –reinstall
 
 <br>
 Avraam Piperidis<br>
