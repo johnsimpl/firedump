@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration
 {
-    class CompressConfig
+    class CompressConfig : ConfigurationClass
     {
+        private static CompressConfig compressConfigInstance;
+        private CompressConfig() { }
+        public static CompressConfig getInstance()
+        {
+            if (compressConfigInstance == null)
+            {
+                compressConfigInstance = new CompressConfig();
+            }
+            return compressConfigInstance;
+        }
+
+        public void initializeConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void saveConfig()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

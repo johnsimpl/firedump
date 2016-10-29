@@ -2,30 +2,30 @@
 
 using System;
 
-namespace Firedump.models
+namespace Firedump.models.configuration
 {
-    /// <summary>
-    /// better store all mysql options in object instance
-    /// tha mporousame na xorisoume ta options se katigories
-    /// 1.mysql credentials
-    /// 2.dump optins(ama thaxei create schema kai tetia)
-    /// 3.compress options(zip i sql)
-    /// 4.output format?? xml,...?
-    /// 
-    /// ??diaxorismos katigorion se ipoklaseis??
-    /// !!eukoloteri diaxeirisi ama exei ipoklaseis!
-    /// 
-    /// Genikos gia ola isos kapio Builder na ta kanei???
-    /// </summary>
-    public class MySqlDumpConfig
+    public class MySqlDumpConfig : ConfigurationClass
     {
-        public MySqlDumpConfig() { }
+        private static MySqlDumpConfig mysqlDumpConfigInstance;
 
-        internal string getHost()
+        private MySqlDumpConfig() { }
+        public static MySqlDumpConfig getInstance()
         {
-            return "";
+            if (mysqlDumpConfigInstance == null)
+            {
+                mysqlDumpConfigInstance = new MySqlDumpConfig();
+            }
+            return mysqlDumpConfigInstance;
         }
 
+        public void initializeConfig()
+        {
+            
+        }
 
+        public void saveConfig()
+        {
+            
+        }
     }
 }

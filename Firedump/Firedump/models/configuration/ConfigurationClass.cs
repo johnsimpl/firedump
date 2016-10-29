@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration
 {
-    class ConfigurationClass
+    public interface ConfigurationClass
     {
+        void initializeConfig();
+        void saveConfig();
     }
 }
