@@ -17,9 +17,9 @@ namespace Firedump.models
     /// 
     /// Genikos gia ola isos kapio Builder na ta kanei???
     /// </summary>
-    public class MySqlDumpOptions
+    public class MySqlDumpConfig
     {
-        public MySqlDumpOptions() { }
+        public MySqlDumpConfig() { }
 
         internal string getHost()
         {

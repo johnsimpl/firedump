@@ -58,7 +58,7 @@ namespace Firedump
             
             //or rename to MySqlDumpWorker..or something else
             MySqlDumpAdapter dumpAdapter = new MySqlDumpAdapter();
-            MySqlDumpOptions options = new MySqlDumpOptions();
+            MySqlDumpConfig options = new MySqlDumpConfig();
             //set options ex zip or not ...
             
             //start async dump and register a listener for callbacks

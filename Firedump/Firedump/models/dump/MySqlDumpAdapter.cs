@@ -20,7 +20,7 @@ namespace Firedump.models
         /// <param name="listener">the listener interface for the notifications status of the whole job \n
         ///                       IDumpProgressListener to notify the user about the job status 
         /// </param>
-        public void startDump(MySqlDumpOptions options, IDumpProgressListener listener)
+        public void startDump(MySqlDumpConfig options, IDumpProgressListener listener)
         {
             this.listener = listener;
             listener.onProgress("mysql dump started!from server:"+options.getHost());
