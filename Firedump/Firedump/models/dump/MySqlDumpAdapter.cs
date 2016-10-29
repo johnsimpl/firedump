@@ -24,7 +24,7 @@ namespace Firedump.models
         public void startDump(MySqlDumpConfig options, IDumpProgressListener listener)
         {
             this.listener = listener;
-            listener.onProgress("mysql dump started!from server:"+options.getHost());
+            listener.onProgress("mysql dump started!from server:");//+options.getHost());
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
             mysqldumpTask.Start();

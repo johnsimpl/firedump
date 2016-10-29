@@ -21,7 +21,7 @@ namespace Firedump.models.configuration
 
         public void initializeConfig()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("foo");
         }
 
         public void saveConfig()

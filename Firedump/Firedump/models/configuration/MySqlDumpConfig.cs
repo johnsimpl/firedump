@@ -20,7 +20,7 @@ namespace Firedump.models.configuration
 
         public void initializeConfig()
         {
-            
+            Console.WriteLine("foo");
         }
 
         public void saveConfig()

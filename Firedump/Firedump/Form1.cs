@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Firedump.models;
+using Firedump.models.configuration;
 
 namespace Firedump
 {
@@ -28,11 +29,12 @@ namespace Firedump
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            FiredumpContext f = new FiredumpContext();
-            List<mysql_servers> s = f.getAllMySqlServers();
+            ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
+            configurationManagerInstance.initializeConfig();
+            //FiredumpContext f = new FiredumpContext();
+            //List<mysql_servers> s = f.getAllMySqlServers();
             //string newdpath = Environment.GetFolderPath(Environment.SpecialFolder.Da);
-            Console.WriteLine(s.Count);
+            //Console.WriteLine(s.Count);
             
         }
 
@@ -57,8 +59,8 @@ namespace Firedump
             */
             
             //or rename to MySqlDumpWorker..or something else
-            MySqlDumpAdapter dumpAdapter = new MySqlDumpAdapter();
-            MySqlDumpConfig options = new MySqlDumpConfig();
+            MySqlDumpAdapter dumpAdapter = new MySqlDumpAdapter(); 
+            MySqlDumpConfig options = null; //fix this later 
             //set options ex zip or not ...
             
             //start async dump and register a listener for callbacks

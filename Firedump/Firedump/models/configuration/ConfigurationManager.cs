@@ -20,6 +20,10 @@ namespace Firedump.models.configuration
             this.compressConfigInstance = CompressConfig.getInstance();
             this.outputConfigInstance = OutputConfig.getInstance();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Returns a ConfigurationManager instance with all configuration class instances set as fields of this instance</returns>
         public static ConfigurationManager getInstance()
         {
             if (configurationManagerInstance == null)
@@ -29,14 +33,27 @@ namespace Firedump.models.configuration
             return configurationManagerInstance;
         }
 
+        /// <summary>
+        /// Calls the initiallize methods of every configuration class.
+        /// </summary>
         public void initializeConfig()
         {
-            throw new NotImplementedException();
+            this.mysqlDumpConfigInstance.initializeConfig();
+            this.credentialsConfigInstance.initializeConfig();
+            this.compressConfigInstance.initializeConfig();
+            this.outputConfigInstance.initializeConfig();
         }
 
+        /// <summary>
+        /// Calls the save methods of every configuration class.
+        /// IMPORTANT: initializeConfig must be called at least once before this method is called.
+        /// </summary>
         public void saveConfig()
         {
-            throw new NotImplementedException();
+            this.mysqlDumpConfigInstance.saveConfig();
+            this.credentialsConfigInstance.saveConfig();
+            this.compressConfigInstance.saveConfig();
+            this.outputConfigInstance.saveConfig();
         }
     }
 }
