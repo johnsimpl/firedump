@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Firedump.models.dump;
 
 namespace Firedump.models
 {
@@ -15,7 +16,11 @@ namespace Firedump.models
 
         void onCancelled();
 
-        void onCompleted(string status);
+        void onCompleted(DumpResultSet status);
+
+        void onTableDumpStart(string table);
+
+        void initDumpTables(List<string> tables);
 
     }
     

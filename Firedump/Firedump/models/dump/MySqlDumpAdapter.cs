@@ -3,12 +3,19 @@ using Firedump.models.configuration;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Firedump.models.dump;
+using Firedump.mysql;
+using System.Collections.Generic;
 
 namespace Firedump.models
 {
-    public class MySqlDumpAdapter 
+    public class MySqlDumpAdapter : IAdapterListener
     {
-        private IDumpProgressListener listener;             
+        private IDumpProgressListener listener;
+        private MysqlDump mydump;
+
+
+
         public MySqlDumpAdapter() {           
         }
 
@@ -21,13 +28,13 @@ namespace Firedump.models
         /// <param name="listener">the listener interface for the notifications status of the whole job \n
         ///                       IDumpProgressListener to notify the user about the job status 
         /// </param>
-        public void startDump(MySqlDumpConfig options, IDumpProgressListener listener)
+        public void startDump(IDumpProgressListener listener)
         {
             this.listener = listener;
             listener.onProgress("mysql dump started!from server:");//+options.getHost());
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
-            mysqldumpTask.Start();
+            mysqldumpTask.Start();         
         }
         
 
@@ -40,60 +47,84 @@ namespace Firedump.models
         /// </summary>
         async void DumpMysqlTaskExecutor()
         {
-            
-            Task<bool> isConnected = connect();
-            //if the form closes listener will be null
-            if(listener != null)
+            Task<List<string>> testConnectionTask = testCon();
+            List<string> tables = await testConnectionTask;
+            if(tables != null)
             {
-                listener.onProgress("connecting...");
-            }
+                if (listener != null)
+                {
+                    listener.onProgress("connected");
+                    listener.initDumpTables(tables);
+                }
 
-            bool successCon = await isConnected;
+                mydump = new MysqlDump(this);
+                Task<DumpResultSet> result = dumptask(mydump);
+                DumpResultSet dumpresult = await result;
 
-            Task<bool> getData = gettingData();
-            listener.onProgress("fetching data...");
-            bool successGet = await getData;
-
-            Task<bool> save = saveData();
-            listener.onProgress("saving data...");
-            bool successSave = await save;
-
-
-
-            if(successCon && successGet && successSave)
-            {
-                listener.onCompleted("completed");
+                if (listener != null)
+                {
+                    listener.onCompleted(dumpresult);
+                }
             } else
             {
-                listener.onError(1);
+                if(listener != null)
+                {
+                    //we need enumaration classes for all kind of different erros
+                    listener.onError(-1);
+                }
             }
             
-            
+
         }
 
 
-
-
-        static async Task<bool> connect()
+        internal void cancelDump()
         {
-            //test connection or connect or whatever
-            return true;
+            if(mydump != null)
+            {
+                mydump.cancelMysqlDumpProcess();
+            }
         }
 
 
-        private async Task<bool> gettingData()
+        static async Task<List<string>>  testCon()
         {
-            return true;
+            ConfigurationManager manager = ConfigurationManager.getInstance();
+            string host = manager.credentialsConfigInstance.host;
+            string username = manager.credentialsConfigInstance.username;
+            string password = manager.credentialsConfigInstance.password;
+            string database = manager.mysqlDumpConfigInstance.database;
+            int port = manager.credentialsConfigInstance.port;
+            DbConnection con = DbConnection.Instance();
+            con.Host = host;
+            con.username = username;
+            con.password = password;
+            con.database = database;
+            //con.port = port;
+            bool success = con.testConnection();
+            if(success)
+            {
+                return con.getTables(database);
+            }
+            return null;
+        }
+
+
+        static async Task<DumpResultSet> dumptask(MysqlDump mydump)
+        {
+            return mydump.executeDump();
+        }
+
+        
+        public void onTableStartDump(string table)
+        {
+            if(listener != null)
+            {
+                listener.onTableDumpStart(table);
+            }
         }
 
        
-        public async Task<bool> saveData()
-        {
-            return true;
-        }
-
-
-
     }
     
 

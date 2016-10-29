@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.dump
 {
-    class DumpResultSet
+    public class DumpResultSet
     {
         /// <summary>
         /// wether the dump was successful or not

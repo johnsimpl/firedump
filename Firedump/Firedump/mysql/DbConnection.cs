@@ -12,7 +12,9 @@ namespace Firedump.mysql
     class DbConnection
     {
 
-        private DbConnection() { }
+        private DbConnection() {
+            port = 3306;
+        }
 
         private static DbConnection instance = null;
         public static DbConnection Instance()
@@ -29,6 +31,7 @@ namespace Firedump.mysql
             get; set;
         }
 
+        public int port { get; set; }
         public string username { get; set; }
 
         public string password { get; set; }
@@ -44,7 +47,7 @@ namespace Firedump.mysql
             string connectionString;
             if (!String.IsNullOrEmpty(database))
             {
-                connectionString = string.Format("Server=" + Host + "database={0};UID=" + username + ";password=" + password, database);
+                connectionString = string.Format("Server=" + Host + ";database={0};UID=" + username + ";password=" + password, database);
             }
             else
             {
@@ -116,7 +119,7 @@ namespace Firedump.mysql
         }
 
         /// <summary>
-        /// Must be connected to a server and not to a database
+        /// Must be connected to a database and not to a database
         /// </summary>
         /// <param name="database">The database name</param>
         /// <returns>A list of the tables in the database</returns>
