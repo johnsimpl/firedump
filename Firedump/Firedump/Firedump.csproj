@@ -149,7 +149,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="db\firedumpdb.db" />
+    <None Include="db\firedumpdb.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <EntityDeploy Include="firedumpDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>firedumpDataModel.Designer.cs</LastGenOutput>
@@ -192,7 +194,7 @@
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="mysqldump.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
