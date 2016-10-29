@@ -14,6 +14,8 @@ namespace Firedump.models
     /// 
     /// ??diaxorismos katigorion se ipoklaseis??
     /// !!eukoloteri diaxeirisi ama exei ipoklaseis!
+    /// 
+    /// Genikos gia ola isos kapio Builder na ta kanei???
     /// </summary>
     public class MySqlDumpOptions
     {

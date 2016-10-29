@@ -63,6 +63,7 @@ namespace Firedump
             
             //start async dump and register a listener for callbacks
             dumpAdapter.startDump(options,this);
+            
         
         }
 

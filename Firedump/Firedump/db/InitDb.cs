@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.SQLite;
+
+namespace Firedump.db
+{
+    /// <summary>
+    /// initialization database sqlite firedump.db script,
+    /// now it all works from visual studio!
+    /// but the relative connection string is ../../db/firedump.db
+    /// when the releash exe will run there wont be any ../../name.db database
+    /// !the debug folder gets reseting with every run.
+    /// building the exe for releash , the initialize Db will run only once.
+    /// so this is utility only first run script.
+    /// 
+    /// Im going to test the shit out of this
+    /// </summary>
+    public class InitDb
+    {
+        private static readonly string conn = "Data Source=firedumpdb.db;Version=3;";
+        private static readonly int dbVersion = 1;
+
+        public InitDb() { }
+
+        public static string ConnectionString { get { return conn; } }
+
+        private static readonly IDictionary<string, string> tables = new Dictionary<string,string>()
+        {
+            {"backup_locations","backup_locations"},
+            {"logs","logs"},
+            {"mysql_servers","mysql_servers"},
+            {"schedule_save_locations","schedule_save_locations" },
+            {"schedules","schedules" },
+            {"userinfo","userinfo"}
+        };
+
+        private static readonly IDictionary<string, string> Indices = new Dictionary<string, string>()
+        {
+            {"backup_location_id_key_idx","backup_location_id_key_idx" },
+            {"schedule_id_key4_idx","schedule_id_key4_idx"},
+            {"schedule_id_key_idx","schedule_id_key_idx" },
+            {"server_id_key_idx","server_id_key_idx"},
+            {"schedule_id_key_2_idx","schedule_id_key_2_idx" }
+        };
+
+
+        private static readonly IDictionary<string, string> createTables = new Dictionary<string, string>()
+        {
+            {"backup_locations","CREATE TABLE "+tables["backup_locations"] + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,name VARCHAR(45) NULL DEFAULT NULL COLLATE NOCASE,username VARCHAR(45) NULL DEFAULT NULL COLLATE NOCASE,password VARCHAR(45) NULL DEFAULT NULL COLLATE NOCASE,path TEXT NULL COLLATE NOCASE)"},
+            {"logs","CREATE TABLE "+tables["logs"] + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,schedule_id INTEGER NULL DEFAULT NULL ,type INTEGER NOT NULL ,message TEXT NULL COLLATE NOCASE,date DATETIME NULL DEFAULT NULL ,success INTEGER NULL DEFAULT NULL ,CONSTRAINT `schedule_id_key` FOREIGN KEY (`schedule_id`) REFERENCES schedules (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)" },
+            {"mysql_servers","CREATE TABLE "+tables["mysql_servers"] + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,name VARCHAR(80) NOT NULL COLLATE NOCASE,port INTEGER NOT NULL ,host TEXT NOT NULL COLLATE NOCASE,username VARCHAR(45) NOT NULL COLLATE NOCASE,password VARCHAR(45) NOT NULL COLLATE NOCASE)" },
+            {"schedule_save_locations","CREATE TABLE "+tables["schedule_save_locations"] + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,schedule_id INTEGER NULL DEFAULT NULL ,service_type INTEGER NULL DEFAULT NULL ,backup_location_id INTEGER NULL DEFAULT NULL ,CONSTRAINT `backup_location_id_key` FOREIGN KEY (`backup_location_id`) REFERENCES backup_locations (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,CONSTRAINT `schedule_id_key4` FOREIGN KEY (`schedule_id`) REFERENCES schedules (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)" },
+            {"schedules","CREATE TABLE "+tables["schedules"] + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,server_id INTEGER NOT NULL ,name VARCHAR(45) NOT NULL COLLATE NOCASE,date DATETIME NULL DEFAULT NULL ,activated INTEGER NOT NULL ,hours INTEGER NOT NULL ,CONSTRAINT `server_id_key` FOREIGN KEY (`server_id`) REFERENCES mysql_servers (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)" },
+            {"userinfo","CREATE TABLE "+tables["userinfo"] + "  (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,schedule_id INTEGER NULL DEFAULT NULL ,successemail VARCHAR(45) NULL DEFAULT NULL COLLATE NOCASE,failemail VARCHAR(45) NULL DEFAULT NULL COLLATE NOCASE,CONSTRAINT `shedule_id_key_2` FOREIGN KEY (`schedule_id`) REFERENCES schedules (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)" }
+        };
+
+        private static readonly IDictionary<string, string> createIndices = new Dictionary<string, string>()
+        {
+            {"backup_location_id_key_idx","CREATE INDEX " + Indices["backup_location_id_key_idx"] + " backup_location_id_key_idx ON schedule_save_locations (`backup_location_id` DESC)"},
+            {"schedule_id_key4_idx","CREATE INDEX "+ Indices["schedule_id_key4_idx"] + " CREATE INDEX schedule_id_key4_idx ON schedule_save_locations (`schedule_id` DESC)" },
+            {"schedule_id_key_idx","CREATE INDEX " + Indices["schedule_id_key_idx"]  + " CREATE INDEX schedule_id_key_idx ON logs (`schedule_id` DESC)"},
+            {"server_id_key_idx","CREATE INDEX " + Indices["server_id_key_idx"] + " CREATE INDEX server_id_key_idx ON schedules (`server_id` DESC)" },
+            {"schedule_id_key_2_idx","CREATE INDEX " + Indices["schedule_id_key_2_idx"] + " CREATE INDEX shedule_id_key_2_idx ON userinfo (`schedule_id` DESC)" }
+        };
+
+
+
+
+        public void createDbTables()
+        {
+           if(!System.IO.File.Exists(".//test.db"))
+            {
+                SQLiteConnection.CreateFile(".//test.db");
+                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//test.db"))
+                {
+                    con.Open();              
+                    foreach(KeyValuePair<string,string> entry in tables)
+                    {
+                        using (SQLiteCommand command = new SQLiteCommand(createTables[entry.Key],con))
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                    }                
+                }
+            }
+            
+        }
+
+
+    }
+
+
+}

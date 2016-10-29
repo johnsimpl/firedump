@@ -1,15 +1,15 @@
 ﻿
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Firedump.models
 {
     public class MySqlDumpAdapter 
     {
-
-        private IDumpProgressListener listener;
-        
-        public MySqlDumpAdapter() { }
+        private IDumpProgressListener listener;             
+        public MySqlDumpAdapter() {           
+        }
 
 
         /// <summary>
@@ -26,8 +26,7 @@ namespace Firedump.models
             listener.onProgress("mysql dump started!from server:"+options.getHost());
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
-            mysqldumpTask.Start();            
-            
+            mysqldumpTask.Start();
         }
         
 
@@ -40,13 +39,13 @@ namespace Firedump.models
         /// </summary>
         async void DumpMysqlTaskExecutor()
         {
+            
             Task<bool> isConnected = connect();
             //if the form closes listener will be null
             if(listener != null)
             {
                 listener.onProgress("connecting...");
             }
-            
 
             bool successCon = await isConnected;
 
@@ -67,6 +66,7 @@ namespace Firedump.models
             {
                 listener.onError(1);
             }
+            
             
         }
 
