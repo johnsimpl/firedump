@@ -29,8 +29,14 @@ namespace Firedump
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            
             ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
             configurationManagerInstance.initializeConfig();
+            MysqlDump mydump = new MysqlDump();
+            mydump.executeDump();
+
+
             //FiredumpContext f = new FiredumpContext();
             //List<mysql_servers> s = f.getAllMySqlServers();
             //string newdpath = Environment.GetFolderPath(Environment.SpecialFolder.Da);

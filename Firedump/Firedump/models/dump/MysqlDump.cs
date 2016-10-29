@@ -4,53 +4,254 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Firedump.models.configuration;
+using Firedump.models.dump;
+using System.IO;
 
 namespace Firedump
 {
     class MysqlDump
     {
-
-        //credentials
-        public String host { set; get; }
-        public String port { set; get; }
-        public String username { set; get; }
-        public String password { set; get; }
-        public String database { set; get; }
-
-        //MySqlDumpConfig
-        public String tempSavePath { set; get; }
-
+        ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         public MysqlDump(){}
-        public String executeDump()
+        public DumpResultSet executeDump()
         {
-            StringBuilder output = new StringBuilder();
+            DumpResultSet resultObj = new DumpResultSet();
             StringBuilder arguments = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(host))
+            //<ConfigurationSection>
+
+            arguments.Append("--protocol=tcp ");
+
+            //Credentials
+
+            //host
+            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.host))
             {
-                arguments.Append("--host " + host + " ");
+                arguments.Append("--host " + configurationManagerInstance.credentialsConfigInstance.host + " ");
             }
-            if (!String.IsNullOrEmpty(port))
+            else
             {
-                arguments.Append("--port=" + port + " ");
-            }
-            
-            if (!String.IsNullOrEmpty(username))
-            {
-                arguments.Append("--user " + username + " ");
-            }
-            if (!String.IsNullOrEmpty(password))
-            {
-                arguments.Append("--password=" + password + " ");
-            }
-            if (!String.IsNullOrEmpty(database))
-            {
-                arguments.Append(database);
-            }else
-            {
-                arguments.Append("--all-databases");
+                resultObj.wasSuccessful = false;
+                resultObj.mysqlErrorNumber = -1;
+                resultObj.mysqlErrorMessage = "Host not set";
+                return resultObj;
             }
 
+            //port
+            if (configurationManagerInstance.credentialsConfigInstance.port<1 || configurationManagerInstance.credentialsConfigInstance.port>65535)
+            {
+                resultObj.wasSuccessful = false;
+                resultObj.mysqlErrorNumber = -1;
+                resultObj.mysqlErrorMessage = "Invalid port number: " + configurationManagerInstance.credentialsConfigInstance.port;
+                return resultObj;
+            }
+            else
+            {
+                arguments.Append("--port=" + configurationManagerInstance.credentialsConfigInstance.port + " ");
+            }
+            
+            //username
+            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.username))
+            {
+                arguments.Append("--user " + configurationManagerInstance.credentialsConfigInstance.username + " ");
+            }
+            else
+            {
+                resultObj.wasSuccessful = false;
+                resultObj.mysqlErrorNumber = -1;
+                resultObj.mysqlErrorMessage = "Username not set";
+                return resultObj;
+            }
+
+            //pasword
+            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.password))
+            {
+                arguments.Append("--password=" + configurationManagerInstance.credentialsConfigInstance.password + " ");
+            }
+
+            //MySqlDumpConfiguration
+
+            //includeCreateSchema
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.includeCreateSchema)
+            {
+                arguments.Append("--no-create-info ");
+            }
+
+            //includeData
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.includeData)
+            {
+                arguments.Append("--no-data ");
+            }
+
+            //includeComments
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.includeComments)
+            {
+                arguments.Append("--skip-comments ");
+            }
+
+            //singleTransaction
+            if (configurationManagerInstance.mysqlDumpConfigInstance.singleTransaction)
+            {
+                arguments.Append("--single-transaction ");
+            }
+
+            //disableForeignKeyChecks
+            if (configurationManagerInstance.mysqlDumpConfigInstance.disableForeignKeyChecks)
+            {
+                arguments.Append("--disable-keys ");
+            }
+
+            //addDropDatabase
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addDropDatabase)
+            {
+                arguments.Append("--add-drop-database ");
+            }
+
+            //createDatabase
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.createDatabase)
+            {
+                arguments.Append("--no-create-db ");
+            }
+
+            //moreCompatible
+            if (configurationManagerInstance.mysqlDumpConfigInstance.moreCompatible)
+            {
+                arguments.Append("--compatible ");
+            }
+
+            //characterSet
+            if (configurationManagerInstance.mysqlDumpConfigInstance.characterSet!="utf8")
+            {
+                arguments.Append("--default-character-set="+ configurationManagerInstance.mysqlDumpConfigInstance.characterSet + " ");
+            }
+
+            //addDropTable
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addDropTable)
+            {
+                arguments.Append("--add-drop-table ");
+            }
+            else
+            {
+                arguments.Append("--skip-add-drop-table ");
+            }
+
+            //encloseWithBackquotes
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.encloseWithBackquotes)
+            {
+                arguments.Append("--skip-quote-names ");
+            }
+
+            //addCreateProcedureFunction
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addCreateProcedureFunction)
+            {
+                arguments.Append(" --routines ");
+            }
+
+            //addInfoComments
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addInfoComments)
+            {
+                arguments.Append("--dump-date ");
+            }
+
+            //completeInsertStatements
+            if (configurationManagerInstance.mysqlDumpConfigInstance.completeInsertStatements)
+            {
+                arguments.Append("--complete-insert ");
+            }
+
+            //extendedInsertStatements
+            if (configurationManagerInstance.mysqlDumpConfigInstance.completeInsertStatements)
+            {
+                arguments.Append("--extended-insert ");
+            }
+
+            //maximumLengthOfQuery
+            arguments.Append("--net-buffer-length " + configurationManagerInstance.mysqlDumpConfigInstance.maximumLengthOfQuery + " ");
+
+            //maximumPacketLength
+            arguments.Append("--max_allowed_packet="+ configurationManagerInstance.mysqlDumpConfigInstance.maximumPacketLength + "M ");
+
+            //useIgnoreInserts
+            if (configurationManagerInstance.mysqlDumpConfigInstance.useIgnoreInserts)
+            {
+                arguments.Append("--insert-ignore ");
+            }
+
+            //useHexadecimal
+            if (configurationManagerInstance.mysqlDumpConfigInstance.useHexadecimal)
+            {
+                arguments.Append("--hex-blob ");
+            }
+
+            //dumpTriggers
+            if (!configurationManagerInstance.mysqlDumpConfigInstance.dumpTriggers)
+            {
+                arguments.Append("--skip-triggers ");
+            }
+
+            //exportType
+            switch (configurationManagerInstance.mysqlDumpConfigInstance.exportType)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    arguments.Append("--replace ");
+                    break;
+                default:
+                    break;         
+            }
+
+            //database choice
+            if (configurationManagerInstance.mysqlDumpConfigInstance.databases == null)
+            {
+                if (string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.database))
+                {
+                    arguments.Append("--all-databases ");
+                }
+                else
+                {
+                    arguments.Append("--databases "+ configurationManagerInstance.mysqlDumpConfigInstance.database);
+                    if (configurationManagerInstance.mysqlDumpConfigInstance.excludeTablesSingleDatabase!=null)
+                    {
+                        arguments.Append(" ");
+                        string[] tables = configurationManagerInstance.mysqlDumpConfigInstance.excludeTablesSingleDatabase.Split(',');
+                        foreach (string table in tables)
+                        {
+                            arguments.Append("--ignore-table=" + configurationManagerInstance.mysqlDumpConfigInstance.database + "." + table + " ");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                arguments.Append("--databases ");
+                foreach (string database in configurationManagerInstance.mysqlDumpConfigInstance.databases)
+                {
+                    arguments.Append(database+" ");
+                }
+                if (configurationManagerInstance.mysqlDumpConfigInstance.excludeTables != null)
+                {
+                    for(int i=0; i< configurationManagerInstance.mysqlDumpConfigInstance.excludeTables.Length; i++)
+                    {
+                        if (!string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.excludeTables[i]))
+                        {
+                            string[] tables = configurationManagerInstance.mysqlDumpConfigInstance.excludeTables[i].Split(',');
+                            foreach (string table in tables)
+                            {
+                                arguments.Append("--ignore-table=" + configurationManagerInstance.mysqlDumpConfigInstance.databases[i] + "." + table + " ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            //</ConfigurationSection>
+
+
+            //dump execution
             Console.WriteLine(arguments.ToString());
 
             Process proc = new Process
@@ -65,45 +266,52 @@ namespace Firedump
                     CreateNoWindow = true
                 }
             };
-            Console.WriteLine("asdasdas");
+            Console.WriteLine("MySqlDump: Dump starting now");
             proc.Start();
 
+            Random rnd = new Random();
+            String filename = "dump" + rnd.Next(1000000, 9999999) + ".sql";
 
-            if (String.IsNullOrEmpty(tempSavePath))
+            Directory.CreateDirectory(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath);
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {
+                //addCustomCommentInHeader
+                if (!string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader))
+                {
+                    file.WriteLine("-- Custom comment: " + configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader);
+                }
+
                 while (!proc.StandardOutput.EndOfStream)
                 {
-                    //xeirismos output edw 
-                    output.Append(proc.StandardOutput.ReadLine());
+                    file.WriteLine(proc.StandardOutput.ReadLine());
                 }
-            }else
-            {
-                String filename="unknown.sql";
-                if (!String.IsNullOrEmpty(database))
-                {
-                    filename = tempSavePath + "\\" + database + ".sql";
-                }else
-                {
-                    filename = tempSavePath + "\\AllDatabases.sql";
-                }
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@filename))
-                {
-                    while (!proc.StandardOutput.EndOfStream)
-                    {
-                        file.WriteLine(proc.StandardOutput.ReadLine());
-                    }
-                }
-                    
             }
 
-            Console.WriteLine(output.ToString());
-
+            resultObj.mysqldumpexeStandardError = "";
             while (!proc.StandardError.EndOfStream)
             {
-                Console.WriteLine(proc.StandardError.ReadLine());
+               resultObj.mysqldumpexeStandardError += proc.StandardError.ReadLine()+"\n";
             }
 
-            return "";
+            Console.WriteLine(resultObj.mysqldumpexeStandardError); //for testing
+
+            proc.WaitForExit();
+
+            if (proc.ExitCode != 0)
+            {
+                resultObj.wasSuccessful = false;
+                resultObj.mysqlErrorNumber = -2;
+                //File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
+                Console.WriteLine();
+            }
+            else
+            {
+                resultObj.wasSuccessful = true;
+                resultObj.fileAbsPath = configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename;
+            }
+                    
+            return resultObj;
         }
     }
 }

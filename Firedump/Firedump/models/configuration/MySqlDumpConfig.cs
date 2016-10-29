@@ -49,6 +49,10 @@ namespace Firedump.models.configuration
         /// </summary>
         public bool createDatabase { set; get; } = true;
         /// <summary>
+        /// produce output that is more compatible with other databse systems or with older mysql servers
+        /// </summary>
+        public bool moreCompatible { set; get; }
+        /// <summary>
         /// custom comment to add in the header of the dump file leave empty or null for no comment
         /// </summary>
         public string addCustomCommentInHeader { set; get; } = "";
@@ -81,7 +85,7 @@ namespace Firedump.models.configuration
         /// <summary>
         /// wether to add info comments (creation/update/check dates)
         /// </summary>
-        public bool addInfoComments { set; get; }
+        public bool addInfoComments { set; get; } = true;
 
         //data
         /// <summary>
@@ -91,7 +95,7 @@ namespace Firedump.models.configuration
         /// <summary>
         /// use multiple-row INSERT syntax that include serveral VALUES lists
         /// </summary>
-        public bool extendedInsertStatements { set; get; } = true;
+        public bool extendedInsertStatements { set; get; }
         /// <summary>
         /// maximum length of insert query. If query exceeds the specified length it is split into smaller queries.
         /// </summary>
@@ -109,19 +113,34 @@ namespace Firedump.models.configuration
         /// </summary>
         public bool useIgnoreInserts { set; get; }
         /// <summary>
+        /// wether to dump triggers
+        /// </summary>
+        public bool dumpTriggers { set; get; }
+        /// <summary>
         /// dump binary columns using hexadecimal notation for example 'abc' becomes 0x616263)
         /// </summary>
         public bool useHexadecimal { set; get; } = true;
         /// <summary>
         /// 0 - INSERT statements
         /// 1 - UPDATE statements
-        /// 2 - REPLACE statements
+        /// 2 - REPLACE statements only replace works
         /// </summary>
         public int exportType { set; get; } = 0;
         /// <summary>
+        /// If set to true the dump file is in xml form
+        /// </summary>
+        public bool xml { set; get; }
+        /// <summary>
         /// the database name to dump (leave null or empty to dump all databases in the server)
+        /// This is disregarded if the databases array is not null.
         /// </summary>
         public string database { set; get; }
+        /// <summary>
+        /// Tables to be excluded from the dump seperated with commas (Table1,Table2).
+        /// Leave it null to exclude no tables. This is disregarded if the databases
+        /// array is not null or if both database and databases are null or empty.
+        /// </summary>
+        public string excludeTablesSingleDatabase { set; get; }
         /// <summary>
         /// string array with all the database names to dump (leave it null to disregard this field)
         /// </summary>
@@ -166,6 +185,7 @@ namespace Firedump.models.configuration
                 this.disableForeignKeyChecks = jsonObj["disableForeignKeyChecks"];
                 this.addDropDatabase = jsonObj["addDropDatabase"];
                 this.createDatabase = jsonObj["createDatabase"];
+                this.moreCompatible = jsonObj["moreCompatible"];
                 this.addCustomCommentInHeader = jsonObj["addCustomCommentInHeader"];
                 this.characterSet = jsonObj["characterSet"];
                 this.addDropTable = jsonObj["addDropTable"];
@@ -180,9 +200,12 @@ namespace Firedump.models.configuration
                 this.maximumPacketLength = jsonObj["maximumPacketLength"];
                 this.useDelayedInserts = jsonObj["useDelayedInserts"];
                 this.useIgnoreInserts = jsonObj["useIgnoreInserts"];
+                this.dumpTriggers = jsonObj["dumpTriggers"];
                 this.useHexadecimal = jsonObj["useHexadecimal"];
                 this.exportType = jsonObj["exportType"];
+                this.xml = jsonObj["xml"];
                 this.database = jsonObj["database"];
+                this.excludeTablesSingleDatabase = jsonObj["excludeTablesSingleDatabase"];
                 this.databases = jsonObj["databases"];
                 this.excludeTables = jsonObj["excludeTables"];
                 //</Field initialization>
