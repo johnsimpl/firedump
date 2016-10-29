@@ -9,6 +9,7 @@ namespace Firedump.models.configuration
     public interface ConfigurationClass
     {
         void initializeConfig();
+        void createConfig();
         void saveConfig();
     }
 }

@@ -8,6 +8,10 @@ namespace Firedump.models.configuration
 {
     class OutputConfig : ConfigurationClass
     {
+        //<!configuration fields section>
+
+        //</configuration fields section>
+
         private static OutputConfig outputConfigInstance;
         private OutputConfig() { }
         public static OutputConfig getInstance()
@@ -22,6 +26,11 @@ namespace Firedump.models.configuration
         public void initializeConfig()
         {
             Console.WriteLine("foo");
+        }
+
+        public void createConfig()
+        {
+            throw new NotImplementedException();
         }
 
         public void saveConfig()

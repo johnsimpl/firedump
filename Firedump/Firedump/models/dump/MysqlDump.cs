@@ -9,12 +9,16 @@ namespace Firedump
 {
     class MysqlDump
     {
+
+        //credentials
         public String host { set; get; }
         public String port { set; get; }
         public String username { set; get; }
         public String password { set; get; }
         public String database { set; get; }
-        public String savepath { set; get; }
+
+        //MySqlDumpConfig
+        public String tempSavePath { set; get; }
 
         public MysqlDump(){}
         public String executeDump()
@@ -65,7 +69,7 @@ namespace Firedump
             proc.Start();
 
 
-            if (String.IsNullOrEmpty(savepath))
+            if (String.IsNullOrEmpty(tempSavePath))
             {
                 while (!proc.StandardOutput.EndOfStream)
                 {
@@ -77,10 +81,10 @@ namespace Firedump
                 String filename="unknown.sql";
                 if (!String.IsNullOrEmpty(database))
                 {
-                    filename = savepath + "\\" + database + ".sql";
+                    filename = tempSavePath + "\\" + database + ".sql";
                 }else
                 {
-                    filename = savepath + "\\AllDatabases.sql";
+                    filename = tempSavePath + "\\AllDatabases.sql";
                 }
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@filename))
                 {

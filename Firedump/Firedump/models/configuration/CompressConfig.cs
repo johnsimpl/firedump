@@ -8,6 +8,10 @@ namespace Firedump.models.configuration
 {
     class CompressConfig : ConfigurationClass
     {
+        //<!configuration fields section>
+
+        //</configuration fields section>
+
         private static CompressConfig compressConfigInstance;
         private CompressConfig() { }
         public static CompressConfig getInstance()
@@ -22,6 +26,11 @@ namespace Firedump.models.configuration
         public void initializeConfig()
         {
             Console.WriteLine("foo");
+        }
+
+        public void createConfig()
+        {
+            throw new NotImplementedException();
         }
 
         public void saveConfig()
