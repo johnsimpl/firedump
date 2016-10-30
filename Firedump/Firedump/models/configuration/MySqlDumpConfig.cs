@@ -59,7 +59,7 @@ namespace Firedump.models.configuration
         /// <summary>
         /// default character set of the dump file
         /// </summary>
-        public string characterSet { set; get; } = "utf-8";
+        public string characterSet { set; get; } = "utf8";
 
         //structure
         /// <summary>
