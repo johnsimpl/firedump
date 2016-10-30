@@ -198,6 +198,12 @@ namespace Firedump
                 arguments.Append("--skip-triggers ");
             }
 
+            //xml
+            if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
+            {
+                arguments.Append("--xml ");
+            }
+
             //exportType
             switch (configurationManagerInstance.mysqlDumpConfigInstance.exportType)
             {
@@ -325,15 +331,13 @@ namespace Firedump
             {
                 resultObj.wasSuccessful = false;
                 resultObj.mysqlErrorNumber = -2;
-                //File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
-                Console.WriteLine();
+                File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
             }
             else
             {
                 resultObj.wasSuccessful = true;
                 resultObj.fileAbsPath = configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename;
             }
-            
                     
             return resultObj;
         }
