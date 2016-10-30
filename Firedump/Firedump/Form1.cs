@@ -67,8 +67,6 @@ namespace Firedump
                 configurationManagerInstance.credentialsConfigInstance.password = password;
                 configurationManagerInstance.credentialsConfigInstance.saveConfig();
                 configurationManagerInstance.mysqlDumpConfigInstance.database = database;
-                //utf-8 gives me an error coming from mysql
-                configurationManagerInstance.mysqlDumpConfigInstance.characterSet = "utf8";
                 configurationManagerInstance.mysqlDumpConfigInstance.saveConfig();
 
                 //start async dump and register a listener for callbacks
