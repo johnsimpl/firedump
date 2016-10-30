@@ -15,7 +15,7 @@ namespace Firedump.db
     /// </summary>
     public class InitDb
     {
-        private static readonly string conn = "Data Source=firedumpdb.db;Version=3;";
+        private static readonly string conn = ".//db//firedumpdb.db";
         private static readonly int dbVersion = 1;
 
         public InitDb() { }
@@ -64,24 +64,57 @@ namespace Firedump.db
 
 
 
-        public void createDbTables()
+        public static void createDbTables()
         {
-           if(!System.IO.File.Exists(".//test.db"))
+           if(!System.IO.File.Exists(conn))
             {
-                SQLiteConnection.CreateFile(".//test.db");
-                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//test.db"))
+                SQLiteConnection.CreateFile(conn);
+                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//db//firedumpdb.db"))
                 {
                     con.Open();              
                     foreach(KeyValuePair<string,string> entry in tables)
                     {
-                        using (SQLiteCommand command = new SQLiteCommand(createTables[entry.Key],con))
+                        if(!isTableExists(entry.Value))
                         {
-                            command.ExecuteNonQuery();
-                        }
+                            using (SQLiteCommand command = new SQLiteCommand(createTables[entry.Key], con))
+                            {
+                                command.ExecuteNonQuery();
+                            }
+                        }                       
                     }                
                 }
+            }            
+        }
+
+
+        public static bool isTableExists(string table)
+        {
+            string count = "0";
+            if(table == null)
+            {
+                return false;
             }
-            
+
+            using (SQLiteConnection con = new SQLiteConnection("Data Source=.//db//firedumpdb.db"))
+            {
+                con.Open();
+                string sql = string.Format("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '{0}'",table);
+                using (SQLiteCommand command = new SQLiteCommand(con))
+                {
+                    command.CommandText = sql;
+                    object value = command.ExecuteScalar();
+                    if(value != null)
+                    {
+                        count = value.ToString();
+                    } else
+                    {
+                        count = "";
+                    }
+
+                    return Convert.ToInt32(count) > 0;
+                }
+            }
+          
         }
 
 

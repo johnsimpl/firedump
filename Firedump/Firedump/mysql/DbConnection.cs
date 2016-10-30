@@ -38,13 +38,15 @@ namespace Firedump.mysql
 
         public string database { get; set; }
 
+        public string connectionString { get; set; }
+
         private MySqlConnection connection;
 
         public MySqlConnection Connection { get; }
 
-        public bool testConnection()
+
+        private string conStringBuilder()
         {
-            string connectionString;
             if (!String.IsNullOrEmpty(database))
             {
                 connectionString = string.Format("Server=" + Host + ";database={0};UID=" + username + ";password=" + password, database);
@@ -53,9 +55,16 @@ namespace Firedump.mysql
             {
                 connectionString = "Server=" + Host + ";UID=" + username + ";password=" + password;
             }
+            return connectionString;
+        }
+
+
+        public bool testConnection()
+        {
+            
             try
             {
-                connection = new MySqlConnection(connectionString);
+                connection = new MySqlConnection(conStringBuilder());
                 connection.Open();
             }
             catch(ArgumentException a_ex)
@@ -99,6 +108,7 @@ namespace Firedump.mysql
         /// <returns></returns>
         public List<string> getDatabases()
         {
+            connection = new MySqlConnection(conStringBuilder());
             connection.Open();
             List<string> databases = new List<string>();
 
@@ -125,6 +135,7 @@ namespace Firedump.mysql
         /// <returns>A list of the tables in the database</returns>
         public List<string> getTables(String database)
         {
+            connection = new MySqlConnection(conStringBuilder());
             connection.Open();
             List<string> tables = new List<string>();
 
@@ -151,6 +162,7 @@ namespace Firedump.mysql
         [Obsolete("use getTables(database)")]
         public List<string> getTables()
         {
+            connection = new MySqlConnection(conStringBuilder());
             connection.Open();
             List<string> tables = new List<string>();
 

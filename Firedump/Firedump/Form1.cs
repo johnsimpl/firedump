@@ -109,8 +109,8 @@ namespace Firedump
 
         public void onCompleted(DumpResultSet resultSet)
         {
-            //setOutputLabelText(status);
             setOutputLabelText("completed");
+            Console.WriteLine(resultSet.ToString());
             if (resultSet.wasSuccessful)
             {
                 MessageBox.Show("Dump was completed successfully.","MySQL Dump",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -150,16 +150,13 @@ namespace Firedump
 
         private void inreaseProgressBarStep()
         {
-            Console.WriteLine("inreaseProgressBarStep1");
             if (this.pbDumpprogress.InvokeRequired)
             {
-                Console.WriteLine("inreaseProgressBarStep2");
                 InreaseProgressBarStep d = new InreaseProgressBarStep(inreaseProgressBarStep);
                 this.Invoke(d);
             }
             else
             {
-                Console.WriteLine("inreaseProgressBarStep3");
                 pbDumpprogress.PerformStep();
             }          
         }
@@ -222,7 +219,8 @@ namespace Firedump
                 {
                     cbDatabases.Items.Clear();
                     List<string> databases = con.getDatabases();
-                    for(int i =0; i < databases.Count; i++)
+                   
+                    for (int i =0; i < databases.Count; i++)
                     {
                         cbDatabases.Items.Add(databases[i].ToString());
                     }

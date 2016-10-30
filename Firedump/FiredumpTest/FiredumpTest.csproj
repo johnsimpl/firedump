@@ -88,6 +88,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDbConnection.cs" />
     <Compile Include="TestInitDb.cs" />
+    <Compile Include="TestMysqlDump.cs" />
+    <Compile Include="TestMysqlDumpAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Firedump\Firedump.csproj">

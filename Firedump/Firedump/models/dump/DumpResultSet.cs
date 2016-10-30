@@ -31,5 +31,12 @@ namespace Firedump.models.dump
         public string mysqldumpexeStandardError { set; get; }
 
         public DumpResultSet() { }
+
+
+        public override string ToString()
+        {
+            return "wasSuccessful:" + wasSuccessful + ",fileAbsPath:" + fileAbsPath + ",errorNumber:" + errorNumber
+                + ",errorMessage" + errorMessage + ",mysqldumpexeStandardError:" + mysqldumpexeStandardError;
+        }
     }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Firedump.models.configuration.jsonconfig;
 using Firedump.models.configuration.dynamicconfig;
+using Firedump.models.configuration.jsonconfig;
 using Firedump.models.dump;
 using System.IO;
 
