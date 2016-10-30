@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.dump
 {
-    interface IAdapterListener
+    public interface IAdapterListener
     {
         void onTableStartDump(string table);
      

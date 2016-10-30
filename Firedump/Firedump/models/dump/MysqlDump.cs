@@ -11,7 +11,7 @@ using System.IO;
 
 namespace Firedump.models.dump
 {
-    class MysqlDump
+    public class MysqlDump
     {
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         /// <summary>

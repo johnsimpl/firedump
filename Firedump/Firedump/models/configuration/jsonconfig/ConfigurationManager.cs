@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    class ConfigurationManager : ConfigurationClass
+    public class ConfigurationManager : ConfigurationClass
     {
         public MySqlDumpConfig mysqlDumpConfigInstance { get; }
         public CompressConfig compressConfigInstance { get; }

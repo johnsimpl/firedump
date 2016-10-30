@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    class CompressConfig : ConfigurationClass
+    public class CompressConfig : ConfigurationClass
     {
         //<!configuration fields section>
 
