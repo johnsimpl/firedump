@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using Firedump.models;
 using Firedump.models.configuration;
+using Firedump.models.dump;
+using Firedump.mysql;
 
 namespace Firedump
 {
@@ -17,62 +19,65 @@ namespace Firedump
     {
 
         delegate void SetTextCallback(string text);
+        delegate void InitProgressBar(List<string> tables);
+        delegate void InreaseProgressBarStep();
+        delegate void ResetPBar();
+
+        private MySqlDumpAdapter adapter;
 
 
         private string savepath = "";
         public Form1()
         {
             InitializeComponent();
+            adapter = new MySqlDumpAdapter();
         }
 
         
+        //comment 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-            
-            ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
-            configurationManagerInstance.initializeConfig();
-            MysqlDump mydump = new MysqlDump();
-            mydump.executeDump();
-
-
-            //FiredumpContext f = new FiredumpContext();
-            //List<mysql_servers> s = f.getAllMySqlServers();
-            //string newdpath = Environment.GetFolderPath(Environment.SpecialFolder.Da);
-            //Console.WriteLine(s.Count);
-            
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            /*
-            Console.WriteLine("yo");
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe"));*/
-            /*
-            MysqlDump mysqldump = new MysqlDump();
-            mysqldump.host = txtHost.Text;
-            mysqldump.port = txtPort.Text;
-            mysqldump.username = txtUsername.Text;
-            mysqldump.password = txtPassword.Text;
-            mysqldump.database = txtDatabase.Text;
-            if (!string.IsNullOrEmpty(savepath))
+            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            pbDumpprogress.Value = 0;
+            string host = txtHost.Text;
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            if (cbDatabases.SelectedItem == null)
             {
-                mysqldump.savepath = savepath;
+                return;
             }
-            mysqldump.executeDump();
-            */
-            
-            //or rename to MySqlDumpWorker..or something else
-            MySqlDumpAdapter dumpAdapter = new MySqlDumpAdapter(); 
-            MySqlDumpConfig options = null; //fix this later 
-            //set options ex zip or not ...
-            
-            //start async dump and register a listener for callbacks
-            dumpAdapter.startDump(options,this);
-            
-        
+            string database = cbDatabases.SelectedItem.ToString();
+
+            int port;
+            if (int.TryParse(txtPort.Text, out port))
+            {
+
+                ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
+                configurationManagerInstance.initializeConfig();
+                configurationManagerInstance.credentialsConfigInstance.host = host;
+                configurationManagerInstance.credentialsConfigInstance.port = port;
+                configurationManagerInstance.credentialsConfigInstance.username = username;
+                configurationManagerInstance.credentialsConfigInstance.password = password;
+                configurationManagerInstance.credentialsConfigInstance.saveConfig();
+                configurationManagerInstance.mysqlDumpConfigInstance.database = database;
+                //utf-8 gives me an error coming from mysql
+                configurationManagerInstance.mysqlDumpConfigInstance.characterSet = "utf8";
+                configurationManagerInstance.mysqlDumpConfigInstance.saveConfig();
+
+                //start async dump and register a listener for callbacks
+                adapter.startDump(this);
+
+            }
+
+
+
         }
 
 
@@ -98,19 +103,76 @@ namespace Firedump
         public void onError(int error)
         {
             setOutputLabelText(error);
+            resetPbarValue();
         }
 
         public void onCancelled()
         {
             setOutputLabelText("Cancelled");
+            MessageBox.Show("Cancelled");
+            resetPbarValue();
         }
 
-        public void onCompleted(string status)
+        public void onCompleted(DumpResultSet status)
         {
-            setOutputLabelText(status);
+            //setOutputLabelText(status);
+            setOutputLabelText("completed");
+            MessageBox.Show(status.ToString());
+        }
+
+        public void onTableDumpStart(string table)
+        {
+            setOutputLabelText("dumping table "+table);
+            inreaseProgressBarStep();
+        }
+
+        public void initDumpTables(List<string> tables)
+        {                   
+            initProgressBar(tables);
         }
 
 
+        private void initProgressBar(List<string> tables)
+        {
+            if(this.pbDumpprogress.InvokeRequired)
+            {
+                InitProgressBar d = new InitProgressBar(initProgressBar);
+                this.Invoke(d, tables);
+            } else
+            {
+                pbDumpprogress.Minimum = 0;
+                pbDumpprogress.Maximum = tables.Count;
+                pbDumpprogress.Step = 1;
+            }
+        }
+
+        private void inreaseProgressBarStep()
+        {
+            Console.WriteLine("inreaseProgressBarStep1");
+            if (this.pbDumpprogress.InvokeRequired)
+            {
+                Console.WriteLine("inreaseProgressBarStep2");
+                InreaseProgressBarStep d = new InreaseProgressBarStep(inreaseProgressBarStep);
+                this.Invoke(d);
+            }
+            else
+            {
+                Console.WriteLine("inreaseProgressBarStep3");
+                pbDumpprogress.PerformStep();
+            }          
+        }
+
+        private void resetPbarValue()
+        {
+            if(this.pbDumpprogress.InvokeRequired)
+            {
+                ResetPBar d = new ResetPBar(resetPbarValue);
+                this.Invoke(d);
+            } else
+            {
+                pbDumpprogress.Value = 0;
+            }
+        }
 
 
         /// <summary>
@@ -120,15 +182,83 @@ namespace Firedump
         /// <param name="text"></param>
         private void setOutputLabelText(object text)
         {
-            if(this.outputLable.InvokeRequired)
+            
+            if(this.lStatus.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(setOutputLabelText);
                 this.Invoke(d,new object[] { text.ToString()});
             } else
             {
-                this.outputLable.Text = text.ToString();
+                this.lStatus.Text = text.ToString();
             }
+            
         }
+
+        private void cancelDUmpTaskClickListener(object sender, EventArgs e)
+        {
+            adapter.cancelDump();
+        }
+
+        private void btnRefreshDatabasesClickListener(object sender, EventArgs e)
+        {
+            string host = txtHost.Text;
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            int port;
+            if(int.TryParse(txtPort.Text,out port))
+            {
+
+                DbConnection con = DbConnection.Instance();
+                con.Host = host;
+                con.username = username;
+                con.password = password;
+                con.port = port;
+                con.database = "";
+
+                if(con.testConnection())
+                {
+                    cbDatabases.Items.Clear();
+                    List<string> databases = con.getDatabases();
+                    for(int i =0; i < databases.Count; i++)
+                    {
+                        cbDatabases.Items.Add(databases[i].ToString());
+                    }
+                    cbDatabases.SelectedIndex = 1;
+                }
+               
+
+            }
+            
+        }
+
+
+        private void test_con_clickListener(object sender, EventArgs e)
+        {
+            string host = txtHost.Text;
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            int port;
+            if (int.TryParse(txtPort.Text, out port))
+            {
+                DbConnection con = DbConnection.Instance();
+                con.Host = host;
+                con.username = username;
+                con.password = password;
+                con.port = port;
+
+                if (con.testConnection())
+                {
+                    lStatus.Text = "connection is successfull!";
+                } else
+                {
+                    lStatus.Text = "Error try connecting to server!";
+                }
+            }
+            
+        }
+
 
 
 

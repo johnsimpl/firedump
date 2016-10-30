@@ -123,6 +123,7 @@
     <Compile Include="models\configuration\OutputConfig.cs" />
     <Compile Include="models\databaseUtils\FiredumpContext.cs" />
     <Compile Include="models\dump\DumpResultSet.cs" />
+    <Compile Include="models\dump\IAdapterListener.cs" />
     <Compile Include="models\dump\IDumpProgressListener.cs" />
     <Compile Include="models\dump\MysqlDump.cs" />
     <Compile Include="models\dump\MySqlDumpAdapter.cs" />

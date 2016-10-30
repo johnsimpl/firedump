@@ -13,9 +13,17 @@ namespace Firedump
     class MysqlDump
     {
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
-        public MysqlDump(){}
-        public DumpResultSet executeDump()
+        private IAdapterListener listener;
+        private Process proc;
+
+        public MysqlDump(IAdapterListener listener)
         {
+            this.listener = listener;
+        }
+
+
+        public DumpResultSet executeDump()
+        {          
             DumpResultSet resultObj = new DumpResultSet();
             StringBuilder arguments = new StringBuilder();
 
@@ -254,7 +262,7 @@ namespace Firedump
             //dump execution
             Console.WriteLine(arguments.ToString());
 
-            Process proc = new Process
+            proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
@@ -282,12 +290,27 @@ namespace Firedump
                     file.WriteLine("-- Custom comment: " + configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader);
                 }
 
+               
                 while (!proc.StandardOutput.EndOfStream)
                 {
-                    file.WriteLine(proc.StandardOutput.ReadLine());
+               
+                    string line = proc.StandardOutput.ReadLine();
+                    file.WriteLine(line);
+
+                    if (line.StartsWith("CREATE TABLE `"))
+                    {
+                        string tablename = line.Split('`', '`')[1];
+                        Console.WriteLine(tablename);
+                        if (listener != null)
+                        {   //fire event
+                            listener.onTableStartDump(tablename);
+                        }
+                    }             
                 }
+                
             }
 
+            
             resultObj.mysqldumpexeStandardError = "";
             while (!proc.StandardError.EndOfStream)
             {
@@ -310,8 +333,27 @@ namespace Firedump
                 resultObj.wasSuccessful = true;
                 resultObj.fileAbsPath = configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename;
             }
+            
                     
             return resultObj;
         }
+
+
+        public void cancelMysqlDumpProcess()
+        {
+            if(proc != null)
+            {
+                try
+                {
+                    proc.Kill();
+                }catch(Exception ex)
+                {
+
+                }
+                                          
+            }
+        }
+
+
     }
 }
