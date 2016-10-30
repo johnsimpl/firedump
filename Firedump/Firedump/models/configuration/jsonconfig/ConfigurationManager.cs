@@ -9,16 +9,12 @@ namespace Firedump.models.configuration
     class ConfigurationManager : ConfigurationClass
     {
         public MySqlDumpConfig mysqlDumpConfigInstance { get; }
-        public CredentialsConfig credentialsConfigInstance { get; }
         public CompressConfig compressConfigInstance { get; }
-        public OutputConfig outputConfigInstance { get; }
         private static ConfigurationManager configurationManagerInstance;
         private ConfigurationManager()
         {
             this.mysqlDumpConfigInstance = MySqlDumpConfig.getInstance();
-            this.credentialsConfigInstance = CredentialsConfig.getInstance();
             this.compressConfigInstance = CompressConfig.getInstance();
-            this.outputConfigInstance = OutputConfig.getInstance();
         }
         /// <summary>
         /// 
@@ -39,9 +35,7 @@ namespace Firedump.models.configuration
         public void initializeConfig()
         {
             this.mysqlDumpConfigInstance.initializeConfig();
-            this.credentialsConfigInstance.initializeConfig();
             this.compressConfigInstance.initializeConfig();
-            this.outputConfigInstance.initializeConfig();
         }
 
         /// <summary>
@@ -51,9 +45,7 @@ namespace Firedump.models.configuration
         public void createConfig()
         {
             this.mysqlDumpConfigInstance.createConfig();
-            this.credentialsConfigInstance.createConfig();
             this.compressConfigInstance.createConfig();
-            this.outputConfigInstance.createConfig();
         }
 
         /// <summary>
@@ -63,9 +55,7 @@ namespace Firedump.models.configuration
         public void saveConfig()
         {
             this.mysqlDumpConfigInstance.saveConfig();
-            this.credentialsConfigInstance.saveConfig();
             this.compressConfigInstance.saveConfig();
-            this.outputConfigInstance.saveConfig();
         }
     }
 }

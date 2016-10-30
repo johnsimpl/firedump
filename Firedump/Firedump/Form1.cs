@@ -58,19 +58,15 @@ namespace Firedump
             int port;
             if (int.TryParse(txtPort.Text, out port))
             {
-
-                ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
-                configurationManagerInstance.initializeConfig();
-                configurationManagerInstance.credentialsConfigInstance.host = host;
-                configurationManagerInstance.credentialsConfigInstance.port = port;
-                configurationManagerInstance.credentialsConfigInstance.username = username;
-                configurationManagerInstance.credentialsConfigInstance.password = password;
-                configurationManagerInstance.credentialsConfigInstance.saveConfig();
-                configurationManagerInstance.mysqlDumpConfigInstance.database = database;
-                configurationManagerInstance.mysqlDumpConfigInstance.saveConfig();
+                CredentialsConfig credentialsConfigInstance = new CredentialsConfig();
+                credentialsConfigInstance.host = host;
+                credentialsConfigInstance.port = port;
+                credentialsConfigInstance.username = username;
+                credentialsConfigInstance.password = password;
+                credentialsConfigInstance.database = database;
 
                 //start async dump and register a listener for callbacks
-                adapter.startDump(this);
+                adapter.startDump(credentialsConfigInstance,this);
 
             }
 
@@ -111,11 +107,19 @@ namespace Firedump
             resetPbarValue();
         }
 
-        public void onCompleted(DumpResultSet status)
+        public void onCompleted(DumpResultSet resultSet)
         {
             //setOutputLabelText(status);
             setOutputLabelText("completed");
-            MessageBox.Show(status.ToString());
+            if (resultSet.wasSuccessful)
+            {
+                MessageBox.Show("Dump was completed successfully.","MySQL Dump",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Dump was unsuccessful.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         public void onTableDumpStart(string table)

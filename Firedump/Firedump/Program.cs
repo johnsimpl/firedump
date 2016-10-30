@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.models.configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,10 @@ namespace Firedump
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //configuration initialization
+            ConfigurationManager.getInstance().initializeConfig();
+
             Application.Run(new Form1());
             
         }

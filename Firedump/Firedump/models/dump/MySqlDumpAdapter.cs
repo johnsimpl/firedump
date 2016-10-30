@@ -13,8 +13,7 @@ namespace Firedump.models
     {
         private IDumpProgressListener listener;
         private MysqlDump mydump;
-
-
+        private CredentialsConfig credentialsConfigInstance;
 
         public MySqlDumpAdapter() {           
         }
@@ -24,14 +23,16 @@ namespace Firedump.models
         /// start mysql dump/backup
         /// usualy gets called from the user
         /// </summary>
-        /// <param name="options">mysql options</param>
+        /// <param name="credentialsConfigInstance">Instance of class CredentialsConfig with set credentials for dump</param>
         /// <param name="listener">the listener interface for the notifications status of the whole job \n
         ///                       IDumpProgressListener to notify the user about the job status 
         /// </param>
-        public void startDump(IDumpProgressListener listener)
+        public void startDump(CredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
         {
             this.listener = listener;
             listener.onProgress("mysql dump started!from server:");//+options.getHost());
+
+            this.credentialsConfigInstance = credentialsConfigInstance;
 
             Task mysqldumpTask = new Task(DumpMysqlTaskExecutor);
             mysqldumpTask.Start();         
@@ -58,6 +59,8 @@ namespace Firedump.models
                 }
 
                 mydump = new MysqlDump(this);
+                mydump.credentialsConfigInstance = credentialsConfigInstance;
+
                 Task<DumpResultSet> result = dumptask(mydump);
                 DumpResultSet dumpresult = await result;
 
@@ -87,20 +90,19 @@ namespace Firedump.models
         }
 
 
-        static async Task<List<string>>  testCon()
+        async Task<List<string>>  testCon()
         {
-            ConfigurationManager manager = ConfigurationManager.getInstance();
-            string host = manager.credentialsConfigInstance.host;
-            string username = manager.credentialsConfigInstance.username;
-            string password = manager.credentialsConfigInstance.password;
-            string database = manager.mysqlDumpConfigInstance.database;
-            int port = manager.credentialsConfigInstance.port;
+            string host = this.credentialsConfigInstance.host;
+            int port = this.credentialsConfigInstance.port;
+            string username = this.credentialsConfigInstance.username;
+            string password = this.credentialsConfigInstance.password;
+            string database = this.credentialsConfigInstance.database;
             DbConnection con = DbConnection.Instance();
             con.Host = host;
             con.username = username;
             con.password = password;
             con.database = database;
-            //con.port = port;
+            con.port = port;
             bool success = con.testConnection();
             if(success)
             {

@@ -13,6 +13,11 @@ namespace Firedump
     class MysqlDump
     {
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
+        /// <summary>
+        /// Create a new credentials instance and set it before executing mysqldump
+        /// </summary>
+        public CredentialsConfig credentialsConfigInstance { set; get; }
+
         private IAdapterListener listener;
         private Process proc;
 
@@ -34,9 +39,9 @@ namespace Firedump
             //Credentials
 
             //host
-            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.host))
+            if (!String.IsNullOrEmpty(credentialsConfigInstance.host))
             {
-                arguments.Append("--host " + configurationManagerInstance.credentialsConfigInstance.host + " ");
+                arguments.Append("--host " + credentialsConfigInstance.host + " ");
             }
             else
             {
@@ -47,22 +52,22 @@ namespace Firedump
             }
 
             //port
-            if (configurationManagerInstance.credentialsConfigInstance.port<1 || configurationManagerInstance.credentialsConfigInstance.port>65535)
+            if (credentialsConfigInstance.port<1 || credentialsConfigInstance.port>65535)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.mysqlErrorNumber = -1;
-                resultObj.mysqlErrorMessage = "Invalid port number: " + configurationManagerInstance.credentialsConfigInstance.port;
+                resultObj.mysqlErrorMessage = "Invalid port number: " + credentialsConfigInstance.port;
                 return resultObj;
             }
             else
             {
-                arguments.Append("--port=" + configurationManagerInstance.credentialsConfigInstance.port + " ");
+                arguments.Append("--port=" + credentialsConfigInstance.port + " ");
             }
             
             //username
-            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.username))
+            if (!String.IsNullOrEmpty(credentialsConfigInstance.username))
             {
-                arguments.Append("--user " + configurationManagerInstance.credentialsConfigInstance.username + " ");
+                arguments.Append("--user " + credentialsConfigInstance.username + " ");
             }
             else
             {
@@ -73,9 +78,9 @@ namespace Firedump
             }
 
             //pasword
-            if (!String.IsNullOrEmpty(configurationManagerInstance.credentialsConfigInstance.password))
+            if (!String.IsNullOrEmpty(credentialsConfigInstance.password))
             {
-                arguments.Append("--password=" + configurationManagerInstance.credentialsConfigInstance.password + " ");
+                arguments.Append("--password=" + credentialsConfigInstance.password + " ");
             }
 
             //MySqlDumpConfiguration
@@ -219,22 +224,22 @@ namespace Firedump
             }
 
             //database choice
-            if (configurationManagerInstance.mysqlDumpConfigInstance.databases == null)
+            if (credentialsConfigInstance.databases == null)
             {
-                if (string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.database))
+                if (string.IsNullOrEmpty(credentialsConfigInstance.database))
                 {
                     arguments.Append("--all-databases ");
                 }
                 else
                 {
-                    arguments.Append("--databases "+ configurationManagerInstance.mysqlDumpConfigInstance.database);
-                    if (configurationManagerInstance.mysqlDumpConfigInstance.excludeTablesSingleDatabase!=null)
+                    arguments.Append("--databases "+ credentialsConfigInstance.database);
+                    if (credentialsConfigInstance.excludeTablesSingleDatabase!=null)
                     {
                         arguments.Append(" ");
-                        string[] tables = configurationManagerInstance.mysqlDumpConfigInstance.excludeTablesSingleDatabase.Split(',');
+                        string[] tables = credentialsConfigInstance.excludeTablesSingleDatabase.Split(',');
                         foreach (string table in tables)
                         {
-                            arguments.Append("--ignore-table=" + configurationManagerInstance.mysqlDumpConfigInstance.database + "." + table + " ");
+                            arguments.Append("--ignore-table=" + credentialsConfigInstance.database + "." + table + " ");
                         }
                     }
                 }
@@ -242,20 +247,20 @@ namespace Firedump
             else
             {
                 arguments.Append("--databases ");
-                foreach (string database in configurationManagerInstance.mysqlDumpConfigInstance.databases)
+                foreach (string database in credentialsConfigInstance.databases)
                 {
                     arguments.Append(database+" ");
                 }
-                if (configurationManagerInstance.mysqlDumpConfigInstance.excludeTables != null)
+                if (credentialsConfigInstance.excludeTables != null)
                 {
-                    for(int i=0; i< configurationManagerInstance.mysqlDumpConfigInstance.excludeTables.Length; i++)
+                    for(int i=0; i< credentialsConfigInstance.excludeTables.Length; i++)
                     {
-                        if (!string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.excludeTables[i]))
+                        if (!string.IsNullOrEmpty(credentialsConfigInstance.excludeTables[i]))
                         {
-                            string[] tables = configurationManagerInstance.mysqlDumpConfigInstance.excludeTables[i].Split(',');
+                            string[] tables = credentialsConfigInstance.excludeTables[i].Split(',');
                             foreach (string table in tables)
                             {
-                                arguments.Append("--ignore-table=" + configurationManagerInstance.mysqlDumpConfigInstance.databases[i] + "." + table + " ");
+                                arguments.Append("--ignore-table=" + credentialsConfigInstance.databases[i] + "." + table + " ");
                             }
                         }
                     }
@@ -287,6 +292,11 @@ namespace Firedump
             String filename = "dump" + rnd.Next(1000000, 9999999) + ".sql";
 
             Directory.CreateDirectory(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath);
+
+            //checking if file exists
+            while(File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
+                filename = "Dump" + rnd.Next(10000000, 99999999) + ".sql";
+            }
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {

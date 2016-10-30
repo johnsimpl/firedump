@@ -116,18 +116,18 @@
     <Compile Include="logs.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="models\configuration\CompressConfig.cs" />
-    <Compile Include="models\configuration\ConfigurationClass.cs" />
-    <Compile Include="models\configuration\ConfigurationManager.cs" />
-    <Compile Include="models\configuration\CredentialsConfig.cs" />
-    <Compile Include="models\configuration\OutputConfig.cs" />
+    <Compile Include="models\configuration\jsonconfig\CompressConfig.cs" />
+    <Compile Include="models\configuration\jsonconfig\ConfigurationClass.cs" />
+    <Compile Include="models\configuration\jsonconfig\ConfigurationManager.cs" />
+    <Compile Include="models\configuration\dynamicconfig\CredentialsConfig.cs" />
+    <Compile Include="models\configuration\dynamicconfig\OutputConfig.cs" />
     <Compile Include="models\databaseUtils\FiredumpContext.cs" />
     <Compile Include="models\dump\DumpResultSet.cs" />
     <Compile Include="models\dump\IAdapterListener.cs" />
     <Compile Include="models\dump\IDumpProgressListener.cs" />
     <Compile Include="models\dump\MysqlDump.cs" />
     <Compile Include="models\dump\MySqlDumpAdapter.cs" />
-    <Compile Include="models\configuration\MySqlDumpConfig.cs" />
+    <Compile Include="models\configuration\jsonconfig\MySqlDumpConfig.cs" />
     <Compile Include="mysql\DbConnection.cs" />
     <Compile Include="mysql_servers.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
