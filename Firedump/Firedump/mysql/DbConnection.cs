@@ -153,7 +153,7 @@ namespace Firedump.mysql
             connection.Open();
             List<string> tables = new List<string>();
 
-            string query = "show tables from " + database + ";";
+            string query = "show tables;";
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
