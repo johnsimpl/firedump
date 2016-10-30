@@ -13,24 +13,20 @@ namespace Firedump.models.dump
         /// </summary>
         public bool wasSuccessful { set; get; }
         /// <summary>
-        /// absolute path of the temporal dump file
+        /// absolute path of the temporal dump file (use if the dump was successful to get the path to the saved file)
         /// </summary>
         public string fileAbsPath { set; get; }
         /// <summary>
-        /// mysql error number in case of mysql error or -1 if dump was code aborted.
-        /// For -1 use mysqlErrorMessage for the error message.
+        /// -1 - obvious mistake in credentials (Message in errorMessage). -2 - mysqldump.exe exited with exit
+        /// code diffent from 0 (use mysqldumpexeStandardError)
         /// </summary>
-        public int mysqlErrorNumber { set; get; }
+        public int errorNumber { set; get; }
         /// <summary>
-        /// mysql exception message
+        /// The error message (use if errorNumber is -1)
         /// </summary>
-        public string mysqlErrorMessage { set; get; }
+        public string errorMessage { set; get; }
         /// <summary>
-        /// the exception.ToString()
-        /// </summary>
-        public string mysqlExceptionToString { set; get; }
-        /// <summary>
-        /// standard error of mysqldump.exe (use in case of failure)
+        /// standard error of mysqldump.exe (use if errorNumber is -2)
         /// </summary>
         public string mysqldumpexeStandardError { set; get; }
 

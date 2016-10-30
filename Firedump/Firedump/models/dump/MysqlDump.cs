@@ -46,8 +46,8 @@ namespace Firedump
             else
             {
                 resultObj.wasSuccessful = false;
-                resultObj.mysqlErrorNumber = -1;
-                resultObj.mysqlErrorMessage = "Host not set";
+                resultObj.errorNumber = -1;
+                resultObj.errorMessage = "Host not set";
                 return resultObj;
             }
 
@@ -55,8 +55,8 @@ namespace Firedump
             if (credentialsConfigInstance.port<1 || credentialsConfigInstance.port>65535)
             {
                 resultObj.wasSuccessful = false;
-                resultObj.mysqlErrorNumber = -1;
-                resultObj.mysqlErrorMessage = "Invalid port number: " + credentialsConfigInstance.port;
+                resultObj.errorNumber = -1;
+                resultObj.errorMessage = "Invalid port number: " + credentialsConfigInstance.port;
                 return resultObj;
             }
             else
@@ -72,8 +72,8 @@ namespace Firedump
             else
             {
                 resultObj.wasSuccessful = false;
-                resultObj.mysqlErrorNumber = -1;
-                resultObj.mysqlErrorMessage = "Username not set";
+                resultObj.errorNumber = -1;
+                resultObj.errorMessage = "Username not set";
                 return resultObj;
             }
 
@@ -340,7 +340,7 @@ namespace Firedump
             if (proc.ExitCode != 0)
             {
                 resultObj.wasSuccessful = false;
-                resultObj.mysqlErrorNumber = -2;
+                resultObj.errorNumber = -2;
                 File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
             }
             else
