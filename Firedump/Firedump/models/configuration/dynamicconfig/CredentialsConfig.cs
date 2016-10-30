@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.CSharp.RuntimeBinder;
 
-namespace Firedump.models.configuration
+namespace Firedump.models.configuration.dynamicconfig
 {
     public class CredentialsConfig
     {

@@ -5,7 +5,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.CSharp.RuntimeBinder;
 
-namespace Firedump.models.configuration
+namespace Firedump.models.configuration.jsonconfig
 {
     public class MySqlDumpConfig : ConfigurationClass
     {

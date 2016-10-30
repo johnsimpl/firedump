@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Firedump.models.dump;
 using Firedump.mysql;
 using System.Collections.Generic;
+using Firedump.models.configuration.dynamicconfig;
 
-namespace Firedump.models
+namespace Firedump.models.dump
 {
     public class MySqlDumpAdapter : IAdapterListener
     {

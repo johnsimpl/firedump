@@ -9,11 +9,6 @@ namespace Firedump.db
 {
     /// <summary>
     /// initialization database sqlite firedump.db script,
-    /// now it all works from visual studio!
-    /// but the relative connection string is ../../db/firedump.db
-    /// when the releash exe will run there wont be any ../../name.db database
-    /// !the debug folder gets reseting with every run.
-    /// building the exe for releash , the initialize Db will run only once.
     /// so this is utility only first run script.
     /// 
     /// Im going to test the shit out of this

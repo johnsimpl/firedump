@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Firedump.models.dump;
 
-namespace Firedump.models
+namespace Firedump.models.dump
 {
     public interface IDumpProgressListener
     {

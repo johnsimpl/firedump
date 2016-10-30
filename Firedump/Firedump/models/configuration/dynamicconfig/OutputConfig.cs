@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firedump.models.configuration
+namespace Firedump.models.configuration.dynamicconfig
 {
     class OutputConfig
     {

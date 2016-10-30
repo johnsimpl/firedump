@@ -86,7 +86,7 @@
   <ItemGroup>
     <Compile Include="FireDumpContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MySqlDbConnectionTest.cs" />
+    <Compile Include="TestDbConnection.cs" />
     <Compile Include="TestInitDb.cs" />
   </ItemGroup>
   <ItemGroup>

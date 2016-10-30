@@ -148,6 +148,7 @@ namespace Firedump.mysql
         ///  Must be connected to database and not to server
         /// </summary>
         /// <returns>A list of the tables in the database</returns>
+        [Obsolete("use getTables(database)")]
         public List<string> getTables()
         {
             connection.Open();
@@ -165,7 +166,7 @@ namespace Firedump.mysql
             {
                 connection.Close();
             }
-
+            
             return tables;
         }
 

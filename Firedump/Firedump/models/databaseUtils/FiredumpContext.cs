@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 //While it can be fine to re-use a DbContext across multiple business transactions, its lifetime should still be kept short. 
-namespace Firedump
+namespace Firedump.models.databaseutils
 {
     public class FiredumpContext
     {
