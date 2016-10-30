@@ -119,7 +119,7 @@ namespace Firedump.mysql
         }
 
         /// <summary>
-        /// Must be connected to a database and not to a database
+        /// Must be connected to a database and not to a server
         /// </summary>
         /// <param name="database">The database name</param>
         /// <returns>A list of the tables in the database</returns>
