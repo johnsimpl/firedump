@@ -39,16 +39,6 @@ namespace Firedump.models.configuration
         }
 
         /// <summary>
-        /// Calls the createConfig methods of every configuration class (This resets all of the configuration to default values).
-        /// IMPORTANT: initializeConfig must be called at least once before this method is called.
-        /// </summary>
-        public void createConfig()
-        {
-            this.mysqlDumpConfigInstance.createConfig();
-            this.compressConfigInstance.createConfig();
-        }
-
-        /// <summary>
         /// Calls the save methods of every configuration class.
         /// IMPORTANT: initializeConfig must be called at least once before this method is called.
         /// </summary>

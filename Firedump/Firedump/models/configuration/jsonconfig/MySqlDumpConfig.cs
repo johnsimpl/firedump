@@ -185,8 +185,9 @@ namespace Firedump.models.configuration
             }
             catch (Exception ex)
             {
-                createConfig();
-                initializeConfig();
+                mysqlDumpConfigInstance = new MySqlDumpConfig(); //resetarei sta default options giati mporei apo panw na exoun allaksei kapoia se periptwsi corrupted data
+                mysqlDumpConfigInstance.saveConfig();
+                mysqlDumpConfigInstance.initializeConfig();
                 if (!(ex is FileNotFoundException || ex is JsonException || ex is RuntimeBinderException))
                 {
                     Console.WriteLine("MySqlDumpConfig.initializeConfig(): "+ex.ToString());
@@ -194,17 +195,12 @@ namespace Firedump.models.configuration
             }
         }
 
-        public void createConfig()
-        {
-            this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+"\\AppData\\roaming\\Firedump\\";
-            string jsonOutput = JsonConvert.SerializeObject(this, Formatting.Indented);
-            FileInfo file = new FileInfo(jsonFilePath);
-            file.Directory.Create(); // If the directory already exists, this method does nothing.
-            File.WriteAllText(file.FullName, jsonOutput);
-        }
-
         public void saveConfig()
         {
+            if (string.IsNullOrEmpty(this.tempSavePath))
+            {
+                this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\roaming\\Firedump\\";
+            }
             string jsonOutput = JsonConvert.SerializeObject(this, Formatting.Indented);
             FileInfo file = new FileInfo(jsonFilePath);
             file.Directory.Create(); // If the directory already exists, this method does nothing.

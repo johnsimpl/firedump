@@ -28,11 +28,6 @@ namespace Firedump.models.configuration
             Console.WriteLine("foo");
         }
 
-        public void createConfig()
-        {
-            throw new NotImplementedException();
-        }
-
         public void saveConfig()
         {
             throw new NotImplementedException();
