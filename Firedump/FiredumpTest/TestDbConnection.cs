@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Firedump.mysql;
 
 namespace FiredumpTest
 {
@@ -14,7 +15,8 @@ namespace FiredumpTest
         [TestMethod]
         public void TesttestConnection()
         {
-            
+            DbConnection connection = DbConnection.Instance();
+            Assert.IsNotNull(connection);
         }
 
         [TestMethod]

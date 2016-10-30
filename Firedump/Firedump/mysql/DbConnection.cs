@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace Firedump.mysql
 {
-    class DbConnection
+    public class DbConnection
     {
 
         private DbConnection() {

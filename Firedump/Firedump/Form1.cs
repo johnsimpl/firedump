@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Firedump.models;
-using Firedump.models.configuration;
+using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.dump;
 using Firedump.mysql;
 
