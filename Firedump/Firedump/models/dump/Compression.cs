@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.dump
 {
-    class Compression7z
+    class Compression
     {
     }
 }
