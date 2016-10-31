@@ -97,6 +97,12 @@ namespace Firedump.models.dump
                     break;
             }
 
+            string f7zip = "resources\\7z64\\7z.exe";
+            if (configurationManagerInstance.compressConfigInstance.use32bit)
+            {
+                f7zip = "resources\\7z\\7z.exe"; 
+            }
+
             //setting filenames
             arguments.Append("\""+absolutePath.Replace(".sql",fileType)+"\" ");
             arguments.Append("\""+absolutePath+"\"");
@@ -107,7 +113,7 @@ namespace Firedump.models.dump
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "resources\\7z\\7z.exe",
+                    FileName = f7zip,
                     Arguments = arguments.ToString(),
                     UseShellExecute = false,
                     RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop

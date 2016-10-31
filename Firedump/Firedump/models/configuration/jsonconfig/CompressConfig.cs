@@ -25,7 +25,10 @@ namespace Firedump.models.configuration.jsonconfig
         public bool use7zip { set; get; } = true;
 
         //<7zip configuration>
-
+        /// <summary>
+        /// If true run 32 bit 7zip otherwise run 64 bit
+        /// </summary>
+        public bool use32bit { set; get; }
         /// <summary>
         /// 0 - -mx1 : Low compression faster proccess
         /// 1 - -mx3 : Fast compression mode
@@ -73,6 +76,7 @@ namespace Firedump.models.configuration.jsonconfig
                 //<Field initialization>
                 this.enableCompression = jsonObj["enableCompression"];
                 this.use7zip = jsonObj["use7zip"];
+                this.use32bit = jsonObj["use32bit"];
                 this.compressionLevel = jsonObj["compressionLevel"];
                 this.useMultithreading = jsonObj["useMultithreading"];
                 this.fileType = jsonObj["fileType"];
@@ -91,6 +95,13 @@ namespace Firedump.models.configuration.jsonconfig
         }
         public void saveConfig()
         {
+            if (!use32bit)
+            {
+                if (!Environment.Is64BitOperatingSystem)
+                {
+                    use32bit = true;
+                }
+            }
             string jsonOutput = JsonConvert.SerializeObject(this, Formatting.Indented);
             FileInfo file = new FileInfo(jsonFilePath);
             file.Directory.Create(); // If the directory already exists, this method does nothing.
