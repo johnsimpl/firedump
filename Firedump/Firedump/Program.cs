@@ -22,7 +22,7 @@ namespace Firedump
             //configuration initialization
             ConfigurationManager.getInstance().initializeConfig();
 
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
             
         }
     }
