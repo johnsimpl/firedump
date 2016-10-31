@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.models.dump;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,13 @@ namespace Firedump
         public Test1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Compression comp = new Compression();
+            comp.absolutePath = "D:\\test\\test 1\\file test.sql";
+            comp.doCompress7z();
         }
     }
 }

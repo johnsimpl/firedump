@@ -97,6 +97,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="models\dump\CompressionResultSet.cs" />
     <Compile Include="resources\db\InitDb.cs" />
     <Compile Include="firedumpDataModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -176,6 +177,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Test1.resx">
+      <DependentUpon>Test1.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="resources\7z\7z.sfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

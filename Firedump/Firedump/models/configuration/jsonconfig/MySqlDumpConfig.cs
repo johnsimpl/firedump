@@ -199,7 +199,7 @@ namespace Firedump.models.configuration.jsonconfig
         {
             if (string.IsNullOrEmpty(this.tempSavePath))
             {
-                this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\roaming\\Firedump\\";
+                this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Roaming\\Firedump\\";
             }
             string jsonOutput = JsonConvert.SerializeObject(this, Formatting.Indented);
             FileInfo file = new FileInfo(jsonFilePath);

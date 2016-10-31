@@ -17,7 +17,7 @@ namespace Firedump.models.configuration.jsonconfig
         /// <summary>
         /// Enables compression after dump
         /// </summary>
-        public bool enableCompression { set; get; }
+        public bool enableCompression { set; get; } 
         /// <summary>
         /// false - use .NET 4.5 native compression
         /// true - use 7zip

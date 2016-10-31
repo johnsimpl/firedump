@@ -348,6 +348,23 @@ namespace Firedump.models.dump
             {
                 resultObj.wasSuccessful = true;
                 resultObj.fileAbsPath = configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename;
+
+                //compression
+                if (configurationManagerInstance.compressConfigInstance.enableCompression)
+                {
+                    Compression comp = new Compression();
+                    comp.absolutePath = resultObj.fileAbsPath;
+                    CompressionResultSet compResult = comp.doCompress7z(); //edw kaleitai to compression
+
+                    if (!compResult.wasSucessful)
+                    {
+                        resultObj.wasSuccessful = false;
+                        resultObj.errorNumber = -3;
+                        resultObj.mysqldumpexeStandardError = compResult.standardError;
+                    }
+                    File.Delete(resultObj.fileAbsPath); //delete to sketo .sql
+                    resultObj.fileAbsPath = compResult.resultAbsPath;
+                }
             }
                     
             return resultObj;

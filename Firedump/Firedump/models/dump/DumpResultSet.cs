@@ -18,7 +18,8 @@ namespace Firedump.models.dump
         public string fileAbsPath { set; get; }
         /// <summary>
         /// -1 - obvious mistake in credentials (Message in errorMessage). -2 - mysqldump.exe exited with exit
-        /// code diffent from 0 (use mysqldumpexeStandardError)
+        /// code diffent from 0 (use mysqldumpexeStandardError). -3 compression failed mysqldumpexeStandardError
+        /// has the compression standardError output
         /// </summary>
         public int errorNumber { set; get; }
         /// <summary>
