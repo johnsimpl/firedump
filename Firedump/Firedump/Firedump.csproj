@@ -91,7 +91,7 @@
     <Compile Include="backup_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="db\InitDb.cs" />
+    <Compile Include="resources\db\InitDb.cs" />
     <Compile Include="firedumpDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,16 +161,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="7z\7z.sfx">
+    <None Include="resources\7z\7z.sfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="7z\7zCon.sfx">
+    <None Include="resources\7z\7zCon.sfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="7z\descript.ion">
+    <None Include="resources\7z\descript.ion">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="db\firedumpdb.db">
+    <None Include="resources\db\firedumpdb.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <EntityDeploy Include="firedumpDataModel.edmx">
@@ -204,19 +204,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="7z\7-zip.dll">
+    <Content Include="resources\7z\7-zip.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="7z\7z.dll">
+    <Content Include="resources\7z\7z.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="7z\7z.exe">
+    <Content Include="resources\7z\7z.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="7z\7zFM.exe">
+    <Content Include="resources\7z\7zFM.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="7z\7zG.exe">
+    <Content Include="resources\7z\7zG.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="firedumpDataModel.Context.tt">
@@ -229,7 +229,7 @@
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
-    <Content Include="mysqldump.exe">
+    <Content Include="resources\mysqldump\mysqldump.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
