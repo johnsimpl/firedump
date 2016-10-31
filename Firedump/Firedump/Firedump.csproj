@@ -122,6 +122,7 @@
     <Compile Include="models\configuration\dynamicconfig\CredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\OutputConfig.cs" />
     <Compile Include="models\databaseUtils\FiredumpContext.cs" />
+    <Compile Include="models\dump\Compression7z.cs" />
     <Compile Include="models\dump\DumpResultSet.cs" />
     <Compile Include="models\dump\IAdapterListener.cs" />
     <Compile Include="models\dump\IDumpProgressListener.cs" />
