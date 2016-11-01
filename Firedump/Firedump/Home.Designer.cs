@@ -119,7 +119,7 @@
             this.gbDestinations.Controls.Add(this.button1);
             this.gbDestinations.Location = new System.Drawing.Point(303, 185);
             this.gbDestinations.Name = "gbDestinations";
-            this.gbDestinations.Size = new System.Drawing.Size(279, 112);
+            this.gbDestinations.Size = new System.Drawing.Size(279, 126);
             this.gbDestinations.TabIndex = 0;
             this.gbDestinations.TabStop = false;
             this.gbDestinations.Text = "Destinations";
