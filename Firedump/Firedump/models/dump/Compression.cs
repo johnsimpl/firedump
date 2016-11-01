@@ -38,6 +38,10 @@ namespace Firedump.models.dump
             }
             if (!string.IsNullOrEmpty(configurationManagerInstance.compressConfigInstance.password))
             {
+                if (configurationManagerInstance.compressConfigInstance.fileType!=0)
+                {
+                    arguments.Append("-mem=AES256 ");
+                }
                 arguments.Append("-p" + configurationManagerInstance.compressConfigInstance.password+ " ");
             }
 

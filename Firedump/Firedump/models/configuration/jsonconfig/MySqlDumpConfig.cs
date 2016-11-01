@@ -35,11 +35,11 @@ namespace Firedump.models.configuration.jsonconfig
         /// <summary>
         /// wether to execute the dump in a single transaction
         /// </summary>
-        public bool singleTransaction { set; get; } 
+        public bool singleTransaction { set; get; }
         /// <summary>
         /// wether to disable foreign key checks in dump file (makes importing the dump file faster because the indexes are created after all rows are inserted)
         /// </summary>
-        public bool disableForeignKeyChecks { set; get; } 
+        public bool disableForeignKeyChecks { set; get; } = true;
         /// <summary>
         /// wether to add drop database in the dump file
         /// </summary>
