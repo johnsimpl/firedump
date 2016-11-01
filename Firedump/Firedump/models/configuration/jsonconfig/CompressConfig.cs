@@ -50,7 +50,18 @@ namespace Firedump.models.configuration.jsonconfig
         /// 5 - -tiso : file.iso
         /// 6 - -tudf : file.udf
         /// </summary>
-        public int fileType { set; get; } = 2;
+        public int fileType { set; get; } = 0;
+
+        //security
+        /// <summary>
+        /// Encrypt archive with password (if not empty or null)
+        /// </summary>
+        public string password { set; get; }
+        /// <summary>
+        /// Hides file names in the password protected archive
+        /// Password must be enabled and only works for .7z type
+        /// </summary>
+        public bool encryptHeader { set; get; }
 
         //</7zip configuration>
 
@@ -80,6 +91,8 @@ namespace Firedump.models.configuration.jsonconfig
                 this.compressionLevel = jsonObj["compressionLevel"];
                 this.useMultithreading = jsonObj["useMultithreading"];
                 this.fileType = jsonObj["fileType"];
+                this.password = jsonObj["password"];
+                this.encryptHeader = jsonObj["encryptHeader"];
                 //</Field initialization>
             }
             catch (Exception ex)

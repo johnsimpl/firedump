@@ -28,5 +28,11 @@ namespace Firedump
             Form form1 = new Test1();
             form1.Show();
         }
+
+        private void bGenConfig_Click(object sender, EventArgs e)
+        {
+            Form form = new GeneralConfiguration();
+            form.Show();
+        }
     }
 }

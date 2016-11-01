@@ -31,6 +31,16 @@ namespace Firedump.models.dump
             StringBuilder arguments = new StringBuilder();
             arguments.Append("a -bsp1 ");
 
+            //security
+            if (configurationManagerInstance.compressConfigInstance.encryptHeader)
+            {
+                arguments.Append("-mhe=on ");
+            }
+            if (!string.IsNullOrEmpty(configurationManagerInstance.compressConfigInstance.password))
+            {
+                arguments.Append("-p" + configurationManagerInstance.compressConfigInstance.password+ " ");
+            }
+
             //compression level
             switch (configurationManagerInstance.compressConfigInstance.compressionLevel)
             {
@@ -96,6 +106,7 @@ namespace Firedump.models.dump
                     fileType = ".zip";
                     break;
             }
+
 
             string f7zip = "resources\\7z64\\7z.exe";
             if (configurationManagerInstance.compressConfigInstance.use32bit)

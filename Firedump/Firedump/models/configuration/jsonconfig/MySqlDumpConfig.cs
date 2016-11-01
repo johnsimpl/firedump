@@ -65,7 +65,7 @@ namespace Firedump.models.configuration.jsonconfig
         /// <summary>
         /// wether to add drop table/view/procedure/function in the dump file
         /// </summary>
-        public bool addDropTable { set; get; }
+        public bool addDropTable { set; get; } = true;
         /// <summary>
         /// wether to add if not exists sql in the dump file
         /// </summary>
