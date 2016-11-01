@@ -222,6 +222,7 @@
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="resources\7z64\7z.sfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -250,7 +251,6 @@
     <None Include="firedumpDataModel.edmx.diagram">
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\DataSources\backup_locations.datasource" />
     <None Include="Properties\DataSources\logs.datasource" />
     <None Include="Properties\DataSources\mysql_servers.datasource" />

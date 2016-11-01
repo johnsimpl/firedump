@@ -299,11 +299,14 @@ namespace Firedump.models.dump
             String filename = "dump" + rnd.Next(1000000, 9999999) + ".sql";
 
             Directory.CreateDirectory(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath);
+           
 
             //checking if file exists
-            while(File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
+            while (File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
                 filename = "Dump" + rnd.Next(10000000, 99999999) + ".sql";
             }
+
+            bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {
@@ -320,15 +323,30 @@ namespace Firedump.models.dump
                     string line = proc.StandardOutput.ReadLine();
                     file.WriteLine(line);
 
-                    if (line.StartsWith("CREATE TABLE `"))
+                    if (includeCreateSchema)
                     {
-                        string tablename = line.Split('`', '`')[1];
-                        Console.WriteLine(tablename);
-                        if (listener != null)
-                        {   //fire event
-                            listener.onTableStartDump(tablename);
+                        if (line.StartsWith("CREATE TABLE `"))
+                        {
+                            string tablename = line.Split('`', '`')[1];
+                            Console.WriteLine(tablename);
+                            if (listener != null)
+                            {   //fire event
+                                listener.onTableStartDump(tablename);
+                            }
                         }
-                    }             
+                    } else
+                    {
+                        if(line.StartsWith("INSERT INTO `"))
+                        {
+                            string tablename = line.Split('`','`')[1];
+                            Console.WriteLine(tablename);
+                            if (listener != null)
+                            {   //fire event
+                                listener.onTableStartDump(tablename);
+                            }
+                        }
+                    }
+                             
                 }
                 
             }

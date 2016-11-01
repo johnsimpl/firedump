@@ -58,6 +58,27 @@ namespace Firedump.mysql
             return connectionString;
         }
 
+        /// <summary>
+        /// used for testing
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="database"></param>
+        /// <returns></returns>
+        public static string conStringBuilder(string host,string username,string password,string database)
+        {
+            string cons = "";
+            if (!String.IsNullOrEmpty(database))
+            {
+                cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password, database);
+            }
+            else
+            {
+                cons = "Server=" + host + ";UID=" + username + ";password=" + password;
+            }
+            return cons;
+        }
 
         public bool testConnection()
         {

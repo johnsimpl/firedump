@@ -15,7 +15,7 @@ namespace Firedump.db
     /// </summary>
     public class InitDb
     {
-        private static readonly string conn = ".//db//firedumpdb.db";
+        private static readonly string conn = ".//resources//db//firedumpdb.db";
         private static readonly int dbVersion = 1;
 
         public InitDb() { }
@@ -69,7 +69,7 @@ namespace Firedump.db
            if(!System.IO.File.Exists(conn))
             {
                 SQLiteConnection.CreateFile(conn);
-                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//db//firedumpdb.db"))
+                using (SQLiteConnection con = new SQLiteConnection("Data Source=.//resources//db//firedumpdb.db"))
                 {
                     con.Open();              
                     foreach(KeyValuePair<string,string> entry in tables)
@@ -95,7 +95,7 @@ namespace Firedump.db
                 return false;
             }
 
-            using (SQLiteConnection con = new SQLiteConnection("Data Source=.//db//firedumpdb.db"))
+            using (SQLiteConnection con = new SQLiteConnection("Data Source=.//resources//db//firedumpdb.db"))
             {
                 con.Open();
                 string sql = string.Format("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '{0}'",table);
