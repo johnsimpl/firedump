@@ -31,11 +31,11 @@
             this.bConnect = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.cbDatabases = new System.Windows.Forms.ComboBox();
             this.gbSchedule = new System.Windows.Forms.GroupBox();
             this.gbDestinations = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +79,24 @@
             this.gbConnection.Text = "Connection";
             this.gbConnection.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(6, 91);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(229, 290);
+            this.listBox1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(8, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(78, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Not connected";
+            // 
             // cbDatabases
             // 
             this.cbDatabases.FormattingEnabled = true;
@@ -101,28 +119,10 @@
             this.gbDestinations.Controls.Add(this.button1);
             this.gbDestinations.Location = new System.Drawing.Point(303, 185);
             this.gbDestinations.Name = "gbDestinations";
-            this.gbDestinations.Size = new System.Drawing.Size(279, 152);
+            this.gbDestinations.Size = new System.Drawing.Size(279, 126);
             this.gbDestinations.TabIndex = 0;
             this.gbDestinations.TabStop = false;
             this.gbDestinations.Text = "Destinations";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Not connected";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 91);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(229, 290);
-            this.listBox1.TabIndex = 3;
             // 
             // menuStrip1
             // 
