@@ -97,6 +97,12 @@
     <Compile Include="Connect.Designer.cs">
       <DependentUpon>Connect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sqloptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sqloptions.Designer.cs">
+      <DependentUpon>Sqloptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Location.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +225,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Sqloptions.resx">
+      <DependentUpon>Sqloptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
     </EmbeddedResource>
