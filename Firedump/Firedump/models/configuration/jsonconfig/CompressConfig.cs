@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    public class CompressConfig : ConfigurationClass
+    public class CompressConfig : ConfigurationClass<CompressConfig>
     {
         private readonly string jsonFilePath = "./config/CompressConfig.json";
 
@@ -78,7 +78,7 @@ namespace Firedump.models.configuration.jsonconfig
             return compressConfigInstance;
         }
 
-        public void initializeConfig()
+        public CompressConfig initializeConfig()
         {
             try
             {
@@ -94,12 +94,14 @@ namespace Firedump.models.configuration.jsonconfig
                 this.password = jsonObj["password"];
                 this.encryptHeader = jsonObj["encryptHeader"];
                 //</Field initialization>
+                return compressConfigInstance;
             }
             catch (Exception ex)
             {
                 compressConfigInstance = new CompressConfig(); //resetarei sta default options giati mporei apo panw na exoun allaksei kapoia se periptwsi corrupted data
                 compressConfigInstance.saveConfig();
                 compressConfigInstance.initializeConfig();
+                return compressConfigInstance; //never reached just to avoid error message
                 if (!(ex is FileNotFoundException || ex is JsonException || ex is RuntimeBinderException))
                 {
                     Console.WriteLine("MySqlDumpConfig.initializeConfig(): " + ex.ToString());

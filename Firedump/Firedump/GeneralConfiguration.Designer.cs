@@ -29,31 +29,38 @@
         private void InitializeComponent()
         {
             this.gbFolders = new System.Windows.Forms.GroupBox();
-            this.tbTempFolder = new System.Windows.Forms.TextBox();
-            this.bTempFolder = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.bLogFolder = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.bLogFolder = new System.Windows.Forms.Button();
+            this.tbLogFolder = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.bTempFolder = new System.Windows.Forms.Button();
+            this.tbTempFolder = new System.Windows.Forms.TextBox();
             this.gbDumpOptions = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.cbEvents = new System.Windows.Forms.CheckBox();
-            this.cbTriggers = new System.Windows.Forms.CheckBox();
-            this.cbSingleFile = new System.Windows.Forms.CheckBox();
+            this.cbProcsFuncs = new System.Windows.Forms.CheckBox();
             this.bMoreSQLOptions = new System.Windows.Forms.Button();
-            this.bSave = new System.Windows.Forms.Button();
+            this.cbSingleFile = new System.Windows.Forms.CheckBox();
+            this.cbTriggers = new System.Windows.Forms.CheckBox();
+            this.cbEvents = new System.Windows.Forms.CheckBox();
+            this.cbDumpData = new System.Windows.Forms.CheckBox();
+            this.cbCreateSchema = new System.Windows.Forms.CheckBox();
             this.bCancel = new System.Windows.Forms.Button();
             this.bReset = new System.Windows.Forms.Button();
             this.gbCompressionSettings = new System.Windows.Forms.GroupBox();
-            this.cbEnableComp = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.cbUseMultithreading = new System.Windows.Forms.CheckBox();
+            this.cmbFileFormat = new System.Windows.Forms.ComboBox();
+            this.lbFileFormat = new System.Windows.Forms.Label();
+            this.cmbCompressionLevel = new System.Windows.Forms.ComboBox();
+            this.lbCompressionLevel = new System.Windows.Forms.Label();
+            this.cbEnableComp = new System.Windows.Forms.CheckBox();
             this.gbEncryption = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.lbPassHelp = new System.Windows.Forms.Label();
+            this.cbEncryptHeader = new System.Windows.Forms.CheckBox();
+            this.tbConfirmPass = new System.Windows.Forms.TextBox();
+            this.tbPass = new System.Windows.Forms.TextBox();
+            this.lbConfirmPass = new System.Windows.Forms.Label();
+            this.lbPass = new System.Windows.Forms.Label();
+            this.cbEnablePasswordEncryption = new System.Windows.Forms.CheckBox();
+            this.bSave = new System.Windows.Forms.Button();
             this.gbFolders.SuspendLayout();
             this.gbDumpOptions.SuspendLayout();
             this.gbCompressionSettings.SuspendLayout();
@@ -64,7 +71,7 @@
             // 
             this.gbFolders.Controls.Add(this.label2);
             this.gbFolders.Controls.Add(this.bLogFolder);
-            this.gbFolders.Controls.Add(this.textBox1);
+            this.gbFolders.Controls.Add(this.tbLogFolder);
             this.gbFolders.Controls.Add(this.label1);
             this.gbFolders.Controls.Add(this.bTempFolder);
             this.gbFolders.Controls.Add(this.tbTempFolder);
@@ -75,22 +82,31 @@
             this.gbFolders.TabStop = false;
             this.gbFolders.Text = "Folder locations";
             // 
-            // tbTempFolder
+            // label2
             // 
-            this.tbTempFolder.Enabled = false;
-            this.tbTempFolder.Location = new System.Drawing.Point(133, 49);
-            this.tbTempFolder.Name = "tbTempFolder";
-            this.tbTempFolder.Size = new System.Drawing.Size(315, 20);
-            this.tbTempFolder.TabIndex = 0;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(70, 110);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Log folder:";
             // 
-            // bTempFolder
+            // bLogFolder
             // 
-            this.bTempFolder.Location = new System.Drawing.Point(454, 47);
-            this.bTempFolder.Name = "bTempFolder";
-            this.bTempFolder.Size = new System.Drawing.Size(40, 23);
-            this.bTempFolder.TabIndex = 1;
-            this.bTempFolder.Text = "...";
-            this.bTempFolder.UseVisualStyleBackColor = true;
+            this.bLogFolder.Location = new System.Drawing.Point(454, 103);
+            this.bLogFolder.Name = "bLogFolder";
+            this.bLogFolder.Size = new System.Drawing.Size(40, 23);
+            this.bLogFolder.TabIndex = 4;
+            this.bLogFolder.Text = "...";
+            this.bLogFolder.UseVisualStyleBackColor = true;
+            // 
+            // tbLogFolder
+            // 
+            this.tbLogFolder.Enabled = false;
+            this.tbLogFolder.Location = new System.Drawing.Point(133, 105);
+            this.tbLogFolder.Name = "tbLogFolder";
+            this.tbLogFolder.Size = new System.Drawing.Size(315, 20);
+            this.tbLogFolder.TabIndex = 3;
             // 
             // label1
             // 
@@ -101,39 +117,32 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Temporary folder:";
             // 
-            // textBox1
+            // bTempFolder
             // 
-            this.textBox1.Location = new System.Drawing.Point(133, 105);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(315, 20);
-            this.textBox1.TabIndex = 3;
+            this.bTempFolder.Location = new System.Drawing.Point(454, 47);
+            this.bTempFolder.Name = "bTempFolder";
+            this.bTempFolder.Size = new System.Drawing.Size(40, 23);
+            this.bTempFolder.TabIndex = 1;
+            this.bTempFolder.Text = "...";
+            this.bTempFolder.UseVisualStyleBackColor = true;
             // 
-            // bLogFolder
+            // tbTempFolder
             // 
-            this.bLogFolder.Location = new System.Drawing.Point(454, 105);
-            this.bLogFolder.Name = "bLogFolder";
-            this.bLogFolder.Size = new System.Drawing.Size(40, 23);
-            this.bLogFolder.TabIndex = 4;
-            this.bLogFolder.Text = "...";
-            this.bLogFolder.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(70, 110);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Log folder:";
+            this.tbTempFolder.Enabled = false;
+            this.tbTempFolder.Location = new System.Drawing.Point(133, 49);
+            this.tbTempFolder.Name = "tbTempFolder";
+            this.tbTempFolder.Size = new System.Drawing.Size(315, 20);
+            this.tbTempFolder.TabIndex = 0;
             // 
             // gbDumpOptions
             // 
+            this.gbDumpOptions.Controls.Add(this.cbProcsFuncs);
             this.gbDumpOptions.Controls.Add(this.bMoreSQLOptions);
             this.gbDumpOptions.Controls.Add(this.cbSingleFile);
             this.gbDumpOptions.Controls.Add(this.cbTriggers);
             this.gbDumpOptions.Controls.Add(this.cbEvents);
-            this.gbDumpOptions.Controls.Add(this.checkBox2);
-            this.gbDumpOptions.Controls.Add(this.checkBox1);
+            this.gbDumpOptions.Controls.Add(this.cbDumpData);
+            this.gbDumpOptions.Controls.Add(this.cbCreateSchema);
             this.gbDumpOptions.Location = new System.Drawing.Point(24, 240);
             this.gbDumpOptions.Name = "gbDumpOptions";
             this.gbDumpOptions.Size = new System.Drawing.Size(510, 261);
@@ -141,37 +150,34 @@
             this.gbDumpOptions.TabStop = false;
             this.gbDumpOptions.Text = "SQL Dump options";
             // 
-            // checkBox1
+            // cbProcsFuncs
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.checkBox1.Location = new System.Drawing.Point(28, 53);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(158, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Include Create Schema";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbProcsFuncs.AutoSize = true;
+            this.cbProcsFuncs.Location = new System.Drawing.Point(342, 193);
+            this.cbProcsFuncs.Name = "cbProcsFuncs";
+            this.cbProcsFuncs.Size = new System.Drawing.Size(162, 17);
+            this.cbProcsFuncs.TabIndex = 6;
+            this.cbProcsFuncs.Text = "Dump Procedures/Functions";
+            this.cbProcsFuncs.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // bMoreSQLOptions
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.checkBox2.Location = new System.Drawing.Point(28, 99);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(89, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Dump Data";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.bMoreSQLOptions.Location = new System.Drawing.Point(227, 99);
+            this.bMoreSQLOptions.Name = "bMoreSQLOptions";
+            this.bMoreSQLOptions.Size = new System.Drawing.Size(217, 23);
+            this.bMoreSQLOptions.TabIndex = 5;
+            this.bMoreSQLOptions.Text = "More SQL Options ...";
+            this.bMoreSQLOptions.UseVisualStyleBackColor = true;
             // 
-            // cbEvents
+            // cbSingleFile
             // 
-            this.cbEvents.AutoSize = true;
-            this.cbEvents.Location = new System.Drawing.Point(28, 193);
-            this.cbEvents.Name = "cbEvents";
-            this.cbEvents.Size = new System.Drawing.Size(90, 17);
-            this.cbEvents.TabIndex = 2;
-            this.cbEvents.Text = "Dump Events";
-            this.cbEvents.UseVisualStyleBackColor = true;
+            this.cbSingleFile.AutoSize = true;
+            this.cbSingleFile.Location = new System.Drawing.Point(187, 228);
+            this.cbSingleFile.Name = "cbSingleFile";
+            this.cbSingleFile.Size = new System.Drawing.Size(95, 17);
+            this.cbSingleFile.TabIndex = 4;
+            this.cbSingleFile.Text = "Single SQL file";
+            this.cbSingleFile.UseVisualStyleBackColor = true;
             // 
             // cbTriggers
             // 
@@ -183,34 +189,37 @@
             this.cbTriggers.Text = "Dump Triggers";
             this.cbTriggers.UseVisualStyleBackColor = true;
             // 
-            // cbSingleFile
+            // cbEvents
             // 
-            this.cbSingleFile.AutoSize = true;
-            this.cbSingleFile.Location = new System.Drawing.Point(349, 193);
-            this.cbSingleFile.Name = "cbSingleFile";
-            this.cbSingleFile.Size = new System.Drawing.Size(95, 17);
-            this.cbSingleFile.TabIndex = 4;
-            this.cbSingleFile.Text = "Single SQL file";
-            this.cbSingleFile.UseVisualStyleBackColor = true;
+            this.cbEvents.AutoSize = true;
+            this.cbEvents.Location = new System.Drawing.Point(28, 193);
+            this.cbEvents.Name = "cbEvents";
+            this.cbEvents.Size = new System.Drawing.Size(90, 17);
+            this.cbEvents.TabIndex = 2;
+            this.cbEvents.Text = "Dump Events";
+            this.cbEvents.UseVisualStyleBackColor = true;
             // 
-            // bMoreSQLOptions
+            // cbDumpData
             // 
-            this.bMoreSQLOptions.Location = new System.Drawing.Point(227, 99);
-            this.bMoreSQLOptions.Name = "bMoreSQLOptions";
-            this.bMoreSQLOptions.Size = new System.Drawing.Size(217, 23);
-            this.bMoreSQLOptions.TabIndex = 5;
-            this.bMoreSQLOptions.Text = "More SQL Options ...";
-            this.bMoreSQLOptions.UseVisualStyleBackColor = true;
+            this.cbDumpData.AutoSize = true;
+            this.cbDumpData.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.cbDumpData.Location = new System.Drawing.Point(28, 99);
+            this.cbDumpData.Name = "cbDumpData";
+            this.cbDumpData.Size = new System.Drawing.Size(89, 17);
+            this.cbDumpData.TabIndex = 1;
+            this.cbDumpData.Text = "Dump Data";
+            this.cbDumpData.UseVisualStyleBackColor = true;
             // 
-            // bSave
+            // cbCreateSchema
             // 
-            this.bSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.bSave.Location = new System.Drawing.Point(52, 525);
-            this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(177, 37);
-            this.bSave.TabIndex = 2;
-            this.bSave.Text = "Save Options";
-            this.bSave.UseVisualStyleBackColor = true;
+            this.cbCreateSchema.AutoSize = true;
+            this.cbCreateSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.cbCreateSchema.Location = new System.Drawing.Point(28, 53);
+            this.cbCreateSchema.Name = "cbCreateSchema";
+            this.cbCreateSchema.Size = new System.Drawing.Size(158, 17);
+            this.cbCreateSchema.TabIndex = 0;
+            this.cbCreateSchema.Text = "Include Create Schema";
+            this.cbCreateSchema.UseVisualStyleBackColor = true;
             // 
             // bCancel
             // 
@@ -235,10 +244,10 @@
             // gbCompressionSettings
             // 
             this.gbCompressionSettings.Controls.Add(this.cbUseMultithreading);
-            this.gbCompressionSettings.Controls.Add(this.comboBox2);
-            this.gbCompressionSettings.Controls.Add(this.label4);
-            this.gbCompressionSettings.Controls.Add(this.comboBox1);
-            this.gbCompressionSettings.Controls.Add(this.label3);
+            this.gbCompressionSettings.Controls.Add(this.cmbFileFormat);
+            this.gbCompressionSettings.Controls.Add(this.lbFileFormat);
+            this.gbCompressionSettings.Controls.Add(this.cmbCompressionLevel);
+            this.gbCompressionSettings.Controls.Add(this.lbCompressionLevel);
             this.gbCompressionSettings.Controls.Add(this.cbEnableComp);
             this.gbCompressionSettings.Location = new System.Drawing.Point(584, 24);
             this.gbCompressionSettings.Name = "gbCompressionSettings";
@@ -246,6 +255,50 @@
             this.gbCompressionSettings.TabIndex = 5;
             this.gbCompressionSettings.TabStop = false;
             this.gbCompressionSettings.Text = "Compression Settings";
+            // 
+            // cbUseMultithreading
+            // 
+            this.cbUseMultithreading.AutoSize = true;
+            this.cbUseMultithreading.Location = new System.Drawing.Point(16, 111);
+            this.cbUseMultithreading.Name = "cbUseMultithreading";
+            this.cbUseMultithreading.Size = new System.Drawing.Size(114, 17);
+            this.cbUseMultithreading.TabIndex = 5;
+            this.cbUseMultithreading.Text = "Use Multithreading";
+            this.cbUseMultithreading.UseVisualStyleBackColor = true;
+            // 
+            // cmbFileFormat
+            // 
+            this.cmbFileFormat.FormattingEnabled = true;
+            this.cmbFileFormat.Location = new System.Drawing.Point(80, 66);
+            this.cmbFileFormat.Name = "cmbFileFormat";
+            this.cmbFileFormat.Size = new System.Drawing.Size(139, 21);
+            this.cmbFileFormat.TabIndex = 4;
+            // 
+            // lbFileFormat
+            // 
+            this.lbFileFormat.AutoSize = true;
+            this.lbFileFormat.Location = new System.Drawing.Point(16, 69);
+            this.lbFileFormat.Name = "lbFileFormat";
+            this.lbFileFormat.Size = new System.Drawing.Size(58, 13);
+            this.lbFileFormat.TabIndex = 3;
+            this.lbFileFormat.Text = "File format:";
+            // 
+            // cmbCompressionLevel
+            // 
+            this.cmbCompressionLevel.FormattingEnabled = true;
+            this.cmbCompressionLevel.Location = new System.Drawing.Point(354, 66);
+            this.cmbCompressionLevel.Name = "cmbCompressionLevel";
+            this.cmbCompressionLevel.Size = new System.Drawing.Size(136, 21);
+            this.cmbCompressionLevel.TabIndex = 2;
+            // 
+            // lbCompressionLevel
+            // 
+            this.lbCompressionLevel.AutoSize = true;
+            this.lbCompressionLevel.Location = new System.Drawing.Point(249, 69);
+            this.lbCompressionLevel.Name = "lbCompressionLevel";
+            this.lbCompressionLevel.Size = new System.Drawing.Size(99, 13);
+            this.lbCompressionLevel.TabIndex = 1;
+            this.lbCompressionLevel.Text = "Compression Level:";
             // 
             // cbEnableComp
             // 
@@ -257,69 +310,101 @@
             this.cbEnableComp.Text = "Enable Compression";
             this.cbEnableComp.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(249, 69);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(99, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Compression Level:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(354, 66);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(136, 21);
-            this.comboBox1.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 69);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "File format:";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(80, 66);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(139, 21);
-            this.comboBox2.TabIndex = 4;
-            // 
-            // cbUseMultithreading
-            // 
-            this.cbUseMultithreading.AutoSize = true;
-            this.cbUseMultithreading.Location = new System.Drawing.Point(19, 120);
-            this.cbUseMultithreading.Name = "cbUseMultithreading";
-            this.cbUseMultithreading.Size = new System.Drawing.Size(114, 17);
-            this.cbUseMultithreading.TabIndex = 5;
-            this.cbUseMultithreading.Text = "Use Multithreading";
-            this.cbUseMultithreading.UseVisualStyleBackColor = true;
-            // 
             // gbEncryption
             // 
-            this.gbEncryption.Controls.Add(this.checkBox3);
+            this.gbEncryption.Controls.Add(this.lbPassHelp);
+            this.gbEncryption.Controls.Add(this.cbEncryptHeader);
+            this.gbEncryption.Controls.Add(this.tbConfirmPass);
+            this.gbEncryption.Controls.Add(this.tbPass);
+            this.gbEncryption.Controls.Add(this.lbConfirmPass);
+            this.gbEncryption.Controls.Add(this.lbPass);
+            this.gbEncryption.Controls.Add(this.cbEnablePasswordEncryption);
             this.gbEncryption.Location = new System.Drawing.Point(584, 240);
             this.gbEncryption.Name = "gbEncryption";
-            this.gbEncryption.Size = new System.Drawing.Size(521, 182);
+            this.gbEncryption.Size = new System.Drawing.Size(521, 160);
             this.gbEncryption.TabIndex = 6;
             this.gbEncryption.TabStop = false;
             this.gbEncryption.Text = "Encryption Settings";
             // 
-            // checkBox3
+            // lbPassHelp
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(16, 19);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(143, 17);
-            this.checkBox3.TabIndex = 0;
-            this.checkBox3.Text = "Enable zip file encryption";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.lbPassHelp.AutoSize = true;
+            this.lbPassHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.lbPassHelp.ForeColor = System.Drawing.Color.Red;
+            this.lbPassHelp.Location = new System.Drawing.Point(161, 135);
+            this.lbPassHelp.Name = "lbPassHelp";
+            this.lbPassHelp.Size = new System.Drawing.Size(145, 13);
+            this.lbPassHelp.TabIndex = 6;
+            this.lbPassHelp.Text = "Passwords do not match";
+            this.lbPassHelp.Visible = false;
+            // 
+            // cbEncryptHeader
+            // 
+            this.cbEncryptHeader.AutoSize = true;
+            this.cbEncryptHeader.Location = new System.Drawing.Point(35, 42);
+            this.cbEncryptHeader.Name = "cbEncryptHeader";
+            this.cbEncryptHeader.Size = new System.Drawing.Size(98, 17);
+            this.cbEncryptHeader.TabIndex = 5;
+            this.cbEncryptHeader.Text = "Encrypt header";
+            this.cbEncryptHeader.UseVisualStyleBackColor = true;
+            // 
+            // tbConfirmPass
+            // 
+            this.tbConfirmPass.Font = new System.Drawing.Font("News706 BT", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.tbConfirmPass.Location = new System.Drawing.Point(164, 102);
+            this.tbConfirmPass.Name = "tbConfirmPass";
+            this.tbConfirmPass.PasswordChar = '*';
+            this.tbConfirmPass.Size = new System.Drawing.Size(172, 21);
+            this.tbConfirmPass.TabIndex = 4;
+            // 
+            // tbPass
+            // 
+            this.tbPass.Font = new System.Drawing.Font("News706 BT", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.tbPass.Location = new System.Drawing.Point(164, 65);
+            this.tbPass.Name = "tbPass";
+            this.tbPass.PasswordChar = '*';
+            this.tbPass.Size = new System.Drawing.Size(172, 21);
+            this.tbPass.TabIndex = 3;
+            // 
+            // lbConfirmPass
+            // 
+            this.lbConfirmPass.AutoSize = true;
+            this.lbConfirmPass.Location = new System.Drawing.Point(66, 105);
+            this.lbConfirmPass.Name = "lbConfirmPass";
+            this.lbConfirmPass.Size = new System.Drawing.Size(93, 13);
+            this.lbConfirmPass.TabIndex = 2;
+            this.lbConfirmPass.Text = "Confirm password:";
+            // 
+            // lbPass
+            // 
+            this.lbPass.AutoSize = true;
+            this.lbPass.Location = new System.Drawing.Point(103, 68);
+            this.lbPass.Name = "lbPass";
+            this.lbPass.Size = new System.Drawing.Size(56, 13);
+            this.lbPass.TabIndex = 1;
+            this.lbPass.Text = "Password:";
+            // 
+            // cbEnablePasswordEncryption
+            // 
+            this.cbEnablePasswordEncryption.AutoSize = true;
+            this.cbEnablePasswordEncryption.Location = new System.Drawing.Point(16, 19);
+            this.cbEnablePasswordEncryption.Name = "cbEnablePasswordEncryption";
+            this.cbEnablePasswordEncryption.Size = new System.Drawing.Size(143, 17);
+            this.cbEnablePasswordEncryption.TabIndex = 0;
+            this.cbEnablePasswordEncryption.Text = "Enable zip file encryption";
+            this.cbEnablePasswordEncryption.UseVisualStyleBackColor = true;
+            // 
+            // bSave
+            // 
+            this.bSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.bSave.Image = global::Firedump.Properties.Resources.save_image1;
+            this.bSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bSave.Location = new System.Drawing.Point(52, 525);
+            this.bSave.Name = "bSave";
+            this.bSave.Size = new System.Drawing.Size(172, 37);
+            this.bSave.TabIndex = 2;
+            this.bSave.Text = "Save Options";
+            this.bSave.UseVisualStyleBackColor = true;
             // 
             // GeneralConfiguration
             // 
@@ -335,6 +420,7 @@
             this.Controls.Add(this.gbFolders);
             this.Name = "GeneralConfiguration";
             this.Text = "GeneralConfiguration";
+            this.Load += new System.EventHandler(this.GeneralConfiguration_Load);
             this.gbFolders.ResumeLayout(false);
             this.gbFolders.PerformLayout();
             this.gbDumpOptions.ResumeLayout(false);
@@ -352,13 +438,13 @@
         private System.Windows.Forms.GroupBox gbFolders;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button bLogFolder;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbLogFolder;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bTempFolder;
         private System.Windows.Forms.TextBox tbTempFolder;
         private System.Windows.Forms.GroupBox gbDumpOptions;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbDumpData;
+        private System.Windows.Forms.CheckBox cbCreateSchema;
         private System.Windows.Forms.CheckBox cbSingleFile;
         private System.Windows.Forms.CheckBox cbTriggers;
         private System.Windows.Forms.CheckBox cbEvents;
@@ -368,12 +454,19 @@
         private System.Windows.Forms.Button bReset;
         private System.Windows.Forms.GroupBox gbCompressionSettings;
         private System.Windows.Forms.CheckBox cbEnableComp;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbFileFormat;
+        private System.Windows.Forms.Label lbFileFormat;
+        private System.Windows.Forms.ComboBox cmbCompressionLevel;
+        private System.Windows.Forms.Label lbCompressionLevel;
         private System.Windows.Forms.CheckBox cbUseMultithreading;
         private System.Windows.Forms.GroupBox gbEncryption;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox cbEnablePasswordEncryption;
+        private System.Windows.Forms.CheckBox cbEncryptHeader;
+        private System.Windows.Forms.TextBox tbConfirmPass;
+        private System.Windows.Forms.TextBox tbPass;
+        private System.Windows.Forms.Label lbConfirmPass;
+        private System.Windows.Forms.Label lbPass;
+        private System.Windows.Forms.Label lbPassHelp;
+        private System.Windows.Forms.CheckBox cbProcsFuncs;
     }
 }

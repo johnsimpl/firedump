@@ -204,6 +204,12 @@ namespace Firedump.models.dump
                 arguments.Append("--skip-triggers ");
             }
 
+            //dumpEvents
+            if (configurationManagerInstance.mysqlDumpConfigInstance.dumpEvents)
+            {
+                arguments.Append("--events ");
+            }
+
             //xml
             if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
             {

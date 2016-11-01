@@ -7,7 +7,7 @@ using Microsoft.CSharp.RuntimeBinder;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    public class MySqlDumpConfig : ConfigurationClass
+    public class MySqlDumpConfig : ConfigurationClass<MySqlDumpConfig>
     {
         private readonly string jsonFilePath = "./config/MySqlDumpConfig.json";
 
@@ -117,6 +117,10 @@ namespace Firedump.models.configuration.jsonconfig
         /// </summary>
         public bool dumpTriggers { set; get; }
         /// <summary>
+        /// wether to dump events
+        /// </summary>
+        public bool dumpEvents { set; get; }
+        /// <summary>
         /// dump binary columns using hexadecimal notation for example 'abc' becomes 0x616263)
         /// </summary>
         public bool useHexadecimal { set; get; } = true;
@@ -146,7 +150,7 @@ namespace Firedump.models.configuration.jsonconfig
             return mysqlDumpConfigInstance;
         }
 
-        public void initializeConfig()
+        public MySqlDumpConfig initializeConfig()
         {
             try
             {
@@ -178,16 +182,19 @@ namespace Firedump.models.configuration.jsonconfig
                 this.useDelayedInserts = jsonObj["useDelayedInserts"];
                 this.useIgnoreInserts = jsonObj["useIgnoreInserts"];
                 this.dumpTriggers = jsonObj["dumpTriggers"];
+                this.dumpEvents = jsonObj["dumpEvents"];
                 this.useHexadecimal = jsonObj["useHexadecimal"];
                 this.exportType = jsonObj["exportType"];
                 this.xml = jsonObj["xml"];
                 //</Field initialization>
+                return mysqlDumpConfigInstance;
             }
             catch (Exception ex)
             {
                 mysqlDumpConfigInstance = new MySqlDumpConfig(); //resetarei sta default options giati mporei apo panw na exoun allaksei kapoia se periptwsi corrupted data
                 mysqlDumpConfigInstance.saveConfig();
                 mysqlDumpConfigInstance.initializeConfig();
+                return mysqlDumpConfigInstance; //never reached just to avoid error message
                 if (!(ex is FileNotFoundException || ex is JsonException || ex is RuntimeBinderException))
                 {
                     Console.WriteLine("MySqlDumpConfig.initializeConfig(): "+ex.ToString());
