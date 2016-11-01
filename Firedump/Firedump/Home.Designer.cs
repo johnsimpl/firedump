@@ -165,7 +165,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Home";
-            this.Text = "Home";
+            this.Text = "Firedump";
             this.gbConnection.ResumeLayout(false);
             this.gbConnection.PerformLayout();
             this.gbDestinations.ResumeLayout(false);
