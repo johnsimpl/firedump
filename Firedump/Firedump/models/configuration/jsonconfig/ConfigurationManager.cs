@@ -45,5 +45,12 @@ namespace Firedump.models.configuration.jsonconfig
             this.mysqlDumpConfigInstance.saveConfig();
             this.compressConfigInstance.saveConfig();
         }
+
+        public ConfigurationManager resetToDefaults()
+        {
+            this.mysqlDumpConfigInstance = MySqlDumpConfig.getInstance().resetToDefaults();
+            this.compressConfigInstance = CompressConfig.getInstance().resetToDefaults();
+            return configurationManagerInstance;
+        }
     }
 }

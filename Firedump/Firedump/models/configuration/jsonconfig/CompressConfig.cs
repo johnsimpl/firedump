@@ -54,7 +54,11 @@ namespace Firedump.models.configuration.jsonconfig
 
         //security
         /// <summary>
-        /// Encrypt archive with password (if not empty or null)
+        /// Enable/disable password encryption
+        /// </summary>
+        public bool enablePasswordEncryption { set; get; }
+        /// <summary>
+        /// Password to encrypt with
         /// </summary>
         public string password { set; get; }
         /// <summary>
@@ -90,6 +94,7 @@ namespace Firedump.models.configuration.jsonconfig
                 this.use32bit = jsonObj["use32bit"];
                 this.compressionLevel = jsonObj["compressionLevel"];
                 this.useMultithreading = jsonObj["useMultithreading"];
+                this.enablePasswordEncryption = jsonObj["enablePasswordEncryption"];
                 this.fileType = jsonObj["fileType"];
                 this.password = jsonObj["password"];
                 this.encryptHeader = jsonObj["encryptHeader"];
@@ -121,6 +126,14 @@ namespace Firedump.models.configuration.jsonconfig
             FileInfo file = new FileInfo(jsonFilePath);
             file.Directory.Create(); // If the directory already exists, this method does nothing.
             File.WriteAllText(file.FullName, jsonOutput);
+        }
+
+        public CompressConfig resetToDefaults()
+        {
+            compressConfigInstance = new CompressConfig();
+            compressConfigInstance.saveConfig();
+            compressConfigInstance.initializeConfig();
+            return compressConfigInstance;
         }
     }
 }

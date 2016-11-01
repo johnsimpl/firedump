@@ -58,40 +58,158 @@ namespace Firedump
             cmbCompressionLevel.DataSource = new string[] { "Fastest", "Fast", "Normal", "Maximum", "Ultra" };
             cmbCompressionLevel.SelectedIndex = configurationManagerInstance.compressConfigInstance.compressionLevel;
             cbUseMultithreading.Checked = configurationManagerInstance.compressConfigInstance.useMultithreading;
-            cbEnablePasswordEncryption.Checked = !string.IsNullOrEmpty(configurationManagerInstance.compressConfigInstance.password);
+            cbEnablePasswordEncryption.Checked = configurationManagerInstance.compressConfigInstance.enablePasswordEncryption;
             cbEncryptHeader.Checked = configurationManagerInstance.compressConfigInstance.encryptHeader;
-            if (cbEnablePasswordEncryption.Checked)
-            {
-                tbPass.Text = configurationManagerInstance.compressConfigInstance.password;
-                tbConfirmPass.Text = configurationManagerInstance.compressConfigInstance.password;
-            }
+            tbPass.Text = configurationManagerInstance.compressConfigInstance.password;
+            tbConfirmPass.Text = configurationManagerInstance.compressConfigInstance.password;
             if (!cbEnableComp.Checked)
             {
-                disableCompression();
+                disableORenableCompression(false);
             }
             if (!cbEnablePasswordEncryption.Checked)
             {
-                disableEnryption();
+                disableORenableEnryption(false);
             }
         }
 
-        private void disableCompression()
+        private void disableORenableCompression(bool action)
         {
-            lbFileFormat.Enabled = false;
-            lbCompressionLevel.Enabled = false;
-            cmbFileFormat.Enabled = false;
-            cmbCompressionLevel.Enabled = false;
-            cbUseMultithreading.Enabled = false;
-            gbEncryption.Enabled = false;
+            lbFileFormat.Enabled = action;
+            lbCompressionLevel.Enabled = action;
+            cmbFileFormat.Enabled = action;
+            cmbCompressionLevel.Enabled = action;
+            cbUseMultithreading.Enabled = action;
+            gbEncryption.Enabled = action;
         }
 
-        private void disableEnryption()
+        private void disableORenableEnryption(bool action)
         {
-            cbEncryptHeader.Enabled = false;
-            lbPass.Enabled = false;
-            lbConfirmPass.Enabled = false;
-            tbPass.Enabled = false;
-            tbConfirmPass.Enabled = false;
+            cbEncryptHeader.Enabled = action;
+            lbPass.Enabled = action;
+            lbConfirmPass.Enabled = action;
+            tbPass.Enabled = action;
+            tbConfirmPass.Enabled = action;
+        }
+
+        private void cbEnableComp_CheckedChanged(object sender, EventArgs e)
+        {
+            disableORenableCompression(cbEnableComp.Checked);
+        }
+
+        private void cbEnablePasswordEncryption_CheckedChanged(object sender, EventArgs e)
+        {
+            disableORenableEnryption(cbEnablePasswordEncryption.Checked);
+            if (cbEnablePasswordEncryption.Checked)
+            {
+                if (tbPass.Text != tbConfirmPass.Text)
+                {
+                    lbPassHelp.Visible = true;
+                }
+                return;
+            }
+            lbPassHelp.Visible = false;
+        }
+
+        private void bTempFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowDialog();
+            string newPath = fbd.SelectedPath;
+            tbTempFolder.Text = newPath+"\\";
+        }
+
+        private void bLogFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowDialog();
+            string newPath = fbd.SelectedPath;
+            tbLogFolder.Text = newPath + "\\";
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            ConfigurationManager configManagerInstance = ConfigurationManager.getInstance();
+
+            if (cbEncryptHeader.Checked)
+            {
+                if (cmbFileFormat.SelectedIndex != 0)
+                {
+                    MessageBox.Show("Header encryption only works with .7z file format. Switch to .7z format or disable header encryption.",
+                        "Header Encryption",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            if (cbEnableComp.Checked && cbEnablePasswordEncryption.Checked)
+            {
+                if (tbPass.Text!=tbConfirmPass.Text)
+                {
+                    MessageBox.Show("The two passwords do not match.",
+                        "Passowrd Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                configManagerInstance.compressConfigInstance.password = tbPass.Text;
+            }
+
+            //folder locations
+            configManagerInstance.mysqlDumpConfigInstance.tempSavePath = tbTempFolder.Text;
+            //log folder path not implemented yet
+
+            //SQL dump options
+            configManagerInstance.mysqlDumpConfigInstance.includeCreateSchema = cbCreateSchema.Checked;
+            configManagerInstance.mysqlDumpConfigInstance.includeData = cbDumpData.Checked;
+            configManagerInstance.mysqlDumpConfigInstance.dumpEvents = cbEvents.Checked;
+            configManagerInstance.mysqlDumpConfigInstance.dumpTriggers = cbTriggers.Checked;
+            configManagerInstance.mysqlDumpConfigInstance.addCreateProcedureFunction = cbProcsFuncs.Checked;
+            //single file selection not implemented yet
+
+            //compression options
+            configManagerInstance.compressConfigInstance.enableCompression = cbEnableComp.Checked;
+            configManagerInstance.compressConfigInstance.fileType = cmbFileFormat.SelectedIndex;
+            configManagerInstance.compressConfigInstance.compressionLevel = cmbCompressionLevel.SelectedIndex;
+            configManagerInstance.compressConfigInstance.useMultithreading = cbUseMultithreading.Checked;
+
+            //encryption
+            configManagerInstance.compressConfigInstance.enablePasswordEncryption = cbEnablePasswordEncryption.Checked;
+            configManagerInstance.compressConfigInstance.encryptHeader = cbEncryptHeader.Checked;
+
+            configManagerInstance.mysqlDumpConfigInstance.saveConfig();
+            configManagerInstance.compressConfigInstance.saveConfig();
+
+            this.Close();
+        }
+
+        private void tbConfirmPass_Leave(object sender, EventArgs e)
+        {
+            if (tbPass.Text!=tbConfirmPass.Text)
+            {
+                lbPassHelp.Visible = true;
+            }
+            else
+            {
+                lbPassHelp.Visible = false;
+            }
+        }
+
+        private void bCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void bReset_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to reset the configuration to default values?","Configuration Reset",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            if(result == DialogResult.Yes)
+            {
+                ConfigurationManager.getInstance().resetToDefaults();
+                setupFormComponents();
+            }
+        }
+
+        private void bMoreSQLOptions_Click(object sender, EventArgs e)
+        {
+            MoreSQLOptions moreSQLoptions = new MoreSQLOptions();
+            moreSQLoptions.ShowDialog();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Firedump.models.configuration.jsonconfig
     {
         T initializeConfig();
         void saveConfig();
+        T resetToDefaults();
     }
 }

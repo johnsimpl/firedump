@@ -213,5 +213,13 @@ namespace Firedump.models.configuration.jsonconfig
             file.Directory.Create(); // If the directory already exists, this method does nothing.
             File.WriteAllText(file.FullName, jsonOutput);
         }
+
+        public MySqlDumpConfig resetToDefaults()
+        {
+            mysqlDumpConfigInstance = new MySqlDumpConfig();
+            mysqlDumpConfigInstance.saveConfig();
+            mysqlDumpConfigInstance.initializeConfig();
+            return mysqlDumpConfigInstance;
+        }
     }
 }

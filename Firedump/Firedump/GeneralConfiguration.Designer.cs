@@ -99,6 +99,7 @@
             this.bLogFolder.TabIndex = 4;
             this.bLogFolder.Text = "...";
             this.bLogFolder.UseVisualStyleBackColor = true;
+            this.bLogFolder.Click += new System.EventHandler(this.bLogFolder_Click);
             // 
             // tbLogFolder
             // 
@@ -125,6 +126,7 @@
             this.bTempFolder.TabIndex = 1;
             this.bTempFolder.Text = "...";
             this.bTempFolder.UseVisualStyleBackColor = true;
+            this.bTempFolder.Click += new System.EventHandler(this.bTempFolder_Click);
             // 
             // tbTempFolder
             // 
@@ -168,6 +170,7 @@
             this.bMoreSQLOptions.TabIndex = 5;
             this.bMoreSQLOptions.Text = "More SQL Options ...";
             this.bMoreSQLOptions.UseVisualStyleBackColor = true;
+            this.bMoreSQLOptions.Click += new System.EventHandler(this.bMoreSQLOptions_Click);
             // 
             // cbSingleFile
             // 
@@ -230,6 +233,7 @@
             this.bCancel.TabIndex = 3;
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // bReset
             // 
@@ -240,6 +244,7 @@
             this.bReset.TabIndex = 4;
             this.bReset.Text = "Reset to defaults";
             this.bReset.UseVisualStyleBackColor = true;
+            this.bReset.Click += new System.EventHandler(this.bReset_Click);
             // 
             // gbCompressionSettings
             // 
@@ -309,6 +314,7 @@
             this.cbEnableComp.TabIndex = 0;
             this.cbEnableComp.Text = "Enable Compression";
             this.cbEnableComp.UseVisualStyleBackColor = true;
+            this.cbEnableComp.CheckedChanged += new System.EventHandler(this.cbEnableComp_CheckedChanged);
             // 
             // gbEncryption
             // 
@@ -356,6 +362,7 @@
             this.tbConfirmPass.PasswordChar = '*';
             this.tbConfirmPass.Size = new System.Drawing.Size(172, 21);
             this.tbConfirmPass.TabIndex = 4;
+            this.tbConfirmPass.Leave += new System.EventHandler(this.tbConfirmPass_Leave);
             // 
             // tbPass
             // 
@@ -393,6 +400,7 @@
             this.cbEnablePasswordEncryption.TabIndex = 0;
             this.cbEnablePasswordEncryption.Text = "Enable zip file encryption";
             this.cbEnablePasswordEncryption.UseVisualStyleBackColor = true;
+            this.cbEnablePasswordEncryption.CheckedChanged += new System.EventHandler(this.cbEnablePasswordEncryption_CheckedChanged);
             // 
             // bSave
             // 
@@ -405,6 +413,7 @@
             this.bSave.TabIndex = 2;
             this.bSave.Text = "Save Options";
             this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // GeneralConfiguration
             // 

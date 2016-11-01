@@ -32,17 +32,20 @@ namespace Firedump.models.dump
             arguments.Append("a -bsp1 ");
 
             //security
-            if (configurationManagerInstance.compressConfigInstance.encryptHeader)
+            if (configurationManagerInstance.compressConfigInstance.enablePasswordEncryption)
             {
-                arguments.Append("-mhe=on ");
-            }
-            if (!string.IsNullOrEmpty(configurationManagerInstance.compressConfigInstance.password))
-            {
-                if (configurationManagerInstance.compressConfigInstance.fileType!=0)
+                if (configurationManagerInstance.compressConfigInstance.encryptHeader)
                 {
-                    arguments.Append("-mem=AES256 ");
+                    arguments.Append("-mhe=on ");
                 }
-                arguments.Append("-p" + configurationManagerInstance.compressConfigInstance.password+ " ");
+                if (!string.IsNullOrEmpty(configurationManagerInstance.compressConfigInstance.password))
+                {
+                    if (configurationManagerInstance.compressConfigInstance.fileType != 0)
+                    {
+                        arguments.Append("-mem=AES256 ");
+                    }
+                    arguments.Append("-p" + configurationManagerInstance.compressConfigInstance.password + " ");
+                }
             }
 
             //compression level

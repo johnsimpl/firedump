@@ -122,6 +122,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="models\dump\CompressionResultSet.cs" />
+    <Compile Include="MoreSQLOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoreSQLOptions.Designer.cs">
+      <DependentUpon>MoreSQLOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="resources\db\InitDb.cs" />
     <Compile Include="firedumpDataModel.Context.cs">
       <AutoGen>True</AutoGen>
