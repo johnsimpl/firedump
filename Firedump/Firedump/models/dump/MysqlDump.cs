@@ -8,6 +8,7 @@ using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.configuration.jsonconfig;
 using Firedump.models.dump;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Firedump.models.dump
 {
@@ -318,35 +319,10 @@ namespace Firedump.models.dump
 
                
                 while (!proc.StandardOutput.EndOfStream)
-                {
-               
+                {              
                     string line = proc.StandardOutput.ReadLine();
-                    file.WriteLine(line);
-
-                    if (includeCreateSchema)
-                    {
-                        if (line.StartsWith("CREATE TABLE `"))
-                        {
-                            string tablename = line.Split('`', '`')[1];
-                            Console.WriteLine(tablename);
-                            if (listener != null)
-                            {   //fire event
-                                listener.onTableStartDump(tablename);
-                            }
-                        }
-                    } else
-                    {
-                        if(line.StartsWith("INSERT INTO `"))
-                        {
-                            string tablename = line.Split('`','`')[1];
-                            Console.WriteLine(tablename);
-                            if (listener != null)
-                            {   //fire event
-                                listener.onTableStartDump(tablename);
-                            }
-                        }
-                    }
-                             
+                    file.WriteLine(line);                  
+                    handleLineOutput(line,includeCreateSchema);                   
                 }
                 
             }
@@ -407,6 +383,50 @@ namespace Firedump.models.dump
 
                 }
                                           
+            }
+        }
+
+
+        /// <summary>
+        /// !this method is not finished yet
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="createschema"></param>
+        private void handleLineOutput(string line,bool createschema)
+        {
+            if (createschema)
+            {
+                if (line.StartsWith("CREATE TABLE `"))
+                {
+                    string tablename = line.Split('`', '`')[1];
+                    Console.WriteLine(tablename);
+                    if (listener != null)
+                    {   //fire event
+                        listener.onTableStartDump(tablename);
+                    }
+                }
+                if (line.StartsWith("INSERT INTO `"))
+                {
+                    int count = Regex.Matches(line, "),(").Count;
+                    if (listener != null)
+                    {
+                        //fire count event
+                    }
+                }
+            }
+            else
+            {
+                if (line.StartsWith("INSERT INTO `"))
+                {
+                    string tablename = line.Split('`', '`')[1];
+                    int count = Regex.Matches(line, "),(").Count;
+                    Console.WriteLine(tablename);
+                    if (listener != null)
+                    {   //fire event
+                        listener.onTableStartDump(tablename);
+                        //fire count event
+                    }
+                }
             }
         }
 
