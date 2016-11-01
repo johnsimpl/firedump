@@ -14,7 +14,6 @@ namespace FiredumpTest
     public class TestMysqlDumpAdapter
     {
         
-
         /// <summary>
         /// runs only once at class init
         /// </summary>
