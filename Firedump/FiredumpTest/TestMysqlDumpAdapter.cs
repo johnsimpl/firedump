@@ -111,6 +111,11 @@ namespace FiredumpTest
                 Assert.IsNotNull(table);            
                 Assert.IsTrue(this.tables.Contains(table));
             }
+
+            public void tableRowCount(int tablecount)
+            {
+
+            }
         }
 
 
@@ -150,6 +155,10 @@ namespace FiredumpTest
                 listener.onCompleted(dumpresult);
             }
 
+            public void tableRowCount(int rowcount)
+            {
+                
+            }
         }
 
         

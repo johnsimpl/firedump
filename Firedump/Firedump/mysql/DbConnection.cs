@@ -176,6 +176,26 @@ namespace Firedump.mysql
             return tables;
         }
 
+
+        public int getTableRowsCount(string tablename,string constring)
+        {
+            connection = new MySqlConnection(constring);
+            connection.Open();
+            int count = 0;
+            string sql = "SELECT COUNT(*) FROM " + tablename;
+            MySqlCommand command = new MySqlCommand(sql,connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                count = reader.GetInt32(0);
+            }
+            if(connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            return count;
+        }
+
         /// <summary>
         ///  Must be connected to database and not to server
         /// </summary>

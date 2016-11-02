@@ -22,6 +22,7 @@ namespace Firedump.models.dump
 
         void initDumpTables(List<string> tables);
 
+        void tableRowCount(int rowcount);
     }
     
 }

@@ -135,6 +135,11 @@ namespace FiredumpTest
                 tables.Remove(table);
             }
 
+            public void tableRowCount(int rowcount)
+            {
+                
+            }
+
             public void validateOnTableStartDump(int actual)
             {
                 Assert.AreEqual(actual,NumOfTables);

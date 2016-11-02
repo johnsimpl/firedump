@@ -127,7 +127,13 @@ namespace Firedump.models.dump
             }
         }
 
-       
+        public void tableRowCount(int rowcount)
+        {
+            if(listener != null)
+            {
+                listener.tableRowCount(rowcount);
+            }
+        }
     }
     
 

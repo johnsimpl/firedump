@@ -9,6 +9,7 @@ using Firedump.models.configuration.jsonconfig;
 using Firedump.models.dump;
 using System.IO;
 using System.Text.RegularExpressions;
+using Firedump.mysql;
 
 namespace Firedump.models.dump
 {
@@ -421,36 +422,48 @@ namespace Firedump.models.dump
                 {
                     string tablename = line.Split('`', '`')[1];
                     Console.WriteLine(tablename);
+                    int rowcount = getTableRowsCount(tablename);
                     if (listener != null)
                     {   //fire event
                         listener.onTableStartDump(tablename);
+                        listener.tableRowCount(rowcount);
                     }
                 }
-                /*
+                
                 if (line.StartsWith("INSERT INTO `"))
                 {
-                    int count = Regex.Matches(line, "),(").Count; //auto varaei exception gia kapoio logo kai etsi kai alliws den tha douleve etsi
                     if (listener != null)
                     {
                         //fire count event
                     }
-                }*/
+                }
             }
             else
-            {
-                /*
+            {               
                 if (line.StartsWith("INSERT INTO `"))
                 {
                     string tablename = line.Split('`', '`')[1];
-                    int count = Regex.Matches(line, "),(").Count;
+                    int rowcount = getTableRowsCount(tablename);
                     Console.WriteLine(tablename);
                     if (listener != null)
                     {   //fire event
                         listener.onTableStartDump(tablename);
-                        //fire count event
+                        listener.tableRowCount(rowcount);
                     }
-                }*/
+                }
             }
+        }
+
+
+        private int getTableRowsCount(string tableName)
+        {
+            string host = credentialsConfigInstance.host;
+            string database = credentialsConfigInstance.database;
+            string password = credentialsConfigInstance.password;
+            string username = credentialsConfigInstance.username;
+
+            string constring = DbConnection.conStringBuilder(host,username,password,database);
+            return DbConnection.Instance().getTableRowsCount(tableName,constring);
         }
 
 
