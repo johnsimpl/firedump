@@ -22,6 +22,7 @@ namespace Firedump
         delegate void InitProgressBar(List<string> tables);
         delegate void InreaseProgressBarStep();
         delegate void ResetPBar();
+        delegate void TableRowCount(int tablerowcount);
 
         private MySqlDumpAdapter adapter;
 
@@ -133,6 +134,19 @@ namespace Firedump
             initProgressBar(tables);
         }
 
+        public void tableRowCount(int rowcount)
+        {
+            if (this.ltablerow.InvokeRequired)
+            {
+                TableRowCount d = new TableRowCount(tableRowCount);
+                this.Invoke(d,rowcount);
+            }
+            else
+            {
+                ltablerow.Text = "Table rows:" + rowcount;
+            }
+        }
+
 
         private void initProgressBar(List<string> tables)
         {
@@ -172,6 +186,8 @@ namespace Firedump
                 pbDumpprogress.Value = 0;
             }
         }
+
+        
 
 
         /// <summary>
@@ -259,8 +275,6 @@ namespace Firedump
             
         }
 
-
-
-
+       
     }
 }

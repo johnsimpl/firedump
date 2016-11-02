@@ -9,6 +9,6 @@ namespace Firedump.models.dump
     public interface IAdapterListener
     {
         void onTableStartDump(string table);
-     
+        void tableRowCount(int rowcount);
     }
 }

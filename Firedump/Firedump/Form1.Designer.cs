@@ -47,6 +47,7 @@
             this.pbDumpprogress = new System.Windows.Forms.ProgressBar();
             this.label6 = new System.Windows.Forms.Label();
             this.lStatus = new System.Windows.Forms.Label();
+            this.ltablerow = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -223,11 +224,21 @@
             this.lStatus.Size = new System.Drawing.Size(0, 13);
             this.lStatus.TabIndex = 21;
             // 
+            // ltablerow
+            // 
+            this.ltablerow.AutoSize = true;
+            this.ltablerow.Location = new System.Drawing.Point(331, 258);
+            this.ltablerow.Name = "ltablerow";
+            this.ltablerow.Size = new System.Drawing.Size(33, 13);
+            this.ltablerow.TabIndex = 22;
+            this.ltablerow.Text = "table:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(468, 347);
+            this.Controls.Add(this.ltablerow);
             this.Controls.Add(this.lStatus);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.pbDumpprogress);
@@ -275,6 +286,7 @@
         private System.Windows.Forms.ProgressBar pbDumpprogress;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lStatus;
+        private System.Windows.Forms.Label ltablerow;
     }
 }
 

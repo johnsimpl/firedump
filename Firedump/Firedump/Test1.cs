@@ -20,9 +20,11 @@ namespace Firedump
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
             Compression comp = new Compression();
             comp.absolutePath = "D:\\test\\test 1\\file test.sql";
-            comp.doCompress7z();
+            comp.doCompress7z();*/
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }
