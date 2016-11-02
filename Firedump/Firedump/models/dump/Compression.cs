@@ -122,7 +122,15 @@ namespace Firedump.models.dump
             }
 
             //setting filenames
-            arguments.Append("\""+absolutePath.Replace(".sql",fileType)+"\" ");
+            if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
+            {
+                arguments.Append("\"" + absolutePath.Replace(".xml", fileType) + "\" ");
+            }
+            else
+            {
+                arguments.Append("\"" + absolutePath.Replace(".sql", fileType) + "\" ");
+            }
+            
             arguments.Append("\""+absolutePath+"\"");
 
             Console.WriteLine("Compression7z arguments: "+arguments.ToString());

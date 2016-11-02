@@ -309,14 +309,23 @@ namespace Firedump.models.dump
             proc.Start();
 
             Random rnd = new Random();
-            String filename = "dump" + rnd.Next(1000000, 9999999) + ".sql";
+            string fileExt;
+            if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
+            {
+                fileExt = ".xml";
+            }
+            else
+            {
+                fileExt = ".sql";
+            }
+            String filename = "dump" + rnd.Next(1000000, 9999999) + fileExt;
 
             Directory.CreateDirectory(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath);
            
 
             //checking if file exists
             while (File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
-                filename = "Dump" + rnd.Next(10000000, 99999999) + ".sql";
+                filename = "Dump" + rnd.Next(10000000, 99999999) + fileExt;
             }
 
             bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
@@ -417,17 +426,19 @@ namespace Firedump.models.dump
                         listener.onTableStartDump(tablename);
                     }
                 }
+                /*
                 if (line.StartsWith("INSERT INTO `"))
                 {
-                    int count = Regex.Matches(line, "),(").Count;
+                    int count = Regex.Matches(line, "),(").Count; //auto varaei exception gia kapoio logo kai etsi kai alliws den tha douleve etsi
                     if (listener != null)
                     {
                         //fire count event
                     }
-                }
+                }*/
             }
             else
             {
+                /*
                 if (line.StartsWith("INSERT INTO `"))
                 {
                     string tablename = line.Split('`', '`')[1];
@@ -438,7 +449,7 @@ namespace Firedump.models.dump
                         listener.onTableStartDump(tablename);
                         //fire count event
                     }
-                }
+                }*/
             }
         }
 
