@@ -34,5 +34,11 @@ namespace Firedump
             Form form = new GeneralConfiguration();
             form.Show();
         }
+
+        private void email_click(object sender, EventArgs e)
+        {
+            Form form = new email();
+            form.Show();
+        }
     }
 }
