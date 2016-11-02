@@ -34,7 +34,7 @@
             this.cmbCharacterSet = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbIncreasedComp = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbCustomComment = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.rbLockTables = new System.Windows.Forms.RadioButton();
             this.rbSingleTransaction = new System.Windows.Forms.RadioButton();
@@ -43,30 +43,29 @@
             this.cbAddComments = new System.Windows.Forms.CheckBox();
             this.gbStructure = new System.Windows.Forms.GroupBox();
             this.cbEncloseBackquotes = new System.Windows.Forms.CheckBox();
-            this.cbAddDataComment = new System.Windows.Forms.CheckBox();
-            this.cbAddCreateProcFunc = new System.Windows.Forms.CheckBox();
+            this.cbAddDateComment = new System.Windows.Forms.CheckBox();
             this.cbAddLocks = new System.Windows.Forms.CheckBox();
             this.cbAddDropTable = new System.Windows.Forms.CheckBox();
             this.cbAddCreateDatabase = new System.Windows.Forms.CheckBox();
             this.cbAddDropDatabase = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.nudMaxPacketSize = new System.Windows.Forms.NumericUpDown();
+            this.cmbExportType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbUseHexadecimal = new System.Windows.Forms.CheckBox();
-            this.cbUseIgnoreInserts = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.cbUseIgnoreInserts = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.nudMaxLength = new System.Windows.Forms.NumericUpDown();
             this.cbUseExtendedInserts = new System.Windows.Forms.CheckBox();
             this.cbUseCompleteInserts = new System.Windows.Forms.CheckBox();
-            this.nudMaxPacketSize = new System.Windows.Forms.NumericUpDown();
             this.bSave = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
             this.gbGeneral.SuspendLayout();
             this.gbStructure.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxPacketSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLength)).BeginInit();
             this.SuspendLayout();
             // 
             // gbGeneral
@@ -76,7 +75,7 @@
             this.gbGeneral.Controls.Add(this.cmbCharacterSet);
             this.gbGeneral.Controls.Add(this.label2);
             this.gbGeneral.Controls.Add(this.cbIncreasedComp);
-            this.gbGeneral.Controls.Add(this.textBox1);
+            this.gbGeneral.Controls.Add(this.tbCustomComment);
             this.gbGeneral.Controls.Add(this.label1);
             this.gbGeneral.Controls.Add(this.rbLockTables);
             this.gbGeneral.Controls.Add(this.rbSingleTransaction);
@@ -137,12 +136,12 @@
             this.cbIncreasedComp.Text = "Increased compatibility mode";
             this.cbIncreasedComp.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbCustomComment
             // 
-            this.textBox1.Location = new System.Drawing.Point(448, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 20);
-            this.textBox1.TabIndex = 6;
+            this.tbCustomComment.Location = new System.Drawing.Point(448, 36);
+            this.tbCustomComment.Name = "tbCustomComment";
+            this.tbCustomComment.Size = new System.Drawing.Size(281, 20);
+            this.tbCustomComment.TabIndex = 6;
             // 
             // label1
             // 
@@ -184,6 +183,7 @@
             this.cbEnableDataPreservation.TabIndex = 2;
             this.cbEnableDataPreservation.Text = "Enable data preservation";
             this.cbEnableDataPreservation.UseVisualStyleBackColor = true;
+            this.cbEnableDataPreservation.CheckedChanged += new System.EventHandler(this.cbEnableDataPreservation_CheckedChanged);
             // 
             // cbForeignKey
             // 
@@ -208,8 +208,7 @@
             // gbStructure
             // 
             this.gbStructure.Controls.Add(this.cbEncloseBackquotes);
-            this.gbStructure.Controls.Add(this.cbAddDataComment);
-            this.gbStructure.Controls.Add(this.cbAddCreateProcFunc);
+            this.gbStructure.Controls.Add(this.cbAddDateComment);
             this.gbStructure.Controls.Add(this.cbAddLocks);
             this.gbStructure.Controls.Add(this.cbAddDropTable);
             this.gbStructure.Controls.Add(this.cbAddCreateDatabase);
@@ -224,32 +223,22 @@
             // cbEncloseBackquotes
             // 
             this.cbEncloseBackquotes.AutoSize = true;
-            this.cbEncloseBackquotes.Location = new System.Drawing.Point(18, 176);
+            this.cbEncloseBackquotes.Location = new System.Drawing.Point(18, 150);
             this.cbEncloseBackquotes.Name = "cbEncloseBackquotes";
             this.cbEncloseBackquotes.Size = new System.Drawing.Size(179, 17);
             this.cbEncloseBackquotes.TabIndex = 6;
             this.cbEncloseBackquotes.Text = "Enclose names with backquotes";
             this.cbEncloseBackquotes.UseVisualStyleBackColor = true;
             // 
-            // cbAddDataComment
+            // cbAddDateComment
             // 
-            this.cbAddDataComment.AutoSize = true;
-            this.cbAddDataComment.Location = new System.Drawing.Point(18, 152);
-            this.cbAddDataComment.Name = "cbAddDataComment";
-            this.cbAddDataComment.Size = new System.Drawing.Size(115, 17);
-            this.cbAddDataComment.TabIndex = 5;
-            this.cbAddDataComment.Text = "Add date comment";
-            this.cbAddDataComment.UseVisualStyleBackColor = true;
-            // 
-            // cbAddCreateProcFunc
-            // 
-            this.cbAddCreateProcFunc.AutoSize = true;
-            this.cbAddCreateProcFunc.Location = new System.Drawing.Point(18, 128);
-            this.cbAddCreateProcFunc.Name = "cbAddCreateProcFunc";
-            this.cbAddCreateProcFunc.Size = new System.Drawing.Size(222, 17);
-            this.cbAddCreateProcFunc.TabIndex = 4;
-            this.cbAddCreateProcFunc.Text = "Add CREATE PROCEDURE/FUNCTION";
-            this.cbAddCreateProcFunc.UseVisualStyleBackColor = true;
+            this.cbAddDateComment.AutoSize = true;
+            this.cbAddDateComment.Location = new System.Drawing.Point(18, 127);
+            this.cbAddDateComment.Name = "cbAddDateComment";
+            this.cbAddDateComment.Size = new System.Drawing.Size(115, 17);
+            this.cbAddDateComment.TabIndex = 5;
+            this.cbAddDateComment.Text = "Add date comment";
+            this.cbAddDateComment.UseVisualStyleBackColor = true;
             // 
             // cbAddLocks
             // 
@@ -294,7 +283,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.nudMaxPacketSize);
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.cmbExportType);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.cbUseHexadecimal);
             this.groupBox2.Controls.Add(this.label4);
@@ -310,13 +299,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Data";
             // 
-            // comboBox1
+            // nudMaxPacketSize
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(209, 176);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(134, 21);
-            this.comboBox1.TabIndex = 9;
+            this.nudMaxPacketSize.Location = new System.Drawing.Point(209, 150);
+            this.nudMaxPacketSize.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.nudMaxPacketSize.Name = "nudMaxPacketSize";
+            this.nudMaxPacketSize.Size = new System.Drawing.Size(134, 20);
+            this.nudMaxPacketSize.TabIndex = 10;
+            // 
+            // cmbExportType
+            // 
+            this.cmbExportType.FormattingEnabled = true;
+            this.cmbExportType.Location = new System.Drawing.Point(209, 176);
+            this.cmbExportType.Name = "cmbExportType";
+            this.cmbExportType.Size = new System.Drawing.Size(134, 21);
+            this.cmbExportType.TabIndex = 9;
             // 
             // label5
             // 
@@ -337,6 +338,15 @@
             this.cbUseHexadecimal.Text = "Use hexadecimal for binary";
             this.cbUseHexadecimal.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 151);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(186, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Maximum allowed packet size (in MB):";
+            // 
             // cbUseIgnoreInserts
             // 
             this.cbUseIgnoreInserts.AutoSize = true;
@@ -346,15 +356,6 @@
             this.cbUseIgnoreInserts.TabIndex = 6;
             this.cbUseIgnoreInserts.Text = "Use ingore inserts";
             this.cbUseIgnoreInserts.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 151);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(186, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Maximum allowed packet size (in MB):";
             // 
             // label3
             // 
@@ -403,18 +404,6 @@
             this.cbUseCompleteInserts.Text = "Use complete inserts";
             this.cbUseCompleteInserts.UseVisualStyleBackColor = true;
             // 
-            // nudMaxPacketSize
-            // 
-            this.nudMaxPacketSize.Location = new System.Drawing.Point(209, 150);
-            this.nudMaxPacketSize.Maximum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            this.nudMaxPacketSize.Name = "nudMaxPacketSize";
-            this.nudMaxPacketSize.Size = new System.Drawing.Size(134, 20);
-            this.nudMaxPacketSize.TabIndex = 10;
-            // 
             // bSave
             // 
             this.bSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
@@ -426,6 +415,7 @@
             this.bSave.TabIndex = 3;
             this.bSave.Text = "Save Options";
             this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // bCancel
             // 
@@ -436,6 +426,7 @@
             this.bCancel.TabIndex = 4;
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // MoreSQLOptions
             // 
@@ -447,16 +438,20 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbStructure);
             this.Controls.Add(this.gbGeneral);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MoreSQLOptions";
             this.Text = "MoreSQLOptions";
+            this.Load += new System.EventHandler(this.MoreSQLOptions_Load);
             this.gbGeneral.ResumeLayout(false);
             this.gbGeneral.PerformLayout();
             this.gbStructure.ResumeLayout(false);
             this.gbStructure.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxPacketSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLength)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -467,7 +462,7 @@
         private System.Windows.Forms.ComboBox cmbCharacterSet;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbIncreasedComp;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbCustomComment;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rbLockTables;
         private System.Windows.Forms.RadioButton rbSingleTransaction;
@@ -481,11 +476,10 @@
         private System.Windows.Forms.CheckBox cbAddCreateDatabase;
         private System.Windows.Forms.CheckBox cbAddDropTable;
         private System.Windows.Forms.CheckBox cbAddLocks;
-        private System.Windows.Forms.CheckBox cbAddCreateProcFunc;
-        private System.Windows.Forms.CheckBox cbAddDataComment;
+        private System.Windows.Forms.CheckBox cbAddDateComment;
         private System.Windows.Forms.CheckBox cbEncloseBackquotes;
         private System.Windows.Forms.CheckBox cbXml;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbExportType;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox cbUseHexadecimal;
         private System.Windows.Forms.CheckBox cbUseIgnoreInserts;

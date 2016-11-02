@@ -427,6 +427,9 @@
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.gbDumpOptions);
             this.Controls.Add(this.gbFolders);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GeneralConfiguration";
             this.Text = "GeneralConfiguration";
             this.Load += new System.EventHandler(this.GeneralConfiguration_Load);
