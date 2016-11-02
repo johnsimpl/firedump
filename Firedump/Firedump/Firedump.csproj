@@ -178,6 +178,7 @@
     <Compile Include="schedule_save_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sqlviewer\MysqlWords.cs" />
     <Compile Include="Test1.cs">
       <SubType>Form</SubType>
     </Compile>

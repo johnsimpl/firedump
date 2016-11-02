@@ -23,6 +23,8 @@ namespace Firedump.models.dump
 
         private IAdapterListener listener;
         private Process proc;
+        private Compression comp;
+        private string tempTableName = "";
 
         public MysqlDump(IAdapterListener listener)
         {
@@ -377,8 +379,9 @@ namespace Firedump.models.dump
                 //compression
                 if (configurationManagerInstance.compressConfigInstance.enableCompression)
                 {
-                    Compression comp = new Compression();
+                    comp = new Compression(listener);
                     comp.absolutePath = resultObj.fileAbsPath;
+                   
                     CompressionResultSet compResult = comp.doCompress7z(); //edw kaleitai to compression
 
                     if (!compResult.wasSucessful)
@@ -397,24 +400,21 @@ namespace Firedump.models.dump
 
 
         public void cancelMysqlDumpProcess()
-        {
-            if(proc != null)
-            {
+        {        
                 try
                 {
+                    comp.KillProc();
                     proc.Kill();
-                    proc = null;
+                    proc = null;                   
                 }catch(Exception ex)
                 {
-
                 }
-                                          
-            }
+                 
         }
 
 
         /// <summary>
-        /// !this method is not finished yet
+        /// 
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
@@ -458,13 +458,21 @@ namespace Firedump.models.dump
                 if (line.StartsWith(insertStartsWith))
                 {
                     string tablename = line.Split('`', '`')[1];
-                    int rowcount = getTableRowsCount(tablename);
-                    Console.WriteLine(tablename);
-                    if (listener != null)
-                    {   //fire event
-                        listener.onTableStartDump(tablename);
-                        listener.tableRowCount(rowcount);
+                    if(tablename == tempTableName)
+                    {
+
+                    } else
+                    {
+                        tempTableName = tablename;
+                        int rowcount = getTableRowsCount(tablename);
+                        Console.WriteLine(tablename);
+                        if (listener != null)
+                        {   //fire event
+                            listener.onTableStartDump(tablename);
+                            listener.tableRowCount(rowcount);
+                        }
                     }
+                    
                 }
             }
         }
