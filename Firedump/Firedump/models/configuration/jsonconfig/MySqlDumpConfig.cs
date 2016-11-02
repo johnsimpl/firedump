@@ -33,9 +33,17 @@ namespace Firedump.models.configuration.jsonconfig
         /// </summary>
         public bool includeComments { set; get; } = true;
         /// <summary>
-        /// wether to execute the dump in a single transaction
+        /// Dumps in a single transaction with isolation level repetable read
         /// </summary>
         public bool singleTransaction { set; get; }
+        /// <summary>
+        /// Locks tables before dumping them (single transaction is better and there is no need for both of these)
+        /// </summary>
+        public bool lockTables { set; get; }
+        /// <summary>
+        /// Enclose the INSERT statements for each dumped table with SET autocommit = 0 and COMMIT statements
+        /// </summary>
+        public bool noAutocommit { set; get; }
         /// <summary>
         /// wether to disable foreign key checks in dump file (makes importing the dump file faster because the indexes are created after all rows are inserted)
         /// </summary>
@@ -66,6 +74,10 @@ namespace Firedump.models.configuration.jsonconfig
         /// wether to add drop table/view/procedure/function in the dump file
         /// </summary>
         public bool addDropTable { set; get; } = true;
+        /// <summary>
+        /// Surround each table dump with LOCK TABLES and UNLOCK TABLES statements
+        /// </summary>
+        public bool addLocks { set; get; }
         /// <summary>
         /// wether to add if not exists sql in the dump file
         /// </summary>
@@ -126,7 +138,6 @@ namespace Firedump.models.configuration.jsonconfig
         public bool useHexadecimal { set; get; } = true;
         /// <summary>
         /// 0 - INSERT statements
-        /// 1 - UPDATE statements
         /// 2 - REPLACE statements only replace works
         /// </summary>
         public int exportType { set; get; } = 0;

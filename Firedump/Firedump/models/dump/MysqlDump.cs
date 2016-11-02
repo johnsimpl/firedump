@@ -138,6 +138,8 @@ namespace Firedump.models.dump
             //characterSet
             if (configurationManagerInstance.mysqlDumpConfigInstance.characterSet!="utf8")
             {
+                string charSetPath = "\""+AppDomain.CurrentDomain.BaseDirectory + "resources\\mysqldump\\charsets\"";
+                arguments.Append("--character-sets-dir="+charSetPath+" ");
                 arguments.Append("--default-character-set="+ configurationManagerInstance.mysqlDumpConfigInstance.characterSet + " ");
             }
 
@@ -149,6 +151,18 @@ namespace Firedump.models.dump
             else
             {
                 arguments.Append("--skip-add-drop-table ");
+            }
+
+            //addLocks
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addLocks)
+            {
+                arguments.Append("--add-locks ");
+            }
+
+            //noAutocommit
+            if (configurationManagerInstance.mysqlDumpConfigInstance.noAutocommit)
+            {
+                arguments.Append("--no-autocommit ");
             }
 
             //encloseWithBackquotes
@@ -223,8 +237,6 @@ namespace Firedump.models.dump
                 case 0:
                     break;
                 case 1:
-                    break;
-                case 2:
                     arguments.Append("--replace ");
                     break;
                 default:
