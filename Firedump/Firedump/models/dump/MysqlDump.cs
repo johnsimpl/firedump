@@ -60,7 +60,7 @@ namespace Firedump.models.dump
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -1;
                 resultObj.errorMessage = "Invalid port number: " + credentialsConfigInstance.port;
-                return resultObj;
+                return resultObj; 
             }
             else
             {
@@ -329,7 +329,10 @@ namespace Firedump.models.dump
                 filename = "Dump" + rnd.Next(10000000, 99999999) + fileExt;
             }
 
+
             bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
+            bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
+            int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType; 
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {
@@ -344,7 +347,7 @@ namespace Firedump.models.dump
                 {              
                     string line = proc.StandardOutput.ReadLine();
                     file.WriteLine(line);                  
-                    handleLineOutput(line,includeCreateSchema);                   
+                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace);                   
                 }
                 
             }
@@ -400,6 +403,7 @@ namespace Firedump.models.dump
                 try
                 {
                     proc.Kill();
+                    proc = null;
                 }catch(Exception ex)
                 {
 
@@ -414,8 +418,26 @@ namespace Firedump.models.dump
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
-        private void handleLineOutput(string line,bool createschema)
+        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace)
         {
+            
+            string insertStartsWith = "";
+            if(insertReplace == 1 && ignoreInsert == true)
+            {
+                insertStartsWith = "REPLACE  IGNORE INTO `";
+            } else if(insertReplace == 1)
+            {
+                insertStartsWith = "REPLACE INTO `";
+            } else if(ignoreInsert)
+            {
+                insertStartsWith = "INSERT  IGNORE INTO `";
+            } else
+            {
+                insertStartsWith = "INSERT INTO `";
+            }
+
+            //Console.WriteLine(insertStartsWith);
+
             if (createschema)
             {
                 if (line.StartsWith("CREATE TABLE `"))
@@ -430,17 +452,10 @@ namespace Firedump.models.dump
                     }
                 }
                 
-                if (line.StartsWith("INSERT INTO `"))
-                {
-                    if (listener != null)
-                    {
-                        //fire count event
-                    }
-                }
             }
             else
             {               
-                if (line.StartsWith("INSERT INTO `"))
+                if (line.StartsWith(insertStartsWith))
                 {
                     string tablename = line.Split('`', '`')[1];
                     int rowcount = getTableRowsCount(tablename);

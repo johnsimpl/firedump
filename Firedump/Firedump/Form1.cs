@@ -143,7 +143,7 @@ namespace Firedump
             }
             else
             {
-                ltablerow.Text = ",Table rows:" + rowcount;
+                ltablerow.Text = "Table rows:" + rowcount;
             }
         }
 

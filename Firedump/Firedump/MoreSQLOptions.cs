@@ -120,6 +120,7 @@ namespace Firedump
             configManagerInstance.mysqlDumpConfigInstance.maximumLengthOfQuery = (int)nudMaxLength.Value;
             configManagerInstance.mysqlDumpConfigInstance.maximumPacketLength = (int)nudMaxPacketSize.Value;
             configManagerInstance.mysqlDumpConfigInstance.exportType = cmbExportType.SelectedIndex;
+            
 
             configManagerInstance.mysqlDumpConfigInstance.saveConfig();
             this.Close();

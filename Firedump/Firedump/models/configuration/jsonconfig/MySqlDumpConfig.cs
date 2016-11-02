@@ -138,7 +138,7 @@ namespace Firedump.models.configuration.jsonconfig
         public bool useHexadecimal { set; get; } = true;
         /// <summary>
         /// 0 - INSERT statements
-        /// 2 - REPLACE statements only replace works
+        /// 1 - REPLACE statements only replace works
         /// </summary>
         public int exportType { set; get; } = 0;
         /// <summary>
