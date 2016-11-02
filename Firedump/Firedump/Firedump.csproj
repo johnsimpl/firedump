@@ -97,12 +97,6 @@
     <Compile Include="Connect.Designer.cs">
       <DependentUpon>Connect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sqloptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Sqloptions.Designer.cs">
-      <DependentUpon>Sqloptions.cs</DependentUpon>
-    </Compile>
     <Compile Include="Location.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +209,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MoreSQLOptions.resx">
+      <DependentUpon>MoreSQLOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -225,9 +222,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Sqloptions.resx">
-      <DependentUpon>Sqloptions.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
     </EmbeddedResource>
