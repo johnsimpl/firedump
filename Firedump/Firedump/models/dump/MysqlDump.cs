@@ -334,6 +334,7 @@ namespace Firedump.models.dump
 
             bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
             bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
+            bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
             int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType; 
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
@@ -349,7 +350,7 @@ namespace Firedump.models.dump
                 {              
                     string line = proc.StandardOutput.ReadLine();
                     file.WriteLine(line);                  
-                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace);                   
+                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes);                   
                 }
                 
             }
@@ -365,7 +366,7 @@ namespace Firedump.models.dump
 
             proc.WaitForExit();
 
-            if (proc.ExitCode != 0)
+            if (proc.ExitCode != 0 || proc == null)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -2;
@@ -403,7 +404,10 @@ namespace Firedump.models.dump
         {        
                 try
                 {
-                    comp.KillProc();
+                    if(comp != null)
+                    {
+                        comp.KillProc();
+                    }                   
                     proc.Kill();
                     proc = null;                   
                 }catch(Exception ex)
@@ -418,7 +422,7 @@ namespace Firedump.models.dump
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
-        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace)
+        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes)
         {
             
             string insertStartsWith = "";
@@ -442,7 +446,17 @@ namespace Firedump.models.dump
             {
                 if (line.StartsWith("CREATE TABLE"))
                 {
-                    string tablename = line.Split('`', '`')[1];
+                    string tablename = "";
+                    if(!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("TABLE") + 5;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
+                    }
+                    
                     Console.WriteLine(tablename);
                     int rowcount = getTableRowsCount(tablename);
                     if (listener != null)
@@ -457,8 +471,18 @@ namespace Firedump.models.dump
             {               
                 if (line.Contains(insertStartsWith))
                 {
-                    string tablename = line.Split('`', '`')[1];
-                    if(tablename == tempTableName)
+                    string tablename = "";
+                    if (!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("INTO") + 4;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
+                    }
+
+                    if (tablename == tempTableName)
                     {
 
                     } else

@@ -93,8 +93,7 @@ namespace Firedump.models.dump
         {
             if(mydump != null)
             {
-                mydump.cancelMysqlDumpProcess();
-                
+                mydump.cancelMysqlDumpProcess();                
             }
         }
 
