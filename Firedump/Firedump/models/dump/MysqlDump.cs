@@ -23,6 +23,8 @@ namespace Firedump.models.dump
 
         private IAdapterListener listener;
         private Process proc;
+        private Compression comp;
+        private string tempTableName = "";
 
         public MysqlDump(IAdapterListener listener)
         {
@@ -332,6 +334,7 @@ namespace Firedump.models.dump
 
             bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
             bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
+            bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
             int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType; 
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
@@ -347,7 +350,7 @@ namespace Firedump.models.dump
                 {              
                     string line = proc.StandardOutput.ReadLine();
                     file.WriteLine(line);                  
-                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace);                   
+                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes);                   
                 }
                 
             }
@@ -363,7 +366,7 @@ namespace Firedump.models.dump
 
             proc.WaitForExit();
 
-            if (proc.ExitCode != 0)
+            if (proc.ExitCode != 0 || proc == null)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -2;
@@ -377,8 +380,9 @@ namespace Firedump.models.dump
                 //compression
                 if (configurationManagerInstance.compressConfigInstance.enableCompression)
                 {
-                    Compression comp = new Compression();
+                    comp = new Compression(listener);
                     comp.absolutePath = resultObj.fileAbsPath;
+                   
                     CompressionResultSet compResult = comp.doCompress7z(); //edw kaleitai to compression
 
                     if (!compResult.wasSucessful)
@@ -397,52 +401,62 @@ namespace Firedump.models.dump
 
 
         public void cancelMysqlDumpProcess()
-        {
-            if(proc != null)
-            {
+        {        
                 try
                 {
+                    if(comp != null)
+                    {
+                        comp.KillProc();
+                    }                   
                     proc.Kill();
-                    proc = null;
+                    proc = null;                   
                 }catch(Exception ex)
                 {
-
                 }
-                                          
-            }
+                 
         }
 
 
         /// <summary>
-        /// !this method is not finished yet
+        /// 
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
-        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace)
+        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes)
         {
             
             string insertStartsWith = "";
             if(insertReplace == 1 && ignoreInsert == true)
             {
-                insertStartsWith = "REPLACE  IGNORE INTO `";
+                insertStartsWith = "REPLACE  IGNORE INTO";
             } else if(insertReplace == 1)
             {
-                insertStartsWith = "REPLACE INTO `";
+                insertStartsWith = "REPLACE INTO";
             } else if(ignoreInsert)
             {
-                insertStartsWith = "INSERT  IGNORE INTO `";
+                insertStartsWith = "INSERT  IGNORE INTO";
             } else
             {
-                insertStartsWith = "INSERT INTO `";
+                insertStartsWith = "INSERT INTO";
             }
 
             //Console.WriteLine(insertStartsWith);
 
             if (createschema)
             {
-                if (line.StartsWith("CREATE TABLE `"))
+                if (line.StartsWith("CREATE TABLE"))
                 {
-                    string tablename = line.Split('`', '`')[1];
+                    string tablename = "";
+                    if(!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("TABLE") + 5;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
+                    }
+                    
                     Console.WriteLine(tablename);
                     int rowcount = getTableRowsCount(tablename);
                     if (listener != null)
@@ -455,16 +469,34 @@ namespace Firedump.models.dump
             }
             else
             {               
-                if (line.StartsWith(insertStartsWith))
+                if (line.Contains(insertStartsWith))
                 {
-                    string tablename = line.Split('`', '`')[1];
-                    int rowcount = getTableRowsCount(tablename);
-                    Console.WriteLine(tablename);
-                    if (listener != null)
-                    {   //fire event
-                        listener.onTableStartDump(tablename);
-                        listener.tableRowCount(rowcount);
+                    string tablename = "";
+                    if (!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("INTO") + 4;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
                     }
+
+                    if (tablename == tempTableName)
+                    {
+
+                    } else
+                    {
+                        tempTableName = tablename;
+                        int rowcount = getTableRowsCount(tablename);
+                        Console.WriteLine(tablename);
+                        if (listener != null)
+                        {   //fire event
+                            listener.onTableStartDump(tablename);
+                            listener.tableRowCount(rowcount);
+                        }
+                    }
+                    
                 }
             }
         }

@@ -40,5 +40,11 @@ namespace Firedump
             Form form = new email();
             form.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sqlviewer.SqlDbViewerForm form = new sqlviewer.SqlDbViewerForm();
+            form.Show();
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Firedump.models.dump
     {
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         private Process proc;
+        private IAdapterListener listener;
+
         /// <summary>
         /// Absolute path of the file to compress
         /// </summary>
@@ -22,6 +24,11 @@ namespace Firedump.models.dump
         public Compression(string absolutePath)
         {
             this.absolutePath = absolutePath;
+        }
+
+        public Compression(IAdapterListener listener)
+        {
+            this.listener = listener;
         }
 
         public CompressionResultSet doCompress7z()
@@ -152,11 +159,27 @@ namespace Firedump.models.dump
             CompressionResultSet result = new CompressionResultSet();
             proc.Start();
 
+            if(listener != null)
+            {
+                listener.onCompressStart();
+            }
+
             while (!proc.StandardOutput.EndOfStream)
             {
                 string line = proc.StandardOutput.ReadLine();
-                Console.WriteLine(line);
-
+                Console.WriteLine("Comp:"+line);
+                
+                if(listener != null)
+                {
+                    if (line.Contains("%"))
+                    {
+                        int per = 0;
+                        int.TryParse(line.Substring(0, 3), out per);
+                        //Console.WriteLine("per:" + per);
+                        listener.compressProgress(per);
+                    }
+                }
+                
             }
 
             while (!proc.StandardError.EndOfStream)
@@ -164,7 +187,6 @@ namespace Firedump.models.dump
                 string line = proc.StandardError.ReadLine();
                 result.standardError += line + "\n";
                 Console.WriteLine(line);
-
             }
 
             proc.WaitForExit();
@@ -182,5 +204,21 @@ namespace Firedump.models.dump
 
             return result;
         }
+
+
+        public void KillProc()
+        {
+            try
+            {
+                proc.Kill();
+                proc.Close();
+                proc = null;
+            } catch(Exception ex)
+            {
+
+            }
+        }
+
+
     }
 }

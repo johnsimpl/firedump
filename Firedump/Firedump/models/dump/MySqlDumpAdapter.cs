@@ -31,7 +31,7 @@ namespace Firedump.models.dump
         public void startDump(CredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
         {
             this.listener = listener;
-            listener.onProgress("mysql dump started!from server:");//+options.getHost());
+            listener.onProgress("mysql dump started!");//+options.getHost());
 
             this.credentialsConfigInstance = credentialsConfigInstance;
 
@@ -63,8 +63,15 @@ namespace Firedump.models.dump
                 mydump.credentialsConfigInstance = credentialsConfigInstance;
 
                 Task<DumpResultSet> result = dumptask(mydump);
-                DumpResultSet dumpresult = await result;
+                DumpResultSet dumpresult = null;
+                try
+                {
+                     dumpresult = await result;
+                } catch(NullReferenceException ex)
+                {
 
+                }
+                
                 if (listener != null)
                 {
                     listener.onCompleted(dumpresult);
@@ -86,7 +93,7 @@ namespace Firedump.models.dump
         {
             if(mydump != null)
             {
-                mydump.cancelMysqlDumpProcess();
+                mydump.cancelMysqlDumpProcess();                
             }
         }
 
@@ -134,6 +141,23 @@ namespace Firedump.models.dump
                 listener.tableRowCount(rowcount);
             }
         }
+
+        public void compressProgress(int progress)
+        {
+            if(listener != null)
+            {
+                listener.compressProgress(progress);
+            }
+        }
+
+        public void onCompressStart()
+        {
+            if(listener != null)
+            {
+                listener.onCompressStart();
+            }
+        }
+
     }
     
 

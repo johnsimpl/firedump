@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using Firedump.models;
@@ -17,10 +18,17 @@ namespace Firedump
 {
     public partial class Form1 : Form, IDumpProgressListener
     {
-
+        /// <summary>
+        /// delegate methods
+        /// used for event callbacks
+        /// </summary>
+        /// <param name="text"></param>
         delegate void SetTextCallback(string text);
-        delegate void InitProgressBar(List<string> tables);
+        delegate void InitProgressBar(List<string> tables,int max);
         delegate void InreaseProgressBarStep();
+        delegate void SetProgressValue(int progress);
+        delegate void MaximizeProgressBar();
+        delegate void StartCompressProgressBar();
         delegate void ResetPBar();
         delegate void TableRowCount(int tablerowcount);
 
@@ -42,6 +50,11 @@ namespace Firedump
            
         }
 
+        /// <summary>
+        /// execute dump button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
@@ -68,14 +81,16 @@ namespace Firedump
 
                 //start async dump and register a listener for callbacks
                 adapter.startDump(credentialsConfigInstance,this);
-
             }
-
-
-
+            
         }
 
-
+        /// <summary>
+        /// not used anymore
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -87,9 +102,11 @@ namespace Firedump
             
         }
 
-
-        //the implemented interface methods for the statdump callbacks
-        //update some progress bar or something
+        /// <summary>      
+        /// the implemented interface methods for the statdump callbacks----------------start--------------------
+        /// update some progress bar or something
+        /// </summary>
+        /// <param name="implemented methods"></param>       
         public void onProgress(string progress)
         {
             setOutputLabelText(progress);
@@ -110,15 +127,19 @@ namespace Firedump
 
         public void onCompleted(DumpResultSet resultSet)
         {
-            setOutputLabelText("completed");
-            Console.WriteLine(resultSet.ToString());
-            if (resultSet.wasSuccessful)
+            if(resultSet != null)
             {
-                MessageBox.Show("Dump was completed successfully.","MySQL Dump",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Dump was unsuccessful.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setOutputLabelText("Completed");
+                Console.WriteLine(resultSet.ToString());
+                maximizeProgressBar();
+                if (resultSet.wasSuccessful)
+                {
+                    MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Dump was unsuccessful.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             
         }
@@ -131,9 +152,14 @@ namespace Firedump
 
         public void initDumpTables(List<string> tables)
         {                   
-            initProgressBar(tables);
+            initProgressBar(tables,0);
         }
 
+        /// <summary>
+        /// updates talbe rows:+rowcount label
+        /// or sets to "" if rowcount is -1
+        /// </summary>
+        /// <param name="rowcount"></param>
         public void tableRowCount(int rowcount)
         {
             if (this.ltablerow.InvokeRequired)
@@ -143,24 +169,76 @@ namespace Firedump
             }
             else
             {
-                ltablerow.Text = "Table rows:" + rowcount;
+                if(rowcount == -1)
+                {
+                    ltablerow.Text = "";
+                } else
+                {
+                    ltablerow.Text = "Table rows:" + rowcount;
+                }
+                
             }
         }
 
+        public void compressProgress(int progress)
+        {
+            setProgressValue(progress);
+        }
 
-        private void initProgressBar(List<string> tables)
+        public void onCompressStart()
+        {
+            setOutputLabelText("Compressing...");
+            initProgressBar(null,100);
+            tableRowCount(-1);
+        }
+        //the implemented interface methods----------------END--------------------
+
+
+        private void setProgressValue(int progress)
+        {
+            if(this.pbDumpprogress.InvokeRequired)
+            {
+                SetProgressValue d = new SetProgressValue(setProgressValue);
+                this.Invoke(d,progress);
+            } else
+            {
+                pbDumpprogress.Value = progress;
+            }
+        }
+
+        /// <summary>
+        /// either list tables size as max or int max 
+        /// </summary>
+        /// <param name="tables"></param>
+        /// <param name="max"></param>
+        private void initProgressBar(List<string> tables,int max)
         {
             if(this.pbDumpprogress.InvokeRequired)
             {
                 InitProgressBar d = new InitProgressBar(initProgressBar);
-                this.Invoke(d, tables);
+                if(tables != null)
+                {
+                    this.Invoke(d, tables,0);
+                } else
+                {
+                    this.Invoke(d, null,max);
+                }
+                
             } else
             {
                 pbDumpprogress.Minimum = 0;
-                pbDumpprogress.Maximum = tables.Count;
+                if(tables != null)
+                {
+                    pbDumpprogress.Maximum = (tables.Count + 1);
+                } else
+                {
+                    pbDumpprogress.Maximum = max;
+                }
+                
                 pbDumpprogress.Step = 1;
             }
         }
+
 
         private void inreaseProgressBarStep()
         {
@@ -175,6 +253,17 @@ namespace Firedump
             }          
         }
 
+        private void maximizeProgressBar()
+        {
+            if(this.pbDumpprogress.InvokeRequired)
+            {
+                MaximizeProgressBar d = new MaximizeProgressBar(maximizeProgressBar);
+            } else
+            {
+                pbDumpprogress.Value = pbDumpprogress.Maximum;
+            }
+        }
+
         private void resetPbarValue()
         {
             if(this.pbDumpprogress.InvokeRequired)
@@ -184,6 +273,7 @@ namespace Firedump
             } else
             {
                 pbDumpprogress.Value = 0;
+                pbDumpprogress.Refresh();
             }
         }
 
@@ -209,9 +299,32 @@ namespace Firedump
             
         }
 
+
+        /// <summary>
+        /// cancel current running task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancelDUmpTaskClickListener(object sender, EventArgs e)
         {
             adapter.cancelDump();
+            Task task = new Task(resetProgressBarAfterCancel);
+            task.Start();
+        }
+
+
+        /// <summary>
+        /// Callbacks are still comming from compress and process.
+        /// We cant stop them because its exe
+        /// so just wait a second after proc kill for all callbacks to come and then reset the progressbar
+        /// </summary>
+        async void resetProgressBarAfterCancel()
+        {
+            Thread.Sleep(1000);
+            if(pbDumpprogress != null)
+            {
+                resetPbarValue();
+            }          
         }
 
         private void btnRefreshDatabasesClickListener(object sender, EventArgs e)
@@ -275,6 +388,6 @@ namespace Firedump
             
         }
 
-       
+        
     }
 }

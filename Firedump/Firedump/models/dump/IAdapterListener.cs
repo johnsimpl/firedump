@@ -10,5 +10,9 @@ namespace Firedump.models.dump
     {
         void onTableStartDump(string table);
         void tableRowCount(int rowcount);
+
+        void compressProgress(int progress);
+
+        void onCompressStart();
     }
 }
