@@ -316,7 +316,7 @@ namespace Firedump
         /// <summary>
         /// Callbacks are still comming from compress and process.
         /// We cant stop them because its exe
-        /// so just wait a second and then reset the progressbar
+        /// so just wait a second after proc kill for all callbacks to come and then reset the progressbar
         /// </summary>
         async void resetProgressBarAfterCancel()
         {

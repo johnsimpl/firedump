@@ -424,16 +424,16 @@ namespace Firedump.models.dump
             string insertStartsWith = "";
             if(insertReplace == 1 && ignoreInsert == true)
             {
-                insertStartsWith = "REPLACE  IGNORE INTO `";
+                insertStartsWith = "REPLACE  IGNORE INTO";
             } else if(insertReplace == 1)
             {
-                insertStartsWith = "REPLACE INTO `";
+                insertStartsWith = "REPLACE INTO";
             } else if(ignoreInsert)
             {
-                insertStartsWith = "INSERT  IGNORE INTO `";
+                insertStartsWith = "INSERT  IGNORE INTO";
             } else
             {
-                insertStartsWith = "INSERT INTO `";
+                insertStartsWith = "INSERT INTO";
             }
 
             //Console.WriteLine(insertStartsWith);
@@ -455,7 +455,7 @@ namespace Firedump.models.dump
             }
             else
             {               
-                if (line.StartsWith(insertStartsWith))
+                if (line.Contains(insertStartsWith))
                 {
                     string tablename = line.Split('`', '`')[1];
                     if(tablename == tempTableName)
