@@ -440,7 +440,7 @@ namespace Firedump.models.dump
 
             if (createschema)
             {
-                if (line.StartsWith("CREATE TABLE `"))
+                if (line.StartsWith("CREATE TABLE"))
                 {
                     string tablename = line.Split('`', '`')[1];
                     Console.WriteLine(tablename);
