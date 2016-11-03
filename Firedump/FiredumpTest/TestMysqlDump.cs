@@ -128,6 +128,8 @@ namespace FiredumpTest
                 NumOfTables = 0;
             }
             public int NumOfTables { get; set; }
+            
+
             public void onTableStartDump(string table)
             {
                 Assert.IsNotNull(table);
@@ -145,7 +147,18 @@ namespace FiredumpTest
                 Assert.AreEqual(actual,NumOfTables);
                 Assert.AreEqual(0,tables.Count);
             }
-            
+
+            public void compressProgress(int progress)
+            {
+
+            }
+
+            public void onCompressStart()
+            {
+
+            }
+
+
         }
 
 

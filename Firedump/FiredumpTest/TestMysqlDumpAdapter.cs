@@ -116,6 +116,16 @@ namespace FiredumpTest
             {
 
             }
+
+            public void compressProgress(int progress)
+            {
+
+            }
+
+            public void onCompressStart()
+            {
+
+            }
         }
 
 
@@ -158,6 +168,16 @@ namespace FiredumpTest
             public void tableRowCount(int rowcount)
             {
                 
+            }
+
+            public void compressProgress(int progress)
+            {
+
+            }
+
+            public void onCompressStart()
+            {
+
             }
         }
 
