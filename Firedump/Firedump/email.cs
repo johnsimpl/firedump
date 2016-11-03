@@ -22,10 +22,5 @@ namespace Firedump
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            SimpleAsynchronousExample.sendmail("smtp.live.com");
-        }
     }
 }
