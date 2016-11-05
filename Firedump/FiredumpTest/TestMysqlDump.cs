@@ -28,6 +28,8 @@ namespace FiredumpTest
             Console.WriteLine(dumpresult.ToString());
             Assert.IsTrue(dumpresult.wasSuccessful);
             //more test todo
+
+
         }
     }
 }
