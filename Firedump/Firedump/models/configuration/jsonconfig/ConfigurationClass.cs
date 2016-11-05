@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    public interface ConfigurationClass
+    public interface ConfigurationClass<T>
     {
-        void initializeConfig();
+        T initializeConfig();
         void saveConfig();
+        T resetToDefaults();
     }
 }

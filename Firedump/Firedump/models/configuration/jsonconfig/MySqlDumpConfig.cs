@@ -7,7 +7,7 @@ using Microsoft.CSharp.RuntimeBinder;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    public class MySqlDumpConfig : ConfigurationClass
+    public class MySqlDumpConfig : ConfigurationClass<MySqlDumpConfig>
     {
         private readonly string jsonFilePath = "./config/MySqlDumpConfig.json";
 
@@ -33,13 +33,21 @@ namespace Firedump.models.configuration.jsonconfig
         /// </summary>
         public bool includeComments { set; get; } = true;
         /// <summary>
-        /// wether to execute the dump in a single transaction
+        /// Dumps in a single transaction with isolation level repetable read
         /// </summary>
-        public bool singleTransaction { set; get; } 
+        public bool singleTransaction { set; get; }
+        /// <summary>
+        /// Locks tables before dumping them (single transaction is better and there is no need for both of these)
+        /// </summary>
+        public bool lockTables { set; get; }
+        /// <summary>
+        /// Enclose the INSERT statements for each dumped table with SET autocommit = 0 and COMMIT statements
+        /// </summary>
+        public bool noAutocommit { set; get; }
         /// <summary>
         /// wether to disable foreign key checks in dump file (makes importing the dump file faster because the indexes are created after all rows are inserted)
         /// </summary>
-        public bool disableForeignKeyChecks { set; get; } 
+        public bool disableForeignKeyChecks { set; get; } = true;
         /// <summary>
         /// wether to add drop database in the dump file
         /// </summary>
@@ -65,7 +73,11 @@ namespace Firedump.models.configuration.jsonconfig
         /// <summary>
         /// wether to add drop table/view/procedure/function in the dump file
         /// </summary>
-        public bool addDropTable { set; get; }
+        public bool addDropTable { set; get; } = true;
+        /// <summary>
+        /// Surround each table dump with LOCK TABLES and UNLOCK TABLES statements
+        /// </summary>
+        public bool addLocks { set; get; }
         /// <summary>
         /// wether to add if not exists sql in the dump file
         /// </summary>
@@ -117,13 +129,16 @@ namespace Firedump.models.configuration.jsonconfig
         /// </summary>
         public bool dumpTriggers { set; get; }
         /// <summary>
+        /// wether to dump events
+        /// </summary>
+        public bool dumpEvents { set; get; }
+        /// <summary>
         /// dump binary columns using hexadecimal notation for example 'abc' becomes 0x616263)
         /// </summary>
         public bool useHexadecimal { set; get; } = true;
         /// <summary>
         /// 0 - INSERT statements
-        /// 1 - UPDATE statements
-        /// 2 - REPLACE statements only replace works
+        /// 1 - REPLACE statements only replace works
         /// </summary>
         public int exportType { set; get; } = 0;
         /// <summary>
@@ -146,7 +161,7 @@ namespace Firedump.models.configuration.jsonconfig
             return mysqlDumpConfigInstance;
         }
 
-        public void initializeConfig()
+        public MySqlDumpConfig initializeConfig()
         {
             try
             {
@@ -178,16 +193,19 @@ namespace Firedump.models.configuration.jsonconfig
                 this.useDelayedInserts = jsonObj["useDelayedInserts"];
                 this.useIgnoreInserts = jsonObj["useIgnoreInserts"];
                 this.dumpTriggers = jsonObj["dumpTriggers"];
+                this.dumpEvents = jsonObj["dumpEvents"];
                 this.useHexadecimal = jsonObj["useHexadecimal"];
                 this.exportType = jsonObj["exportType"];
                 this.xml = jsonObj["xml"];
                 //</Field initialization>
+                return mysqlDumpConfigInstance;
             }
             catch (Exception ex)
             {
                 mysqlDumpConfigInstance = new MySqlDumpConfig(); //resetarei sta default options giati mporei apo panw na exoun allaksei kapoia se periptwsi corrupted data
                 mysqlDumpConfigInstance.saveConfig();
                 mysqlDumpConfigInstance.initializeConfig();
+                return mysqlDumpConfigInstance; //never reached just to avoid error message
                 if (!(ex is FileNotFoundException || ex is JsonException || ex is RuntimeBinderException))
                 {
                     Console.WriteLine("MySqlDumpConfig.initializeConfig(): "+ex.ToString());
@@ -199,12 +217,20 @@ namespace Firedump.models.configuration.jsonconfig
         {
             if (string.IsNullOrEmpty(this.tempSavePath))
             {
-                this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\roaming\\Firedump\\";
+                this.tempSavePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\AppData\\Roaming\\Firedump\\";
             }
             string jsonOutput = JsonConvert.SerializeObject(this, Formatting.Indented);
             FileInfo file = new FileInfo(jsonFilePath);
             file.Directory.Create(); // If the directory already exists, this method does nothing.
             File.WriteAllText(file.FullName, jsonOutput);
+        }
+
+        public MySqlDumpConfig resetToDefaults()
+        {
+            mysqlDumpConfigInstance = new MySqlDumpConfig();
+            mysqlDumpConfigInstance.saveConfig();
+            mysqlDumpConfigInstance.initializeConfig();
+            return mysqlDumpConfigInstance;
         }
     }
 }

@@ -58,6 +58,27 @@ namespace Firedump.mysql
             return connectionString;
         }
 
+        /// <summary>
+        /// used for testing
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="database"></param>
+        /// <returns></returns>
+        public static string conStringBuilder(string host,string username,string password,string database)
+        {
+            string cons = "";
+            if (!String.IsNullOrEmpty(database))
+            {
+                cons = string.Format("Server=" + host + ";database={0};UID=" + username + ";password=" + password, database);
+            }
+            else
+            {
+                cons = "Server=" + host + ";UID=" + username + ";password=" + password;
+            }
+            return cons;
+        }
 
         public bool testConnection()
         {
@@ -153,6 +174,26 @@ namespace Firedump.mysql
             }
 
             return tables;
+        }
+
+
+        public int getTableRowsCount(string tablename,string constring)
+        {
+            connection = new MySqlConnection(constring);
+            connection.Open();
+            int count = 0;
+            string sql = "SELECT COUNT(*) FROM " + tablename;
+            MySqlCommand command = new MySqlCommand(sql,connection);
+            MySqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                count = reader.GetInt32(0);
+            }
+            if(connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            return count;
         }
 
         /// <summary>

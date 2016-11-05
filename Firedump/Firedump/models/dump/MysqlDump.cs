@@ -8,6 +8,8 @@ using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.configuration.jsonconfig;
 using Firedump.models.dump;
 using System.IO;
+using System.Text.RegularExpressions;
+using Firedump.mysql;
 
 namespace Firedump.models.dump
 {
@@ -21,6 +23,8 @@ namespace Firedump.models.dump
 
         private IAdapterListener listener;
         private Process proc;
+        private Compression comp;
+        private string tempTableName = "";
 
         public MysqlDump(IAdapterListener listener)
         {
@@ -58,7 +62,7 @@ namespace Firedump.models.dump
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -1;
                 resultObj.errorMessage = "Invalid port number: " + credentialsConfigInstance.port;
-                return resultObj;
+                return resultObj; 
             }
             else
             {
@@ -137,6 +141,8 @@ namespace Firedump.models.dump
             //characterSet
             if (configurationManagerInstance.mysqlDumpConfigInstance.characterSet!="utf8")
             {
+                string charSetPath = "\""+AppDomain.CurrentDomain.BaseDirectory + "resources\\mysqldump\\charsets\"";
+                arguments.Append("--character-sets-dir="+charSetPath+" ");
                 arguments.Append("--default-character-set="+ configurationManagerInstance.mysqlDumpConfigInstance.characterSet + " ");
             }
 
@@ -148,6 +154,18 @@ namespace Firedump.models.dump
             else
             {
                 arguments.Append("--skip-add-drop-table ");
+            }
+
+            //addLocks
+            if (configurationManagerInstance.mysqlDumpConfigInstance.addLocks)
+            {
+                arguments.Append("--add-locks ");
+            }
+
+            //noAutocommit
+            if (configurationManagerInstance.mysqlDumpConfigInstance.noAutocommit)
+            {
+                arguments.Append("--no-autocommit ");
             }
 
             //encloseWithBackquotes
@@ -204,6 +222,12 @@ namespace Firedump.models.dump
                 arguments.Append("--skip-triggers ");
             }
 
+            //dumpEvents
+            if (configurationManagerInstance.mysqlDumpConfigInstance.dumpEvents)
+            {
+                arguments.Append("--events ");
+            }
+
             //xml
             if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
             {
@@ -216,8 +240,6 @@ namespace Firedump.models.dump
                 case 0:
                     break;
                 case 1:
-                    break;
-                case 2:
                     arguments.Append("--replace ");
                     break;
                 default:
@@ -278,7 +300,7 @@ namespace Firedump.models.dump
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "mysqldump.exe",//AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
+                    FileName = "resources\\mysqldump\\mysqldump.exe",//AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\", "mysqldump.exe") ,
                     Arguments = arguments.ToString(),
                     UseShellExecute = false,
                     RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop
@@ -290,14 +312,30 @@ namespace Firedump.models.dump
             proc.Start();
 
             Random rnd = new Random();
-            String filename = "dump" + rnd.Next(1000000, 9999999) + ".sql";
+            string fileExt;
+            if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
+            {
+                fileExt = ".xml";
+            }
+            else
+            {
+                fileExt = ".sql";
+            }
+            String filename = "dump" + rnd.Next(1000000, 9999999) + fileExt;
 
             Directory.CreateDirectory(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath);
+           
 
             //checking if file exists
-            while(File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
-                filename = "Dump" + rnd.Next(10000000, 99999999) + ".sql";
+            while (File.Exists(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename)){
+                filename = "Dump" + rnd.Next(10000000, 99999999) + fileExt;
             }
+
+
+            bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
+            bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
+            bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
+            int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType; 
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {
@@ -309,20 +347,10 @@ namespace Firedump.models.dump
 
                
                 while (!proc.StandardOutput.EndOfStream)
-                {
-               
+                {              
                     string line = proc.StandardOutput.ReadLine();
-                    file.WriteLine(line);
-
-                    if (line.StartsWith("CREATE TABLE `"))
-                    {
-                        string tablename = line.Split('`', '`')[1];
-                        Console.WriteLine(tablename);
-                        if (listener != null)
-                        {   //fire event
-                            listener.onTableStartDump(tablename);
-                        }
-                    }             
+                    file.WriteLine(line);                  
+                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes);                   
                 }
                 
             }
@@ -338,7 +366,7 @@ namespace Firedump.models.dump
 
             proc.WaitForExit();
 
-            if (proc.ExitCode != 0)
+            if (proc.ExitCode != 0 || proc == null)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -2;
@@ -348,6 +376,24 @@ namespace Firedump.models.dump
             {
                 resultObj.wasSuccessful = true;
                 resultObj.fileAbsPath = configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename;
+
+                //compression
+                if (configurationManagerInstance.compressConfigInstance.enableCompression)
+                {
+                    comp = new Compression(listener);
+                    comp.absolutePath = resultObj.fileAbsPath;
+                   
+                    CompressionResultSet compResult = comp.doCompress7z(); //edw kaleitai to compression
+
+                    if (!compResult.wasSucessful)
+                    {
+                        resultObj.wasSuccessful = false;
+                        resultObj.errorNumber = -3;
+                        resultObj.mysqldumpexeStandardError = compResult.standardError;
+                    }
+                    File.Delete(resultObj.fileAbsPath); //delete to sketo .sql
+                    resultObj.fileAbsPath = compResult.resultAbsPath;
+                }
             }
                     
             return resultObj;
@@ -355,18 +401,116 @@ namespace Firedump.models.dump
 
 
         public void cancelMysqlDumpProcess()
-        {
-            if(proc != null)
-            {
+        {        
                 try
                 {
+                    if(comp != null)
+                    {
+                        comp.KillProc();
+                    }                   
                     proc.Kill();
+                    proc = null;                   
                 }catch(Exception ex)
                 {
-
                 }
-                                          
+                 
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="createschema"></param>
+        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes)
+        {
+            
+            string insertStartsWith = "";
+            if(insertReplace == 1 && ignoreInsert == true)
+            {
+                insertStartsWith = "REPLACE  IGNORE INTO";
+            } else if(insertReplace == 1)
+            {
+                insertStartsWith = "REPLACE INTO";
+            } else if(ignoreInsert)
+            {
+                insertStartsWith = "INSERT  IGNORE INTO";
+            } else
+            {
+                insertStartsWith = "INSERT INTO";
             }
+
+            //Console.WriteLine(insertStartsWith);
+
+            if (createschema)
+            {
+                if (line.StartsWith("CREATE TABLE"))
+                {
+                    string tablename = "";
+                    if(!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("TABLE") + 5;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
+                    }
+                    
+                    Console.WriteLine(tablename);
+                    int rowcount = getTableRowsCount(tablename);
+                    if (listener != null)
+                    {   //fire event
+                        listener.onTableStartDump(tablename);
+                        listener.tableRowCount(rowcount);
+                    }
+                }
+                
+            }
+            else
+            {               
+                if (line.Contains(insertStartsWith))
+                {
+                    string tablename = "";
+                    if (!backquotes)
+                    {
+                        int Pos1 = line.IndexOf("INTO") + 4;
+                        int Pos2 = line.IndexOf("(");
+                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                    } else
+                    {
+                        tablename = line.Split('`', '`')[1];
+                    }
+
+                    if (tablename == tempTableName)
+                    {
+
+                    } else
+                    {
+                        tempTableName = tablename;
+                        int rowcount = getTableRowsCount(tablename);
+                        Console.WriteLine(tablename);
+                        if (listener != null)
+                        {   //fire event
+                            listener.onTableStartDump(tablename);
+                            listener.tableRowCount(rowcount);
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+
+        private int getTableRowsCount(string tableName)
+        {
+            string host = credentialsConfigInstance.host;
+            string database = credentialsConfigInstance.database;
+            string password = credentialsConfigInstance.password;
+            string username = credentialsConfigInstance.username;
+
+            string constring = DbConnection.conStringBuilder(host,username,password,database);
+            return DbConnection.Instance().getTableRowsCount(tableName,constring);
         }
 
 

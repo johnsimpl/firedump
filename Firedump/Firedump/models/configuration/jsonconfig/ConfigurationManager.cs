@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.jsonconfig
 {
-    public class ConfigurationManager : ConfigurationClass
+    public class ConfigurationManager : ConfigurationClass<ConfigurationManager>
     {
-        public MySqlDumpConfig mysqlDumpConfigInstance { get; }
-        public CompressConfig compressConfigInstance { get; }
+        public MySqlDumpConfig mysqlDumpConfigInstance { set; get; }
+        public CompressConfig compressConfigInstance { set; get; }
         private static ConfigurationManager configurationManagerInstance;
-        private ConfigurationManager()
-        {
-            this.mysqlDumpConfigInstance = MySqlDumpConfig.getInstance();
-            this.compressConfigInstance = CompressConfig.getInstance();
-        }
+        private ConfigurationManager() { }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -32,10 +29,11 @@ namespace Firedump.models.configuration.jsonconfig
         /// <summary>
         /// Calls the initiallize methods of every configuration class.
         /// </summary>
-        public void initializeConfig()
+        public ConfigurationManager initializeConfig()
         {
-            this.mysqlDumpConfigInstance.initializeConfig();
-            this.compressConfigInstance.initializeConfig();
+            this.mysqlDumpConfigInstance = MySqlDumpConfig.getInstance().initializeConfig();
+            this.compressConfigInstance = CompressConfig.getInstance().initializeConfig();
+            return configurationManagerInstance;
         }
 
         /// <summary>
@@ -46,6 +44,13 @@ namespace Firedump.models.configuration.jsonconfig
         {
             this.mysqlDumpConfigInstance.saveConfig();
             this.compressConfigInstance.saveConfig();
+        }
+
+        public ConfigurationManager resetToDefaults()
+        {
+            this.mysqlDumpConfigInstance = MySqlDumpConfig.getInstance().resetToDefaults();
+            this.compressConfigInstance = CompressConfig.getInstance().resetToDefaults();
+            return configurationManagerInstance;
         }
     }
 }
