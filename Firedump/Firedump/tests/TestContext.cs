@@ -17,6 +17,7 @@ namespace Firedump.tests
         public TestContext()
         {
             mysql_servers = new TestDbSet<mysql_servers>();
+            schedules = new TestDbSet<schedules>();
         }
 
         public  int SaveChangesCount
@@ -29,6 +30,11 @@ namespace Firedump.tests
             get; set;
         }
 
+        public DbSet<schedules> schedules
+        {
+            get; set;
+        }
+
         public int SaveChanges()
         {
             this.SaveChangesCount++;
@@ -36,8 +42,6 @@ namespace Firedump.tests
         }
 
        
-
-
 
        public class TestDbSet<TEntity> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>, IDbAsyncEnumerable<TEntity>
        where TEntity : class
