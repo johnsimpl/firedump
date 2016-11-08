@@ -43,5 +43,16 @@ namespace Firedump.tests
         }
 
 
+        public List<schedules> getSchedules()
+        {
+            return contextdb.schedules.ToList();
+        }
+
+        public int saveSchedule(schedules schedule)
+        {
+            contextdb.schedules.Add(schedule);
+            contextdb.SaveChanges();
+            return (int)schedule.id;
+        }
     }
 }

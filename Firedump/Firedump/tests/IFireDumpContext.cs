@@ -10,6 +10,7 @@ namespace Firedump.tests
     public interface IFireDumpContext
     {
         DbSet<mysql_servers> mysql_servers { get; }
+        DbSet<schedules> schedules { get; }
         int SaveChanges();
     }
 }

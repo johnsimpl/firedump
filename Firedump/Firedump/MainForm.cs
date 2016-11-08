@@ -43,7 +43,13 @@ namespace Firedump
 
         private void button2_Click(object sender, EventArgs e)
         {
-            sqlviewer.SqlDbViewerForm form = new sqlviewer.SqlDbViewerForm();
+            mysql_servers server = new mysql_servers();
+            server.host = "localhost";
+            server.username = "user";
+            server.password = "password";
+
+            string database = "wall";
+            sqlviewer.SqlDbViewerForm form = new sqlviewer.SqlDbViewerForm(server, database);
             form.Show();
         }
     }

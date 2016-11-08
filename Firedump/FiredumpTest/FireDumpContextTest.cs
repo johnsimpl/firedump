@@ -63,6 +63,23 @@ namespace FiredumpTest
                 Assert.AreEqual(servers[i].port, temps.port);
             }
 
+
+            mysql_servers mysqlserver = service.getAllMySqlServers()[0];
+            schedules schedule = new schedules();
+            schedule.hours = 1;
+            schedule.activated = 0;
+            schedule.date = new DateTime();
+            schedule.name = "scheduleName";
+            schedule.server_id = mysqlserver.id;
+
+            service.saveSchedule(schedule);
+
+            servers = service.getAllMySqlServers();
+            List<schedules> schedules = service.getSchedules();
+            for(int i =0; i < servers.Count; i++)
+            {
+                
+            }
             
 
         }
