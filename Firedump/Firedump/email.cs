@@ -1,4 +1,5 @@
 ﻿using Examples.Smpt;
+using Firedump.mysql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ namespace Firedump
 {
     public partial class email : Form
     {
-        public static String newfrom;
+        
         public email()
         {
             InitializeComponent();
@@ -20,9 +21,9 @@ namespace Firedump
 
         private void email_Load(object sender, EventArgs e)
         {
-            if(!String.IsNullOrEmpty(newfrom))
+            if(!String.IsNullOrEmpty(emailform.from))
             {
-                textBox1.Text = newfrom;
+                textBox1.Text = emailform.from;
             }
 
             
@@ -35,17 +36,24 @@ namespace Firedump
 
         private void button1_Click(object sender, EventArgs e)
         {
-            emailform.from = textBox1.Text;
-            emailform.to = textBox2.Text;
-            Console.WriteLine(emailform.server);
-            emailform.sendmail();
+            DbConnection con = DbConnection.Instance();
+            if(con.testConnection ())
+            {
+                emailform.to = textBox1.Text;
+                emailform.sendmail();
+            }
+            else
+            {
+                emailform.to = textBox2.Text;
+                emailform.sendmail();
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Form form1 = new emailconfig ();
             form1.Show();
-            this.Close();
         }
 
     }

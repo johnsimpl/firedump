@@ -29,41 +29,81 @@ namespace Firedump
             {
                 emailform.server = "smtp.live.com";
                 emailform.pass = textBox3.Text;
+                emailform.from = textBox1.Text;
                 emailform.port = 25;
-                Form form1 = new email();
-                form1.Show();
-                Console.WriteLine(emailform.server);
-                this.Close();
+                Close();
             }
             else 
                 if(radioButton2.Checked )
             {
-                emailform.server = textBox2.Text ;
                 emailform.from = textBox1.Text;
-                emailform.port = Convert.ToInt32(numericUpDown1.Value);
-                email.newfrom= textBox1.Text;
-                Form form1 = new email();
-                form1.Show();
-                this.Close();
+                emailform.server = textBox2.Text ;                
+                emailform.port = Convert.ToInt16(numericUpDown1.Value);
+                emailform.pass = textBox3.Text;
+                Close();
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form form1 = new email();
-            form1.Show();
-            this.Close();
+            Close();
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            groupBox2.Enabled = true;
+            if (radioButton2.Checked)
+            {
+                textBox2.Text = "";
+                groupBox3.Enabled = false;
+                groupBox2.Enabled = true;
+            }
+            else
+            {
+                groupBox2.Enabled = false ;
+                groupBox3.Enabled = true;
+            }
+
+
             
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            groupBox2.Enabled = false;
+            if (radioButton1.Checked)
+            {
+                
+                groupBox2.Enabled = false;
+                groupBox3.Enabled = true;
+            }
+            else
+            {
+                textBox2.Text = "smtp.live.com";
+                groupBox2.Enabled = true;
+                groupBox3.Enabled = false;
+            }
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox1.Checked)
+            {
+                groupBox3.Enabled = true;
+              
+            }
+            else
+            {
+                groupBox3.Enabled = false;
+            }
+            
+        }
+
+        private void emailconfig_Load(object sender, EventArgs e)
+        {
+            if(radioButton1.Checked)
+            {
+                textBox2.Text = "smtp.live.com";
+            }
         }
     }
 }
