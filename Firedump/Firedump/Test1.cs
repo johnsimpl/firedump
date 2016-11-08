@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Firedump
 {
@@ -24,7 +25,11 @@ namespace Firedump
             Compression comp = new Compression();
             comp.absolutePath = "D:\\test\\test 1\\file test.sql";
             comp.doCompress7z();*/
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
+            cofd.IsFolderPicker = true;
+            cofd.ShowDialog();
         }
     }
 }
