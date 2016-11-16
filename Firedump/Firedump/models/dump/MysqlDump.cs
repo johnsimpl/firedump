@@ -335,7 +335,8 @@ namespace Firedump.models.dump
             bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
             bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
             bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
-            int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType; 
+            int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType;
+            bool outputxml = ConfigurationManager.getInstance().mysqlDumpConfigInstance.xml;
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
             {
@@ -350,7 +351,7 @@ namespace Firedump.models.dump
                 {              
                     string line = proc.StandardOutput.ReadLine();
                     file.WriteLine(line);                  
-                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes);                   
+                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes, outputxml);                   
                 }
                 
             }
@@ -422,7 +423,7 @@ namespace Firedump.models.dump
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
-        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes)
+        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes,bool xmlout)
         {
             
             string insertStartsWith = "";
@@ -442,63 +443,70 @@ namespace Firedump.models.dump
 
             //Console.WriteLine(insertStartsWith);
 
-            if (createschema)
+            if(!xmlout)
             {
-                if (line.StartsWith("CREATE TABLE"))
+                if (createschema)
                 {
-                    string tablename = "";
-                    if(!backquotes)
+                    if (line.StartsWith("CREATE TABLE"))
                     {
-                        int Pos1 = line.IndexOf("TABLE") + 5;
-                        int Pos2 = line.IndexOf("(");
-                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
-                    } else
-                    {
-                        tablename = line.Split('`', '`')[1];
-                    }
-                    
-                    Console.WriteLine(tablename);
-                    int rowcount = getTableRowsCount(tablename);
-                    if (listener != null)
-                    {   //fire event
-                        listener.onTableStartDump(tablename);
-                        listener.tableRowCount(rowcount);
-                    }
-                }
-                
-            }
-            else
-            {               
-                if (line.Contains(insertStartsWith))
-                {
-                    string tablename = "";
-                    if (!backquotes)
-                    {
-                        int Pos1 = line.IndexOf("INTO") + 4;
-                        int Pos2 = line.IndexOf("(");
-                        tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
-                    } else
-                    {
-                        tablename = line.Split('`', '`')[1];
-                    }
+                        string tablename = "";
+                        if (!backquotes)
+                        {
+                            int Pos1 = line.IndexOf("TABLE") + 5;
+                            int Pos2 = line.IndexOf("(");
+                            tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                        }
+                        else
+                        {
+                            tablename = line.Split('`', '`')[1];
+                        }
 
-                    if (tablename == tempTableName)
-                    {
-
-                    } else
-                    {
-                        tempTableName = tablename;
-                        int rowcount = getTableRowsCount(tablename);
                         Console.WriteLine(tablename);
+                        int rowcount = getTableRowsCount(tablename);
                         if (listener != null)
                         {   //fire event
                             listener.onTableStartDump(tablename);
                             listener.tableRowCount(rowcount);
                         }
                     }
-                    
+
+                }
+                else
+                {
+                    if (line.Contains(insertStartsWith))
+                    {
+                        string tablename = "";
+                        if (!backquotes)
+                        {
+                            int Pos1 = line.IndexOf("INTO") + 4;
+                            int Pos2 = line.IndexOf("(");
+                            tablename = line.Substring(Pos1, Pos2 - Pos1).Trim();
+                        }
+                        else
+                        {
+                            tablename = line.Split('`', '`')[1];
+                        }
+
+                        if (tablename == tempTableName)
+                        {
+
+                        }
+                        else
+                        {
+                            tempTableName = tablename;
+                            int rowcount = getTableRowsCount(tablename);
+                            Console.WriteLine(tablename);
+                            if (listener != null)
+                            {   //fire event
+                                listener.onTableStartDump(tablename);
+                                listener.tableRowCount(rowcount);
+                            }
+                        }
+
+                    }
                 }
             }
+            
         }
 
 
