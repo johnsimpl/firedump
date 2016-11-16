@@ -128,6 +128,11 @@
       <DependentUpon>emailconfig.cs</DependentUpon>
     </Compile>
     <Compile Include="email\email.cs" />
+    <Compile Include="firedumpdbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Location.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +277,17 @@
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="firedumpdbDataSet.xsc">
+      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="firedumpdbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>firedumpdbDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="firedumpdbDataSet.xss">
+      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="resources\7z64\7z.sfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
