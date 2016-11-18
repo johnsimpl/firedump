@@ -1,4 +1,5 @@
 ﻿using Firedump.models.configuration.jsonconfig;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -112,18 +113,26 @@ namespace Firedump
 
         private void bTempFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowDialog();
-            string newPath = fbd.SelectedPath;
-            tbTempFolder.Text = newPath+"\\";
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
+            cofd.IsFolderPicker = true;
+            cofd.InitialDirectory = tbTempFolder.Text;  
+            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string newPath = cofd.FileName;
+                tbTempFolder.Text = newPath+"\\";
+            }
         }
 
         private void bLogFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowDialog();
-            string newPath = fbd.SelectedPath;
-            tbLogFolder.Text = newPath + "\\";
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
+            cofd.IsFolderPicker = true;
+            cofd.InitialDirectory = tbLogFolder.Text;
+            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string newPath = cofd.FileName;
+                tbLogFolder.Text = newPath + "\\";
+            }
         }
 
         private void bSave_Click(object sender, EventArgs e)
