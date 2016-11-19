@@ -52,5 +52,11 @@ namespace Firedump
             sqlviewer.SqlDbViewerForm form = new sqlviewer.SqlDbViewerForm(server, database);
             form.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            NewMySQLServer form = new NewMySQLServer();
+            form.Show();
+        }
     }
 }

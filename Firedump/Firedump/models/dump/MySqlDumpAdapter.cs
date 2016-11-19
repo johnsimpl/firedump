@@ -111,7 +111,7 @@ namespace Firedump.models.dump
             con.password = password;
             con.database = database;
             con.port = port;
-            bool success = con.testConnection();
+            bool success = con.testConnection().wasSuccessful;
             if(success)
             {
                 return con.getTables(database);

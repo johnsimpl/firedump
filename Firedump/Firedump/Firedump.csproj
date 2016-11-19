@@ -109,6 +109,10 @@
     <Compile Include="backup_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="firedumpdbDataSet.cs">
+      <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="models\databaseUtils\ConnectionResultSet.cs" />
     <Compile Include="NewMySQLServer.cs">
       <SubType>Form</SubType>
     </Compile>

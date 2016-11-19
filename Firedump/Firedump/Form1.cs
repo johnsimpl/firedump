@@ -345,7 +345,7 @@ namespace Firedump
                 con.port = port;
                 con.database = "";
 
-                if(con.testConnection())
+                if(con.testConnection().wasSuccessful)
                 {
                     cbDatabases.Items.Clear();
                     List<string> databases = con.getDatabases();
@@ -378,12 +378,12 @@ namespace Firedump
                 con.password = password;
                 con.port = port;
 
-                if (con.testConnection())
+                if (con.testConnection().wasSuccessful)
                 {
                     lStatus.Text = "connection is successfull!";
                 } else
                 {
-                    lStatus.Text = "Error try connecting to server!";
+                    lStatus.Text = "Error trying to connect to the server!";
                 }
             }
             

@@ -28,7 +28,7 @@ namespace Firedump.sqlviewer
             connection.Host = server.host;
 
 
-            if(connection.testConnection())
+            if(connection.testConnection().wasSuccessful)
             {
                 this.server = server;
                 this.database = database;

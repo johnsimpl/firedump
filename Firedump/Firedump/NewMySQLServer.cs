@@ -1,4 +1,5 @@
-﻿using Firedump.mysql;
+﻿using Firedump.models.databaseUtils;
+using Firedump.mysql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,21 +67,34 @@ namespace Firedump
             {
                 con.password = tbPassword.Text;
             }
+            //database
+            if (!string.IsNullOrEmpty(tbDatabase.Text))
+            {
+                con.database = tbDatabase.Text;
+            }
 
             //test connection
-            if (con.testConnection())
+            ConnectionResultSet result = con.testConnection();
+            if (result.wasSuccessful)
             {
                 MessageBox.Show("Connection Successful", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Connection failed", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Connection failed: \n"+result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void bSave_Click(object sender, EventArgs e)
         {
             firedumpdbDataSetTableAdapters.mysql_serversTableAdapter adapter = new firedumpdbDataSetTableAdapters.mysql_serversTableAdapter();
+            if ((Int64)adapter.numberOfOccurances(tbName.Text) == 0)
+            {
+                adapter.Insert(tbName.Text, int.Parse(tbPort.Text), tbHost.Text, tbUsername.Text, tbPassword.Text); //prepei na bei kai database
+                this.Close();
+                return;
+            }
+            MessageBox.Show("Name "+tbName.Text+ " already exists", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void bCancel_Click(object sender, EventArgs e)
