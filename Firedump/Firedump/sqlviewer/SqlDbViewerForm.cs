@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Firedump.utils;
 
 namespace Firedump.sqlviewer
 {
@@ -17,6 +18,7 @@ namespace Firedump.sqlviewer
     {
 
         private mysql_servers server;
+        //merge whene database mysql_server gets database field
         private string database;
 
         public SqlDbViewerForm(mysql_servers server,string database)
@@ -35,14 +37,18 @@ namespace Firedump.sqlviewer
                 List<string> tables = connection.getTables(database);
 
                 TreeNode[] nodearray = new TreeNode[tables.Count];
+                //ImageList imagelist = new ImageList();
                 for (int i =0; i < tables.Count; i++)
                 {
                     nodearray[i] = new TreeNode(tables[i]);
+                    //imagelist.Images.Add(Image.FromFile("../../resources/icons/sqlselecticon.png"));
                 }
                 
                 TreeNode rootNode = new TreeNode("database:" + database, nodearray);
                 rootNode.Expand();
                 treeView1.Nodes.Add(rootNode);
+                
+                treeView1.ImageList = imageList1;
             } else
             {
                 MessageBox.Show("Couldent connect to "+database+" database");
@@ -55,37 +61,59 @@ namespace Firedump.sqlviewer
 
         private void executesql_click(object sender, EventArgs e)
         {
-            string query = addLimitToQuery(richTextBox1.Text);
+            executeQuery(richTextBox1.Text);
            
-            string connectionString = DbConnection.conStringBuilder(server.host,server.username,server.password,database);
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+        }
+        
+
+        private void executeQuery(string query)
+        {
+            if (!String.IsNullOrEmpty(query))
             {
-                connection.Open();
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter(query,connection))
+                string sql = SqlUtils.limitQuery(query);
+
+                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    DataSet dataset = new DataSet();
-                    adapter.Fill(dataset);
-                    dataGridView1.DataSource = dataset.Tables[0];
+                    connection.Open();
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, connection))
+                    {
+                        try
+                        {
+                            DataSet dataset = new DataSet();
+                            adapter.Fill(dataset);
+                            dataGridView1.DataSource = dataset.Tables[0];
+                        }
+                        catch (MySqlException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            DataSet dataset = new DataSet();
+                            DataTable datatable = new DataTable("MySql Error");
+                            datatable.Columns.Add(new DataColumn("Type", typeof(string)));
+                            datatable.Columns.Add(new DataColumn("Message", typeof(string)));
+                            DataRow datarow = datatable.NewRow();
+                            datarow["Type"] = "MySql Error";
+                            datarow["Message"] = ex.Message;
+                            datatable.Rows.Add(datarow);
+                            dataset.Tables.Add(datatable);
+
+                            dataGridView1.DataSource = dataset.Tables[0];
+
+                        }
+
+                    }
                 }
             }
-           
         }
 
 
-        /// <summary>
-        /// add safe limit to query results
-        /// max row results is 500
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        private string addLimitToQuery(string query)
+        private void nodeSelectEvent(object sender, TreeViewEventArgs e)
         {
-            if(query.ToUpper().Contains("LIMIT"))
+            if(!e.Node.Text.StartsWith("database:"))
             {
-                return query;
-            } else
-            {
-                return query + " LIMIT 500";
+                string table = e.Node.Text;
+                string sql = "SELECT * FROM "+table + " ";
+                executeQuery(sql);
             }
         }
     }

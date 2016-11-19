@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.sqlviewer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,14 +44,9 @@ namespace Firedump
 
         private void button2_Click(object sender, EventArgs e)
         {
-            mysql_servers server = new mysql_servers();
-            server.host = "localhost";
-            server.username = "user";
-            server.password = "password";
-
-            string database = "wall";
-            sqlviewer.SqlDbViewerForm form = new sqlviewer.SqlDbViewerForm(server, database);
-            form.Show();
+            tempform tf = new tempform();
+            tf.Show();
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -58,5 +54,13 @@ namespace Firedump
             NewMySQLServer form = new NewMySQLServer();
             form.Show();
         }
+
+        private void home_form_click(object sender, EventArgs e)
+        {
+            Home home = new Home();
+            home.Show();
+        }
+
+
     }
 }

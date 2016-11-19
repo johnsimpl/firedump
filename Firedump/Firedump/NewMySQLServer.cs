@@ -18,6 +18,7 @@ namespace Firedump
         public NewMySQLServer()
         {
             InitializeComponent();
+            
         }
 
         private void bTestConnection_Click(object sender, EventArgs e)

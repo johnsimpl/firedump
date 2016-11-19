@@ -4,6 +4,9 @@
 
     partial class firedumpdbDataSet
     {
+        partial class mysql_serversDataTable
+        {
+        }
     }
 }
 

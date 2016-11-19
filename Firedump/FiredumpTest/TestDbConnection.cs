@@ -67,13 +67,13 @@ namespace FiredumpTest
             connection.username = Const.username;
             connection.password = password;
 
-            Assert.IsTrue(connection.testConnection());
+            Assert.IsTrue(connection.testConnection().wasSuccessful);
 
             connection.Host = Const.host;
             connection.username = "invaliduser";
             connection.password = "passwd";
 
-            Assert.IsFalse(connection.testConnection());
+            Assert.IsFalse(connection.testConnection().wasSuccessful);
             
         }
 

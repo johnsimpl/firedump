@@ -64,16 +64,16 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Add Destination";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btAddDestClick);
             // 
             // gbConnection
             // 
-            this.gbConnection.Controls.Add(this.listBox1);
             this.gbConnection.Controls.Add(this.label1);
             this.gbConnection.Controls.Add(this.cbDatabases);
             this.gbConnection.Controls.Add(this.bConnect);
             this.gbConnection.Location = new System.Drawing.Point(5, 58);
             this.gbConnection.Name = "gbConnection";
-            this.gbConnection.Size = new System.Drawing.Size(241, 344);
+            this.gbConnection.Size = new System.Drawing.Size(285, 412);
             this.gbConnection.TabIndex = 2;
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
@@ -82,9 +82,9 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 91);
+            this.listBox1.Location = new System.Drawing.Point(11, 150);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(229, 290);
+            this.listBox1.Size = new System.Drawing.Size(273, 316);
             this.listBox1.TabIndex = 3;
             // 
             // label1
@@ -99,17 +99,18 @@
             // 
             // cbDatabases
             // 
+            this.cbDatabases.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDatabases.FormattingEnabled = true;
-            this.cbDatabases.Location = new System.Drawing.Point(9, 65);
+            this.cbDatabases.Location = new System.Drawing.Point(6, 65);
             this.cbDatabases.Name = "cbDatabases";
-            this.cbDatabases.Size = new System.Drawing.Size(222, 21);
+            this.cbDatabases.Size = new System.Drawing.Size(273, 21);
             this.cbDatabases.TabIndex = 1;
             // 
             // gbSchedule
             // 
-            this.gbSchedule.Location = new System.Drawing.Point(303, 58);
+            this.gbSchedule.Location = new System.Drawing.Point(420, 58);
             this.gbSchedule.Name = "gbSchedule";
-            this.gbSchedule.Size = new System.Drawing.Size(279, 121);
+            this.gbSchedule.Size = new System.Drawing.Size(279, 166);
             this.gbSchedule.TabIndex = 3;
             this.gbSchedule.TabStop = false;
             this.gbSchedule.Text = "Schedule";
@@ -117,9 +118,9 @@
             // gbDestinations
             // 
             this.gbDestinations.Controls.Add(this.button1);
-            this.gbDestinations.Location = new System.Drawing.Point(303, 185);
+            this.gbDestinations.Location = new System.Drawing.Point(420, 230);
             this.gbDestinations.Name = "gbDestinations";
-            this.gbDestinations.Size = new System.Drawing.Size(279, 126);
+            this.gbDestinations.Size = new System.Drawing.Size(279, 172);
             this.gbDestinations.TabIndex = 0;
             this.gbDestinations.TabStop = false;
             this.gbDestinations.Text = "Destinations";
@@ -132,7 +133,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(594, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(754, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -158,7 +159,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 482);
+            this.ClientSize = new System.Drawing.Size(754, 482);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.gbDestinations);
             this.Controls.Add(this.gbSchedule);
             this.Controls.Add(this.gbConnection);
