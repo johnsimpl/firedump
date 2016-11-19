@@ -14,6 +14,7 @@ namespace Firedump
 {
     public partial class NewMySQLServer : Form
     {
+        DbConnection con = new DbConnection();
         public NewMySQLServer()
         {
             InitializeComponent();
@@ -21,56 +22,10 @@ namespace Firedump
 
         private void bTestConnection_Click(object sender, EventArgs e)
         {
-            DbConnection con = new DbConnection();
 
-            //port
-            if (!string.IsNullOrEmpty(tbPort.Text))
+            if (!performChecks())
             {
-                try
-                {
-                    int port = int.Parse(tbPort.Text);
-                    if (port < 1 || port > 65535)
-                    {
-                        MessageBox.Show(tbPort.Text + " is not a valid port number", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    con.port = port;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(tbPort.Text + " is not a valid port number", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            //host
-            if (!string.IsNullOrEmpty(tbHost.Text))
-            {
-                con.Host = tbHost.Text;
-            }
-            else
-            {
-                MessageBox.Show("Hostname is empty.", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
-            //username
-            if (!string.IsNullOrEmpty(tbUsername.Text))
-            {
-                con.username = tbUsername.Text;
-            }
-            else
-            {
-                MessageBox.Show("Username is empty.", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            //password
-            if (!string.IsNullOrEmpty(tbPassword.Text))
-            {
-                con.password = tbPassword.Text;
-            }
-            //database
-            if (!string.IsNullOrEmpty(tbDatabase.Text))
-            {
-                con.database = tbDatabase.Text;
             }
 
             //test connection
@@ -85,12 +40,77 @@ namespace Firedump
             }
         }
 
+        private Boolean performChecks()
+        {
+            //port
+            if (!string.IsNullOrEmpty(tbPort.Text))
+            {
+                try
+                {
+                    int port = int.Parse(tbPort.Text);
+                    if (port < 1 || port > 65535)
+                    {
+                        MessageBox.Show(tbPort.Text + " is not a valid port number", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    con.port = port;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(tbPort.Text + " is not a valid port number", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            //host
+            if (!string.IsNullOrEmpty(tbHost.Text))
+            {
+                con.Host = tbHost.Text;
+            }
+            else
+            {
+                MessageBox.Show("Hostname is empty.", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            //username
+            if (!string.IsNullOrEmpty(tbUsername.Text))
+            {
+                con.username = tbUsername.Text;
+            }
+            else
+            {
+                MessageBox.Show("Username is empty.", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            //password
+            if (!string.IsNullOrEmpty(tbPassword.Text))
+            {
+                con.password = tbPassword.Text;
+            }
+            //database
+            if (!string.IsNullOrEmpty(tbDatabase.Text))
+            {
+                con.database = tbDatabase.Text;
+            }
+
+            return true;
+        }
+
         private void bSave_Click(object sender, EventArgs e)
         {
             firedumpdbDataSetTableAdapters.mysql_serversTableAdapter adapter = new firedumpdbDataSetTableAdapters.mysql_serversTableAdapter();
+            if (string.IsNullOrEmpty(tbName.Text))
+            {
+                MessageBox.Show("Type a name for the new server", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if ((Int64)adapter.numberOfOccurances(tbName.Text) == 0)
             {
-                adapter.Insert(tbName.Text, int.Parse(tbPort.Text), tbHost.Text, tbUsername.Text, tbPassword.Text); //prepei na bei kai database
+                if(!performChecks())
+                {
+                    return;
+                }
+
+                adapter.Insert(tbName.Text, con.port, con.Host, con.username, tbPassword.Text); //prepei na bei kai database
                 this.Close();
                 return;
             }
