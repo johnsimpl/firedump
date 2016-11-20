@@ -178,8 +178,7 @@ namespace Firedump.models.dump
                         int.TryParse(line.Substring(0, 3), out per);
                         listener.compressProgress(per);
                     }
-                }
-                
+                }              
             }
 
             while (!proc.StandardError.EndOfStream)
