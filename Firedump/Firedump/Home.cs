@@ -49,8 +49,7 @@ namespace Firedump
             InitializeComponent();       
             adapter = new MySqlDumpAdapter();
         }
-
-
+        
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -442,11 +441,28 @@ namespace Firedump
             if(adapter != null)
             {
                 adapter.cancelDump();
+                Task task = new Task(resetProgressBarAfterCancel);
+                task.Start();
                 lStatus.Text = "Cancelled";               
                 resetPbarValue();
             }
         }
 
+
+
+        /// <summary>
+        /// Callbacks are still comming from compress and process.
+        /// We cant stop them because its exe
+        /// so just wait a second after proc kill for all callbacks to come and then reset the progressbar
+        /// </summary>
+        async void resetProgressBarAfterCancel()
+        {
+            Thread.Sleep(1000);
+            if (pbDumpExec != null)
+            {
+                resetPbarValue();
+            }
+        }
 
 
         //
