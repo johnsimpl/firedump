@@ -218,6 +218,7 @@
     <Compile Include="schedule_save_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sqlviewer\HtmlBase.cs" />
     <Compile Include="sqlviewer\MysqlWords.cs" />
     <Compile Include="sqlviewer\SqlDbViewerForm.cs">
       <SubType>Form</SubType>
@@ -398,6 +399,7 @@
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="resources\icons\sqlselecticon.png" />
+    <None Include="resources\icons_sqlselecticon.png.png" />
     <Content Include="resources\mysqldump\charsets\armscii8.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -476,6 +478,7 @@
     <Content Include="resources\mysqldump\mysqldump.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="resources\sqlselecticon.png.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

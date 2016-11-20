@@ -31,6 +31,8 @@
             this.bAddServer = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
+            this.tvDatabases = new System.Windows.Forms.TreeView();
+            this.bDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
             this.gbDestinations = new System.Windows.Forms.GroupBox();
@@ -39,11 +41,10 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bDelete = new System.Windows.Forms.Button();
-            this.tvDatabases = new System.Windows.Forms.TreeView();
             this.bStartDump = new System.Windows.Forms.Button();
             this.pbDumpExec = new System.Windows.Forms.ProgressBar();
             this.lStatus = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.gbConnection.SuspendLayout();
             this.gbDestinations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -84,6 +85,25 @@
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
             this.gbConnection.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // tvDatabases
+            // 
+            this.tvDatabases.CheckBoxes = true;
+            this.tvDatabases.Location = new System.Drawing.Point(6, 92);
+            this.tvDatabases.Name = "tvDatabases";
+            this.tvDatabases.Size = new System.Drawing.Size(273, 299);
+            this.tvDatabases.TabIndex = 4;
+            this.tvDatabases.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvDatabases_AfterCheck);
+            // 
+            // bDelete
+            // 
+            this.bDelete.Location = new System.Drawing.Point(148, 36);
+            this.bDelete.Name = "bDelete";
+            this.bDelete.Size = new System.Drawing.Size(131, 23);
+            this.bDelete.TabIndex = 3;
+            this.bDelete.Text = "Delete Server";
+            this.bDelete.UseVisualStyleBackColor = true;
+            this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
             // 
             // label1
             // 
@@ -154,25 +174,6 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // bDelete
-            // 
-            this.bDelete.Location = new System.Drawing.Point(148, 36);
-            this.bDelete.Name = "bDelete";
-            this.bDelete.Size = new System.Drawing.Size(131, 23);
-            this.bDelete.TabIndex = 3;
-            this.bDelete.Text = "Delete Server";
-            this.bDelete.UseVisualStyleBackColor = true;
-            this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
-            // 
-            // tvDatabases
-            // 
-            this.tvDatabases.CheckBoxes = true;
-            this.tvDatabases.Location = new System.Drawing.Point(6, 92);
-            this.tvDatabases.Name = "tvDatabases";
-            this.tvDatabases.Size = new System.Drawing.Size(273, 299);
-            this.tvDatabases.TabIndex = 4;
-            this.tvDatabases.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvDatabases_AfterCheck);
-            // 
             // bStartDump
             // 
             this.bStartDump.Location = new System.Drawing.Point(477, 396);
@@ -198,6 +199,10 @@
             this.lStatus.Size = new System.Drawing.Size(63, 13);
             this.lStatus.TabIndex = 7;
             this.lStatus.Text = "StatusLabel";
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.treeview_work);
             // 
             // Home
             // 
@@ -242,5 +247,6 @@
         private System.Windows.Forms.Button bStartDump;
         private System.Windows.Forms.ProgressBar pbDumpExec;
         private System.Windows.Forms.Label lStatus;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

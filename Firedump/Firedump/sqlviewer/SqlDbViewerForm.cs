@@ -17,6 +17,8 @@ namespace Firedump.sqlviewer
     public partial class SqlDbViewerForm : Form
     {
 
+        private bool skip = false;
+
         private mysql_servers server;
         //merge whene database mysql_server gets database field
         private string database;
@@ -35,13 +37,16 @@ namespace Firedump.sqlviewer
                 this.server = server;
                 this.database = database;
                 List<string> tables = connection.getTables(database);
+                MysqlWords.tables = tables;
+                for(int i =0; i < MysqlWords.tables.Count; i++)
+                {
+                    MysqlWords.tables[i].ToUpper();
+                }
 
                 TreeNode[] nodearray = new TreeNode[tables.Count];
-                //ImageList imagelist = new ImageList();
                 for (int i =0; i < tables.Count; i++)
                 {
                     nodearray[i] = new TreeNode(tables[i]);
-                    //imagelist.Images.Add(Image.FromFile("../../resources/icons/sqlselecticon.png"));
                 }
                 
                 TreeNode rootNode = new TreeNode("database:" + database, nodearray);
@@ -51,18 +56,17 @@ namespace Firedump.sqlviewer
                 treeView1.ImageList = imageList1;
             } else
             {
-                MessageBox.Show("Couldent connect to "+database+" database");
-                
+                MessageBox.Show("Couldent connect to "+database+" database");                
             }
-            
-            
+
+            richTextBox1.Text = "";
+
         }
 
 
         private void executesql_click(object sender, EventArgs e)
         {
             executeQuery(richTextBox1.Text);
-           
         }
         
 
@@ -114,7 +118,76 @@ namespace Firedump.sqlviewer
                 string table = e.Node.Text;
                 string sql = "SELECT * FROM "+table + " ";
                 executeQuery(sql);
+                setSqlHighlight(sql);
             }
+        }
+
+        private void openToolStripButton_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+
+
+        private void onKeyDownEvent(object sender, PreviewKeyDownEventArgs e)
+        {
+            
+            
+        }
+
+
+
+
+        private void setSqlHighlight(string sql)
+        {
+            if(!String.IsNullOrEmpty(sql))
+            {
+                
+            }           
+        }
+
+        private void onKeyUpEvent(object sender, KeyEventArgs e)
+        {
+            //space
+            if(((char)e.KeyCode) == ' ')
+            {
+                string word = richTextBox1.Text.Split(' ').Last();
+               
+                //string word = richTextBox1.Text.Substring(i + 1).TrimEnd().ToUpper().Trim();
+                if(!String.IsNullOrEmpty(word))
+                {
+                    if(MysqlWords.words.Contains(word))
+                    {                   
+
+                        Console.WriteLine("wordIndex:");
+                        int index = -1;
+                        int selectStart = this.richTextBox1.SelectionStart;
+                        int startIndex = 0;
+                       
+                            int stIndex = 0;
+                            stIndex = richTextBox1.Find(word, stIndex, RichTextBoxFinds.MatchCase);
+                            richTextBox1.Select(stIndex, word.Length);
+                            richTextBox1.SelectionColor = Color.Aqua;
+                            richTextBox1.Select(richTextBox1.TextLength, 0);
+                            richTextBox1.SelectionColor = richTextBox1.ForeColor;
+                            Console.WriteLine("selectStart:"+selectStart);
+                            Console.WriteLine("index:"+index);
+                            Console.WriteLine("startIndex:" + startIndex);
+
+                        
+                    } else if(MysqlWords.tables.Contains(word))
+                    {
+
+                    }
+                }
+                   
+            }
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,8 +16,9 @@ namespace Firedump
 {
     public partial class Home : Form
     {
-        firedumpdbDataSet.mysql_serversDataTable serverData;
-        firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
+        private firedumpdbDataSet.mysql_serversDataTable serverData;
+        private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
+
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -41,6 +43,8 @@ namespace Firedump
         public Home()
         {
             InitializeComponent();
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += treeview_work;
         }
 
 
@@ -95,39 +99,50 @@ namespace Firedump
 
         private void fillTreeView()
         {
+           
             if (cmbServers.Items.Count == 0) { return; } //ama den iparxei kanenas server den to kanei
+            Console.WriteLine(cmbServers.Items.Count);
             DbConnection con = new DbConnection();
-            con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
-            con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
-            con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
-            con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
-            //edw prepei na bei to database kai mia if then else apo katw analoga ama kanei connect se server i se database
 
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
+                con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
+                con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
+                con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
+                con.password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
+            });
+          
+            //edw prepei na bei to database kai mia if then else apo katw analoga ama kanei connect se server i se database
             ConnectionResultSet result = con.testConnection();
             if (result.wasSuccessful)
             {
-                List<string> databases = con.getDatabases();
-                foreach(string database in databases)
+                List<string> databases = con.getDatabases();              
+                foreach (string database in databases)
                 {
-                    TreeNode node = new TreeNode(database);
-                    List<string> tables = con.getTables(database);
-                    foreach(string table in tables)
-                    {
-                        node.Nodes.Add(table);
-                    }
-                    tvDatabases.Nodes.Add(node);
+                    this.Invoke((MethodInvoker)delegate () {
+                        TreeNode node = new TreeNode(database);
+                        List<string> tables = con.getTables(database);
+                        foreach (string table in tables)
+                        {
+                            node.Nodes.Add(table);
+                        }
+                        tvDatabases.Nodes.Add(node);
+                    });                   
                 }
             }
             else
             {
-                MessageBox.Show("Connection failed: \n" + result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Invoke((MethodInvoker)delegate () {
+                    MessageBox.Show("Connection failed: \n" + result.errorMessage, "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
             }
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
             loadServerData();
-            fillTreeView();
+            backgroundWorker1.RunWorkerAsync();           
         }
 
         private void bDelete_Click(object sender, EventArgs e)
@@ -140,19 +155,64 @@ namespace Firedump
             }
         }
 
+
         private void tvDatabases_AfterCheck(object sender, TreeViewEventArgs e)
         {
+            //an kapio child ginei checked na ginei kai o parent
+            //an ginei unchecked kai to telefteo pedi na ginei unchecked kai o parent
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                if (e.Node.Parent != null)
+                {
+                    if (!e.Node.Checked)
+                    {
+
+                        bool found = false;
+                        foreach (TreeNode n in e.Node.Parent.Nodes)
+                        {
+                            if (n.Checked)
+                            {
+                                e.Node.Parent.Checked = true;
+                                found = true;
+                                break;
+                            }                           
+                        }
+                        if (!found)
+                            e.Node.Parent.Checked = false;
+                    }
+                    else
+                    {
+                        e.Node.Parent.Checked = true;
+                    }
+                }
+                else
+                {                   
+                    if(e.Node.Checked)
+                    {
+                        this.checkAllChildNodes(true, e.Node);
+                    } else
+                    {
+                        this.checkAllChildNodes(false, e.Node);
+                    }                   
+                }
+            }
+            
+
+            /*
             // The code only executes if the user caused the checked state to change.
             if (e.Action != TreeViewAction.Unknown)
             {
                 if (e.Node.Nodes.Count > 0)
                 {
-                    /* Calls the CheckAllChildNodes method, passing in the current 
-                    Checked value of the TreeNode whose checked state changed. */
+                   
+                    //Calls the CheckAllChildNodes method, passing in the current 
+                    //Checked value of the TreeNode whose checked state changed. 
                     this.checkAllChildNodes(e.Node.Checked, e.Node);
                 }
             }
+            */           
         }
+
         /// <summary>
         /// Recursively checks or unchecks all child nodes of a node
         /// </summary>
@@ -252,10 +312,25 @@ namespace Firedump
 
         }
 
+
         private void cmbServers_SelectionChangeCommitted(object sender, EventArgs e)
         {
             //edw prepei na bei elenxos ean trexei eidh to filltreeview thread kai an trexei na ginei interrupt kai destroy
             tvDatabases.Nodes.Clear();
+            if(!backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.RunWorkerAsync();
+            } else
+            {
+                backgroundWorker1.CancelAsync();
+                backgroundWorker1.RunWorkerAsync();
+            }
+            
+        }
+
+        private void treeview_work(object sender, DoWorkEventArgs e)
+        {
+            Console.WriteLine("worker!");
             fillTreeView();
         }
     }

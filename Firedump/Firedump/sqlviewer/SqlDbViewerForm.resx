@@ -120,6 +120,25 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 17</value>
+  </metadata>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABM
+        AQAAAk1TRnQBSQFMAwEBAAFIAQABSAEAARABAAEQAQAE/wERAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABEAYAAQj/AJ0AAdYBWn4AAdYBWn4AAdYBWnoAAdYBWgHWAVoBnAFzAdYBWgHWAVoB1gFa
+        AdYBWgHWAVoB1gFaAdYBWgHWAVpuAAHWAVp+AAHWAVr+AAHWAVp+AAHWAVp6AAHWAVoB1gFaAZwBcwHW
+        AVoB1gFaAdYBWgHWAVoB1gFaAdYBWgHWAVoB1gFa/wDlAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEB
+        AQABAQUAAYAXAAP/AQAC/wYAAv8GAAL/BgAB4AEDBgAB4AEDBgAB4AEDBgAB4AEDBgAB4AEDBgAB4AED
+        BgAC/wYAAeABAwYAAeABAwYAAeABAwYAAv8GAAL/BgAC/wYACw==
+</value>
+  </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>232, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="executeSqlToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -235,22 +254,6 @@
         BQ49yaW50J7Fh0xJw3IxbM3hwo2x0ICRHZzFgveTunYERK5lgo5YMxx8WPFw5Li+U8wYm66jNz+Naov+
         Beqiao58N5NrPluoryJO0QeKU7sNGKPPazh9aRzGo/eYmVvEMk270fTlmzl2N3XW9xL/jv7iaxw7+wAH
         E9ew//AVxE8OItv/9O/Cf0ck8gud2vKswuxNZgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>122, 17</value>
-  </metadata>
-  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABM
-        AQAAAk1TRnQBSQFMAwEBAAEQAQABEAEAARABAAEQAQAE/wERAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
-        ARADAAEBAQABEAYAAQj/AJ0AAdYBWn4AAdYBWn4AAdYBWnoAAdYBWgHWAVoBnAFzAdYBWgHWAVoB1gFa
-        AdYBWgHWAVoB1gFaAdYBWgHWAVpuAAHWAVp+AAHWAVr+AAHWAVp+AAHWAVp6AAHWAVoB1gFaAZwBcwHW
-        AVoB1gFaAdYBWgHWAVoB1gFaAdYBWgHWAVoB1gFa/wDlAAFCAU0BPgcAAT4DAAEoAwABQAMAARADAAEB
-        AQABAQUAAYAXAAP/AQAC/wYAAv8GAAL/BgAB4AEDBgAB4AEDBgAB4AEDBgAB4AEDBgAB4AEDBgAB4AED
-        BgAC/wYAAeABAwYAAeABAwYAAeABAwYAAv8GAAL/BgAC/wYACw==
 </value>
   </data>
 </root>
