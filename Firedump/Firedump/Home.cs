@@ -22,6 +22,7 @@ namespace Firedump
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
         private MySqlDumpAdapter adapter;
         private List<string> databaseList;
+        private bool hideSystemDatabases = true;
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -117,7 +118,13 @@ namespace Firedump
             ConnectionResultSet result = con.testConnection();
             if (result.wasSuccessful)
             {
-                List<string> databases = con.getDatabases();              
+                List<string> databases = con.getDatabases();
+                if (hideSystemDatabases)
+                {
+                    databases.Remove("information_schema");
+                    databases.Remove("mysql");
+                    databases.Remove("performance_schema");
+                }              
                 foreach (string database in databases)
                 {
                     this.Invoke((MethodInvoker)delegate () {
@@ -372,7 +379,8 @@ namespace Firedump
             if(!backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
-            } else
+            }
+            else
             {
                 backgroundWorker1.CancelAsync();
                 backgroundWorker1.RunWorkerAsync();
@@ -484,9 +492,25 @@ namespace Firedump
                 if(status.wasSuccessful)
                 {
                     MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else
+                }
+                else
                 {
-                    MessageBox.Show("Dump was unsuccessful.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string errorMessage = "";
+                    switch (status.errorNumber)
+                    {
+                        case 1:
+                            errorMessage = "Connection credentials not set correctly:\n"+status.errorMessage;
+                            break;
+                        case 2:
+                            errorMessage = "MySQL dump failed:\n" + status.mysqldumpexeStandardError;
+                            break;
+                        case 3:
+                            errorMessage = "Compression failed:\n" + status.mysqldumpexeStandardError;
+                            break;
+                        default:
+                            break;
+                    }
+                    MessageBox.Show(errorMessage, "Dump failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 //kiala pramata na kanei edo, afta pou meleges
@@ -538,12 +562,18 @@ namespace Firedump
             });
         }
 
+        private void cbShowSysDB_CheckedChanged(object sender, EventArgs e)
+        {
+            hideSystemDatabases = !cbShowSysDB.Checked;
+            cmbServers_SelectionChangeCommitted(null, null); //ksanakalei to fillTreeView
+        }
+
 
         //-----------------------------------------------------------------------
         //------------END INTERFACE METHODS--------------------------------------
         //
 
 
-       
+
     }
 }

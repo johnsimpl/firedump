@@ -203,6 +203,10 @@ namespace Firedump.models.dump
             if(proc==null || proc.ExitCode!=0)
             {
                 result.wasSucessful = false;
+                if(proc == null)
+                {
+                    result.standardError = "Compression proccess was killed.";
+                }
                 //delete
                 File.Delete(absolutePath);
                 File.Delete(absolutePath.Replace(".sql", fileType));
