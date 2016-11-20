@@ -165,35 +165,46 @@ namespace Firedump.models.dump
                 listener.onCompressStart();
             }
 
-            while (!proc.StandardOutput.EndOfStream)
+            try
             {
-                string line = proc.StandardOutput.ReadLine();
-                Console.WriteLine("Comp:"+line);
-                
-                if(listener != null)
+                while (!proc.StandardOutput.EndOfStream)
                 {
-                    if (line.Contains("%"))
+                    string line = proc.StandardOutput.ReadLine();
+                    Console.WriteLine("Comp:" + line);
+
+                    if (listener != null)
                     {
-                        int per = 0;
-                        int.TryParse(line.Substring(0, 3), out per);
-                        listener.compressProgress(per);
+                        if (line.Contains("%"))
+                        {
+                            int per = 0;
+                            int.TryParse(line.Substring(0, 3), out per);
+                            listener.compressProgress(per);
+                        }
                     }
-                }              
-            }
 
-            while (!proc.StandardError.EndOfStream)
+                }
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    result.standardError += line + "\n";
+                    Console.WriteLine(line);
+                }
+
+                proc.WaitForExit();
+            }
+            catch(NullReferenceException ex)
             {
-                string line = proc.StandardError.ReadLine();
-                result.standardError += line + "\n";
-                Console.WriteLine(line);
+                Console.WriteLine("Compression null reference exception on proccess: " + ex.Message);
+                File.Delete(absolutePath);
+                File.Delete(absolutePath.Replace(".sql", fileType));
             }
 
-            proc.WaitForExit();
-
-            if(proc.ExitCode!=0)
+            if(proc==null || proc.ExitCode!=0)
             {
                 result.wasSucessful = false;
                 //delete
+                File.Delete(absolutePath);
                 File.Delete(absolutePath.Replace(".sql", fileType));
             }
             else

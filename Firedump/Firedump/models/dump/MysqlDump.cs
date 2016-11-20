@@ -337,37 +337,43 @@ namespace Firedump.models.dump
             bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
             int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType;
             bool outputxml = ConfigurationManager.getInstance().mysqlDumpConfigInstance.xml;
-
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
+            try
             {
-                //addCustomCommentInHeader
-                if (!string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader))
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
                 {
-                    file.WriteLine("-- Custom comment: " + configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader);
+                    //addCustomCommentInHeader
+                    if (!string.IsNullOrEmpty(configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader))
+                    {
+                        file.WriteLine("-- Custom comment: " + configurationManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader);
+                    }
+
+
+                    while (!proc.StandardOutput.EndOfStream)
+                    {
+                        string line = proc.StandardOutput.ReadLine();
+                        file.WriteLine(line);
+                        handleLineOutput(line, includeCreateSchema, ignoreInsert, insertReplace, backquotes, outputxml);
+                    }
+
                 }
 
-               
-                while (!proc.StandardOutput.EndOfStream)
-                {              
-                    string line = proc.StandardOutput.ReadLine();
-                    file.WriteLine(line);                  
-                    handleLineOutput(line,includeCreateSchema,ignoreInsert,insertReplace, backquotes, outputxml);                   
+
+                resultObj.mysqldumpexeStandardError = "";
+                while (!proc.StandardError.EndOfStream)
+                {
+                    resultObj.mysqldumpexeStandardError += proc.StandardError.ReadLine() + "\n";
                 }
-                
+
+                Console.WriteLine(resultObj.mysqldumpexeStandardError); //for testing
+
+                proc.WaitForExit();
             }
-
-            
-            resultObj.mysqldumpexeStandardError = "";
-            while (!proc.StandardError.EndOfStream)
+            catch (NullReferenceException ex)
             {
-               resultObj.mysqldumpexeStandardError += proc.StandardError.ReadLine()+"\n";
+                Console.WriteLine("MySQLdump null reference exception on proccess: "+ex.Message);
+                File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
             }
-
-            Console.WriteLine(resultObj.mysqldumpexeStandardError); //for testing
-
-            proc.WaitForExit();
-
-            if (proc.ExitCode != 0 || proc == null)
+            if (proc == null || proc.ExitCode != 0)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -2;

@@ -18,10 +18,21 @@ namespace Firedump.sqlviewer
     {
 
         private bool skip = false;
+        private Stack<string> undoList = new Stack<string>();
+        private Stack<string> redoList = new Stack<string>();
 
         private mysql_servers server;
         //merge whene database mysql_server gets database field
         private string database;
+
+        private string[] limits = new string[] {
+            "Limit to 50 rows",
+            "Limit to 100 rows",
+            "Limit to 500 rows",
+            "Limit to 1000 rows",
+            "Limit to 5000 rows",
+            "No Limit"
+        };
 
         public SqlDbViewerForm(mysql_servers server,string database)
         {
@@ -60,7 +71,11 @@ namespace Firedump.sqlviewer
             }
 
             richTextBox1.Text = "";
-
+            for(int i =0; i < limits.Length; i++)
+            {
+                toolStripComboBox1.Items.Add(limits[i]);
+            }
+            toolStripComboBox1.SelectedIndex = 2;
         }
 
 
@@ -72,10 +87,12 @@ namespace Firedump.sqlviewer
 
         private void executeQuery(string query)
         {
+            
             if (!String.IsNullOrEmpty(query))
             {
-                string sql = SqlUtils.limitQuery(query);
-
+                undoList.Push(query);
+                string sql = limitQuery(query);
+                
                 string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -85,8 +102,11 @@ namespace Firedump.sqlviewer
                         try
                         {
                             DataSet dataset = new DataSet();
+                            BindingSource bs = new BindingSource();
                             adapter.Fill(dataset);
-                            dataGridView1.DataSource = dataset.Tables[0];
+                            bs.DataSource = dataset.Tables[0].DefaultView;
+                            bindingNavigator1.BindingSource = bs;
+                            dataGridView1.DataSource = bs;
                         }
                         catch (MySqlException ex)
                         {
@@ -132,17 +152,7 @@ namespace Firedump.sqlviewer
         {
            
         }
-
-
-
-        private void onKeyDownEvent(object sender, PreviewKeyDownEventArgs e)
-        {
-            
-            
-        }
-
-
-
+        
 
         private void setSqlHighlight(string sql)
         {
@@ -154,10 +164,12 @@ namespace Firedump.sqlviewer
 
         private void onKeyUpEvent(object sender, KeyEventArgs e)
         {
-            /*
+                      
             //space
-            if(((char)e.KeyCode) == ' ')
+            if(((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
             {
+                undoList.Push(richTextBox1.Text);
+                /*
                 string word = richTextBox1.Text.Split(' ').Last();
                
                 //string word = richTextBox1.Text.Substring(i + 1).TrimEnd().ToUpper().Trim();
@@ -186,10 +198,67 @@ namespace Firedump.sqlviewer
                     {
 
                     }
-                }                  
+                }     
+                */             
             }
-            */
+            
+        }
 
+
+        private string limitQuery(string query)
+        {
+            if (!query.ToUpper().StartsWith("SHOW"))
+            {
+                if (query.ToUpper().Contains("LIMIT"))
+                {
+                    return query;
+                }
+                else
+                {
+                    int pos = toolStripComboBox1.SelectedIndex;
+                    if (pos == 0)
+                    {
+                        return query+" LIMIT 50";
+                    }
+                    if (pos == 1)
+                        return query+" LIMIT 100";
+                    if (pos == 2)
+                        return query+" LIMIT 500";
+                    if (pos == 3)
+                        return query+" LIMIT 1000";
+                    if (pos == 4)
+                        return query+" LIMIT 5000";
+                    return query;
+                }
+            }
+
+            return query;
+        }
+
+        private void clearQueryField(object sender, EventArgs e)
+        {
+            richTextBox1.Text = "";
+        }
+
+
+        private void unduTextClick(object sender, EventArgs e)
+        {
+            if(undoList.Count != 0)
+            {
+                string unduText = undoList.Pop();
+                richTextBox1.Text = unduText;
+                redoList.Push(unduText);
+            }         
+        }
+
+        private void redoClick(object sender, EventArgs e)
+        {
+            if(redoList.Count != 0)
+            {
+                string content = redoList.Pop();
+                richTextBox1.Text = content;
+                undoList.Push(content);
+            }
         }
     }
 }
