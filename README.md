@@ -22,10 +22,10 @@ mysqlftp backup .net desktop app <br>
 http://mysqlbackupnet.codeplex.com/ <br>
 <br>
 some early pics.<br>
-<img src="./icons/pic1.PNG" width="350" />
+<img src="./icons/pic1.PNG" width="450" />
 <br>
-<img src="./icons/pic2.PNG" width="350" />
+<img src="./icons/pic2.PNG" width="450" />
 <br>
-<img src="./icons/pic3.PNG" width="350" />
+<img src="./icons/pic3.PNG" width="450" />
 <br>
-<img src="./icons/pic4.PNG" width="350" />
+<img src="./icons/pic4.PNG" width="450" />
