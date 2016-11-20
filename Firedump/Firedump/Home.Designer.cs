@@ -28,33 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bConnect = new System.Windows.Forms.Button();
+            this.bAddServer = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbDatabases = new System.Windows.Forms.ComboBox();
-            this.gbSchedule = new System.Windows.Forms.GroupBox();
+            this.cmbServers = new System.Windows.Forms.ComboBox();
             this.gbDestinations = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bDelete = new System.Windows.Forms.Button();
+            this.tvDatabases = new System.Windows.Forms.TreeView();
+            this.bStartDump = new System.Windows.Forms.Button();
+            this.pbDumpExec = new System.Windows.Forms.ProgressBar();
+            this.lStatus = new System.Windows.Forms.Label();
             this.gbConnection.SuspendLayout();
             this.gbDestinations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // bConnect
+            // bAddServer
             // 
-            this.bConnect.Location = new System.Drawing.Point(6, 36);
-            this.bConnect.Name = "bConnect";
-            this.bConnect.Size = new System.Drawing.Size(124, 23);
-            this.bConnect.TabIndex = 0;
-            this.bConnect.TabStop = false;
-            this.bConnect.Text = "Connect to Server";
-            this.bConnect.UseVisualStyleBackColor = true;
-            this.bConnect.Click += new System.EventHandler(this.bConnect_Click);
+            this.bAddServer.Location = new System.Drawing.Point(6, 36);
+            this.bAddServer.Name = "bAddServer";
+            this.bAddServer.Size = new System.Drawing.Size(124, 23);
+            this.bAddServer.TabIndex = 0;
+            this.bAddServer.TabStop = false;
+            this.bAddServer.Text = "Add New Server";
+            this.bAddServer.UseVisualStyleBackColor = true;
+            this.bAddServer.Click += new System.EventHandler(this.bAddServer_Click);
             // 
             // button1
             // 
@@ -68,24 +72,18 @@
             // 
             // gbConnection
             // 
+            this.gbConnection.Controls.Add(this.tvDatabases);
+            this.gbConnection.Controls.Add(this.bDelete);
             this.gbConnection.Controls.Add(this.label1);
-            this.gbConnection.Controls.Add(this.cbDatabases);
-            this.gbConnection.Controls.Add(this.bConnect);
-            this.gbConnection.Location = new System.Drawing.Point(5, 58);
+            this.gbConnection.Controls.Add(this.cmbServers);
+            this.gbConnection.Controls.Add(this.bAddServer);
+            this.gbConnection.Location = new System.Drawing.Point(12, 37);
             this.gbConnection.Name = "gbConnection";
-            this.gbConnection.Size = new System.Drawing.Size(285, 412);
+            this.gbConnection.Size = new System.Drawing.Size(285, 402);
             this.gbConnection.TabIndex = 2;
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
             this.gbConnection.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(11, 150);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(273, 316);
-            this.listBox1.TabIndex = 3;
             // 
             // label1
             // 
@@ -97,28 +95,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Not connected";
             // 
-            // cbDatabases
+            // cmbServers
             // 
-            this.cbDatabases.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDatabases.FormattingEnabled = true;
-            this.cbDatabases.Location = new System.Drawing.Point(6, 65);
-            this.cbDatabases.Name = "cbDatabases";
-            this.cbDatabases.Size = new System.Drawing.Size(273, 21);
-            this.cbDatabases.TabIndex = 1;
-            // 
-            // gbSchedule
-            // 
-            this.gbSchedule.Location = new System.Drawing.Point(420, 58);
-            this.gbSchedule.Name = "gbSchedule";
-            this.gbSchedule.Size = new System.Drawing.Size(279, 166);
-            this.gbSchedule.TabIndex = 3;
-            this.gbSchedule.TabStop = false;
-            this.gbSchedule.Text = "Schedule";
+            this.cmbServers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbServers.FormattingEnabled = true;
+            this.cmbServers.Location = new System.Drawing.Point(6, 65);
+            this.cmbServers.Name = "cmbServers";
+            this.cmbServers.Size = new System.Drawing.Size(273, 21);
+            this.cmbServers.TabIndex = 1;
+            this.cmbServers.SelectionChangeCommitted += new System.EventHandler(this.cmbServers_SelectionChangeCommitted);
             // 
             // gbDestinations
             // 
             this.gbDestinations.Controls.Add(this.button1);
-            this.gbDestinations.Location = new System.Drawing.Point(420, 230);
+            this.gbDestinations.Location = new System.Drawing.Point(420, 37);
             this.gbDestinations.Name = "gbDestinations";
             this.gbDestinations.Size = new System.Drawing.Size(279, 172);
             this.gbDestinations.TabIndex = 0;
@@ -145,9 +135,18 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miConfiguration});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // miConfiguration
+            // 
+            this.miConfiguration.Name = "miConfiguration";
+            this.miConfiguration.Size = new System.Drawing.Size(157, 22);
+            this.miConfiguration.Text = "Configuration...";
+            this.miConfiguration.Click += new System.EventHandler(this.miConfiguration_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -155,19 +154,66 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // bDelete
+            // 
+            this.bDelete.Location = new System.Drawing.Point(148, 36);
+            this.bDelete.Name = "bDelete";
+            this.bDelete.Size = new System.Drawing.Size(131, 23);
+            this.bDelete.TabIndex = 3;
+            this.bDelete.Text = "Delete Server";
+            this.bDelete.UseVisualStyleBackColor = true;
+            this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
+            // 
+            // tvDatabases
+            // 
+            this.tvDatabases.CheckBoxes = true;
+            this.tvDatabases.Location = new System.Drawing.Point(6, 92);
+            this.tvDatabases.Name = "tvDatabases";
+            this.tvDatabases.Size = new System.Drawing.Size(273, 299);
+            this.tvDatabases.TabIndex = 4;
+            this.tvDatabases.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvDatabases_AfterCheck);
+            // 
+            // bStartDump
+            // 
+            this.bStartDump.Location = new System.Drawing.Point(477, 396);
+            this.bStartDump.Name = "bStartDump";
+            this.bStartDump.Size = new System.Drawing.Size(174, 53);
+            this.bStartDump.TabIndex = 5;
+            this.bStartDump.Text = "Start Dump";
+            this.bStartDump.UseVisualStyleBackColor = true;
+            this.bStartDump.Click += new System.EventHandler(this.bStartDump_Click);
+            // 
+            // pbDumpExec
+            // 
+            this.pbDumpExec.Location = new System.Drawing.Point(18, 470);
+            this.pbDumpExec.Name = "pbDumpExec";
+            this.pbDumpExec.Size = new System.Drawing.Size(681, 23);
+            this.pbDumpExec.TabIndex = 6;
+            // 
+            // lStatus
+            // 
+            this.lStatus.AutoSize = true;
+            this.lStatus.Location = new System.Drawing.Point(20, 442);
+            this.lStatus.Name = "lStatus";
+            this.lStatus.Size = new System.Drawing.Size(63, 13);
+            this.lStatus.TabIndex = 7;
+            this.lStatus.Text = "StatusLabel";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 482);
-            this.Controls.Add(this.listBox1);
+            this.ClientSize = new System.Drawing.Size(754, 505);
+            this.Controls.Add(this.lStatus);
+            this.Controls.Add(this.pbDumpExec);
+            this.Controls.Add(this.bStartDump);
             this.Controls.Add(this.gbDestinations);
-            this.Controls.Add(this.gbSchedule);
             this.Controls.Add(this.gbConnection);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Home";
             this.Text = "Firedump";
+            this.Load += new System.EventHandler(this.Home_Load);
             this.gbConnection.ResumeLayout(false);
             this.gbConnection.PerformLayout();
             this.gbDestinations.ResumeLayout(false);
@@ -180,17 +226,21 @@
 
         #endregion
 
-        private System.Windows.Forms.Button bConnect;
+        private System.Windows.Forms.Button bAddServer;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox gbConnection;
-        private System.Windows.Forms.GroupBox gbSchedule;
         private System.Windows.Forms.GroupBox gbDestinations;
-        private System.Windows.Forms.ComboBox cbDatabases;
+        private System.Windows.Forms.ComboBox cmbServers;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miConfiguration;
+        private System.Windows.Forms.Button bDelete;
+        private System.Windows.Forms.TreeView tvDatabases;
+        private System.Windows.Forms.Button bStartDump;
+        private System.Windows.Forms.ProgressBar pbDumpExec;
+        private System.Windows.Forms.Label lStatus;
     }
 }
