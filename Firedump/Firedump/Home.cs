@@ -1,6 +1,8 @@
 ﻿using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.databaseUtils;
+using Firedump.models.dump;
 using Firedump.mysql;
+using Firedump.sqlviewer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +16,12 @@ using System.Windows.Forms;
 
 namespace Firedump
 {
-    public partial class Home : Form
+    public partial class Home : Form , IDumpProgressListener
     {
         private firedumpdbDataSet.mysql_serversDataTable serverData;
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
-
+        private MySqlDumpAdapter adapter;
+        private List<string> databaseList;
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -42,9 +45,8 @@ namespace Firedump
 
         public Home()
         {
-            InitializeComponent();
-            backgroundWorker1.WorkerSupportsCancellation = true;
-            backgroundWorker1.DoWork += treeview_work;
+            InitializeComponent();       
+            adapter = new MySqlDumpAdapter();
         }
 
 
@@ -101,12 +103,10 @@ namespace Firedump
         {
            
             if (cmbServers.Items.Count == 0) { return; } //ama den iparxei kanenas server den to kanei
-            Console.WriteLine(cmbServers.Items.Count);
             DbConnection con = new DbConnection();
 
             this.Invoke((MethodInvoker)delegate ()
             {
-                con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
                 con.Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
                 con.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
                 con.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
@@ -130,6 +130,16 @@ namespace Firedump
                         tvDatabases.Nodes.Add(node);
                     });                   
                 }
+
+                this.Invoke((MethodInvoker)delegate () {
+                    ToolStripMenuItem opendb = new ToolStripMenuItem();
+                    opendb.Text = "browse data";
+                    opendb.Tag = "sql";
+                    opendb.Click += new EventHandler(menuClick);
+                    ContextMenuStrip menu = new ContextMenuStrip();
+                    menu.Items.AddRange(new ToolStripMenuItem[] { opendb});                    
+                    tvDatabases.ContextMenuStrip = menu;
+                });
             }
             else
             {
@@ -139,9 +149,37 @@ namespace Firedump
             }
         }
 
+        private void menuClick(object sender,EventArgs e)
+        {
+            string Host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
+            int port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
+            string username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];
+            string password = (string)serverData.Rows[cmbServers.SelectedIndex]["password"];
+
+            mysql_servers server = new mysql_servers();
+            server.host = Host;
+            server.port = port;
+            server.username = username;
+            server.password = password;
+            if (tvDatabases.SelectedNode.Parent == null)
+            {
+                string database = tvDatabases.SelectedNode.Text;
+                SqlDbViewerForm sqlform = new SqlDbViewerForm(server,database);
+                sqlform.Show();
+            } else
+            {
+                string database = tvDatabases.SelectedNode.Parent.Text;
+                SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
+                sqlform.Show();
+            }
+        }
+
         private void Home_Load(object sender, EventArgs e)
         {
             loadServerData();
+            backgroundWorker1 = new BackgroundWorker();
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += treeview_work;
             backgroundWorker1.RunWorkerAsync();           
         }
 
@@ -304,12 +342,26 @@ namespace Firedump
             }
             else
             {
+                databaseList = databases;
+                config.database = databases[0];
                 config.databases = databases.ToArray();
                 config.excludeTables = excludedTables.ToArray();
             }
 
-            //EDW KALEITAI TO ADAPTER kai tou pernas to config
+            pbDumpExec.Value = 0;
 
+            //EDW KALEITAI TO ADAPTER kai tou pernas to config
+            //xriazontai kialoi elenxoi
+            //tha iparxei koumpei Cancel?
+            //gia oso trexei to dump to button Start Dump tha einai disable?
+            //I tha to elenxoume sto performChecks ?
+           
+            if (!adapter.isDumpRunning())
+                adapter.startDump(config, this);
+            else
+                //inform user...
+                MessageBox.Show("dump is running...");
+            
         }
 
 
@@ -330,8 +382,167 @@ namespace Firedump
 
         private void treeview_work(object sender, DoWorkEventArgs e)
         {
-            Console.WriteLine("worker!");
             fillTreeView();
         }
+
+
+        private void resetPbarValue()
+        {
+            pbDumpExec.Invoke((MethodInvoker)delegate () {
+                pbDumpExec.Value = 0;
+                pbDumpExec.Refresh();
+            });
+        }
+
+        private void maximizeProgressBar()
+        {
+            pbDumpExec.Invoke((MethodInvoker)delegate () {
+                pbDumpExec.Value = pbDumpExec.Maximum;
+            });
+        }
+
+        private void increaseProgressBarStep()
+        {
+            pbDumpExec.Invoke((MethodInvoker)delegate () {
+                pbDumpExec.PerformStep();
+            });
+        }
+
+        private void initProgressBar(List<string> tables,int max)
+        {
+            pbDumpExec.Invoke((MethodInvoker)delegate () {
+                if(tables != null)
+                {
+                    pbDumpExec.Maximum = (tables.Count);
+                } else
+                {
+                    pbDumpExec.Maximum = max;
+                }
+                pbDumpExec.Step = 1;
+            });
+        }
+
+        private void setProgressValue(int progress)
+        {
+            pbDumpExec.Invoke((MethodInvoker)delegate () {
+                pbDumpExec.Value = progress;
+            });
+        }
+
+        private void cancelDumpClick(object sender, EventArgs e)
+        {
+            if(adapter != null)
+            {
+                adapter.cancelDump();
+                lStatus.Text = "Cancelled";               
+                resetPbarValue();
+            }
+        }
+
+
+
+        //
+        //-------------------------------------------------------------------------
+        //------->INTERFACE EVENT-CALLBACK METHODS START---------------------------
+        public void onProgress(string progress)
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = progress;
+            });
+        }
+
+
+        public void onError(int error)
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {
+                //to error pernei sigkekrimenes times
+                //opote mporoume na to diksoume kalitera more info error
+                lStatus.Text = "Error:"+error.ToString();
+            });
+            resetPbarValue();
+        }
+
+
+        public void onCancelled()
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {              
+                lStatus.Text = "Cancelled";
+            });
+            resetPbarValue();
+        }
+
+
+        public void onCompleted(DumpResultSet status)
+        {
+            if(status != null)
+            {
+                lStatus.Invoke((MethodInvoker)delegate () {
+                    lStatus.Text = "Completed";
+                });
+
+
+                if(status.wasSuccessful)
+                {
+                    MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else
+                {
+                    MessageBox.Show("Dump was unsuccessful.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                //kiala pramata na kanei edo, afta pou meleges
+                //
+                //gia ui components xriazete Invoke
+            }
+        }
+
+
+        public void onTableDumpStart(string table)
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = "dumping table " + table;
+            });
+
+            increaseProgressBarStep();
+        }
+
+        public void initDumpTables(List<string> tables)
+        {
+            initProgressBar(tables,0);
+        }
+
+        public void tableRowCount(int rowcount)
+        {
+            ltable.Invoke((MethodInvoker)delegate () {
+                if(rowcount == -1)
+                {
+                    ltable.Text = "";
+                } else
+                {
+                    ltable.Text = "Table rows:"+rowcount;
+                }
+            });
+        }
+
+        public void compressProgress(int progress)
+        {
+            setProgressValue(progress);
+        }
+
+        public void onCompressStart()
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = "Compressing...";
+                initProgressBar(null,100);
+                tableRowCount(-1);
+            });
+        }
+
+
+        //-----------------------------------------------------------------------
+        //------------END INTERFACE METHODS--------------------------------------
+        //
+
+
+       
     }
 }

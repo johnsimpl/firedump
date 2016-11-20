@@ -117,6 +117,7 @@ namespace Firedump.sqlviewer
             {
                 string table = e.Node.Text;
                 string sql = "SELECT * FROM "+table + " ";
+                richTextBox1.Text = sql;
                 executeQuery(sql);
                 setSqlHighlight(sql);
             }
@@ -153,6 +154,7 @@ namespace Firedump.sqlviewer
 
         private void onKeyUpEvent(object sender, KeyEventArgs e)
         {
+            /*
             //space
             if(((char)e.KeyCode) == ' ')
             {
@@ -184,9 +186,9 @@ namespace Firedump.sqlviewer
                     {
 
                     }
-                }
-                   
+                }                  
             }
+            */
 
         }
     }

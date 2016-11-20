@@ -462,12 +462,23 @@ namespace Firedump.models.dump
                         }
 
                         Console.WriteLine(tablename);
-                        int rowcount = getTableRowsCount(tablename);
-                        if (listener != null)
-                        {   //fire event
-                            listener.onTableStartDump(tablename);
-                            listener.tableRowCount(rowcount);
+                        if (credentialsConfigInstance.databases == null)
+                        {
+                            int rowcount = getTableRowsCount(tablename);
+                            if (listener != null)
+                            {   //fire event
+                                listener.onTableStartDump(tablename);
+                                listener.tableRowCount(rowcount);
+                            }
+                        } else
+                        {
+                            if(listener != null)
+                            {
+                                listener.onTableStartDump(tablename);
+                                listener.tableRowCount(0);
+                            }
                         }
+                        
                     }
 
                 }
@@ -494,13 +505,24 @@ namespace Firedump.models.dump
                         else
                         {
                             tempTableName = tablename;
-                            int rowcount = getTableRowsCount(tablename);
-                            Console.WriteLine(tablename);
-                            if (listener != null)
-                            {   //fire event
-                                listener.onTableStartDump(tablename);
-                                listener.tableRowCount(rowcount);
+                            if(credentialsConfigInstance.databases == null)
+                            {
+                                int rowcount = getTableRowsCount(tablename);
+                                Console.WriteLine(tablename);
+                                if (listener != null)
+                                {   //fire event
+                                    listener.onTableStartDump(tablename);
+                                    listener.tableRowCount(rowcount);
+                                }
+                            } else
+                            {
+                                if(listener != null)
+                                {
+                                    listener.onTableStartDump(tablename);
+                                    listener.tableRowCount(0);
+                                }
                             }
+                            
                         }
 
                     }

@@ -76,13 +76,16 @@ namespace Firedump.models.dump
                 {
                     listener.onCompleted(dumpresult);
                 }
+                mydump = null;
             } else
             {
                 if(listener != null)
                 {
                     //we need enumaration classes for all kind of different erros
+                    //..We still need enumaration class for all kind of dif erros
                     listener.onError(-1);
                 }
+                mydump = null;
             }
             
 
@@ -93,8 +96,14 @@ namespace Firedump.models.dump
         {
             if(mydump != null)
             {
-                mydump.cancelMysqlDumpProcess();                
+                mydump.cancelMysqlDumpProcess();
+                mydump = null;              
             }
+        }
+
+        public bool isDumpRunning()
+        {
+            return mydump != null;
         }
 
 

@@ -43,8 +43,12 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bStartDump = new System.Windows.Forms.Button();
             this.pbDumpExec = new System.Windows.Forms.ProgressBar();
-            this.lStatus = new System.Windows.Forms.Label();
+            this.lStatusLabel = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.ltable = new System.Windows.Forms.Label();
+            this.lStatus = new System.Windows.Forms.Label();
+            this.bcancel = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.gbConnection.SuspendLayout();
             this.gbDestinations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -143,7 +147,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(754, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(730, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -176,7 +180,8 @@
             // 
             // bStartDump
             // 
-            this.bStartDump.Location = new System.Drawing.Point(477, 396);
+            this.bStartDump.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.bStartDump.Location = new System.Drawing.Point(303, 386);
             this.bStartDump.Name = "bStartDump";
             this.bStartDump.Size = new System.Drawing.Size(174, 53);
             this.bStartDump.TabIndex = 5;
@@ -191,25 +196,66 @@
             this.pbDumpExec.Size = new System.Drawing.Size(681, 23);
             this.pbDumpExec.TabIndex = 6;
             // 
-            // lStatus
+            // lStatusLabel
             // 
-            this.lStatus.AutoSize = true;
-            this.lStatus.Location = new System.Drawing.Point(20, 442);
-            this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(63, 13);
-            this.lStatus.TabIndex = 7;
-            this.lStatus.Text = "StatusLabel";
+            this.lStatusLabel.AutoSize = true;
+            this.lStatusLabel.Location = new System.Drawing.Point(20, 442);
+            this.lStatusLabel.Name = "lStatusLabel";
+            this.lStatusLabel.Size = new System.Drawing.Size(40, 13);
+            this.lStatusLabel.TabIndex = 7;
+            this.lStatusLabel.Text = "Status:";
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.treeview_work);
             // 
+            // ltable
+            // 
+            this.ltable.AutoSize = true;
+            this.ltable.Location = new System.Drawing.Point(256, 442);
+            this.ltable.Name = "ltable";
+            this.ltable.Size = new System.Drawing.Size(37, 13);
+            this.ltable.TabIndex = 8;
+            this.ltable.Text = "Table:";
+            // 
+            // lStatus
+            // 
+            this.lStatus.AutoSize = true;
+            this.lStatus.Location = new System.Drawing.Point(63, 442);
+            this.lStatus.Name = "lStatus";
+            this.lStatus.Size = new System.Drawing.Size(0, 13);
+            this.lStatus.TabIndex = 9;
+            // 
+            // bcancel
+            // 
+            this.bcancel.ForeColor = System.Drawing.Color.Red;
+            this.bcancel.Location = new System.Drawing.Point(624, 437);
+            this.bcancel.Name = "bcancel";
+            this.bcancel.Size = new System.Drawing.Size(75, 23);
+            this.bcancel.TabIndex = 10;
+            this.bcancel.Text = "Cancel";
+            this.bcancel.UseVisualStyleBackColor = true;
+            this.bcancel.Click += new System.EventHandler(this.cancelDumpClick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(304, 224);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(123, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "<-right click on database";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 505);
+            this.ClientSize = new System.Drawing.Size(730, 505);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.bcancel);
             this.Controls.Add(this.lStatus);
+            this.Controls.Add(this.ltable);
+            this.Controls.Add(this.lStatusLabel);
             this.Controls.Add(this.pbDumpExec);
             this.Controls.Add(this.bStartDump);
             this.Controls.Add(this.gbDestinations);
@@ -246,7 +292,11 @@
         private System.Windows.Forms.TreeView tvDatabases;
         private System.Windows.Forms.Button bStartDump;
         private System.Windows.Forms.ProgressBar pbDumpExec;
-        private System.Windows.Forms.Label lStatus;
+        private System.Windows.Forms.Label lStatusLabel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label ltable;
+        private System.Windows.Forms.Label lStatus;
+        private System.Windows.Forms.Button bcancel;
+        private System.Windows.Forms.Label label2;
     }
 }
