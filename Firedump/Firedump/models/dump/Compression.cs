@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -175,7 +176,6 @@ namespace Firedump.models.dump
                     {
                         int per = 0;
                         int.TryParse(line.Substring(0, 3), out per);
-                        //Console.WriteLine("per:" + per);
                         listener.compressProgress(per);
                     }
                 }
@@ -194,6 +194,8 @@ namespace Firedump.models.dump
             if(proc.ExitCode!=0)
             {
                 result.wasSucessful = false;
+                //delete
+                File.Delete(absolutePath.Replace(".sql", fileType));
             }
             else
             {

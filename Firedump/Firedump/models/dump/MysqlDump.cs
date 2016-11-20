@@ -413,8 +413,7 @@ namespace Firedump.models.dump
                     proc = null;                   
                 }catch(Exception ex)
                 {
-                }
-                 
+                }                
         }
 
 
