@@ -69,6 +69,7 @@ namespace Firedump.mysql
         /// <returns></returns>
         public static string conStringBuilder(string host,string username,string password,string database)
         {
+
             string cons = "";
             if (!String.IsNullOrEmpty(database))
             {

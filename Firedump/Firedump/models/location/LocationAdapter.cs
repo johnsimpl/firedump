@@ -18,7 +18,7 @@ namespace Firedump.models.location
 
         public void setFtpLocation(LocationFtp loc)
         {
-            this.location = loc;
+            
         }
 
 

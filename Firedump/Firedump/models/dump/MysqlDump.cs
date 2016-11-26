@@ -25,6 +25,7 @@ namespace Firedump.models.dump
         private Process proc;
         private Compression comp;
         private string tempTableName = "";
+        private string currentDatabase = "";
 
         private DumpResultSet resultObj;
 
@@ -449,6 +450,20 @@ namespace Firedump.models.dump
         /// <param name="createschema"></param>
         private void handleLineOutput(string line) //ekana ta boolean global gia na min ta pernaei sinexws parametrika
         {
+
+            if(backquotes)
+            {
+                if(line.ToUpper().StartsWith("USE"))
+                {
+                    currentDatabase = line.Split('`', '`')[1];
+                }
+            } else
+            {
+                if(line.ToUpper().StartsWith("USE"))
+                {
+                    currentDatabase = line.Replace("USE","").Trim();
+                }
+            }
             
             string insertStartsWith = "";
             if(insertReplace == 1 && ignoreInsert == true)
@@ -486,23 +501,14 @@ namespace Firedump.models.dump
                         }
 
                         Console.WriteLine(tablename);
-                        if (credentialsConfigInstance.databases == null)
-                        {
-                            int rowcount = getTableRowsCount(tablename);
-                            if (listener != null)
-                            {   //fire event
-                                listener.onTableStartDump(tablename);
-                                listener.tableRowCount(rowcount);
-                            }
-                        } else
-                        {
-                            if(listener != null)
-                            {
-                                listener.onTableStartDump(tablename);
-                                listener.tableRowCount(0);
-                            }
-                        }
                         
+                        int rowcount = getDbTableRowsCount(tablename,currentDatabase);
+                        if (listener != null)
+                        {   //fire event
+                            listener.onTableStartDump(tablename);
+                            listener.tableRowCount(rowcount);
+                        }
+                       
                     }
 
                 }
@@ -529,24 +535,15 @@ namespace Firedump.models.dump
                         else
                         {
                             tempTableName = tablename;
-                            if(credentialsConfigInstance.databases == null)
-                            {
-                                int rowcount = getTableRowsCount(tablename);
-                                Console.WriteLine(tablename);
-                                if (listener != null)
-                                {   //fire event
-                                    listener.onTableStartDump(tablename);
-                                    listener.tableRowCount(rowcount);
-                                }
-                            } else
-                            {
-                                if(listener != null)
-                                {
-                                    listener.onTableStartDump(tablename);
-                                    listener.tableRowCount(0);
-                                }
+                           
+                            int rowcount = getDbTableRowsCount(tablename,currentDatabase);
+                            Console.WriteLine(tablename);
+                            if (listener != null)
+                            {   //fire event
+                                listener.onTableStartDump(tablename);
+                                listener.tableRowCount(rowcount);
                             }
-                            
+                           
                         }
 
                     }
@@ -567,6 +564,15 @@ namespace Firedump.models.dump
             return DbConnection.Instance().getTableRowsCount(tableName,constring);
         }
 
+        private int getDbTableRowsCount(string tableName,string dbname)
+        {
+            string host = credentialsConfigInstance.host;
+            string password = credentialsConfigInstance.password;
+            string username = credentialsConfigInstance.username;
+
+            string constring = DbConnection.conStringBuilder(host, username, password, dbname);
+            return DbConnection.Instance().getTableRowsCount(tableName,constring);
+        }
 
     }
 }

@@ -41,5 +41,10 @@ namespace Firedump.models.location
 
             return result;
         }
+
+        public void setListener(ICallBack callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

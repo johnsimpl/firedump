@@ -13,6 +13,10 @@ namespace Firedump.models.location
             throw new NotImplementedException();
         }
 
+         void test()
+        {
+        }
+
         public void connect(object o)
         {
             throw new NotImplementedException();
