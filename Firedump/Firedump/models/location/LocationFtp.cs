@@ -18,12 +18,12 @@ namespace Firedump.models.location
             throw new NotImplementedException();
         }
 
-        public void getFile()
+        public LocationResultSet getFile()
         {
             throw new NotImplementedException();
         }
 
-        public void send()
+        public LocationResultSet send()
         {
             throw new NotImplementedException();
         }

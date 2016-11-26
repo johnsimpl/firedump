@@ -12,8 +12,8 @@ namespace Firedump.models.location
 
         void connect(object o);
 
-        void getFile();
+        LocationResultSet getFile();
 
-        void send();
+        LocationResultSet send();
     }
 }

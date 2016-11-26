@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationLocal : ILocation
+    class LocationLocal : Location,ILocation
     {
         public void connect()
         {
@@ -18,14 +19,27 @@ namespace Firedump.models.location
             throw new NotImplementedException();
         }
 
-        public void getFile()
+        public LocationResultSet getFile()
         {
             throw new NotImplementedException();
         }
 
-        public void send()
+        public LocationResultSet send()
         {
-            throw new NotImplementedException();
+            LocationResultSet result = new LocationResultSet();
+            result.path = base.locationPath;
+            try
+            {
+                File.Move(base.localPath,base.locationPath);
+                result.wasSuccessful = true;
+            }
+            catch (Exception ex)
+            {
+                result.wasSuccessful = false;
+                result.errorMessage = ex.Message;
+            }
+
+            return result;
         }
     }
 }

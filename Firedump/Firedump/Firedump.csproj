@@ -121,6 +121,7 @@
     <Compile Include="models\location\LocationCloudDrive.cs" />
     <Compile Include="models\location\LocationFtp.cs" />
     <Compile Include="models\location\LocationLocal.cs" />
+    <Compile Include="models\location\LocationResultSet.cs" />
     <Compile Include="models\location\UIServiceDemo.cs" />
     <Compile Include="models\databaseUtils\ConnectionResultSet.cs" />
     <Compile Include="NewMySQLServer.cs">
