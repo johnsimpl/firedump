@@ -17,5 +17,7 @@ namespace Firedump.location
         void send();
 
         void setListener(ICallBack callback);
+
+       
     }
 }

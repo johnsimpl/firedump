@@ -13,8 +13,7 @@ namespace Firedump.location
         public void demo()
         {
             LocationAdapter adapter = new LocationAdapter();
-            adapter.setFtpLocation(new LocationFtp());
-            
+            adapter.setFtpLocation(new LocationFtp());            
         }
 
 
