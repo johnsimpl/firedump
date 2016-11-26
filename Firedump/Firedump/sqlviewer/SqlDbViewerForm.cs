@@ -122,7 +122,6 @@ namespace Firedump.sqlviewer
                             dataset.Tables.Add(datatable);
 
                             dataGridView1.DataSource = dataset.Tables[0];
-
                         }
 
                     }

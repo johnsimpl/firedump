@@ -112,6 +112,14 @@
     <Compile Include="firedumpdbDataSet.cs">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="location\ICallBack.cs" />
+    <Compile Include="location\ILocation.cs" />
+    <Compile Include="location\ILocationCloud.cs" />
+    <Compile Include="location\LocationCloudBox.cs" />
+    <Compile Include="location\LocationCloudDrive.cs" />
+    <Compile Include="location\LocationFtp.cs" />
+    <Compile Include="location\LocationLocal.cs" />
+    <Compile Include="location\UIServiceDemo.cs" />
     <Compile Include="models\databaseUtils\ConnectionResultSet.cs" />
     <Compile Include="NewMySQLServer.cs">
       <SubType>Form</SubType>
