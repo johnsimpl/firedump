@@ -12,20 +12,9 @@ namespace Firedump.location
 
         public void demo()
         {
-            //ex 1 ftp
-            ILocation location = new LocationFtp();
-            location.connect();
-            location.send();
-
-
-            //ex2
-            ILocation locationDrive = new LocationCloudDrive();
-            locationDrive.connect();
-            ((ILocationCloud)locationDrive).doExtraStuff();
-
-            //set ui listener
-            locationDrive.setListener(this);
-
+            LocationAdapter adapter = new LocationAdapter();
+            adapter.setFtpLocation(new LocationFtp());
+            
         }
 
 

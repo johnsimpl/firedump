@@ -115,6 +115,7 @@
     <Compile Include="location\ICallBack.cs" />
     <Compile Include="location\ILocation.cs" />
     <Compile Include="location\ILocationCloud.cs" />
+    <Compile Include="location\LocationAdapter.cs" />
     <Compile Include="location\LocationCloudBox.cs" />
     <Compile Include="location\LocationCloudDrive.cs" />
     <Compile Include="location\LocationFtp.cs" />
