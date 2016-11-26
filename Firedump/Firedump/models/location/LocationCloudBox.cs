@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firedump.location
+namespace Firedump.models.location
 {
-    class LocationLocal : ILocation
+    class LocationCloudBox : Location,ILocationCloud
     {
         public void connect()
         {
@@ -14,6 +14,11 @@ namespace Firedump.location
         }
 
         public void connect(object o)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void doExtraStuff()
         {
             throw new NotImplementedException();
         }
@@ -28,7 +33,7 @@ namespace Firedump.location
             throw new NotImplementedException();
         }
 
-        public void setListener(ICallBack callback)
+        public void setExtraCredentials()
         {
             throw new NotImplementedException();
         }

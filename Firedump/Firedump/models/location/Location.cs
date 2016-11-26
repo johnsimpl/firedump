@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firedump.location
+namespace Firedump.models.location
 {
-    abstract class Location
+    abstract class Location //ola public alliws den ta vlepoun alles klaseis oute kan autes pou klironomoun
     {
-        private string path { set; get; }
+        public string path { set; get; }
         public void setListener(ICallBack callback)
         {
             throw new NotImplementedException();
