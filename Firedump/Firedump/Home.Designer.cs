@@ -49,6 +49,7 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbShowSysDB = new System.Windows.Forms.CheckBox();
             this.gbConnection.SuspendLayout();
             this.gbDestinations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -77,6 +78,7 @@
             // 
             // gbConnection
             // 
+            this.gbConnection.Controls.Add(this.cbShowSysDB);
             this.gbConnection.Controls.Add(this.tvDatabases);
             this.gbConnection.Controls.Add(this.bDelete);
             this.gbConnection.Controls.Add(this.label1);
@@ -246,6 +248,17 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
             // 
+            // cbShowSysDB
+            // 
+            this.cbShowSysDB.AutoSize = true;
+            this.cbShowSysDB.Location = new System.Drawing.Point(135, 13);
+            this.cbShowSysDB.Name = "cbShowSysDB";
+            this.cbShowSysDB.Size = new System.Drawing.Size(144, 17);
+            this.cbShowSysDB.TabIndex = 5;
+            this.cbShowSysDB.Text = "Show System Databases";
+            this.cbShowSysDB.UseVisualStyleBackColor = true;
+            this.cbShowSysDB.CheckedChanged += new System.EventHandler(this.cbShowSysDB_CheckedChanged);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,5 +311,6 @@
         private System.Windows.Forms.Label lStatus;
         private System.Windows.Forms.Button bcancel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cbShowSysDB;
     }
 }

@@ -26,17 +26,23 @@ namespace Firedump.models.dump
         private Compression comp;
         private string tempTableName = "";
 
+        private DumpResultSet resultObj;
+
+        bool createschema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
+        bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
+        bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
+        int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType;
+        bool xmlout = ConfigurationManager.getInstance().mysqlDumpConfigInstance.xml;
+
         public MysqlDump(IAdapterListener listener)
         {
             this.listener = listener;
         }
 
-
-        public DumpResultSet executeDump()
-        {          
-            DumpResultSet resultObj = new DumpResultSet();
+        private StringBuilder calculateArguments()
+        {
             StringBuilder arguments = new StringBuilder();
-
+            resultObj = new DumpResultSet();
             //<ConfigurationSection>
 
             arguments.Append("--protocol=tcp ");
@@ -53,22 +59,20 @@ namespace Firedump.models.dump
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -1;
                 resultObj.errorMessage = "Host not set";
-                return resultObj;
             }
 
             //port
-            if (credentialsConfigInstance.port<1 || credentialsConfigInstance.port>65535)
+            if (credentialsConfigInstance.port < 1 || credentialsConfigInstance.port > 65535)
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -1;
                 resultObj.errorMessage = "Invalid port number: " + credentialsConfigInstance.port;
-                return resultObj; 
             }
             else
             {
                 arguments.Append("--port=" + credentialsConfigInstance.port + " ");
             }
-            
+
             //username
             if (!String.IsNullOrEmpty(credentialsConfigInstance.username))
             {
@@ -79,7 +83,6 @@ namespace Firedump.models.dump
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -1;
                 resultObj.errorMessage = "Username not set";
-                return resultObj;
             }
 
             //pasword
@@ -139,11 +142,11 @@ namespace Firedump.models.dump
             }
 
             //characterSet
-            if (configurationManagerInstance.mysqlDumpConfigInstance.characterSet!="utf8")
+            if (configurationManagerInstance.mysqlDumpConfigInstance.characterSet != "utf8")
             {
-                string charSetPath = "\""+AppDomain.CurrentDomain.BaseDirectory + "resources\\mysqldump\\charsets\"";
-                arguments.Append("--character-sets-dir="+charSetPath+" ");
-                arguments.Append("--default-character-set="+ configurationManagerInstance.mysqlDumpConfigInstance.characterSet + " ");
+                string charSetPath = "\"" + AppDomain.CurrentDomain.BaseDirectory + "resources\\mysqldump\\charsets\"";
+                arguments.Append("--character-sets-dir=" + charSetPath + " ");
+                arguments.Append("--default-character-set=" + configurationManagerInstance.mysqlDumpConfigInstance.characterSet + " ");
             }
 
             //addDropTable
@@ -202,7 +205,7 @@ namespace Firedump.models.dump
             arguments.Append("--net-buffer-length " + configurationManagerInstance.mysqlDumpConfigInstance.maximumLengthOfQuery + " ");
 
             //maximumPacketLength
-            arguments.Append("--max_allowed_packet="+ configurationManagerInstance.mysqlDumpConfigInstance.maximumPacketLength + "M ");
+            arguments.Append("--max_allowed_packet=" + configurationManagerInstance.mysqlDumpConfigInstance.maximumPacketLength + "M ");
 
             //useIgnoreInserts
             if (configurationManagerInstance.mysqlDumpConfigInstance.useIgnoreInserts)
@@ -243,7 +246,7 @@ namespace Firedump.models.dump
                     arguments.Append("--replace ");
                     break;
                 default:
-                    break;         
+                    break;
             }
 
             //database choice
@@ -255,8 +258,8 @@ namespace Firedump.models.dump
                 }
                 else
                 {
-                    arguments.Append("--databases "+ credentialsConfigInstance.database);
-                    if (credentialsConfigInstance.excludeTablesSingleDatabase!=null)
+                    arguments.Append("--databases " + credentialsConfigInstance.database);
+                    if (credentialsConfigInstance.excludeTablesSingleDatabase != null)
                     {
                         arguments.Append(" ");
                         string[] tables = credentialsConfigInstance.excludeTablesSingleDatabase.Split(',');
@@ -272,11 +275,11 @@ namespace Firedump.models.dump
                 arguments.Append("--databases ");
                 foreach (string database in credentialsConfigInstance.databases)
                 {
-                    arguments.Append(database+" ");
+                    arguments.Append(database + " ");
                 }
                 if (credentialsConfigInstance.excludeTables != null)
                 {
-                    for(int i=0; i< credentialsConfigInstance.excludeTables.Length; i++)
+                    for (int i = 0; i < credentialsConfigInstance.excludeTables.Length; i++)
                     {
                         if (!string.IsNullOrEmpty(credentialsConfigInstance.excludeTables[i]))
                         {
@@ -291,7 +294,20 @@ namespace Firedump.models.dump
             }
 
             //</ConfigurationSection>
+            resultObj.wasSuccessful = true;
+            return arguments;
+        }
 
+
+        public DumpResultSet executeDump()
+        {
+            //to espasa se 2 methodous
+            StringBuilder arguments = calculateArguments();
+
+            if (!resultObj.wasSuccessful)
+            {
+                return resultObj;
+            }
 
             //dump execution
             Console.WriteLine(arguments.ToString());
@@ -331,12 +347,6 @@ namespace Firedump.models.dump
                 filename = "Dump" + rnd.Next(10000000, 99999999) + fileExt;
             }
 
-
-            bool includeCreateSchema = ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema;
-            bool ignoreInsert = ConfigurationManager.getInstance().mysqlDumpConfigInstance.useIgnoreInserts;
-            bool backquotes = ConfigurationManager.getInstance().mysqlDumpConfigInstance.encloseWithBackquotes;
-            int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType;
-            bool outputxml = ConfigurationManager.getInstance().mysqlDumpConfigInstance.xml;
             try
             {
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename))
@@ -352,7 +362,7 @@ namespace Firedump.models.dump
                     {
                         string line = proc.StandardOutput.ReadLine();
                         file.WriteLine(line);
-                        handleLineOutput(line, includeCreateSchema, ignoreInsert, insertReplace, backquotes, outputxml);
+                        handleLineOutput(line);
                     }
 
                 }
@@ -362,6 +372,11 @@ namespace Firedump.models.dump
                 while (!proc.StandardError.EndOfStream)
                 {
                     resultObj.mysqldumpexeStandardError += proc.StandardError.ReadLine() + "\n";
+                }
+
+                if(resultObj.mysqldumpexeStandardError.StartsWith("Warning: Using a password"))
+                {
+                    resultObj.mysqldumpexeStandardError = resultObj.mysqldumpexeStandardError.Replace("Warning: Using a password on the command line interface can be insecure.\n","");
                 }
 
                 Console.WriteLine(resultObj.mysqldumpexeStandardError); //for testing
@@ -377,6 +392,10 @@ namespace Firedump.models.dump
             {
                 resultObj.wasSuccessful = false;
                 resultObj.errorNumber = -2;
+                if(proc == null)
+                {
+                    resultObj.mysqldumpexeStandardError = "MySQL dump proccess was killed.";
+                }
                 File.Delete(configurationManagerInstance.mysqlDumpConfigInstance.tempSavePath + filename);
             }
             else
@@ -428,7 +447,7 @@ namespace Firedump.models.dump
         /// </summary>
         /// <param name="line"></param>
         /// <param name="createschema"></param>
-        private void handleLineOutput(string line,bool createschema,bool ignoreInsert,int insertReplace,bool backquotes,bool xmlout)
+        private void handleLineOutput(string line) //ekana ta boolean global gia na min ta pernaei sinexws parametrika
         {
             
             string insertStartsWith = "";

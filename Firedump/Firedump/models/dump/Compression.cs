@@ -14,6 +14,7 @@ namespace Firedump.models.dump
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         private Process proc;
         private IAdapterListener listener;
+        private string fileType;
 
         /// <summary>
         /// Absolute path of the file to compress
@@ -32,10 +33,8 @@ namespace Firedump.models.dump
             this.listener = listener;
         }
 
-        public CompressionResultSet doCompress7z()
+        private StringBuilder calculateArguments()
         {
-            string fileType;
-
             StringBuilder arguments = new StringBuilder();
             arguments.Append("a -bsp1 ");
 
@@ -122,13 +121,6 @@ namespace Firedump.models.dump
                     break;
             }
 
-
-            string f7zip = "resources\\7z64\\7z.exe";
-            if (configurationManagerInstance.compressConfigInstance.use32bit)
-            {
-                f7zip = "resources\\7z\\7z.exe"; 
-            }
-
             //setting filenames
             if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
             {
@@ -138,11 +130,24 @@ namespace Firedump.models.dump
             {
                 arguments.Append("\"" + absolutePath.Replace(".sql", fileType) + "\" ");
             }
-            
-            arguments.Append("\""+absolutePath+"\"");
 
+            arguments.Append("\"" + absolutePath + "\"");
+
+            return arguments;
+        }
+
+        public CompressionResultSet doCompress7z()
+        {
+
+            StringBuilder arguments = calculateArguments();
             Console.WriteLine("Compression7z arguments: "+arguments.ToString());
-            
+
+            string f7zip = "resources\\7z64\\7z.exe";
+            if (configurationManagerInstance.compressConfigInstance.use32bit)
+            {
+                f7zip = "resources\\7z\\7z.exe";
+            }
+
             proc = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -203,6 +208,10 @@ namespace Firedump.models.dump
             if(proc==null || proc.ExitCode!=0)
             {
                 result.wasSucessful = false;
+                if(proc == null)
+                {
+                    result.standardError = "Compression proccess was killed.";
+                }
                 //delete
                 File.Delete(absolutePath);
                 File.Delete(absolutePath.Replace(".sql", fileType));
