@@ -27,10 +27,5 @@ namespace Firedump.location
         {
             throw new NotImplementedException();
         }
-
-        public void setListener(ICallBack callback)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
