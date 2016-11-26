@@ -36,7 +36,7 @@ namespace Firedump.sqlviewer
 
         public SqlDbViewerForm(mysql_servers server,string database)
         {
-            InitializeComponent();
+            InitializeComponent();          
             DbConnection connection = DbConnection.Instance();
             connection.username = server.username;
             connection.password = server.password;
@@ -76,6 +76,7 @@ namespace Firedump.sqlviewer
                 toolStripComboBox1.Items.Add(limits[i]);
             }
             toolStripComboBox1.SelectedIndex = 2;
+            
         }
 
 
@@ -105,8 +106,10 @@ namespace Firedump.sqlviewer
                             BindingSource bs = new BindingSource();
                             adapter.Fill(dataset);
                             bs.DataSource = dataset.Tables[0].DefaultView;
-                            bindingNavigator1.BindingSource = bs;
                             dataGridView1.DataSource = bs;
+
+                            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                         }
                         catch (MySqlException ex)
                         {
@@ -168,7 +171,7 @@ namespace Firedump.sqlviewer
             if(((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
             {
                 undoList.Push(richTextBox1.Text);
-                /*
+                
                 string word = richTextBox1.Text.Split(' ').Last();
                
                 //string word = richTextBox1.Text.Substring(i + 1).TrimEnd().ToUpper().Trim();
@@ -198,7 +201,7 @@ namespace Firedump.sqlviewer
 
                     }
                 }     
-                */             
+                           
             }
             
         }
@@ -258,6 +261,11 @@ namespace Firedump.sqlviewer
                 richTextBox1.Text = content;
                 undoList.Push(content);
             }
+        }
+
+        private void saveToExcelClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

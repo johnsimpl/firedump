@@ -243,6 +243,18 @@
     <Compile Include="sqlviewer\tempform.Designer.cs">
       <DependentUpon>tempform.cs</DependentUpon>
     </Compile>
+    <Compile Include="status\AnalyzeDbForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="status\AnalyzeDbForm.Designer.cs">
+      <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="status\AnalyzeTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="status\AnalyzeTableForm.Designer.cs">
+      <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Test1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -299,6 +311,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="sqlviewer\tempform.resx">
       <DependentUpon>tempform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="status\AnalyzeDbForm.resx">
+      <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="status\AnalyzeTableForm.resx">
+      <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>

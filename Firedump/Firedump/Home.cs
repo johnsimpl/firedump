@@ -169,7 +169,7 @@ namespace Firedump
             server.port = port;
             server.username = username;
             server.password = password;
-            if (tvDatabases.SelectedNode.Parent == null)
+            if (tvDatabases.SelectedNode != null && tvDatabases.SelectedNode.Parent == null)
             {
                 string database = tvDatabases.SelectedNode.Text;
                 SqlDbViewerForm sqlform = new SqlDbViewerForm(server,database);

@@ -1,4 +1,5 @@
 ﻿using Firedump.sqlviewer;
+using Firedump.status;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace Firedump
         private void bTest1_Click(object sender, EventArgs e)
         {
             Form form1 = new Test1();
-            form1.Show();
+            form1.Show();          
         }
 
         private void bGenConfig_Click(object sender, EventArgs e)
