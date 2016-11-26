@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.location
 {
-    class LocationCloudDrive : ILocationCloud
+    class LocationCloudDrive : Location,ILocationCloud
     {
         public void connect()
         {
@@ -34,11 +34,6 @@ namespace Firedump.location
         }
 
         public void setExtraCredentials()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void setListener(ICallBack callback)
         {
             throw new NotImplementedException();
         }

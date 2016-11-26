@@ -22,6 +22,7 @@ namespace Firedump
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
         private MySqlDumpAdapter adapter;
         private List<string> databaseList;
+        private List<String> tableList = new List<string>();
         private bool hideSystemDatabases = true;
         //form instances
         private static GeneralConfiguration genConfig;
@@ -123,6 +124,7 @@ namespace Firedump
                     databases.Remove("information_schema");
                     databases.Remove("mysql");
                     databases.Remove("performance_schema");
+                    databases.Remove("sys");
                 }              
                 foreach (string database in databases)
                 {
@@ -293,6 +295,7 @@ namespace Firedump
 
             List<string> databases = new List<string>();
             List<string> excludedTables = new List<string>();
+            tableList = new List<string>();
             foreach(TreeNode node in tvDatabases.Nodes)
             {
                 if (node.Checked)
@@ -304,6 +307,9 @@ namespace Firedump
                         if (!childNode.Checked)
                         {
                             tables += childNode.Text + ",";
+                        } else
+                        {
+                            tableList.Add(childNode.Text);
                         }
                     }
                     if (tables != "")
@@ -361,13 +367,17 @@ namespace Firedump
             //tha iparxei koumpei Cancel?
             //gia oso trexei to dump to button Start Dump tha einai disable?
             //I tha to elenxoume sto performChecks ?
-           
+
             if (!adapter.isDumpRunning())
+            {
+                adapter.setTableList(tableList);
                 adapter.startDump(config, this);
-            else
+            }else
+            {
                 //inform user...
                 MessageBox.Show("dump is running...");
-            
+            }
+               
         }
 
 
@@ -445,6 +455,7 @@ namespace Firedump
                 task.Start();
                 lStatus.Text = "Cancelled";               
                 resetPbarValue();
+                tableList = new List<string>();
             }
         }
 

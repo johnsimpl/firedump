@@ -18,8 +18,6 @@ namespace Firedump.location
 
         public void setFtpLocation(LocationFtp loc)
         {
-            this.location = loc;
-            ILocation loc = new LocationFtp();
             
         }
 

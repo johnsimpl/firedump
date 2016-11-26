@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.location
 {
-    class LocationFtp : ILocation
+    class LocationFtp : Location,ILocation
     {
         public void connect()
         {
@@ -31,10 +31,6 @@ namespace Firedump.location
         {
             throw new NotImplementedException();
         }
-
-        public void setListener(ICallBack callback)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

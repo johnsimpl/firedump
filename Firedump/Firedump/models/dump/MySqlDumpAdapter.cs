@@ -15,6 +15,7 @@ namespace Firedump.models.dump
         private IDumpProgressListener listener;
         private MysqlDump mydump;
         private CredentialsConfig credentialsConfigInstance;
+        private List<string> tableList;
 
         public MySqlDumpAdapter() {           
         }
@@ -123,7 +124,9 @@ namespace Firedump.models.dump
             bool success = con.testConnection().wasSuccessful;
             if(success)
             {
-                return con.getTables(database);
+
+                //return con.getTables(database);
+                return tableList;
             }
             return null;
         }
@@ -167,6 +170,10 @@ namespace Firedump.models.dump
             }
         }
 
+        internal void setTableList(List<string> tableList)
+        {
+            this.tableList = tableList;
+        }
     }
     
 
