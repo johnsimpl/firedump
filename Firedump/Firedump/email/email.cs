@@ -5,6 +5,7 @@ using System.Net.Mime;
 using System.Threading;
 using System.ComponentModel;
 using static System.Windows.Forms.Control;
+using Firedump.mysql;
 
 namespace Examples.Smpt
 {
@@ -38,9 +39,18 @@ namespace Examples.Smpt
 
                 message.To.Add(new MailAddress(to,
                    to));
-
-                message.Subject = "My HTML Formatted Email";
-                message.Body = "<h1>HTML Formatted EMail</h1>< p > DO you like this < strong > EMail </ strong >with HTML formatting contained in its body.</ p > ";
+                DbConnection con = DbConnection.Instance();
+                if (con.testConnection())
+                {
+                    message.Subject = "Success Mail";
+                    message.Body = string.Format("<h1>Connection Succeeded</h1>< p >"+con.connectionString +" </ p > ");
+                }
+                else
+                {
+                    message.Subject = "Fail Mail";
+                    message.Body = string.Format("<h1>Connection Failed</h1>< p >" + con.connectionString + " </ p > ");
+                }
+                
 
 
                 message.IsBodyHtml = true;
