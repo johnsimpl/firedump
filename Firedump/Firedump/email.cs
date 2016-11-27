@@ -37,7 +37,7 @@ namespace Firedump
         private void button1_Click(object sender, EventArgs e)
         {
             DbConnection con = DbConnection.Instance();
-            if(con.testConnection ())
+            if(con.testConnection().wasSuccessful)
             {
                 emailform.to = textBox1.Text;
                 emailform.sendmail();

@@ -13,6 +13,7 @@ using Firedump.models;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.dump;
 using Firedump.mysql;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Firedump
 {
@@ -93,11 +94,11 @@ namespace Firedump
         /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
+            cofd.IsFolderPicker = true;
+            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                savepath = fbd.SelectedPath;
+                savepath = cofd.FileName;
             }
             
         }
@@ -344,7 +345,7 @@ namespace Firedump
                 con.port = port;
                 con.database = "";
 
-                if(con.testConnection())
+                if(con.testConnection().wasSuccessful)
                 {
                     cbDatabases.Items.Clear();
                     List<string> databases = con.getDatabases();
@@ -377,12 +378,12 @@ namespace Firedump
                 con.password = password;
                 con.port = port;
 
-                if (con.testConnection())
+                if (con.testConnection().wasSuccessful)
                 {
                     lStatus.Text = "connection is successfull!";
                 } else
                 {
-                    lStatus.Text = "Error try connecting to server!";
+                    lStatus.Text = "Error trying to connect to the server!";
                 }
             }
             

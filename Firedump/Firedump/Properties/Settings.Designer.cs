@@ -22,5 +22,16 @@ namespace Firedump.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source=\"C:\\Users\\zeron\\Documents\\Visual Studio 2015\\Projects\\firedump\\Firedu" +
+            "mp\\Firedump\\resources\\db\\firedumpdb.db\"")]
+        public string firedumpdbConnectionString {
+            get {
+                return ((string)(this["firedumpdbConnectionString"]));
+            }
+        }
     }
 }

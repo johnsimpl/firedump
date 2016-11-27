@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Firedump.models.databaseUtils;
 
 namespace Firedump.mysql
 {
     public class DbConnection
     {
 
-        private DbConnection() {
+        public DbConnection() {
             port = 3306;
         }
-
+        //den prepei na einai singleton auto me tpt mporei na ginonte taftoxrona connections se diaforous server
         private static DbConnection instance = null;
         public static DbConnection Instance()
         {
@@ -68,6 +69,7 @@ namespace Firedump.mysql
         /// <returns></returns>
         public static string conStringBuilder(string host,string username,string password,string database)
         {
+
             string cons = "";
             if (!String.IsNullOrEmpty(database))
             {
@@ -80,9 +82,9 @@ namespace Firedump.mysql
             return cons;
         }
 
-        public bool testConnection()
+        public ConnectionResultSet testConnection()
         {
-            
+            ConnectionResultSet result = new ConnectionResultSet();
             try
             {
                 connection = new MySqlConnection(conStringBuilder());
@@ -93,7 +95,10 @@ namespace Firedump.mysql
                 Console.WriteLine("Check the connection string");
                 Console.WriteLine(a_ex.Message);
                 Console.WriteLine(a_ex.ToString());
-                return false;
+                result.wasSuccessful = false;
+                result.exceptionType = 0;
+                result.errorMessage = a_ex.Message;
+                return result;
             }
             catch(MySqlException ex)
             {
@@ -111,7 +116,12 @@ namespace Firedump.mysql
                     default:
                         break;
                 }
-                return false;
+                result.wasSuccessful = false;
+                result.exceptionType = 1;
+                result.errorMessage = ex.Message;
+                result.errorSource = ex.Source;
+                result.mysqlErrNum = ex.Number;
+                return result;
             }
             finally
             {
@@ -120,7 +130,8 @@ namespace Firedump.mysql
                     connection.Close();
                 }
             }
-            return true;
+            result.wasSuccessful = true;
+            return result;
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ namespace Firedump.models.dump
         private IDumpProgressListener listener;
         private MysqlDump mydump;
         private CredentialsConfig credentialsConfigInstance;
+        private List<string> tableList;
 
         public MySqlDumpAdapter() {           
         }
@@ -76,13 +77,16 @@ namespace Firedump.models.dump
                 {
                     listener.onCompleted(dumpresult);
                 }
+                mydump = null;
             } else
             {
                 if(listener != null)
                 {
                     //we need enumaration classes for all kind of different erros
+                    //..We still need enumaration class for all kind of dif erros
                     listener.onError(-1);
                 }
+                mydump = null;
             }
             
 
@@ -93,8 +97,14 @@ namespace Firedump.models.dump
         {
             if(mydump != null)
             {
-                mydump.cancelMysqlDumpProcess();                
+                mydump.cancelMysqlDumpProcess();
+                mydump = null;              
             }
+        }
+
+        public bool isDumpRunning()
+        {
+            return mydump != null;
         }
 
 
@@ -111,10 +121,12 @@ namespace Firedump.models.dump
             con.password = password;
             con.database = database;
             con.port = port;
-            bool success = con.testConnection();
+            bool success = con.testConnection().wasSuccessful;
             if(success)
             {
-                return con.getTables(database);
+
+                //return con.getTables(database);
+                return tableList;
             }
             return null;
         }
@@ -158,6 +170,10 @@ namespace Firedump.models.dump
             }
         }
 
+        internal void setTableList(List<string> tableList)
+        {
+            this.tableList = tableList;
+        }
     }
     
 

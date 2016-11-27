@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Firedump
+namespace Firedump.status
 {
-    public partial class Connect : Form
+    public partial class AnalyzeDbForm : Form
     {
-        public Connect()
+        public AnalyzeDbForm()
         {
             InitializeComponent();
+           
         }
     }
 }

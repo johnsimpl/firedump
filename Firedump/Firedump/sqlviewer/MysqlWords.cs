@@ -62,5 +62,29 @@ namespace Firedump.sqlviewer
             "LIMIT",
             "OR"
         };
+
+        public static List<string> operators = new List<string>()
+        {
+            "+",
+            "-",
+            "*",
+            "/",
+            "(",
+            ")",
+            "'",
+            "\"",
+            ".",
+            ",",
+            ";",
+            "=",
+            ">",
+            "<",
+            ">=",
+            "<="
+        };
+
+
+        public static List<string> tables = new List<string>();
+
     }
 }

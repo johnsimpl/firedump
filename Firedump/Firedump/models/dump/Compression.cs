@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Firedump.models.dump
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         private Process proc;
         private IAdapterListener listener;
+        private string fileType;
 
         /// <summary>
         /// Absolute path of the file to compress
@@ -31,10 +33,8 @@ namespace Firedump.models.dump
             this.listener = listener;
         }
 
-        public CompressionResultSet doCompress7z()
+        private StringBuilder calculateArguments()
         {
-            string fileType;
-
             StringBuilder arguments = new StringBuilder();
             arguments.Append("a -bsp1 ");
 
@@ -121,13 +121,6 @@ namespace Firedump.models.dump
                     break;
             }
 
-
-            string f7zip = "resources\\7z64\\7z.exe";
-            if (configurationManagerInstance.compressConfigInstance.use32bit)
-            {
-                f7zip = "resources\\7z\\7z.exe"; 
-            }
-
             //setting filenames
             if (configurationManagerInstance.mysqlDumpConfigInstance.xml)
             {
@@ -137,11 +130,24 @@ namespace Firedump.models.dump
             {
                 arguments.Append("\"" + absolutePath.Replace(".sql", fileType) + "\" ");
             }
-            
-            arguments.Append("\""+absolutePath+"\"");
 
+            arguments.Append("\"" + absolutePath + "\"");
+
+            return arguments;
+        }
+
+        public CompressionResultSet doCompress7z()
+        {
+
+            StringBuilder arguments = calculateArguments();
             Console.WriteLine("Compression7z arguments: "+arguments.ToString());
-            
+
+            string f7zip = "resources\\7z64\\7z.exe";
+            if (configurationManagerInstance.compressConfigInstance.use32bit)
+            {
+                f7zip = "resources\\7z\\7z.exe";
+            }
+
             proc = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -164,36 +170,51 @@ namespace Firedump.models.dump
                 listener.onCompressStart();
             }
 
-            while (!proc.StandardOutput.EndOfStream)
+            try
             {
-                string line = proc.StandardOutput.ReadLine();
-                Console.WriteLine("Comp:"+line);
-                
-                if(listener != null)
+                while (!proc.StandardOutput.EndOfStream)
                 {
-                    if (line.Contains("%"))
+                    string line = proc.StandardOutput.ReadLine();
+                    Console.WriteLine("Comp:" + line);
+
+                    if (listener != null)
                     {
-                        int per = 0;
-                        int.TryParse(line.Substring(0, 3), out per);
-                        //Console.WriteLine("per:" + per);
-                        listener.compressProgress(per);
+                        if (line.Contains("%"))
+                        {
+                            int per = 0;
+                            int.TryParse(line.Substring(0, 3), out per);
+                            listener.compressProgress(per);
+                        }
                     }
+
                 }
-                
-            }
 
-            while (!proc.StandardError.EndOfStream)
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    result.standardError += line + "\n";
+                    Console.WriteLine(line);
+                }
+
+                proc.WaitForExit();
+            }
+            catch(NullReferenceException ex)
             {
-                string line = proc.StandardError.ReadLine();
-                result.standardError += line + "\n";
-                Console.WriteLine(line);
+                Console.WriteLine("Compression null reference exception on proccess: " + ex.Message);
+                File.Delete(absolutePath);
+                File.Delete(absolutePath.Replace(".sql", fileType));
             }
 
-            proc.WaitForExit();
-
-            if(proc.ExitCode!=0)
+            if(proc==null || proc.ExitCode!=0)
             {
                 result.wasSucessful = false;
+                if(proc == null)
+                {
+                    result.standardError = "Compression proccess was killed.";
+                }
+                //delete
+                File.Delete(absolutePath);
+                File.Delete(absolutePath.Replace(".sql", fileType));
             }
             else
             {
