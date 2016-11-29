@@ -40,7 +40,7 @@ namespace Examples.Smpt
                 message.To.Add(new MailAddress(to,
                    to));
                 DbConnection con = DbConnection.Instance();
-                if (con.testConnection())
+                if (con.testConnection().wasSuccessful)
                 {
                     message.Subject = "Success Mail";
                     message.Body = string.Format("<h1>Connection Succeeded</h1>< p >"+con.connectionString +" </ p > ");

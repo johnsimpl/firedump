@@ -3,6 +3,7 @@ using Firedump.models.databaseUtils;
 using Firedump.models.dump;
 using Firedump.mysql;
 using Firedump.sqlviewer;
+using Firedump.status;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -141,11 +142,14 @@ namespace Firedump
 
                 this.Invoke((MethodInvoker)delegate () {
                     ToolStripMenuItem opendb = new ToolStripMenuItem();
+                    ToolStripMenuItem analyzedb = new ToolStripMenuItem();
                     opendb.Text = "browse data";
                     opendb.Tag = "sql";
                     opendb.Click += new EventHandler(menuClick);
+                    analyzedb.Text = "inspect database";
+                    analyzedb.Click += new EventHandler(menuClick);
                     ContextMenuStrip menu = new ContextMenuStrip();
-                    menu.Items.AddRange(new ToolStripMenuItem[] { opendb});                    
+                    menu.Items.AddRange(new ToolStripMenuItem[] { opendb,analyzedb});                    
                     tvDatabases.ContextMenuStrip = menu;
                 });
             }
@@ -172,15 +176,34 @@ namespace Firedump
             if (tvDatabases.SelectedNode != null && tvDatabases.SelectedNode.Parent == null)
             {
                 string database = tvDatabases.SelectedNode.Text;
-                SqlDbViewerForm sqlform = new SqlDbViewerForm(server,database);
-                sqlform.Show();
+                if(sender.ToString() == "browse data")
+                {
+                    SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
+                    sqlform.Show();
+                } else if(sender.ToString() == "inspect database")
+                {
+                    AnalyzeDbForm adbf = new AnalyzeDbForm(server, database);
+                    adbf.Show();
+                }
+                
             } else
             {
                 string database = tvDatabases.SelectedNode.Parent.Text;
-                SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
-                sqlform.Show();
+                if (sender.ToString() == "browse data")
+                {
+                    SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
+                    sqlform.Show();
+                }
+                else if (sender.ToString() == "inspect database")
+                {
+                    AnalyzeDbForm adbf = new AnalyzeDbForm(server, database);
+                    adbf.Show();
+                }
+               
             }
         }
+
+       
 
         private void Home_Load(object sender, EventArgs e)
         {
