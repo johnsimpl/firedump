@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.bAddServer = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bAddSaveLoc = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
+            this.cbShowSysDB = new System.Windows.Forms.CheckBox();
             this.tvDatabases = new System.Windows.Forms.TreeView();
             this.bDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
-            this.gbDestinations = new System.Windows.Forms.GroupBox();
+            this.gbSaveLocations = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +50,10 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbShowSysDB = new System.Windows.Forms.CheckBox();
+            this.bDeleteSaveLocation = new System.Windows.Forms.Button();
+            this.lbSaveLocations = new System.Windows.Forms.ListBox();
             this.gbConnection.SuspendLayout();
-            this.gbDestinations.SuspendLayout();
+            this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,15 +68,15 @@
             this.bAddServer.UseVisualStyleBackColor = true;
             this.bAddServer.Click += new System.EventHandler(this.bAddServer_Click);
             // 
-            // button1
+            // bAddSaveLoc
             // 
-            this.button1.Location = new System.Drawing.Point(31, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Add Destination";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btAddDestClick);
+            this.bAddSaveLoc.Location = new System.Drawing.Point(6, 36);
+            this.bAddSaveLoc.Name = "bAddSaveLoc";
+            this.bAddSaveLoc.Size = new System.Drawing.Size(125, 23);
+            this.bAddSaveLoc.TabIndex = 1;
+            this.bAddSaveLoc.Text = "Add Save Location";
+            this.bAddSaveLoc.UseVisualStyleBackColor = true;
+            this.bAddSaveLoc.Click += new System.EventHandler(this.btAddDestClick);
             // 
             // gbConnection
             // 
@@ -91,6 +93,17 @@
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
             this.gbConnection.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cbShowSysDB
+            // 
+            this.cbShowSysDB.AutoSize = true;
+            this.cbShowSysDB.Location = new System.Drawing.Point(135, 13);
+            this.cbShowSysDB.Name = "cbShowSysDB";
+            this.cbShowSysDB.Size = new System.Drawing.Size(144, 17);
+            this.cbShowSysDB.TabIndex = 5;
+            this.cbShowSysDB.Text = "Show System Databases";
+            this.cbShowSysDB.UseVisualStyleBackColor = true;
+            this.cbShowSysDB.CheckedChanged += new System.EventHandler(this.cbShowSysDB_CheckedChanged);
             // 
             // tvDatabases
             // 
@@ -131,15 +144,17 @@
             this.cmbServers.TabIndex = 1;
             this.cmbServers.SelectionChangeCommitted += new System.EventHandler(this.cmbServers_SelectionChangeCommitted);
             // 
-            // gbDestinations
+            // gbSaveLocations
             // 
-            this.gbDestinations.Controls.Add(this.button1);
-            this.gbDestinations.Location = new System.Drawing.Point(420, 37);
-            this.gbDestinations.Name = "gbDestinations";
-            this.gbDestinations.Size = new System.Drawing.Size(279, 172);
-            this.gbDestinations.TabIndex = 0;
-            this.gbDestinations.TabStop = false;
-            this.gbDestinations.Text = "Destinations";
+            this.gbSaveLocations.Controls.Add(this.lbSaveLocations);
+            this.gbSaveLocations.Controls.Add(this.bDeleteSaveLocation);
+            this.gbSaveLocations.Controls.Add(this.bAddSaveLoc);
+            this.gbSaveLocations.Location = new System.Drawing.Point(353, 37);
+            this.gbSaveLocations.Name = "gbSaveLocations";
+            this.gbSaveLocations.Size = new System.Drawing.Size(346, 305);
+            this.gbSaveLocations.TabIndex = 0;
+            this.gbSaveLocations.TabStop = false;
+            this.gbSaveLocations.Text = "Save Locations";
             // 
             // menuStrip1
             // 
@@ -242,22 +257,28 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(304, 224);
+            this.label2.Location = new System.Drawing.Point(303, 355);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
             // 
-            // cbShowSysDB
+            // bDeleteSaveLocation
             // 
-            this.cbShowSysDB.AutoSize = true;
-            this.cbShowSysDB.Location = new System.Drawing.Point(135, 13);
-            this.cbShowSysDB.Name = "cbShowSysDB";
-            this.cbShowSysDB.Size = new System.Drawing.Size(144, 17);
-            this.cbShowSysDB.TabIndex = 5;
-            this.cbShowSysDB.Text = "Show System Databases";
-            this.cbShowSysDB.UseVisualStyleBackColor = true;
-            this.cbShowSysDB.CheckedChanged += new System.EventHandler(this.cbShowSysDB_CheckedChanged);
+            this.bDeleteSaveLocation.Location = new System.Drawing.Point(213, 36);
+            this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
+            this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
+            this.bDeleteSaveLocation.TabIndex = 2;
+            this.bDeleteSaveLocation.Text = "Delete Save Location";
+            this.bDeleteSaveLocation.UseVisualStyleBackColor = true;
+            // 
+            // lbSaveLocations
+            // 
+            this.lbSaveLocations.FormattingEnabled = true;
+            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
+            this.lbSaveLocations.Name = "lbSaveLocations";
+            this.lbSaveLocations.Size = new System.Drawing.Size(334, 225);
+            this.lbSaveLocations.TabIndex = 3;
             // 
             // Home
             // 
@@ -271,7 +292,7 @@
             this.Controls.Add(this.lStatusLabel);
             this.Controls.Add(this.pbDumpExec);
             this.Controls.Add(this.bStartDump);
-            this.Controls.Add(this.gbDestinations);
+            this.Controls.Add(this.gbSaveLocations);
             this.Controls.Add(this.gbConnection);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -280,7 +301,7 @@
             this.Load += new System.EventHandler(this.Home_Load);
             this.gbConnection.ResumeLayout(false);
             this.gbConnection.PerformLayout();
-            this.gbDestinations.ResumeLayout(false);
+            this.gbSaveLocations.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -291,9 +312,9 @@
         #endregion
 
         private System.Windows.Forms.Button bAddServer;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bAddSaveLoc;
         private System.Windows.Forms.GroupBox gbConnection;
-        private System.Windows.Forms.GroupBox gbDestinations;
+        private System.Windows.Forms.GroupBox gbSaveLocations;
         private System.Windows.Forms.ComboBox cmbServers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -312,5 +333,7 @@
         private System.Windows.Forms.Button bcancel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbShowSysDB;
+        private System.Windows.Forms.ListBox lbSaveLocations;
+        private System.Windows.Forms.Button bDeleteSaveLocation;
     }
 }

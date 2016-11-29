@@ -13,6 +13,13 @@ namespace Firedump.models.location
         private ILocation location;
         private ILocationListener listener;
 
+        public LocationAdapter() { }
+
+        public LocationAdapter(ILocationListener listener)
+        {
+            this.listener = listener;
+        }
+
         public void setLocalLocation()
         {
             this.location = new LocationLocal(this);
@@ -24,29 +31,25 @@ namespace Firedump.models.location
             ((LocationFtp)this.location).config = config;
         }
 
-        public void sendFile(ILocationListener listener)
+        public void sendFile()
         {
             if (this.location == null)
             {
                 listener.onError("Location type not set. Aborting...");
                 return;
             }
-
-            this.listener = listener;
 
             Task sendtask = new Task(sendFileTaskExecutor);
             sendtask.Start();
         }
 
-        public void getFile(ILocationListener listener)
+        public void getFile()
         {
             if (this.location == null)
             {
                 listener.onError("Location type not set. Aborting...");
                 return;
             }
-
-            this.listener = listener;
 
             Task gettask = new Task(getFileTaskExecutor);
             gettask.Start();

@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace Firedump
 {
-    public partial class Location : Form
+    public partial class LocationSwitchboard : Form
     {
-        public Location()
+        private Home homeinstance;
+        public LocationSwitchboard(Home homeinstance)
         {
             InitializeComponent();
+            this.homeinstance = homeinstance;
         }
     }
 }

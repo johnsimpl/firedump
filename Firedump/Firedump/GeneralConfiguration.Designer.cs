@@ -103,9 +103,9 @@
             // 
             // tbLogFolder
             // 
-            this.tbLogFolder.Enabled = false;
             this.tbLogFolder.Location = new System.Drawing.Point(133, 105);
             this.tbLogFolder.Name = "tbLogFolder";
+            this.tbLogFolder.ReadOnly = true;
             this.tbLogFolder.Size = new System.Drawing.Size(315, 20);
             this.tbLogFolder.TabIndex = 3;
             // 
@@ -130,9 +130,9 @@
             // 
             // tbTempFolder
             // 
-            this.tbTempFolder.Enabled = false;
             this.tbTempFolder.Location = new System.Drawing.Point(133, 49);
             this.tbTempFolder.Name = "tbTempFolder";
+            this.tbTempFolder.ReadOnly = true;
             this.tbTempFolder.Size = new System.Drawing.Size(315, 20);
             this.tbTempFolder.TabIndex = 0;
             // 

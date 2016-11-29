@@ -61,7 +61,8 @@ namespace Firedump
 
         private void btAddDestClick(object sender, EventArgs e)
         {
-
+            LocationSwitchboard locswitch = new LocationSwitchboard(this);
+            locswitch.ShowDialog();
         }
 
         private void miConfiguration_Click(object sender, EventArgs e)

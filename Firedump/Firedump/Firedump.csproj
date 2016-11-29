@@ -152,11 +152,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Location.cs">
+    <Compile Include="LocationSwitchboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Location.Designer.cs">
-      <DependentUpon>Location.cs</DependentUpon>
+    <Compile Include="LocationSwitchboard.Designer.cs">
+      <DependentUpon>LocationSwitchboard.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneralConfiguration.cs">
       <SubType>Form</SubType>
@@ -290,8 +290,8 @@
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Location.resx">
-      <DependentUpon>Location.cs</DependentUpon>
+    <EmbeddedResource Include="LocationSwitchboard.resx">
+      <DependentUpon>LocationSwitchboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
