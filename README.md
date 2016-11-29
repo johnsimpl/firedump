@@ -14,7 +14,6 @@ Nuget reinstall Command:<br>  Update-Package –reinstall
 Avraam Piperidis<br>
 Valantis Pitsas<br>
 Chenyang Ji <br>
-Ioannis Deliveis<br>
 <br>
 
 mysqlftp backup .net desktop app <br>
