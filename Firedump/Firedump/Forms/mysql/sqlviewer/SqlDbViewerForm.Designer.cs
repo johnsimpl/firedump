@@ -1,4 +1,4 @@
-﻿namespace Firedump.sqlviewer
+﻿namespace Firedump.Forms.mysql.sqlviewer
 {
     partial class SqlDbViewerForm
     {

@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Firedump.models.databaseUtils;
 
-namespace Firedump.mysql
+namespace Firedump.models.databaseUtils
 {
     public class DbConnection
     {

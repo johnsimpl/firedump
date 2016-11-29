@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firedump.sqlviewer
+namespace Firedump.Forms.mysql.sqlviewer
 {
     class MysqlWords
     {

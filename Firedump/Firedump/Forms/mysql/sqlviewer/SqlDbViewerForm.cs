@@ -1,5 +1,4 @@
-﻿using Firedump.mysql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Firedump.utils;
+using Firedump.models.databaseUtils;
 
-namespace Firedump.sqlviewer
+namespace Firedump.Forms.mysql.sqlviewer
 {
     public partial class SqlDbViewerForm : Form
     {

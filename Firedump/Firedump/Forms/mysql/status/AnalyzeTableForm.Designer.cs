@@ -1,4 +1,4 @@
-﻿namespace Firedump.status
+﻿namespace Firedump.Forms.mysql.status
 {
     partial class AnalyzeTableForm
     {

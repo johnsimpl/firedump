@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Firedump
+namespace Firedump.Forms.location
 {
     public partial class LocationSwitchboard : Form
     {
@@ -17,6 +17,11 @@ namespace Firedump
         {
             InitializeComponent();
             this.homeinstance = homeinstance;
+        }
+
+        private void bFileSystem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

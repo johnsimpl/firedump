@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Firedump
+namespace Firedump.Forms.configuration
 {
     public partial class GeneralConfiguration : Form
     {

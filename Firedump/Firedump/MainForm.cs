@@ -1,5 +1,8 @@
-﻿using Firedump.sqlviewer;
-using Firedump.status;
+﻿using Firedump.Forms.configuration;
+using Firedump.Forms.email;
+using Firedump.Forms.mysql;
+using Firedump.Forms.mysql.sqlviewer;
+using Firedump.Forms.mysql.status;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

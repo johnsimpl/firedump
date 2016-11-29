@@ -128,40 +128,40 @@
     <Compile Include="models\location\LocationResultSet.cs" />
     <Compile Include="models\location\UIServiceDemo.cs" />
     <Compile Include="models\databaseUtils\ConnectionResultSet.cs" />
-    <Compile Include="NewMySQLServer.cs">
+    <Compile Include="Forms\mysql\NewMySQLServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewMySQLServer.Designer.cs">
+    <Compile Include="Forms\mysql\NewMySQLServer.Designer.cs">
       <DependentUpon>NewMySQLServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="email.cs">
+    <Compile Include="Forms\email\email.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="email.Designer.cs">
+    <Compile Include="Forms\email\email.Designer.cs">
       <DependentUpon>email.cs</DependentUpon>
     </Compile>
-    <Compile Include="emailconfig.cs">
+    <Compile Include="Forms\email\emailconfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="emailconfig.Designer.cs">
+    <Compile Include="Forms\email\emailconfig.Designer.cs">
       <DependentUpon>emailconfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="email\email.cs" />
+    <Compile Include="models\email\email.cs" />
     <Compile Include="firedumpdbDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="LocationSwitchboard.cs">
+    <Compile Include="Forms\location\LocationSwitchboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocationSwitchboard.Designer.cs">
+    <Compile Include="Forms\location\LocationSwitchboard.Designer.cs">
       <DependentUpon>LocationSwitchboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeneralConfiguration.cs">
+    <Compile Include="Forms\configuration\GeneralConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeneralConfiguration.Designer.cs">
+    <Compile Include="Forms\configuration\GeneralConfiguration.Designer.cs">
       <DependentUpon>GeneralConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="Home.cs">
@@ -177,10 +177,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="models\dump\CompressionResultSet.cs" />
-    <Compile Include="MoreSQLOptions.cs">
+    <Compile Include="Forms\configuration\MoreSQLOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MoreSQLOptions.Designer.cs">
+    <Compile Include="Forms\configuration\MoreSQLOptions.Designer.cs">
       <DependentUpon>MoreSQLOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="resources\db\InitDb.cs" />
@@ -220,7 +220,7 @@
     <Compile Include="models\dump\MysqlDump.cs" />
     <Compile Include="models\dump\MySqlDumpAdapter.cs" />
     <Compile Include="models\configuration\jsonconfig\MySqlDumpConfig.cs" />
-    <Compile Include="mysql\DbConnection.cs" />
+    <Compile Include="models\databaseUtils\DbConnection.cs" />
     <Compile Include="mysql_servers.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
@@ -232,30 +232,30 @@
     <Compile Include="schedule_save_locations.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sqlviewer\HtmlBase.cs" />
-    <Compile Include="sqlviewer\MysqlWords.cs" />
-    <Compile Include="sqlviewer\SqlDbViewerForm.cs">
+    <Compile Include="Forms\mysql\sqlviewer\HtmlBase.cs" />
+    <Compile Include="Forms\mysql\sqlviewer\MysqlWords.cs" />
+    <Compile Include="Forms\mysql\sqlviewer\SqlDbViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sqlviewer\SqlDbViewerForm.Designer.cs">
+    <Compile Include="Forms\mysql\sqlviewer\SqlDbViewerForm.Designer.cs">
       <DependentUpon>SqlDbViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="sqlviewer\tempform.cs">
+    <Compile Include="Forms\mysql\sqlviewer\tempform.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sqlviewer\tempform.Designer.cs">
+    <Compile Include="Forms\mysql\sqlviewer\tempform.Designer.cs">
       <DependentUpon>tempform.cs</DependentUpon>
     </Compile>
-    <Compile Include="status\AnalyzeDbForm.cs">
+    <Compile Include="Forms\mysql\status\AnalyzeDbForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="status\AnalyzeDbForm.Designer.cs">
+    <Compile Include="Forms\mysql\status\AnalyzeDbForm.Designer.cs">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="status\AnalyzeTableForm.cs">
+    <Compile Include="Forms\mysql\status\AnalyzeTableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="status\AnalyzeTableForm.Designer.cs">
+    <Compile Include="Forms\mysql\status\AnalyzeTableForm.Designer.cs">
       <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Test1.cs">
@@ -271,32 +271,32 @@
     <Compile Include="userinfo.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="utils\SqlUtils.cs" />
-    <EmbeddedResource Include="NewMySQLServer.resx">
+    <Compile Include="models\databaseUtils\SqlUtils.cs" />
+    <EmbeddedResource Include="Forms\mysql\NewMySQLServer.resx">
       <DependentUpon>NewMySQLServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="email.resx">
+    <EmbeddedResource Include="Forms\email\email.resx">
       <DependentUpon>email.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="emailconfig.resx">
+    <EmbeddedResource Include="Forms\email\emailconfig.resx">
       <DependentUpon>emailconfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GeneralConfiguration.resx">
+    <EmbeddedResource Include="Forms\configuration\GeneralConfiguration.resx">
       <DependentUpon>GeneralConfiguration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocationSwitchboard.resx">
+    <EmbeddedResource Include="Forms\location\LocationSwitchboard.resx">
       <DependentUpon>LocationSwitchboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MoreSQLOptions.resx">
+    <EmbeddedResource Include="Forms\configuration\MoreSQLOptions.resx">
       <DependentUpon>MoreSQLOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -309,16 +309,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="sqlviewer\SqlDbViewerForm.resx">
+    <EmbeddedResource Include="Forms\mysql\sqlviewer\SqlDbViewerForm.resx">
       <DependentUpon>SqlDbViewerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="sqlviewer\tempform.resx">
+    <EmbeddedResource Include="Forms\mysql\sqlviewer\tempform.resx">
       <DependentUpon>tempform.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="status\AnalyzeDbForm.resx">
+    <EmbeddedResource Include="Forms\mysql\status\AnalyzeDbForm.resx">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="status\AnalyzeTableForm.resx">
+    <EmbeddedResource Include="Forms\mysql\status\AnalyzeTableForm.resx">
       <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">

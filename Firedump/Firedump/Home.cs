@@ -1,9 +1,8 @@
 ﻿using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.databaseUtils;
 using Firedump.models.dump;
-using Firedump.mysql;
-using Firedump.sqlviewer;
-using Firedump.status;
+using Firedump.Forms.mysql.sqlviewer;
+using Firedump.Forms.mysql.status;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +13,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Firedump.Forms.configuration;
+using Firedump.Forms.mysql;
+using Firedump.Forms.location;
 
 namespace Firedump
 {

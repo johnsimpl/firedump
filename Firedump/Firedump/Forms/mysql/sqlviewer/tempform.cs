@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Firedump.sqlviewer
+namespace Firedump.Forms.mysql.sqlviewer
 {
     public partial class tempform : Form
     {

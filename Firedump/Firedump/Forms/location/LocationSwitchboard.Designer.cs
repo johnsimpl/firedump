@@ -1,4 +1,4 @@
-﻿namespace Firedump
+﻿namespace Firedump.Forms.location
 {
     partial class LocationSwitchboard
     {
@@ -50,6 +50,7 @@
             this.bFileSystem.TabIndex = 0;
             this.bFileSystem.Text = "File System";
             this.bFileSystem.UseVisualStyleBackColor = true;
+            this.bFileSystem.Click += new System.EventHandler(this.bFileSystem_Click);
             // 
             // bFTP
             // 

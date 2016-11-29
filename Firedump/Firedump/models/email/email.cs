@@ -5,9 +5,9 @@ using System.Net.Mime;
 using System.Threading;
 using System.ComponentModel;
 using static System.Windows.Forms.Control;
-using Firedump.mysql;
+using Firedump.models.databaseUtils;
 
-namespace Examples.Smpt
+namespace Firedump.models.email
 {
     public class emailform
     {

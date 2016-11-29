@@ -1,5 +1,4 @@
-﻿using Firedump.mysql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Firedump.models.databaseUtils;
 
-namespace Firedump.status
+namespace Firedump.Forms.mysql.status
 {
     public partial class AnalyzeDbForm : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace Firedump
+﻿namespace Firedump.Forms.configuration
 {
     partial class GeneralConfiguration
     {

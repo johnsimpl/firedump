@@ -4,9 +4,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Firedump.models.dump;
-using Firedump.mysql;
 using System.Collections.Generic;
 using Firedump.models.configuration.dynamicconfig;
+using Firedump.models.databaseUtils;
 
 namespace Firedump.models.dump
 {

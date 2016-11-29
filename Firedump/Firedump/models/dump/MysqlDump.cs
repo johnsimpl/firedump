@@ -9,7 +9,7 @@ using Firedump.models.configuration.jsonconfig;
 using Firedump.models.dump;
 using System.IO;
 using System.Text.RegularExpressions;
-using Firedump.mysql;
+using Firedump.models.databaseUtils;
 
 namespace Firedump.models.dump
 {

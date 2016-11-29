@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Examples.Smpt;
+using Firedump.models.email;
 
-namespace Firedump
+namespace Firedump.Forms.email
 {
     public partial class emailconfig : Form
     {

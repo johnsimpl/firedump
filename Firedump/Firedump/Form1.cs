@@ -12,8 +12,8 @@ using System.Data.SQLite;
 using Firedump.models;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.dump;
-using Firedump.mysql;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Firedump.models.databaseUtils;
 
 namespace Firedump
 {

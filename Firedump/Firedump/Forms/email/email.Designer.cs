@@ -1,4 +1,4 @@
-﻿namespace Firedump
+﻿namespace Firedump.Forms.email
 {
     partial class email
     {

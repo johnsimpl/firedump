@@ -1,5 +1,5 @@
-﻿using Examples.Smpt;
-using Firedump.mysql;
+﻿using Firedump.models.databaseUtils;
+using Firedump.models.email;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace Firedump
+namespace Firedump.Forms.email
 {
     public partial class email : Form
     {

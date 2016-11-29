@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Firedump.status
+namespace Firedump.Forms.mysql.status
 {
     public partial class AnalyzeTableForm : Form
     {
