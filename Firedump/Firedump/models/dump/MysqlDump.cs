@@ -19,7 +19,7 @@ namespace Firedump.models.dump
         /// <summary>
         /// Create a new credentials instance and set it before executing mysqldump
         /// </summary>
-        public CredentialsConfig credentialsConfigInstance { set; get; }
+        public DumpCredentialsConfig credentialsConfigInstance { set; get; }
 
         private IAdapterListener listener;
         private Process proc;

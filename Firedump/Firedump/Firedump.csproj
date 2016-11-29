@@ -112,9 +112,13 @@
     <Compile Include="firedumpdbDataSet.cs">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
+    <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
     <Compile Include="models\location\ICallBack.cs" />
     <Compile Include="models\location\ILocation.cs" />
     <Compile Include="models\location\ILocationCloud.cs" />
+    <Compile Include="models\location\ILocationListener.cs" />
+    <Compile Include="models\location\ILocationProgressListener.cs" />
     <Compile Include="models\location\Location.cs" />
     <Compile Include="models\location\LocationAdapter.cs" />
     <Compile Include="models\location\LocationCloudBox.cs" />
@@ -208,7 +212,6 @@
     <Compile Include="models\configuration\jsonconfig\ConfigurationClass.cs" />
     <Compile Include="models\configuration\jsonconfig\ConfigurationManager.cs" />
     <Compile Include="models\configuration\dynamicconfig\CredentialsConfig.cs" />
-    <Compile Include="models\configuration\dynamicconfig\OutputConfig.cs" />
     <Compile Include="models\databaseUtils\FiredumpContext.cs" />
     <Compile Include="models\dump\Compression.cs" />
     <Compile Include="models\dump\DumpResultSet.cs" />

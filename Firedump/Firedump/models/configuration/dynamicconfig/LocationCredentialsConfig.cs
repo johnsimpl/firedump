@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.dynamicconfig
 {
-    class OutputConfig
+    public class LocationCredentialsConfig : CredentialsConfig
     {
-        //<!configuration fields section>
-
-        //</configuration fields section>
-        public OutputConfig() { }
-
+        public string sourcePath { set; get; }
+        public string locationPath { set; get; }
     }
 }

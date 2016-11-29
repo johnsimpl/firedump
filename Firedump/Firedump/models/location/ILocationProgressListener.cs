@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    abstract class Location //ola public alliws den ta vlepoun alles klaseis oute kan autes pou klironomoun
+    interface ILocationProgressListener
     {
-
+        void setProgress(int progress);
     }
 }

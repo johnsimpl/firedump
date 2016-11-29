@@ -13,8 +13,9 @@ namespace Firedump.models.location
         public void demo()
         {
             LocationAdapter adapter = new LocationAdapter();
+            /*
             adapter.setFtpLocation(new LocationFtp());
-            ILocation loc = new LocationFtp();
+            ILocation loc = new LocationFtp();*/
 
         }
 

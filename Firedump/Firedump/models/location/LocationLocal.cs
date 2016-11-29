@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.models.configuration.dynamicconfig;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace Firedump.models.location
 {
     class LocationLocal : Location,ILocation
     {
+        public LocationCredentialsConfig config { set; get; }
+        private ILocationProgressListener listener;
+        private LocationLocal() { }
+        public LocationLocal(ILocationProgressListener listener)
+        {
+            this.listener = listener;
+        }
         public void connect()
         {
             throw new NotImplementedException();
@@ -27,10 +35,10 @@ namespace Firedump.models.location
         public LocationResultSet send()
         {
             LocationResultSet result = new LocationResultSet();
-            result.path = base.locationPath;
+            result.path = config.locationPath;
             try
             {
-                File.Move(base.localPath,base.locationPath);
+                File.Move(config.sourcePath, config.locationPath);
                 result.wasSuccessful = true;
             }
             catch (Exception ex)

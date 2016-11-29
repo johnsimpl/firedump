@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.models.configuration.dynamicconfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +7,77 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationAdapter
+    class LocationAdapter : ILocationProgressListener
     {
 
         private ILocation location;
+        private ILocationListener listener;
 
-        public void setLocation(ILocation location)
+        public void setLocalLocation()
         {
-            this.location = location;
+            this.location = new LocationLocal(this);
         }
 
-        public void setFtpLocation(LocationFtp loc)
+        public void setFtpLocation(LocationCredentialsConfig config)
         {
-            
+            this.location = new LocationFtp(this);
+            ((LocationFtp)this.location).config = config;
         }
 
+        public void sendFile(ILocationListener listener)
+        {
+            if (this.location == null)
+            {
+                listener.onError("Location type not set. Aborting...");
+                return;
+            }
 
+            this.listener = listener;
+
+            Task sendtask = new Task(sendFileTaskExecutor);
+            sendtask.Start();
+        }
+
+        public void getFile(ILocationListener listener)
+        {
+            if (this.location == null)
+            {
+                listener.onError("Location type not set. Aborting...");
+                return;
+            }
+
+            this.listener = listener;
+
+            Task gettask = new Task(getFileTaskExecutor);
+            gettask.Start();
+        }
+
+        private async void sendFileTaskExecutor()
+        {
+            Task<LocationResultSet> innersendtask = new Task<LocationResultSet>(location.send);
+            LocationResultSet res;
+            try
+            {
+                res = await innersendtask;
+            }
+            catch (NullReferenceException) { }
+
+        }
+
+        private async void getFileTaskExecutor()
+        {
+            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);//getFileTask();
+            LocationResultSet res;
+            try
+            {
+                res = await innergettask;
+            }
+            catch (NullReferenceException) { }
+        }
+
+        public void setProgress(int progress)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

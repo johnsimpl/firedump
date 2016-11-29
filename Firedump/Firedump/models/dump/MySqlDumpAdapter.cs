@@ -14,7 +14,7 @@ namespace Firedump.models.dump
     {
         private IDumpProgressListener listener;
         private MysqlDump mydump;
-        private CredentialsConfig credentialsConfigInstance;
+        private DumpCredentialsConfig credentialsConfigInstance;
         private List<string> tableList;
 
         public MySqlDumpAdapter() {           
@@ -29,7 +29,7 @@ namespace Firedump.models.dump
         /// <param name="listener">the listener interface for the notifications status of the whole job \n
         ///                       IDumpProgressListener to notify the user about the job status 
         /// </param>
-        public void startDump(CredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
+        public void startDump(DumpCredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
         {
             this.listener = listener;
             listener.onProgress("mysql dump started!");//+options.getHost());

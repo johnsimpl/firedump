@@ -356,7 +356,7 @@ namespace Firedump
                 Console.WriteLine(table);
             }*/
 
-            CredentialsConfig config = new CredentialsConfig();
+            DumpCredentialsConfig config = new DumpCredentialsConfig();
             config.host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
             config.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
             config.username = (string)serverData.Rows[cmbServers.SelectedIndex]["username"];

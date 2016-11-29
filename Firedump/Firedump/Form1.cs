@@ -73,7 +73,7 @@ namespace Firedump
             int port;
             if (int.TryParse(txtPort.Text, out port))
             {
-                CredentialsConfig credentialsConfigInstance = new CredentialsConfig();
+                DumpCredentialsConfig credentialsConfigInstance = new DumpCredentialsConfig();
                 credentialsConfigInstance.host = host;
                 credentialsConfigInstance.port = port;
                 credentialsConfigInstance.username = username;
