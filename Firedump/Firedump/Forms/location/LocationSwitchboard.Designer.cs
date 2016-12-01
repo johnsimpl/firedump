@@ -28,18 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bFileSystem = new System.Windows.Forms.Button();
             this.bFTP = new System.Windows.Forms.Button();
             this.bDropbox = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.bGoogleDrive = new System.Windows.Forms.Button();
             this.cmbName = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.backuplocationsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.firedumpdbDataSet = new Firedump.firedumpdbDataSet();
+            this.bAdd = new System.Windows.Forms.Button();
             this.tbPath = new System.Windows.Forms.TextBox();
             this.lName = new System.Windows.Forms.Label();
             this.lPath = new System.Windows.Forms.Label();
             this.bDelete = new System.Windows.Forms.Button();
+            this.backup_locationsTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backuplocationsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // bFileSystem
@@ -94,20 +100,35 @@
             // 
             // cmbName
             // 
+            this.cmbName.DataSource = this.backuplocationsBindingSource;
+            this.cmbName.DisplayMember = "name";
             this.cmbName.FormattingEnabled = true;
             this.cmbName.Location = new System.Drawing.Point(59, 82);
             this.cmbName.Name = "cmbName";
             this.cmbName.Size = new System.Drawing.Size(315, 21);
             this.cmbName.TabIndex = 4;
+            this.cmbName.ValueMember = "id";
+            this.cmbName.SelectedIndexChanged += new System.EventHandler(this.cmbName_SelectedIndexChanged);
             // 
-            // button1
+            // backuplocationsBindingSource
             // 
-            this.button1.Location = new System.Drawing.Point(398, 80);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Add ";
-            this.button1.UseVisualStyleBackColor = true;
+            this.backuplocationsBindingSource.DataMember = "backup_locations";
+            this.backuplocationsBindingSource.DataSource = this.firedumpdbDataSet;
+            // 
+            // firedumpdbDataSet
+            // 
+            this.firedumpdbDataSet.DataSetName = "firedumpdbDataSet";
+            this.firedumpdbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // bAdd
+            // 
+            this.bAdd.Location = new System.Drawing.Point(398, 80);
+            this.bAdd.Name = "bAdd";
+            this.bAdd.Size = new System.Drawing.Size(75, 23);
+            this.bAdd.TabIndex = 5;
+            this.bAdd.Text = "Add ";
+            this.bAdd.UseVisualStyleBackColor = true;
+            this.bAdd.Click += new System.EventHandler(this.bAdd_Click);
             // 
             // tbPath
             // 
@@ -143,6 +164,11 @@
             this.bDelete.TabIndex = 9;
             this.bDelete.Text = "Delete Save Location";
             this.bDelete.UseVisualStyleBackColor = true;
+            this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
+            // 
+            // backup_locationsTableAdapter
+            // 
+            this.backup_locationsTableAdapter.ClearBeforeFill = true;
             // 
             // LocationSwitchboard
             // 
@@ -153,12 +179,15 @@
             this.Controls.Add(this.lPath);
             this.Controls.Add(this.lName);
             this.Controls.Add(this.tbPath);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bAdd);
             this.Controls.Add(this.cmbName);
             this.Controls.Add(this.groupBox1);
             this.Name = "LocationSwitchboard";
             this.Text = "Add Location";
+            this.Load += new System.EventHandler(this.LocationSwitchboard_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.backuplocationsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,10 +201,13 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button bGoogleDrive;
         private System.Windows.Forms.ComboBox cmbName;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bAdd;
         private System.Windows.Forms.TextBox tbPath;
         private System.Windows.Forms.Label lName;
         private System.Windows.Forms.Label lPath;
         private System.Windows.Forms.Button bDelete;
+        private firedumpdbDataSet firedumpdbDataSet;
+        private System.Windows.Forms.BindingSource backuplocationsBindingSource;
+        private firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_locationsTableAdapter;
     }
 }

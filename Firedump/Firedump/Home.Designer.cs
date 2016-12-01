@@ -37,6 +37,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
             this.gbSaveLocations = new System.Windows.Forms.GroupBox();
+            this.lbSaveLocations = new System.Windows.Forms.ListBox();
+            this.bDeleteSaveLocation = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,8 +52,6 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.bDeleteSaveLocation = new System.Windows.Forms.Button();
-            this.lbSaveLocations = new System.Windows.Forms.ListBox();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -155,6 +155,24 @@
             this.gbSaveLocations.TabIndex = 0;
             this.gbSaveLocations.TabStop = false;
             this.gbSaveLocations.Text = "Save Locations";
+            // 
+            // lbSaveLocations
+            // 
+            this.lbSaveLocations.FormattingEnabled = true;
+            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
+            this.lbSaveLocations.Name = "lbSaveLocations";
+            this.lbSaveLocations.Size = new System.Drawing.Size(334, 225);
+            this.lbSaveLocations.TabIndex = 3;
+            // 
+            // bDeleteSaveLocation
+            // 
+            this.bDeleteSaveLocation.Location = new System.Drawing.Point(213, 36);
+            this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
+            this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
+            this.bDeleteSaveLocation.TabIndex = 2;
+            this.bDeleteSaveLocation.Text = "Delete Save Location";
+            this.bDeleteSaveLocation.UseVisualStyleBackColor = true;
+            this.bDeleteSaveLocation.Click += new System.EventHandler(this.bDeleteSaveLocation_Click);
             // 
             // menuStrip1
             // 
@@ -262,23 +280,6 @@
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
-            // 
-            // bDeleteSaveLocation
-            // 
-            this.bDeleteSaveLocation.Location = new System.Drawing.Point(213, 36);
-            this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
-            this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
-            this.bDeleteSaveLocation.TabIndex = 2;
-            this.bDeleteSaveLocation.Text = "Delete Save Location";
-            this.bDeleteSaveLocation.UseVisualStyleBackColor = true;
-            // 
-            // lbSaveLocations
-            // 
-            this.lbSaveLocations.FormattingEnabled = true;
-            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
-            this.lbSaveLocations.Name = "lbSaveLocations";
-            this.lbSaveLocations.Size = new System.Drawing.Size(334, 225);
-            this.lbSaveLocations.TabIndex = 3;
             // 
             // Home
             // 

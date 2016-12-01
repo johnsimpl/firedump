@@ -16,10 +16,11 @@ using System.Windows.Forms;
 using Firedump.Forms.configuration;
 using Firedump.Forms.mysql;
 using Firedump.Forms.location;
+using Firedump.models.location;
 
 namespace Firedump
 {
-    public partial class Home : Form , IDumpProgressListener
+    public partial class Home : Form , IDumpProgressListener,ILocationListener
     {
         private firedumpdbDataSet.mysql_serversDataTable serverData;
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
@@ -206,10 +207,21 @@ namespace Firedump
             }
         }
 
+        public void addToLbSaveLocation(BackupLocation loc)
+        {
+            if (lbSaveLocations.Items.Contains(loc))
+            {
+                return;
+            }
+            lbSaveLocations.Items.Add(loc);
+        }
+
        
 
         private void Home_Load(object sender, EventArgs e)
         {
+            lbSaveLocations.DisplayMember = "path";
+            lbSaveLocations.ValueMember = "id";
             loadServerData();
             backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerSupportsCancellation = true;
@@ -307,6 +319,11 @@ namespace Firedump
         {
             //elenxoi edw logika tha einai arketoi
             //<elenxoi>
+            if (lbSaveLocations.Items.Count==0)
+            {
+                MessageBox.Show("No save locations. Add at least one save location and try again.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             //</elenxoi>
 
             return true;
@@ -544,6 +561,10 @@ namespace Firedump
 
                 if(status.wasSuccessful)
                 {
+                    /*
+                    LocationAdapter adapter = new LocationAdapter(this);
+                    adapter.setLocalLocation();
+                    adapter.sendFile();*/
                     MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -619,6 +640,43 @@ namespace Firedump
         {
             hideSystemDatabases = !cbShowSysDB.Checked;
             cmbServers_SelectionChangeCommitted(null, null); //ksanakalei to fillTreeView
+        }
+
+        private void bDeleteSaveLocation_Click(object sender, EventArgs e)
+        {
+            if (lbSaveLocations.Items.Count == 0 || lbSaveLocations.SelectedIndex==-1) //-1 einai ama den exei tpt selected
+            {
+                return;
+            }
+            lbSaveLocations.Items.RemoveAt(lbSaveLocations.SelectedIndex);
+        }
+
+        public void deleteSaveLocation(BackupLocation loc)
+        {
+            if (lbSaveLocations.Items.Contains(loc))
+            {
+                lbSaveLocations.Items.Remove(loc);
+            }
+        }
+
+        public void setSaveProgress(int progress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onSaveInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onSaveComplete(LocationResultSet result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onSaveError(string message)
+        {
+            throw new NotImplementedException();
         }
 
 

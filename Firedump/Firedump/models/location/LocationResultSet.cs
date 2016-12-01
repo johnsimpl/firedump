@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationResultSet
+    public class LocationResultSet
     {
         public bool wasSuccessful { set; get; }
         public string path { set; get; }
