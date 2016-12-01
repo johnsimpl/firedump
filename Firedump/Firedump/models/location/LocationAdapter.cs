@@ -35,7 +35,7 @@ namespace Firedump.models.location
         {
             if (this.location == null)
             {
-                listener.onError("Location type not set. Aborting...");
+                listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
 
@@ -47,7 +47,7 @@ namespace Firedump.models.location
         {
             if (this.location == null)
             {
-                listener.onError("Location type not set. Aborting...");
+                listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
 
