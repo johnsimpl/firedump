@@ -118,6 +118,12 @@
     <Compile Include="Forms\location\FileSystem.Designer.cs">
       <DependentUpon>FileSystem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
     <Compile Include="models\location\ICallBack.cs" />
@@ -291,6 +297,9 @@
     <EmbeddedResource Include="Forms\configuration\GeneralConfiguration.resx">
       <DependentUpon>GeneralConfiguration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -431,6 +440,7 @@
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
+    <None Include="resources\firedump.png" />
     <Content Include="resources\icons\sqlselecticon.png" />
     <None Include="resources\icons_sqlselecticon.png.png" />
     <Content Include="resources\mysqldump\charsets\armscii8.xml">
