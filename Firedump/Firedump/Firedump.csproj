@@ -247,12 +247,6 @@
     <Compile Include="Forms\mysql\sqlviewer\SqlDbViewerForm.Designer.cs">
       <DependentUpon>SqlDbViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\mysql\sqlviewer\tempform.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\mysql\sqlviewer\tempform.Designer.cs">
-      <DependentUpon>tempform.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\mysql\status\AnalyzeDbForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -321,9 +315,6 @@
     </Compile>
     <EmbeddedResource Include="Forms\mysql\sqlviewer\SqlDbViewerForm.resx">
       <DependentUpon>SqlDbViewerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\mysql\sqlviewer\tempform.resx">
-      <DependentUpon>tempform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mysql\status\AnalyzeDbForm.resx">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>

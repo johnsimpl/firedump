@@ -2,8 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Firedump.mysql;
+using Firedump.Forms.mysql;
 using System.Collections.Generic;
+using Firedump.models.databaseUtils;
 
 namespace FiredumpTest
 {

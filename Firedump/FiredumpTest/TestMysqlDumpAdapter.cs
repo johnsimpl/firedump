@@ -3,10 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Firedump.models.dump;
 using System.Collections.Generic;
 using Firedump.models.dump;
-using Firedump.mysql;
+using Firedump.Forms.mysql;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.configuration.jsonconfig;
 using System.IO;
+using Firedump.models.databaseUtils;
 
 namespace FiredumpTest
 {
@@ -49,7 +50,7 @@ namespace FiredumpTest
             List<string> tables = connection.getTables(Const.database);
             form.tables = tables;
 
-            CredentialsConfig config = new CredentialsConfig();
+            DumpCredentialsConfig config = new DumpCredentialsConfig();
             config.host = Const.host;
             config.port = 3306;
             config.username = Const.username;
@@ -155,7 +156,7 @@ namespace FiredumpTest
                 Assert.AreEqual(0, tables.Count);
             }
 
-            public void startDump(CredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
+            public void startDump(DumpCredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
             {
                 this.listener = listener;
                 listener.onProgress("mysql dump started!from server:");

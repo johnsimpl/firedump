@@ -48,21 +48,21 @@ namespace Firedump.Forms.mysql.sqlviewer
                 this.database = database;
                 List<string> tables = connection.getTables(database);
                 MysqlWords.tables = tables;
-                for(int i =0; i < MysqlWords.tables.Count; i++)
-                {
-                    MysqlWords.tables[i].ToUpper();
-                }
 
                 TreeNode[] nodearray = new TreeNode[tables.Count];
-                for (int i =0; i < tables.Count; i++)
+                for (int i = 0; i < tables.Count; i++)
                 {
                     nodearray[i] = new TreeNode(tables[i]);
                 }
-                
+                for (int i = 0; i < MysqlWords.tables.Count; i++)
+                {
+                    MysqlWords.tables[i] = MysqlWords.tables[i].ToUpper();
+                }
+
                 TreeNode rootNode = new TreeNode("database:" + database, nodearray);
                 rootNode.Expand();
                 treeView1.Nodes.Add(rootNode);
-                
+
                 treeView1.ImageList = imageList1;
             } else
             {
@@ -138,9 +138,15 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 string table = e.Node.Text;
                 string sql = "SELECT * FROM "+table + " ";
-                richTextBox1.Text = sql;
+                string[] sqlarr = sql.Split(' ');
+                richTextBox1.Text = "";
+                for(int i =0; i < sqlarr.Length; i++)
+                {
+                    richTextBox1.AppendText(sqlarr[i] + " ");
+                    richTextBox1.SelectionStart = richTextBox1.TextLength;
+                    setSqlHighlight();
+                }
                 executeQuery(sql);
-                setSqlHighlight(sql);
             }
         }
 
@@ -155,54 +161,67 @@ namespace Firedump.Forms.mysql.sqlviewer
         }
         
 
-        private void setSqlHighlight(string sql)
+        private void setSqlHighlight()
         {
-            if(!String.IsNullOrEmpty(sql))
+            undoList.Push(richTextBox1.Text);
+
+            int i = 0;
+            string word = "";
+            int c = 0;
+            for (i = richTextBox1.SelectionStart - 2; i >= 0; i--)
             {
-                
-            }           
+                if (richTextBox1.Text[i] == ' ' || i == 0)
+                {
+                    word = richTextBox1.Text.Substring(i, c + 1).Trim().ToUpper();
+                    break;
+                }
+                c++;
+            }
+            int cursorpos = richTextBox1.SelectionStart;
+            if (!String.IsNullOrEmpty(word))
+            {
+                if (i == -1)
+                    i = 0;
+
+                richTextBox1.Select(i, word.Length + 1);
+                if (MysqlWords.words.Contains(word))
+                {
+                    richTextBox1.SelectionColor = Color.Blue;
+                }
+                else if (MysqlWords.tables.Contains(word))
+                {
+                    richTextBox1.SelectionColor = Color.Purple;
+                }
+                else if (MysqlWords.operators.Contains(word))
+                {
+                    richTextBox1.Select(i, word.Length + 1);
+                    richTextBox1.SelectionColor = Color.Red;
+                }
+                else
+                {
+                    richTextBox1.SelectionColor = Color.Black;
+                }
+
+                richTextBox1.Select(richTextBox1.TextLength, 0);
+                richTextBox1.SelectionColor = richTextBox1.ForeColor;
+                richTextBox1.SelectionStart = cursorpos;
+            }
         }
 
         private void onKeyUpEvent(object sender, KeyEventArgs e)
         {
-                      
+
             //space
-            if(((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
+            if (((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
             {
-                undoList.Push(richTextBox1.Text);
-                
-                string word = richTextBox1.Text.Split(' ').Last();
-               
-                //string word = richTextBox1.Text.Substring(i + 1).TrimEnd().ToUpper().Trim();
-                if(!String.IsNullOrEmpty(word))
-                {
-                    if(MysqlWords.words.Contains(word))
-                    {                   
-
-                        Console.WriteLine("wordIndex:");
-                        int index = -1;
-                        int selectStart = this.richTextBox1.SelectionStart;
-                        int startIndex = 0;
-                       
-                            int stIndex = 0;
-                            stIndex = richTextBox1.Find(word, stIndex, RichTextBoxFinds.MatchCase);
-                            richTextBox1.Select(stIndex, word.Length);
-                            richTextBox1.SelectionColor = Color.Aqua;
-                            richTextBox1.Select(richTextBox1.TextLength, 0);
-                            richTextBox1.SelectionColor = richTextBox1.ForeColor;
-                            Console.WriteLine("selectStart:"+selectStart);
-                            Console.WriteLine("index:"+index);
-                            Console.WriteLine("startIndex:" + startIndex);
-
-                        
-                    } else if(MysqlWords.tables.Contains(word))
-                    {
-
-                    }
-                }     
-                           
+                setSqlHighlight();
             }
-            
+            else if (((char)e.KeyCode) == (char)Keys.Back)
+            {
+                //richTextBox1.Select(richTextBox1.TextLength,0);
+                //richTextBox1.SelectionColor = richTextBox1.ForeColor;
+            }
+
         }
 
 

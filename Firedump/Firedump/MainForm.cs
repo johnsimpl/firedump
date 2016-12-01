@@ -48,9 +48,7 @@ namespace Firedump
 
         private void button2_Click(object sender, EventArgs e)
         {
-            tempform tf = new tempform();
-            tf.Show();
-            
+           
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -41,6 +41,8 @@ namespace Firedump.Forms.mysql.sqlviewer
             "COLLATE",
             "COLUMN",
             "COLUMNS",
+            "COUNT",
+            "COUNT(*)",
             "COMMIT",
             "CONTAINS",
             "CREATE",

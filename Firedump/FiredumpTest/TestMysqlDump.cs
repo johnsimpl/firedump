@@ -4,8 +4,9 @@ using Firedump.models.dump;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.configuration.jsonconfig;
 using System.IO;
-using Firedump.mysql;
+using Firedump.Forms.mysql;
 using System.Collections.Generic;
+using Firedump.models.databaseUtils;
 
 namespace FiredumpTest
 {
@@ -60,7 +61,7 @@ namespace FiredumpTest
             ConfigurationManager.getInstance().initializeConfig();
 
             MysqlDump mysqldump = new MysqlDump(null);
-            CredentialsConfig creconfig = new CredentialsConfig();
+            DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
             creconfig.port = 3306;
             creconfig.username = Const.username;
@@ -89,7 +90,7 @@ namespace FiredumpTest
         [TestMethod]
         public void TestExecuteDumpPhaseTwo()
         {
-            CredentialsConfig creconfig = new CredentialsConfig();
+            DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
             creconfig.port = 3306;
             creconfig.username = Const.username;
