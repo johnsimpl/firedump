@@ -38,7 +38,10 @@ namespace Firedump.models.location
             result.path = config.locationPath;
             try
             {
-                File.Move(config.sourcePath, config.locationPath);
+                string[] path = config.sourcePath.Split('\\');
+                string filename = path[path.Length - 1];
+                string[] temp = filename.Split('.'); //pernei to extension apo to sourcepath kai na to kanei append sto location
+                File.Move(config.sourcePath, config.locationPath+temp[temp.Length-1]);
                 result.wasSuccessful = true;
             }
             catch (Exception ex)

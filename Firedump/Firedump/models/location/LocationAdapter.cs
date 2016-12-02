@@ -13,16 +13,17 @@ namespace Firedump.models.location
         private ILocation location;
         private ILocationListener listener;
 
-        public LocationAdapter() { }
+        private LocationAdapter() { }
 
         public LocationAdapter(ILocationListener listener)
         {
             this.listener = listener;
         }
 
-        public void setLocalLocation()
+        public void setLocalLocation(LocationCredentialsConfig config) //auta na kanoun try catch gia to cast kai na kaloun onError se fail
         {
             this.location = new LocationLocal(this);
+            ((LocationLocal)this.location).config = config;
         }
 
         public void setFtpLocation(LocationCredentialsConfig config)
@@ -30,7 +31,16 @@ namespace Firedump.models.location
             this.location = new LocationFtp(this);
             ((LocationFtp)this.location).config = config;
         }
-
+        public void setCloudBoxLocation(LocationCredentialsConfig config)
+        {
+            this.location = new LocationCloudBox(this);
+            ((LocationCloudBox)this.location).config = config;
+        }
+        public void setCloudDriveLocation(LocationCredentialsConfig config)
+        {
+            this.location = new LocationCloudDrive(this);
+            ((LocationCloudDrive)this.location).config = config;
+        }
         public void sendFile()
         {
             if (this.location == null)

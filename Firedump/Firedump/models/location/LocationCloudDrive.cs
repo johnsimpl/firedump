@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firedump.models.configuration.dynamicconfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,13 @@ namespace Firedump.models.location
 {
     class LocationCloudDrive : Location,ILocationCloud
     {
+        public LocationCredentialsConfig config { set; get; }
+        private ILocationProgressListener listener;
+        private LocationCloudDrive() { }
+        public LocationCloudDrive(ILocationProgressListener listener)
+        {
+            this.listener = listener;
+        }
         public void connect()
         {
             throw new NotImplementedException();

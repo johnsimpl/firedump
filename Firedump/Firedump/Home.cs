@@ -20,7 +20,7 @@ using Firedump.models.location;
 
 namespace Firedump
 {
-    public partial class Home : Form , IDumpProgressListener,ILocationListener
+    public partial class Home : Form , IDumpProgressListener,ILocationManagerListener
     {
         private firedumpdbDataSet.mysql_serversDataTable serverData;
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
@@ -664,20 +664,17 @@ namespace Firedump
             throw new NotImplementedException();
         }
 
-        public void onSaveInit()
+        public void onSaveInit(int maxprogress)
         {
             throw new NotImplementedException();
         }
 
-        public void onSaveComplete(LocationResultSet result)
+        public void onSaveComplete(List<LocationResultSet> results)
         {
             throw new NotImplementedException();
         }
 
-        public void onSaveError(string message)
-        {
-            throw new NotImplementedException();
-        }
+
 
 
         //-----------------------------------------------------------------------
