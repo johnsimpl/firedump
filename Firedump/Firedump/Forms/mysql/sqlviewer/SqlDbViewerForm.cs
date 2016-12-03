@@ -87,7 +87,10 @@ namespace Firedump.Forms.mysql.sqlviewer
             toolStripComboBox1.SelectedIndex = 2;
 
             intellform = new IntelliSense();
-          
+            intellform.Location = point;
+            intellform.Show();
+            intellform.Visible = false;
+            intellform.Hide();
         }
 
 
