@@ -499,6 +499,34 @@ namespace Firedump {
             
             private global::System.Data.DataColumn columnpath;
             
+            private global::System.Data.DataColumn columnfilename;
+            
+            private global::System.Data.DataColumn columnprotocol;
+            
+            private global::System.Data.DataColumn columnssh_key;
+            
+            private global::System.Data.DataColumn columnssh_key_fingerprint;
+            
+            private global::System.Data.DataColumn columnkey;
+            
+            private global::System.Data.DataColumn columnemail;
+            
+            private global::System.Data.DataColumn columnaccount;
+            
+            private global::System.Data.DataColumn columnapi_key;
+            
+            private global::System.Data.DataColumn columnapi_name;
+            
+            private global::System.Data.DataColumn columnapi_id;
+            
+            private global::System.Data.DataColumn columnclient_id;
+            
+            private global::System.Data.DataColumn columnaccess_token;
+            
+            private global::System.Data.DataColumn columnrefresh_token;
+            
+            private global::System.Data.DataColumn columnservice_type;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public backup_locationsDataTable() {
@@ -574,6 +602,118 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn filenameColumn {
+                get {
+                    return this.columnfilename;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn protocolColumn {
+                get {
+                    return this.columnprotocol;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ssh_keyColumn {
+                get {
+                    return this.columnssh_key;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ssh_key_fingerprintColumn {
+                get {
+                    return this.columnssh_key_fingerprint;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn keyColumn {
+                get {
+                    return this.columnkey;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn emailColumn {
+                get {
+                    return this.columnemail;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn accountColumn {
+                get {
+                    return this.columnaccount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn api_keyColumn {
+                get {
+                    return this.columnapi_key;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn api_nameColumn {
+                get {
+                    return this.columnapi_name;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn api_idColumn {
+                get {
+                    return this.columnapi_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn client_idColumn {
+                get {
+                    return this.columnclient_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn access_tokenColumn {
+                get {
+                    return this.columnaccess_token;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn refresh_tokenColumn {
+                get {
+                    return this.columnrefresh_token;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn service_typeColumn {
+                get {
+                    return this.columnservice_type;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -609,14 +749,46 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public backup_locationsRow Addbackup_locationsRow(string name, string username, string password, string path) {
+            public backup_locationsRow Addbackup_locationsRow(
+                        string name, 
+                        string username, 
+                        string password, 
+                        string path, 
+                        string filename, 
+                        long protocol, 
+                        string ssh_key, 
+                        string ssh_key_fingerprint, 
+                        string key, 
+                        string email, 
+                        string account, 
+                        string api_key, 
+                        string api_name, 
+                        long api_id, 
+                        long client_id, 
+                        string access_token, 
+                        string refresh_token, 
+                        long service_type) {
                 backup_locationsRow rowbackup_locationsRow = ((backup_locationsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         username,
                         password,
-                        path};
+                        path,
+                        filename,
+                        protocol,
+                        ssh_key,
+                        ssh_key_fingerprint,
+                        key,
+                        email,
+                        account,
+                        api_key,
+                        api_name,
+                        api_id,
+                        client_id,
+                        access_token,
+                        refresh_token,
+                        service_type};
                 rowbackup_locationsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowbackup_locationsRow);
                 return rowbackup_locationsRow;
@@ -651,6 +823,20 @@ namespace Firedump {
                 this.columnusername = base.Columns["username"];
                 this.columnpassword = base.Columns["password"];
                 this.columnpath = base.Columns["path"];
+                this.columnfilename = base.Columns["filename"];
+                this.columnprotocol = base.Columns["protocol"];
+                this.columnssh_key = base.Columns["ssh_key"];
+                this.columnssh_key_fingerprint = base.Columns["ssh_key_fingerprint"];
+                this.columnkey = base.Columns["key"];
+                this.columnemail = base.Columns["email"];
+                this.columnaccount = base.Columns["account"];
+                this.columnapi_key = base.Columns["api_key"];
+                this.columnapi_name = base.Columns["api_name"];
+                this.columnapi_id = base.Columns["api_id"];
+                this.columnclient_id = base.Columns["client_id"];
+                this.columnaccess_token = base.Columns["access_token"];
+                this.columnrefresh_token = base.Columns["refresh_token"];
+                this.columnservice_type = base.Columns["service_type"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -666,6 +852,34 @@ namespace Firedump {
                 base.Columns.Add(this.columnpassword);
                 this.columnpath = new global::System.Data.DataColumn("path", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnpath);
+                this.columnfilename = new global::System.Data.DataColumn("filename", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfilename);
+                this.columnprotocol = new global::System.Data.DataColumn("protocol", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnprotocol);
+                this.columnssh_key = new global::System.Data.DataColumn("ssh_key", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnssh_key);
+                this.columnssh_key_fingerprint = new global::System.Data.DataColumn("ssh_key_fingerprint", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnssh_key_fingerprint);
+                this.columnkey = new global::System.Data.DataColumn("key", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnkey);
+                this.columnemail = new global::System.Data.DataColumn("email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnemail);
+                this.columnaccount = new global::System.Data.DataColumn("account", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnaccount);
+                this.columnapi_key = new global::System.Data.DataColumn("api_key", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnapi_key);
+                this.columnapi_name = new global::System.Data.DataColumn("api_name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnapi_name);
+                this.columnapi_id = new global::System.Data.DataColumn("api_id", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnapi_id);
+                this.columnclient_id = new global::System.Data.DataColumn("client_id", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnclient_id);
+                this.columnaccess_token = new global::System.Data.DataColumn("access_token", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnaccess_token);
+                this.columnrefresh_token = new global::System.Data.DataColumn("refresh_token", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnrefresh_token);
+                this.columnservice_type = new global::System.Data.DataColumn("service_type", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnservice_type);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -677,6 +891,16 @@ namespace Firedump {
                 this.columnusername.MaxLength = 45;
                 this.columnpassword.MaxLength = 45;
                 this.columnpath.MaxLength = 2147483647;
+                this.columnfilename.MaxLength = 2147483647;
+                this.columnssh_key.MaxLength = 2147483647;
+                this.columnssh_key_fingerprint.MaxLength = 2147483647;
+                this.columnkey.MaxLength = 2147483647;
+                this.columnemail.MaxLength = 2147483647;
+                this.columnaccount.MaxLength = 2147483647;
+                this.columnapi_key.MaxLength = 2147483647;
+                this.columnapi_name.MaxLength = 2147483647;
+                this.columnaccess_token.MaxLength = 2147483647;
+                this.columnrefresh_token.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1158,6 +1382,8 @@ namespace Firedump {
             
             private global::System.Data.DataColumn columnpassword;
             
+            private global::System.Data.DataColumn columndatabase;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public mysql_serversDataTable() {
@@ -1241,6 +1467,14 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn databaseColumn {
+                get {
+                    return this.columndatabase;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1276,7 +1510,7 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public mysql_serversRow Addmysql_serversRow(string name, long port, string host, string username, string password) {
+            public mysql_serversRow Addmysql_serversRow(string name, long port, string host, string username, string password, string database) {
                 mysql_serversRow rowmysql_serversRow = ((mysql_serversRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1284,7 +1518,8 @@ namespace Firedump {
                         port,
                         host,
                         username,
-                        password};
+                        password,
+                        database};
                 rowmysql_serversRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowmysql_serversRow);
                 return rowmysql_serversRow;
@@ -1320,6 +1555,7 @@ namespace Firedump {
                 this.columnhost = base.Columns["host"];
                 this.columnusername = base.Columns["username"];
                 this.columnpassword = base.Columns["password"];
+                this.columndatabase = base.Columns["database"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1337,6 +1573,8 @@ namespace Firedump {
                 base.Columns.Add(this.columnusername);
                 this.columnpassword = new global::System.Data.DataColumn("password", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnpassword);
+                this.columndatabase = new global::System.Data.DataColumn("database", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndatabase);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1490,8 +1728,6 @@ namespace Firedump {
             
             private global::System.Data.DataColumn columnschedule_id;
             
-            private global::System.Data.DataColumn columnservice_type;
-            
             private global::System.Data.DataColumn columnbackup_location_id;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1545,14 +1781,6 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn service_typeColumn {
-                get {
-                    return this.columnservice_type;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn backup_location_idColumn {
                 get {
                     return this.columnbackup_location_id;
@@ -1596,18 +1824,17 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public schedule_save_locationsRow Addschedule_save_locationsRow(schedulesRow parentschedulesRowByFK_schedule_save_locations_0_0, long service_type, backup_locationsRow parentbackup_locationsRowByFK_schedule_save_locations_1_0) {
+            public schedule_save_locationsRow Addschedule_save_locationsRow(schedulesRow parentschedulesRowByFK_schedule_save_locations_0_0, backup_locationsRow parentbackup_locationsRowByFK_schedule_save_locations_1_0) {
                 schedule_save_locationsRow rowschedule_save_locationsRow = ((schedule_save_locationsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         null,
-                        service_type,
                         null};
                 if ((parentschedulesRowByFK_schedule_save_locations_0_0 != null)) {
                     columnValuesArray[1] = parentschedulesRowByFK_schedule_save_locations_0_0[0];
                 }
                 if ((parentbackup_locationsRowByFK_schedule_save_locations_1_0 != null)) {
-                    columnValuesArray[3] = parentbackup_locationsRowByFK_schedule_save_locations_1_0[0];
+                    columnValuesArray[2] = parentbackup_locationsRowByFK_schedule_save_locations_1_0[0];
                 }
                 rowschedule_save_locationsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowschedule_save_locationsRow);
@@ -1640,7 +1867,6 @@ namespace Firedump {
             internal void InitVars() {
                 this.columnid = base.Columns["id"];
                 this.columnschedule_id = base.Columns["schedule_id"];
-                this.columnservice_type = base.Columns["service_type"];
                 this.columnbackup_location_id = base.Columns["backup_location_id"];
             }
             
@@ -1651,8 +1877,6 @@ namespace Firedump {
                 base.Columns.Add(this.columnid);
                 this.columnschedule_id = new global::System.Data.DataColumn("schedule_id", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnschedule_id);
-                this.columnservice_type = new global::System.Data.DataColumn("service_type", typeof(long), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnservice_type);
                 this.columnbackup_location_id = new global::System.Data.DataColumn("backup_location_id", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbackup_location_id);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
@@ -2526,6 +2750,231 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string filename {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.filenameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'filename\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.filenameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long protocol {
+                get {
+                    try {
+                        return ((long)(this[this.tablebackup_locations.protocolColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'protocol\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.protocolColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ssh_key {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.ssh_keyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ssh_key\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.ssh_keyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ssh_key_fingerprint {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.ssh_key_fingerprintColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ssh_key_fingerprint\' in table \'backup_locations\' is DBNull." +
+                                "", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.ssh_key_fingerprintColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string key {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.keyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'key\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.keyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string email {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.emailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'email\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.emailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string account {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.accountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'account\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.accountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string api_key {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.api_keyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'api_key\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.api_keyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string api_name {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.api_nameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'api_name\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.api_nameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long api_id {
+                get {
+                    try {
+                        return ((long)(this[this.tablebackup_locations.api_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'api_id\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.api_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long client_id {
+                get {
+                    try {
+                        return ((long)(this[this.tablebackup_locations.client_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'client_id\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.client_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string access_token {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.access_tokenColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'access_token\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.access_tokenColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string refresh_token {
+                get {
+                    try {
+                        return ((string)(this[this.tablebackup_locations.refresh_tokenColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'refresh_token\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.refresh_tokenColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long service_type {
+                get {
+                    try {
+                        return ((long)(this[this.tablebackup_locations.service_typeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'service_type\' in table \'backup_locations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablebackup_locations.service_typeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnameNull() {
                 return this.IsNull(this.tablebackup_locations.nameColumn);
             }
@@ -2570,6 +3019,174 @@ namespace Firedump {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetpathNull() {
                 this[this.tablebackup_locations.pathColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfilenameNull() {
+                return this.IsNull(this.tablebackup_locations.filenameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfilenameNull() {
+                this[this.tablebackup_locations.filenameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsprotocolNull() {
+                return this.IsNull(this.tablebackup_locations.protocolColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetprotocolNull() {
+                this[this.tablebackup_locations.protocolColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isssh_keyNull() {
+                return this.IsNull(this.tablebackup_locations.ssh_keyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setssh_keyNull() {
+                this[this.tablebackup_locations.ssh_keyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isssh_key_fingerprintNull() {
+                return this.IsNull(this.tablebackup_locations.ssh_key_fingerprintColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setssh_key_fingerprintNull() {
+                this[this.tablebackup_locations.ssh_key_fingerprintColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IskeyNull() {
+                return this.IsNull(this.tablebackup_locations.keyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetkeyNull() {
+                this[this.tablebackup_locations.keyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsemailNull() {
+                return this.IsNull(this.tablebackup_locations.emailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetemailNull() {
+                this[this.tablebackup_locations.emailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsaccountNull() {
+                return this.IsNull(this.tablebackup_locations.accountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetaccountNull() {
+                this[this.tablebackup_locations.accountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isapi_keyNull() {
+                return this.IsNull(this.tablebackup_locations.api_keyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setapi_keyNull() {
+                this[this.tablebackup_locations.api_keyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isapi_nameNull() {
+                return this.IsNull(this.tablebackup_locations.api_nameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setapi_nameNull() {
+                this[this.tablebackup_locations.api_nameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isapi_idNull() {
+                return this.IsNull(this.tablebackup_locations.api_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setapi_idNull() {
+                this[this.tablebackup_locations.api_idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isclient_idNull() {
+                return this.IsNull(this.tablebackup_locations.client_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setclient_idNull() {
+                this[this.tablebackup_locations.client_idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isaccess_tokenNull() {
+                return this.IsNull(this.tablebackup_locations.access_tokenColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setaccess_tokenNull() {
+                this[this.tablebackup_locations.access_tokenColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isrefresh_tokenNull() {
+                return this.IsNull(this.tablebackup_locations.refresh_tokenColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setrefresh_tokenNull() {
+                this[this.tablebackup_locations.refresh_tokenColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isservice_typeNull() {
+                return this.IsNull(this.tablebackup_locations.service_typeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setservice_typeNull() {
+                this[this.tablebackup_locations.service_typeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2826,6 +3443,34 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string database {
+                get {
+                    if (this.IsdatabaseNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tablemysql_servers.databaseColumn]));
+                    }
+                }
+                set {
+                    this[this.tablemysql_servers.databaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsdatabaseNull() {
+                return this.IsNull(this.tablemysql_servers.databaseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetdatabaseNull() {
+                this[this.tablemysql_servers.databaseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public schedulesRow[] GetschedulesRows() {
                 if ((this.Table.ChildRelations["FK_schedules_0_0"] == null)) {
                     return new schedulesRow[0];
@@ -2879,23 +3524,6 @@ namespace Firedump {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public long service_type {
-                get {
-                    try {
-                        return ((long)(this[this.tableschedule_save_locations.service_typeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'service_type\' in table \'schedule_save_locations\' is DBNull." +
-                                "", e);
-                    }
-                }
-                set {
-                    this[this.tableschedule_save_locations.service_typeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public long backup_location_id {
                 get {
                     try {
@@ -2943,18 +3571,6 @@ namespace Firedump {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setschedule_idNull() {
                 this[this.tableschedule_save_locations.schedule_idColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isservice_typeNull() {
-                return this.IsNull(this.tableschedule_save_locations.service_typeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setservice_typeNull() {
-                this[this.tableschedule_save_locations.service_typeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3567,10 +4183,45 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("username", "username");
             tableMapping.ColumnMappings.Add("password", "password");
             tableMapping.ColumnMappings.Add("path", "path");
+            tableMapping.ColumnMappings.Add("filename", "filename");
+            tableMapping.ColumnMappings.Add("protocol", "protocol");
+            tableMapping.ColumnMappings.Add("ssh_key", "ssh_key");
+            tableMapping.ColumnMappings.Add("ssh_key_fingerprint", "ssh_key_fingerprint");
+            tableMapping.ColumnMappings.Add("key", "key");
+            tableMapping.ColumnMappings.Add("email", "email");
+            tableMapping.ColumnMappings.Add("account", "account");
+            tableMapping.ColumnMappings.Add("api_key", "api_key");
+            tableMapping.ColumnMappings.Add("api_name", "api_name");
+            tableMapping.ColumnMappings.Add("api_id", "api_id");
+            tableMapping.ColumnMappings.Add("client_id", "client_id");
+            tableMapping.ColumnMappings.Add("access_token", "access_token");
+            tableMapping.ColumnMappings.Add("refresh_token", "refresh_token");
+            tableMapping.ColumnMappings.Add("service_type", "service_type");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [main].[sqlite_default_schema].[backup_locations] WHERE (([id] = @Original_id) AND ((@IsNull_name = 1 AND [name] IS NULL) OR ([name] = @Original_name)) AND ((@IsNull_username = 1 AND [username] IS NULL) OR ([username] = @Original_username)) AND ((@IsNull_password = 1 AND [password] IS NULL) OR ([password] = @Original_password)) AND ((@IsNull_path = 1 AND [path] IS NULL) OR ([path] = @Original_path)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [main].[sqlite_default_schema].[backup_locations] WHERE (([id] = @Ori" +
+                "ginal_id) AND ((@IsNull_name = 1 AND [name] IS NULL) OR ([name] = @Original_name" +
+                ")) AND ((@IsNull_username = 1 AND [username] IS NULL) OR ([username] = @Original" +
+                "_username)) AND ((@IsNull_password = 1 AND [password] IS NULL) OR ([password] = " +
+                "@Original_password)) AND ((@IsNull_path = 1 AND [path] IS NULL) OR ([path] = @Or" +
+                "iginal_path)) AND ((@IsNull_filename = 1 AND [filename] IS NULL) OR ([filename] " +
+                "= @Original_filename)) AND ((@IsNull_service_type = 1 AND [service_type] IS NULL" +
+                ") OR ([service_type] = @Original_service_type)) AND ((@IsNull_protocol = 1 AND [" +
+                "protocol] IS NULL) OR ([protocol] = @Original_protocol)) AND ((@IsNull_ssh_key =" +
+                " 1 AND [ssh_key] IS NULL) OR ([ssh_key] = @Original_ssh_key)) AND ((@IsNull_ssh_" +
+                "key_fingerprint = 1 AND [ssh_key_fingerprint] IS NULL) OR ([ssh_key_fingerprint]" +
+                " = @Original_ssh_key_fingerprint)) AND ((@IsNull_key = 1 AND [key] IS NULL) OR (" +
+                "[key] = @Original_key)) AND ((@IsNull_email = 1 AND [email] IS NULL) OR ([email]" +
+                " = @Original_email)) AND ((@IsNull_account = 1 AND [account] IS NULL) OR ([accou" +
+                "nt] = @Original_account)) AND ((@IsNull_api_key = 1 AND [api_key] IS NULL) OR ([" +
+                "api_key] = @Original_api_key)) AND ((@IsNull_api_name = 1 AND [api_name] IS NULL" +
+                ") OR ([api_name] = @Original_api_name)) AND ((@IsNull_api_id = 1 AND [api_id] IS" +
+                " NULL) OR ([api_id] = @Original_api_id)) AND ((@IsNull_client_id = 1 AND [client" +
+                "_id] IS NULL) OR ([client_id] = @Original_client_id)) AND ((@IsNull_access_token" +
+                " = 1 AND [access_token] IS NULL) OR ([access_token] = @Original_access_token)) A" +
+                "ND ((@IsNull_refresh_token = 1 AND [refresh_token] IS NULL) OR ([refresh_token] " +
+                "= @Original_refresh_token)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::System.Data.SQLite.SQLiteParameter param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
@@ -3638,10 +4289,209 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.SourceColumn = "path";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_filename";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "filename";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_filename";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "filename";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_service_type";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "service_type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_service_type";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "service_type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_protocol";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "protocol";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_protocol";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "protocol";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_ssh_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "ssh_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_ssh_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "ssh_key_fingerprint";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key_fingerprint";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_email";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "email";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_email";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "email";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_account";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "account";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_account";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "account";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_name";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_name";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_name";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_name";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "api_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_client_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "client_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_client_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "client_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_access_token";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "access_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_access_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "access_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_refresh_token";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "refresh_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_refresh_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "refresh_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [main].[sqlite_default_schema].[backup_locations] ([name], [username]" +
-                ", [password], [path]) VALUES (@name, @username, @password, @path)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [main].[sqlite_default_schema].[backup_locations] ([name], [username], [password], [path], [filename], [service_type], [protocol], [ssh_key], [ssh_key_fingerprint], [key], [email], [account], [api_key], [api_name], [api_id], [client_id], [access_token], [refresh_token]) VALUES (@name, @username, @password, @path, @filename, @service_type, @protocol, @ssh_key, @ssh_key_fingerprint, @key, @email, @account, @api_key, @api_name, @api_id, @client_id, @access_token, @refresh_token)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -3666,9 +4516,109 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.String;
             param.SourceColumn = "path";
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@filename";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "filename";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@service_type";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "service_type";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@protocol";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "protocol";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@ssh_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key_fingerprint";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "key";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@email";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "email";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@account";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "account";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_key";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_name";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_name";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "api_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@client_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "client_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@access_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "access_token";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@refresh_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "refresh_token";
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [main].[sqlite_default_schema].[backup_locations] SET [name] = @name, [username] = @username, [password] = @password, [path] = @path WHERE (([id] = @Original_id) AND ((@IsNull_name = 1 AND [name] IS NULL) OR ([name] = @Original_name)) AND ((@IsNull_username = 1 AND [username] IS NULL) OR ([username] = @Original_username)) AND ((@IsNull_password = 1 AND [password] IS NULL) OR ([password] = @Original_password)) AND ((@IsNull_path = 1 AND [path] IS NULL) OR ([path] = @Original_path)))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [main].[sqlite_default_schema].[backup_locations] SET [name] = @name, [use" +
+                "rname] = @username, [password] = @password, [path] = @path, [filename] = @filena" +
+                "me, [service_type] = @service_type, [protocol] = @protocol, [ssh_key] = @ssh_key" +
+                ", [ssh_key_fingerprint] = @ssh_key_fingerprint, [key] = @key, [email] = @email, " +
+                "[account] = @account, [api_key] = @api_key, [api_name] = @api_name, [api_id] = @" +
+                "api_id, [client_id] = @client_id, [access_token] = @access_token, [refresh_token" +
+                "] = @refresh_token WHERE (([id] = @Original_id) AND ((@IsNull_name = 1 AND [name" +
+                "] IS NULL) OR ([name] = @Original_name)) AND ((@IsNull_username = 1 AND [usernam" +
+                "e] IS NULL) OR ([username] = @Original_username)) AND ((@IsNull_password = 1 AND" +
+                " [password] IS NULL) OR ([password] = @Original_password)) AND ((@IsNull_path = " +
+                "1 AND [path] IS NULL) OR ([path] = @Original_path)) AND ((@IsNull_filename = 1 A" +
+                "ND [filename] IS NULL) OR ([filename] = @Original_filename)) AND ((@IsNull_servi" +
+                "ce_type = 1 AND [service_type] IS NULL) OR ([service_type] = @Original_service_t" +
+                "ype)) AND ((@IsNull_protocol = 1 AND [protocol] IS NULL) OR ([protocol] = @Origi" +
+                "nal_protocol)) AND ((@IsNull_ssh_key = 1 AND [ssh_key] IS NULL) OR ([ssh_key] = " +
+                "@Original_ssh_key)) AND ((@IsNull_ssh_key_fingerprint = 1 AND [ssh_key_fingerpri" +
+                "nt] IS NULL) OR ([ssh_key_fingerprint] = @Original_ssh_key_fingerprint)) AND ((@" +
+                "IsNull_key = 1 AND [key] IS NULL) OR ([key] = @Original_key)) AND ((@IsNull_emai" +
+                "l = 1 AND [email] IS NULL) OR ([email] = @Original_email)) AND ((@IsNull_account" +
+                " = 1 AND [account] IS NULL) OR ([account] = @Original_account)) AND ((@IsNull_ap" +
+                "i_key = 1 AND [api_key] IS NULL) OR ([api_key] = @Original_api_key)) AND ((@IsNu" +
+                "ll_api_name = 1 AND [api_name] IS NULL) OR ([api_name] = @Original_api_name)) AN" +
+                "D ((@IsNull_api_id = 1 AND [api_id] IS NULL) OR ([api_id] = @Original_api_id)) A" +
+                "ND ((@IsNull_client_id = 1 AND [client_id] IS NULL) OR ([client_id] = @Original_" +
+                "client_id)) AND ((@IsNull_access_token = 1 AND [access_token] IS NULL) OR ([acce" +
+                "ss_token] = @Original_access_token)) AND ((@IsNull_refresh_token = 1 AND [refres" +
+                "h_token] IS NULL) OR ([refresh_token] = @Original_refresh_token)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -3692,6 +4642,80 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.ParameterName = "@path";
             param.DbType = global::System.Data.DbType.String;
             param.SourceColumn = "path";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@filename";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "filename";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@service_type";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "service_type";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@protocol";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "protocol";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@ssh_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key_fingerprint";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "key";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@email";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "email";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@account";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "account";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_key";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_name";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_name";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@api_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "api_id";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@client_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "client_id";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@access_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "access_token";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@refresh_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "refresh_token";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
@@ -3759,6 +4783,206 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.SourceColumn = "path";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_filename";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "filename";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_filename";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "filename";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_service_type";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "service_type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_service_type";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "service_type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_protocol";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "protocol";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_protocol";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "protocol";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_ssh_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "ssh_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_ssh_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "ssh_key_fingerprint";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key_fingerprint";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_email";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "email";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_email";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "email";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_account";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "account";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_account";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "account";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_key";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_key";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_key";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_name";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_name";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_name";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "api_name";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_api_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "api_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_api_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "api_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_client_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "client_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_client_id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.SourceColumn = "client_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_access_token";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "access_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_access_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "access_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_refresh_token";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "refresh_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_refresh_token";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "refresh_token";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3774,7 +4998,9 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[4];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [name], [username], [password], [path] FROM [backup_locations]";
+            this._commandCollection[0].CommandText = "SELECT id, name, username, password, path, filename, service_type, protocol, ssh_" +
+                "key, ssh_key_fingerprint, [key], email, account, api_key, api_name, api_id, clie" +
+                "nt_id, access_token, refresh_token FROM backup_locations";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -3787,7 +5013,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._commandCollection[1].Parameters.Add(param);
             this._commandCollection[2] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT [id] FROM [backup_locations] WHERE name = @name";
+            this._commandCollection[2].CommandText = "SELECT id FROM backup_locations WHERE (name = @name)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -3861,7 +5087,26 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(long Original_id, string Original_name, string Original_username, string Original_password, string Original_path) {
+        public virtual int Delete(
+                    long Original_id, 
+                    string Original_name, 
+                    string Original_username, 
+                    string Original_password, 
+                    string Original_path, 
+                    string Original_filename, 
+                    global::System.Nullable<long> Original_service_type, 
+                    global::System.Nullable<long> Original_protocol, 
+                    string Original_ssh_key, 
+                    string Original_ssh_key_fingerprint, 
+                    string Original_key, 
+                    string Original_email, 
+                    string Original_account, 
+                    string Original_api_key, 
+                    string Original_api_name, 
+                    global::System.Nullable<long> Original_api_id, 
+                    global::System.Nullable<long> Original_client_id, 
+                    string Original_access_token, 
+                    string Original_refresh_token) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((long)(Original_id));
             if ((Original_name == null)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
@@ -3895,6 +5140,118 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_path));
             }
+            if ((Original_filename == null)) {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_filename));
+            }
+            if ((Original_service_type.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[12].Value = ((long)(Original_service_type.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            if ((Original_protocol.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((long)(Original_protocol.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            if ((Original_ssh_key == null)) {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[16].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((string)(Original_ssh_key));
+            }
+            if ((Original_ssh_key_fingerprint == null)) {
+                this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[18].Value = ((string)(Original_ssh_key_fingerprint));
+            }
+            if ((Original_key == null)) {
+                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[20].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[20].Value = ((string)(Original_key));
+            }
+            if ((Original_email == null)) {
+                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[21].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[22].Value = ((string)(Original_email));
+            }
+            if ((Original_account == null)) {
+                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[24].Value = ((string)(Original_account));
+            }
+            if ((Original_api_key == null)) {
+                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[26].Value = ((string)(Original_api_key));
+            }
+            if ((Original_api_name == null)) {
+                this.Adapter.DeleteCommand.Parameters[27].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[28].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[27].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[28].Value = ((string)(Original_api_name));
+            }
+            if ((Original_api_id.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[29].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[30].Value = ((long)(Original_api_id.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[29].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[30].Value = global::System.DBNull.Value;
+            }
+            if ((Original_client_id.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[31].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[32].Value = ((long)(Original_client_id.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[31].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[32].Value = global::System.DBNull.Value;
+            }
+            if ((Original_access_token == null)) {
+                this.Adapter.DeleteCommand.Parameters[33].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[34].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[33].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[34].Value = ((string)(Original_access_token));
+            }
+            if ((Original_refresh_token == null)) {
+                this.Adapter.DeleteCommand.Parameters[35].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[36].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[35].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[36].Value = ((string)(Original_refresh_token));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3915,7 +5272,25 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string name, string username, string password, string path) {
+        public virtual int Insert(
+                    string name, 
+                    string username, 
+                    string password, 
+                    string path, 
+                    string filename, 
+                    global::System.Nullable<long> service_type, 
+                    global::System.Nullable<long> protocol, 
+                    string ssh_key, 
+                    string ssh_key_fingerprint, 
+                    string key, 
+                    string email, 
+                    string account, 
+                    string api_key, 
+                    string api_name, 
+                    global::System.Nullable<long> api_id, 
+                    global::System.Nullable<long> client_id, 
+                    string access_token, 
+                    string refresh_token) {
             if ((name == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -3940,6 +5315,90 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = ((string)(path));
             }
+            if ((filename == null)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(filename));
+            }
+            if ((service_type.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = ((long)(service_type.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((protocol.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((long)(protocol.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((ssh_key == null)) {
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(ssh_key));
+            }
+            if ((ssh_key_fingerprint == null)) {
+                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[8].Value = ((string)(ssh_key_fingerprint));
+            }
+            if ((key == null)) {
+                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(key));
+            }
+            if ((email == null)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((string)(email));
+            }
+            if ((account == null)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(account));
+            }
+            if ((api_key == null)) {
+                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[12].Value = ((string)(api_key));
+            }
+            if ((api_name == null)) {
+                this.Adapter.InsertCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(api_name));
+            }
+            if ((api_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[14].Value = ((long)(api_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            if ((client_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[15].Value = ((long)(client_id.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            if ((access_token == null)) {
+                this.Adapter.InsertCommand.Parameters[16].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[16].Value = ((string)(access_token));
+            }
+            if ((refresh_token == null)) {
+                this.Adapter.InsertCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[17].Value = ((string)(refresh_token));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3960,7 +5419,44 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string name, string username, string password, string path, long Original_id, string Original_name, string Original_username, string Original_password, string Original_path) {
+        public virtual int Update(
+                    string name, 
+                    string username, 
+                    string password, 
+                    string path, 
+                    string filename, 
+                    global::System.Nullable<long> service_type, 
+                    global::System.Nullable<long> protocol, 
+                    string ssh_key, 
+                    string ssh_key_fingerprint, 
+                    string key, 
+                    string email, 
+                    string account, 
+                    string api_key, 
+                    string api_name, 
+                    global::System.Nullable<long> api_id, 
+                    global::System.Nullable<long> client_id, 
+                    string access_token, 
+                    string refresh_token, 
+                    long Original_id, 
+                    string Original_name, 
+                    string Original_username, 
+                    string Original_password, 
+                    string Original_path, 
+                    string Original_filename, 
+                    global::System.Nullable<long> Original_service_type, 
+                    global::System.Nullable<long> Original_protocol, 
+                    string Original_ssh_key, 
+                    string Original_ssh_key_fingerprint, 
+                    string Original_key, 
+                    string Original_email, 
+                    string Original_account, 
+                    string Original_api_key, 
+                    string Original_api_name, 
+                    global::System.Nullable<long> Original_api_id, 
+                    global::System.Nullable<long> Original_client_id, 
+                    string Original_access_token, 
+                    string Original_refresh_token) {
             if ((name == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -3985,38 +5481,234 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(path));
             }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((long)(Original_id));
-            if ((Original_name == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            if ((filename == null)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_name));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(filename));
             }
-            if ((Original_username == null)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(1));
+            if ((service_type.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((long)(service_type.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((protocol.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((long)(protocol.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((ssh_key == null)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(ssh_key));
+            }
+            if ((ssh_key_fingerprint == null)) {
                 this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_username));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(ssh_key_fingerprint));
             }
-            if ((Original_password == null)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
+            if ((key == null)) {
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(key));
+            }
+            if ((email == null)) {
                 this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_password));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(email));
             }
-            if ((Original_path == null)) {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
+            if ((account == null)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(account));
+            }
+            if ((api_key == null)) {
                 this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Original_path));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(api_key));
+            }
+            if ((api_name == null)) {
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(api_name));
+            }
+            if ((api_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((long)(api_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            if ((client_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((long)(client_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            if ((access_token == null)) {
+                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(access_token));
+            }
+            if ((refresh_token == null)) {
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(refresh_token));
+            }
+            this.Adapter.UpdateCommand.Parameters[18].Value = ((long)(Original_id));
+            if ((Original_name == null)) {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((string)(Original_name));
+            }
+            if ((Original_username == null)) {
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Original_username));
+            }
+            if ((Original_password == null)) {
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_password));
+            }
+            if ((Original_path == null)) {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(Original_path));
+            }
+            if ((Original_filename == null)) {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(Original_filename));
+            }
+            if ((Original_service_type.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((long)(Original_service_type.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
+            }
+            if ((Original_protocol.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[31].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[32].Value = ((long)(Original_protocol.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[31].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[32].Value = global::System.DBNull.Value;
+            }
+            if ((Original_ssh_key == null)) {
+                this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((string)(Original_ssh_key));
+            }
+            if ((Original_ssh_key_fingerprint == null)) {
+                this.Adapter.UpdateCommand.Parameters[35].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[35].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((string)(Original_ssh_key_fingerprint));
+            }
+            if ((Original_key == null)) {
+                this.Adapter.UpdateCommand.Parameters[37].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[37].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(Original_key));
+            }
+            if ((Original_email == null)) {
+                this.Adapter.UpdateCommand.Parameters[39].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[40].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[39].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[40].Value = ((string)(Original_email));
+            }
+            if ((Original_account == null)) {
+                this.Adapter.UpdateCommand.Parameters[41].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[42].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[41].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Original_account));
+            }
+            if ((Original_api_key == null)) {
+                this.Adapter.UpdateCommand.Parameters[43].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[44].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[43].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[44].Value = ((string)(Original_api_key));
+            }
+            if ((Original_api_name == null)) {
+                this.Adapter.UpdateCommand.Parameters[45].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[46].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[45].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((string)(Original_api_name));
+            }
+            if ((Original_api_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[47].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[48].Value = ((long)(Original_api_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[47].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[48].Value = global::System.DBNull.Value;
+            }
+            if ((Original_client_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[49].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[50].Value = ((long)(Original_client_id.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[49].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[50].Value = global::System.DBNull.Value;
+            }
+            if ((Original_access_token == null)) {
+                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[52].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[52].Value = ((string)(Original_access_token));
+            }
+            if ((Original_refresh_token == null)) {
+                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[54].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[54].Value = ((string)(Original_refresh_token));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -5025,7 +6717,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[3];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [name], [port], [host], [username], [password] FROM [mysql_servers]";
+            this._commandCollection[0].CommandText = "SELECT id, name, port, host, username, password FROM mysql_servers";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -5452,12 +7144,11 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             tableMapping.DataSetTable = "schedule_save_locations";
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("schedule_id", "schedule_id");
-            tableMapping.ColumnMappings.Add("service_type", "service_type");
             tableMapping.ColumnMappings.Add("backup_location_id", "backup_location_id");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [main].[sqlite_default_schema].[schedule_save_locations] WHERE (([id] = @Original_id) AND ((@IsNull_schedule_id = 1 AND [schedule_id] IS NULL) OR ([schedule_id] = @Original_schedule_id)) AND ((@IsNull_service_type = 1 AND [service_type] IS NULL) OR ([service_type] = @Original_service_type)) AND ((@IsNull_backup_location_id = 1 AND [backup_location_id] IS NULL) OR ([backup_location_id] = @Original_backup_location_id)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [main].[sqlite_default_schema].[schedule_save_locations] WHERE (([id] = @Original_id) AND ((@IsNull_schedule_id = 1 AND [schedule_id] IS NULL) OR ([schedule_id] = @Original_schedule_id)) AND ((@IsNull_backup_location_id = 1 AND [backup_location_id] IS NULL) OR ([backup_location_id] = @Original_backup_location_id)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::System.Data.SQLite.SQLiteParameter param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
@@ -5482,21 +7173,6 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_service_type";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "service_type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_service_type";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "service_type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@IsNull_backup_location_id";
             param.DbType = global::System.Data.DbType.Int32;
             param.DbType = global::System.Data.DbType.Int32;
@@ -5514,20 +7190,13 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._adapter.InsertCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [main].[sqlite_default_schema].[schedule_save_locations] ([schedule_i" +
-                "d], [service_type], [backup_location_id]) VALUES (@schedule_id, @service_type, @" +
-                "backup_location_id)";
+                "d], [backup_location_id]) VALUES (@schedule_id, @backup_location_id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@schedule_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
             param.SourceColumn = "schedule_id";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@service_type";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "service_type";
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@backup_location_id";
@@ -5537,19 +7206,13 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [main].[sqlite_default_schema].[schedule_save_locations] SET [schedule_id] = @schedule_id, [service_type] = @service_type, [backup_location_id] = @backup_location_id WHERE (([id] = @Original_id) AND ((@IsNull_schedule_id = 1 AND [schedule_id] IS NULL) OR ([schedule_id] = @Original_schedule_id)) AND ((@IsNull_service_type = 1 AND [service_type] IS NULL) OR ([service_type] = @Original_service_type)) AND ((@IsNull_backup_location_id = 1 AND [backup_location_id] IS NULL) OR ([backup_location_id] = @Original_backup_location_id)))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [main].[sqlite_default_schema].[schedule_save_locations] SET [schedule_id] = @schedule_id, [backup_location_id] = @backup_location_id WHERE (([id] = @Original_id) AND ((@IsNull_schedule_id = 1 AND [schedule_id] IS NULL) OR ([schedule_id] = @Original_schedule_id)) AND ((@IsNull_backup_location_id = 1 AND [backup_location_id] IS NULL) OR ([backup_location_id] = @Original_backup_location_id)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@schedule_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
             param.SourceColumn = "schedule_id";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@service_type";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "service_type";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@backup_location_id";
@@ -5577,21 +7240,6 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
             param.SourceColumn = "schedule_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_service_type";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "service_type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_service_type";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "service_type";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
@@ -5624,8 +7272,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[1];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [schedule_id], [service_type], [backup_location_id] FROM [schedule_s" +
-                "ave_locations]";
+            this._commandCollection[0].CommandText = "SELECT id, schedule_id, backup_location_id FROM schedule_save_locations";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -5686,7 +7333,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(long Original_id, global::System.Nullable<long> Original_schedule_id, global::System.Nullable<long> Original_service_type, global::System.Nullable<long> Original_backup_location_id) {
+        public virtual int Delete(long Original_id, global::System.Nullable<long> Original_schedule_id, global::System.Nullable<long> Original_backup_location_id) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((long)(Original_id));
             if ((Original_schedule_id.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
@@ -5696,21 +7343,13 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            if ((Original_service_type.HasValue == true)) {
+            if ((Original_backup_location_id.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((long)(Original_service_type.Value));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((long)(Original_backup_location_id.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            if ((Original_backup_location_id.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((long)(Original_backup_location_id.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -5732,24 +7371,18 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(global::System.Nullable<long> schedule_id, global::System.Nullable<long> service_type, global::System.Nullable<long> backup_location_id) {
+        public virtual int Insert(global::System.Nullable<long> schedule_id, global::System.Nullable<long> backup_location_id) {
             if ((schedule_id.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((long)(schedule_id.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
-            if ((service_type.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((long)(service_type.Value));
+            if ((backup_location_id.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((long)(backup_location_id.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((backup_location_id.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((long)(backup_location_id.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -5771,49 +7404,35 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(global::System.Nullable<long> schedule_id, global::System.Nullable<long> service_type, global::System.Nullable<long> backup_location_id, long Original_id, global::System.Nullable<long> Original_schedule_id, global::System.Nullable<long> Original_service_type, global::System.Nullable<long> Original_backup_location_id) {
+        public virtual int Update(global::System.Nullable<long> schedule_id, global::System.Nullable<long> backup_location_id, long Original_id, global::System.Nullable<long> Original_schedule_id, global::System.Nullable<long> Original_backup_location_id) {
             if ((schedule_id.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((long)(schedule_id.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
-            if ((service_type.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((long)(service_type.Value));
+            if ((backup_location_id.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((long)(backup_location_id.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((backup_location_id.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((long)(backup_location_id.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((long)(Original_id));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((long)(Original_id));
             if ((Original_schedule_id.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((long)(Original_schedule_id.Value));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((long)(Original_schedule_id.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            if ((Original_service_type.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((long)(Original_service_type.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             if ((Original_backup_location_id.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((long)(Original_backup_location_id.Value));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((long)(Original_backup_location_id.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 

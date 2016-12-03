@@ -53,6 +53,9 @@ namespace Firedump
         {
             InitializeComponent();       
             adapter = new MySqlDumpAdapter();
+
+            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter ad = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+            
         }
         
 
@@ -102,7 +105,11 @@ namespace Firedump
             cmbServers.DataSource = serverData;           
             cmbServers.DisplayMember = "name";
             cmbServers.ValueMember = "id";
-            cmbServers.SelectedIndex = 0;
+            if(cmbServers.Items.Count > 0)
+            {
+                cmbServers.SelectedIndex = 0;
+            }
+            
         }
 
         private void fillTreeView()
