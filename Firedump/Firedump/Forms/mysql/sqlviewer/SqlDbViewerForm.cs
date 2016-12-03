@@ -10,15 +10,25 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Firedump.models.databaseUtils;
+using System.Runtime.InteropServices;
 
 namespace Firedump.Forms.mysql.sqlviewer
 {
+    
     public partial class SqlDbViewerForm : Form
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetGUIThreadInfo(uint idThread, ref CaretPosition.frmTooltip.GUITHREADINFO lpgui);
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
         private bool skip = false;
         private Stack<string> undoList = new Stack<string>();
         private Stack<string> redoList = new Stack<string>();
+        private CaretPosition.frmTooltip.GUITHREADINFO guiInfo = new CaretPosition.frmTooltip.GUITHREADINFO();
+        private Point point = new Point();
+        private IntelliSense intellform;
 
         private mysql_servers server;
         //merge whene database mysql_server gets database field
@@ -75,13 +85,47 @@ namespace Firedump.Forms.mysql.sqlviewer
                 toolStripComboBox1.Items.Add(limits[i]);
             }
             toolStripComboBox1.SelectedIndex = 2;
+
+            intellform = new IntelliSense();
+          
+        }
+
+
+        private void EvaluateCaretPosition()
+        {
+            Point caretPosition = new Point();
+
+            // Fetch GUITHREADINFO
+            GetCaretPosition();
+
+            caretPosition.X = (int)guiInfo.rcCaret.Left + 5;
+            caretPosition.Y = (int)guiInfo.rcCaret.Bottom;
+
+            ClientToScreen(guiInfo.hwndCaret, ref caretPosition);
             
+            point.X = caretPosition.X;
+            point.Y = caretPosition.Y;
+
+            string x = (caretPosition.X).ToString();
+            string y = caretPosition.Y.ToString();
+            Console.WriteLine("X:"+x);
+            Console.WriteLine("y:" + y);
+        }
+
+        public void GetCaretPosition()
+        {
+            guiInfo = new CaretPosition.frmTooltip.GUITHREADINFO();
+            guiInfo.cbSize = (uint)Marshal.SizeOf(guiInfo);
+            // Get GuiThreadInfo into guiInfo
+          
+            GetGUIThreadInfo(0,ref guiInfo);
         }
 
 
         private void executesql_click(object sender, EventArgs e)
         {
             executeQuery(richTextBox1.Text);
+            
         }
         
 
@@ -210,7 +254,8 @@ namespace Firedump.Forms.mysql.sqlviewer
 
         private void onKeyUpEvent(object sender, KeyEventArgs e)
         {
-
+            EvaluateCaretPosition();
+            
             //space
             if (((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
             {
@@ -222,6 +267,36 @@ namespace Firedump.Forms.mysql.sqlviewer
                 //richTextBox1.SelectionColor = richTextBox1.ForeColor;
             }
 
+            string word = getCurrentWord().ToUpper();
+            if(word.Length >= 3)
+            {
+                List<string> words = MysqlWords.words;
+                List<string> tables = MysqlWords.tables;
+                List<string> candidatewords = new List<string>();
+                foreach(string i in words)
+                {
+                    if (i.Contains(word))
+                        candidatewords.Add(i);
+                }
+                foreach(string t in tables)
+                {
+                    if (t.Contains(word))
+                        candidatewords.Add(t);
+                }
+
+                if(candidatewords.Count > 0)
+                {
+                    intellform.Location = point;
+                    intellform.Visible = false;
+                    intellform.setItemsToListView(candidatewords);
+                    intellform.Show(this);
+                    richTextBox1.Focus();
+                }
+            } else
+            {
+                intellform.Visible = false;
+            }
+        
         }
 
 
@@ -259,7 +334,7 @@ namespace Firedump.Forms.mysql.sqlviewer
         {
             richTextBox1.Text = "";
         }
-
+        
 
         private void unduTextClick(object sender, EventArgs e)
         {
@@ -285,5 +360,43 @@ namespace Firedump.Forms.mysql.sqlviewer
         {
                     
         }
+
+
+
+        private string getCurrentWord()
+        {
+            if (richTextBox1.SelectionStart > 1)
+            {
+                int cursorPosition = richTextBox1.SelectionStart;
+                int nextSpace = richTextBox1.Text.IndexOf(' ', cursorPosition);
+                int selectionStart = 0;
+                string trimmedString = string.Empty;
+                if (nextSpace != -1)
+                {
+                    trimmedString = richTextBox1.Text.Substring(0, nextSpace);
+                }
+                else
+                {
+                    trimmedString = richTextBox1.Text;
+                }
+
+                if (trimmedString.LastIndexOf(' ') != -1)
+                {
+                    selectionStart = 1 + trimmedString.LastIndexOf(' ');
+                    trimmedString = trimmedString.Substring(1 + trimmedString.LastIndexOf(' '));
+                }
+
+                string word = richTextBox1.Text.Substring(selectionStart, trimmedString.Length);
+                Console.WriteLine(word);
+                return word;
+
+                //select the word
+                //richTextBox1.SelectionStart = selectionStart;
+                //richTextBox1.SelectionLength = trimmedString.Length;
+            }
+            return "";
+        }
+
+
     }
 }
