@@ -130,9 +130,11 @@
     <Compile Include="models\location\ILocation.cs" />
     <Compile Include="models\location\ILocationCloud.cs" />
     <Compile Include="models\location\ILocationListener.cs" />
+    <Compile Include="models\location\ILocationManagerListener.cs" />
     <Compile Include="models\location\ILocationProgressListener.cs" />
     <Compile Include="models\location\Location.cs" />
     <Compile Include="models\location\LocationAdapter.cs" />
+    <Compile Include="models\location\LocationAdapterManager.cs" />
     <Compile Include="models\location\LocationCloudBox.cs" />
     <Compile Include="models\location\LocationCloudDrive.cs" />
     <Compile Include="models\location\LocationFtp.cs" />

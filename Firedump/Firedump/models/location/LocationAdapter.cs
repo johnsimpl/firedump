@@ -13,16 +13,17 @@ namespace Firedump.models.location
         private ILocation location;
         private ILocationListener listener;
 
-        public LocationAdapter() { }
+        private LocationAdapter() { }
 
         public LocationAdapter(ILocationListener listener)
         {
             this.listener = listener;
         }
 
-        public void setLocalLocation()
+        public void setLocalLocation(LocationCredentialsConfig config) //auta na kanoun try catch gia to cast kai na kaloun onError se fail
         {
             this.location = new LocationLocal(this);
+            ((LocationLocal)this.location).config = config;
         }
 
         public void setFtpLocation(LocationCredentialsConfig config)
@@ -30,7 +31,16 @@ namespace Firedump.models.location
             this.location = new LocationFtp(this);
             ((LocationFtp)this.location).config = config;
         }
-
+        public void setCloudBoxLocation(LocationCredentialsConfig config)
+        {
+            this.location = new LocationCloudBox(this);
+            ((LocationCloudBox)this.location).config = config;
+        }
+        public void setCloudDriveLocation(LocationCredentialsConfig config)
+        {
+            this.location = new LocationCloudDrive(this);
+            ((LocationCloudDrive)this.location).config = config;
+        }
         public void sendFile()
         {
             if (this.location == null)
@@ -57,11 +67,15 @@ namespace Firedump.models.location
 
         private async void sendFileTaskExecutor()
         {
+
             Task<LocationResultSet> innersendtask = new Task<LocationResultSet>(location.send);
             LocationResultSet res;
+            innersendtask.Start();  
+                    
             try
             {
                 res = await innersendtask;
+                listener.onSaveComplete(res);
             }
             catch (NullReferenceException) { }
 
@@ -69,18 +83,20 @@ namespace Firedump.models.location
 
         private async void getFileTaskExecutor()
         {
-            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);//getFileTask();
+            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);
             LocationResultSet res;
+            innergettask.Start();
             try
             {
                 res = await innergettask;
+                listener.onSaveComplete(res);
             }
             catch (NullReferenceException) { }
         }
 
         public void setProgress(int progress)
         {
-            throw new NotImplementedException();
+            listener.setSaveProgress(progress);
         }
     }
 }

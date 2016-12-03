@@ -40,7 +40,7 @@ namespace Firedump.Forms.location
             }
             catch(ArgumentException ex)
             {
-                MessageBox.Show("Please choose a valid folder path", "New file system location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please choose a valid path", "New file system location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -59,14 +59,16 @@ namespace Firedump.Forms.location
 
         private void bPath_Click(object sender, EventArgs e)
         {
-            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
-            cofd.IsFolderPicker = true;
-            cofd.InitialDirectory = tbPath.Text;
-            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.AddExtension = true;
+            //sfd.DefaultExt = ".sql";
+            //sfd.Filter = "SQL file (*.sql)|*.sql|XML file (*.xml)|*.xml";
+            sfd.Filter = "All Files (Do not add extension it will be automatically added)|*";
+            if(sfd.ShowDialog() == DialogResult.OK)
             {
-                string newPath = cofd.FileName;
-                tbPath.Text = newPath + "\\";
+                tbPath.Text = sfd.FileName;
             }
+            
         }
     }
 }
