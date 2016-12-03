@@ -67,11 +67,15 @@ namespace Firedump.models.location
 
         private async void sendFileTaskExecutor()
         {
+
             Task<LocationResultSet> innersendtask = new Task<LocationResultSet>(location.send);
             LocationResultSet res;
+            innersendtask.Start();  
+                    
             try
             {
                 res = await innersendtask;
+                listener.onSaveComplete(res);
             }
             catch (NullReferenceException) { }
 
@@ -79,18 +83,20 @@ namespace Firedump.models.location
 
         private async void getFileTaskExecutor()
         {
-            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);//getFileTask();
+            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);
             LocationResultSet res;
+            innergettask.Start();
             try
             {
                 res = await innergettask;
+                listener.onSaveComplete(res);
             }
             catch (NullReferenceException) { }
         }
 
         public void setProgress(int progress)
         {
-            throw new NotImplementedException();
+            listener.setSaveProgress(progress);
         }
     }
 }

@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
+            this.bLocLocal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(105, 91);
+            this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -41,11 +42,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // bLocLocal
+            // 
+            this.bLocLocal.Location = new System.Drawing.Point(12, 213);
+            this.bLocLocal.Name = "bLocLocal";
+            this.bLocLocal.Size = new System.Drawing.Size(86, 23);
+            this.bLocLocal.TabIndex = 1;
+            this.bLocLocal.Text = "LocationLocal";
+            this.bLocLocal.UseVisualStyleBackColor = true;
+            this.bLocLocal.Click += new System.EventHandler(this.bLocLocal_Click);
+            // 
             // Test1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.bLocLocal);
             this.Controls.Add(this.button1);
             this.Name = "Test1";
             this.Text = "Test1";
@@ -56,5 +68,6 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bLocLocal;
     }
 }

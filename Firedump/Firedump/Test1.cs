@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Firedump.models.location;
 
 namespace Firedump
 {
@@ -26,10 +27,17 @@ namespace Firedump
             comp.absolutePath = "D:\\test\\test 1\\file test.sql";
             comp.doCompress7z();*/
             //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            
+            /*
             CommonOpenFileDialog cofd = new CommonOpenFileDialog();
             cofd.IsFolderPicker = true;
-            cofd.ShowDialog();
+            cofd.ShowDialog();*/
+
+        }
+
+        private void bLocLocal_Click(object sender, EventArgs e)
+        {
+            UIServiceDemo usd = new UIServiceDemo();
+            usd.demo();
         }
     }
 }
