@@ -34,7 +34,6 @@ namespace Firedump.models.location
             this.config = config;
             this.listener = listener;
             setupSessionOptions();
-            setupLocationPath();
         }
 
         public void setupSessionOptions()
@@ -58,6 +57,10 @@ namespace Firedump.models.location
             else
             {
                 sessionOptions.Protocol = Protocol.Ftp;
+            }
+            if (config.usePrivateKey)
+            {
+                sessionOptions.SshPrivateKeyPath = config.privateKeyPath;
             }
         }
         
@@ -85,11 +88,6 @@ namespace Firedump.models.location
                 session.Dispose();
             }
             return result;
-        }
-
-        private void setupLocationPath()
-        {
-            //EDW NA MPEI TO EXTENSION STO LOCATION PATH
         }
 
         private string[] splitPath(string path)
