@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class UIServiceDemo : ILocationManagerListener
+    class UIServiceDemo : ILocationManagerListener,IFTPListener
     {
 
         public UIServiceDemo() { }
@@ -29,9 +29,37 @@ namespace Firedump.models.location
             adapter.startSave();
         }
 
+        public void demoFTP()
+        {
+            FTPCredentialsConfig config = new FTPCredentialsConfig();
+            config.host = "cspeitch.com";
+            config.port = 22;
+            config.username = "";
+            config.password = "";
+            config.sourcePath = "D:\\MyStuff\\DSC_0133.JPG";
+            config.locationPath = "/home/cspeitch/eikona";
+            config.useSFTP = true;
+
+            FTPUtils ftp = new FTPUtils(config,this);
+            /*
+            FTPConnectionResultSet res = ftp.testConnection();
+            Console.WriteLine("Was Succesful: "+res.wasSuccessful);
+            Console.WriteLine("Error Message: " + res.errorMessage);
+            Console.WriteLine("SSH fingerprint: "+res.sshHostKeyFingerprint);*/
+
+            ftp.sendFile();
+
+
+        }
+
         public void onInnerSaveInit(string location)
         {
             Console.WriteLine("Inner save init: "+location);
+        }
+
+        public void onProgress(int progress, int speed)
+        {
+            Console.WriteLine(progress + " " + speed);
         }
 
         public void onSaveComplete(List<LocationResultSet> results)
@@ -65,6 +93,16 @@ namespace Firedump.models.location
         public void onSaveInit(int maxprogress)
         {
             Console.WriteLine("Setting max progress to: "+maxprogress);
+        }
+
+        public void onTransferComplete()
+        {
+            Console.WriteLine("Transfer complete");
+        }
+
+        public void onTransferError(string message)
+        {
+            Console.WriteLine("Transfer error: "+message);
         }
 
         public void setSaveProgress(int progress)

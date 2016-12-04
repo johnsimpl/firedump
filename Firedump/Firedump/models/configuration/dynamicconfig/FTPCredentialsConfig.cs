@@ -8,15 +8,8 @@ namespace Firedump.models.configuration.dynamicconfig
 {
     class FTPCredentialsConfig : LocationCredentialsConfig
     {
-        public string hostname { set; get; }
-        public string username { set; get; }
-        public string password { set; get; }
-        /// <summary>
-        /// Default value = 3306
-        /// </summary>
-        public int port { set; get; } = 3306;
         public bool useSFTP { set; get; }
-        public string SshHostKeyFingerprint { set; get; } = "ssh-rsa 2048 xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx";
+        public string SshHostKeyFingerprint { set; get; }
         /// <summary>
         /// Use private key for SFTP login (useSFTP must be true or this is disregarded)
         /// If used privateKeyPath must also be set
