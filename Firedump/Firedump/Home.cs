@@ -441,8 +441,8 @@ namespace Firedump
             }
             else
             {
-                backgroundWorker1.CancelAsync();
-                backgroundWorker1.RunWorkerAsync();
+                //backgroundWorker1.CancelAsync();
+                //backgroundWorker1.RunWorkerAsync();
             }
             
         }
@@ -565,8 +565,11 @@ namespace Firedump
                     lStatus.Text = "Completed";
                 });
 
+                pbDumpExec.Invoke((MethodInvoker)delegate () {
+                    pbDumpExec.Value = pbDumpExec.Maximum;
+                });           
 
-                if(status.wasSuccessful)
+                if (status.wasSuccessful)
                 {
                     //EDW KALEITAI TO SAVE STA LOCATIONS
                     List<int> locations = new List<int>();
