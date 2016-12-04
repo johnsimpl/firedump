@@ -7,39 +7,65 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class UIServiceDemo : ILocationListener
+    class UIServiceDemo : ILocationManagerListener
     {
 
         public UIServiceDemo() { }
         public void demo()
         {
+            /*
             LocationCredentialsConfig config = new LocationCredentialsConfig();
             config.sourcePath = "K:\\MyStuff\\summer season 2015 checkout\\[Ajin2.com] Ajin Season 2 Episode 4 [720p].mkv";
-            config.locationPath = "K:\\MyStuff\\thefile";
+            config.locationPath = "K:\\MyStuff\\thefile";*/
             /* test to location apefthias
             LocationLocal loc = new LocationLocal(this);
             loc.config = config;
             loc.send();*/
+            /*
             LocationAdapter adapter = new LocationAdapter(this);
             adapter.setLocalLocation(config);
-            adapter.sendFile();
+            adapter.sendFile();*/
+            LocationAdapterManager adapter = new LocationAdapterManager(this,new List<int> { 2,3,4,5}, "K:\\MyStuff\\summer season 2015 checkout\\[Ajin2.com] Ajin Season 2 Episode 4 [720p].mkv");
+            adapter.startSave();
+        }
+
+        public void onInnerSaveInit(string location)
+        {
+            Console.WriteLine("Inner save init: "+location);
+        }
+
+        public void onSaveComplete(List<LocationResultSet> results)
+        {
+
+            Console.WriteLine("Save Completed!");
+            Console.WriteLine("Results:");
+            foreach(LocationResultSet result in results)
+            {
+                Console.WriteLine(result.wasSuccessful);
+                if(!result.wasSuccessful)
+                Console.WriteLine(result.errorMessage);
+            }
         }
 
         public void onSaveComplete(LocationResultSet result)
         {
-            //throw new NotImplementedException();
+            Console.WriteLine("Save Completed!");
         }
 
         public void onSaveError(string message)
         {
-            //throw new NotImplementedException();
+            Console.WriteLine("Save Error: "+message);
         }
 
         public void onSaveInit()
         {
-            //throw new NotImplementedException();
+            Console.WriteLine("Save Init");
         }
 
+        public void onSaveInit(int maxprogress)
+        {
+            Console.WriteLine("Setting max progress to: "+maxprogress);
+        }
 
         public void setSaveProgress(int progress)
         {

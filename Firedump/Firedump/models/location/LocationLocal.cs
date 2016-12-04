@@ -61,7 +61,7 @@ namespace Firedump.models.location
                     return result;
                 }
 
-                File.Delete(config.locationPath); //kamia fora prokalei unothorized access exception den mporw na katalavw me poia logiki
+                //akiro afto to command File.Delete(config.locationPath); //kamia fora prokalei unothorized access exception den mporw na katalavw me poia logiki
                 result.wasSuccessful = true;
 
                 /*

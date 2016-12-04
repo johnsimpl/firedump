@@ -568,11 +568,16 @@ namespace Firedump
 
                 if(status.wasSuccessful)
                 {
-                    /*
-                    LocationAdapter adapter = new LocationAdapter(this);
-                    adapter.setLocalLocation();
-                    adapter.sendFile();*/
-                    MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //EDW KALEITAI TO SAVE STA LOCATIONS
+                    List<int> locations = new List<int>();
+                    foreach (object item in lbSaveLocations.Items)
+                    {
+                        BackupLocation loc = (BackupLocation)item;
+                        locations.Add(loc.id);
+                    }
+                    LocationAdapterManager adapter = new LocationAdapterManager(this,locations,status.fileAbsPath);
+                    adapter.startSave();
+                    //MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -668,17 +673,41 @@ namespace Firedump
 
         public void setSaveProgress(int progress)
         {
-            throw new NotImplementedException();
+            setProgressValue(progress);
         }
 
         public void onSaveInit(int maxprogress)
         {
-            throw new NotImplementedException();
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = "Saving to locations...";
+                initProgressBar(null, maxprogress);
+                tableRowCount(-1);
+            });
         }
 
         public void onSaveComplete(List<LocationResultSet> results)
         {
-            throw new NotImplementedException();
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = "Save complete!";
+                tableRowCount(-1);
+            });
+            
+            //XEIRISMOS RESULTS EDW!!!
+
+            MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void onSaveError(string message)
+        {
+            MessageBox.Show("Save to locations failed:\n"+message,"Locations Save",MessageBoxButtons.OK,MessageBoxIcon.Error);
+        }
+
+        public void onInnerSaveInit(string location)
+        {
+            lStatus.Invoke((MethodInvoker)delegate () {
+                lStatus.Text = "Saving to: "+location;
+                tableRowCount(-1);
+            });
         }
 
 

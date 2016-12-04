@@ -1,24 +1,29 @@
 ﻿using Firedump.models.configuration.dynamicconfig;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Firedump.models.location
 {
     class LocationAdapterManager : ILocationListener 
     {
         private ILocationManagerListener listener;
-        private List<ILocation> locations;
+        private List<int> locations;
         private List<LocationResultSet> results;
-        private firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_adapter; //malon tha xreiastei adapter pou tha einai join pinakwn tha doume
+        private firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_adapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter(); //malon tha xreiastei adapter pou tha einai join pinakwn tha doume
         private int currentProgress = 0;
+        private string sourcePath;
         private LocationAdapterManager() { }
-        public LocationAdapterManager(ILocationManagerListener listener, List<ILocation> locations)
+        public LocationAdapterManager(ILocationManagerListener listener, List<int> locations, string sourcePath)
         {
             this.listener = listener;
             this.locations = locations;
+            this.sourcePath = sourcePath;
             init();
         }
         private void init()
@@ -33,36 +38,67 @@ namespace Firedump.models.location
             {
                 locations.RemoveAt(0);
             }
+
+            if (locations.Count > 0) //teliki sinthiki tou adapter
+            {
+                startSave();
+            }
+            else
+            {
+                try
+                {
+                    File.Delete(sourcePath);
+                }
+                catch(Exception e){ }
+                listener.onSaveComplete(results);
+            }
         }
+
         public void startSave() //thelei douleia afti
         {
-            LocationCredentialsConfig config = new LocationCredentialsConfig();
-            
-
-            int type = 0;
+            if(locations.Count == 0)
+            {
+                listener.onSaveError("Save started with no locations");
+                return;
+            }
+            LocationCredentialsConfig config;
+            DataTable data = backup_adapter.GetDataByID(locations[0]);
+            if (data.Rows.Count == 0)
+            {
+                onSaveError("Location not found in the database");
+                return;
+            }
+            long type = (Int64)data.Rows[0]["service_type"];
             LocationAdapter adapter = new LocationAdapter(this);
             switch (type) //edw gemizei to config apo to database prepei na kanei diaforetiko query gia kathe diaforetiko type kai na gemisei to config prin to settarei ston adapter
             {              
                 case 0: //file system
+                    config = new LocationCredentialsConfig();
+                    config.sourcePath = sourcePath;
+                    config.locationPath = (string)data.Rows[0]["path"];
                     adapter.setLocalLocation(config);
                     break;
                 case 1: //FTP
+                    config = new LocationCredentialsConfig();
+                    //EDW SETUP TO CONFIG
                     adapter.setFtpLocation(config);
                     break;
                 case 2: //Dropbox
+                    config = new LocationCredentialsConfig();
+                    //EDW SETUP TO CONFIG
                     adapter.setCloudBoxLocation(config);
                     break;
                 case 3: //Google drive
+                    config = new LocationCredentialsConfig();
+                    //EDW SETUP TO CONFIG
                     adapter.setCloudDriveLocation(config);
                     break;
                 default:
-                    LocationResultSet result = new LocationResultSet();
-                    result.wasSuccessful = false;
-                    result.errorMessage = "Location type uknown";
-                    results.Add(result);
-                    setupForNewSave();
+                    onSaveError("Location type unknown");
                     return;
             }
+
+            listener.onInnerSaveInit((string)data.Rows[0]["name"]);
 
             Task managersendtask = new Task(adapter.sendFile);
             managersendtask.Start();
@@ -72,14 +108,6 @@ namespace Firedump.models.location
         {
             results.Add(result);
             setupForNewSave();
-            if (locations.Count > 0)
-            {
-                startSave();
-            }
-            else
-            {
-                listener.onSaveComplete(results);
-            }
         }
 
         public void onSaveError(string message)
