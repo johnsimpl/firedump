@@ -104,6 +104,10 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WinSCPnet, Version=1.3.6.7136, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinSCP.5.9.3\lib\WinSCPnet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="backup_locations.cs">
@@ -131,8 +135,11 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
+    <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
+    <Compile Include="models\location\FTPUtils.cs" />
     <Compile Include="models\location\ICallBack.cs" />
+    <Compile Include="models\location\IFTPListener.cs" />
     <Compile Include="models\location\ILocation.cs" />
     <Compile Include="models\location\ILocationCloud.cs" />
     <Compile Include="models\location\ILocationListener.cs" />
@@ -450,6 +457,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="WinSCP.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="resources\firedump.png" />
     <Content Include="resources\icons\sqlselecticon.png" />
