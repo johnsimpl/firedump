@@ -79,8 +79,22 @@ namespace Firedump.models.location
                     adapter.setLocalLocation(config);
                     break;
                 case 1: //FTP
-                    config = new LocationCredentialsConfig();
-                    //EDW SETUP TO CONFIG
+                    config = new FTPCredentialsConfig();
+                    config.sourcePath = sourcePath;
+                    config.locationPath = (string)data.Rows[0]["path"];
+                    ((FTPCredentialsConfig)config).id = (Int64)data.Rows[0]["id"];
+                    ((FTPCredentialsConfig)config).host = (string)data.Rows[0]["host"];
+                    config.port = unchecked((int)(Int64)data.Rows[0]["port"]);
+                    config.username = (string)data.Rows[0]["username"];
+                    config.password = (string)data.Rows[0]["password"];
+                    ((FTPCredentialsConfig)config).useSFTP = (bool)data.Rows[0]["useSFTP"];
+                    ((FTPCredentialsConfig)config).SshHostKeyFingerprint = (string)data.Rows[0]["ssh_key_fingerprint"];
+                    string keypath = (string)data.Rows[0]["ssh_key"];
+                    if (!string.IsNullOrEmpty(keypath))
+                    {
+                        ((FTPCredentialsConfig)config).usePrivateKey = true;
+                        ((FTPCredentialsConfig)config).privateKeyPath = keypath;
+                    }
                     adapter.setFtpLocation(config);
                     break;
                 case 2: //Dropbox

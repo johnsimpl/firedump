@@ -8,9 +8,9 @@ namespace Firedump.models.location
 {
     interface ILocation
     {
-        void connect();
+        LocationConnectionResultSet connect();
 
-        void connect(object o);
+        LocationConnectionResultSet connect(object o);
 
         LocationResultSet getFile();
 

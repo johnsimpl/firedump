@@ -5083,7 +5083,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[5];
+            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[6];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        backup_locations.*\r\nFROM            backup_locations";
@@ -5127,6 +5127,21 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             param.ParameterName = "@name";
             param.DbType = global::System.Data.DbType.String;
             this._commandCollection[4].Parameters.Add(param);
+            this._commandCollection[5] = new global::System.Data.SQLite.SQLiteCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = "UPDATE [main].[sqlite_default_schema].[backup_locations] SET [ssh_key_fingerprint" +
+                "] = @ssh_key_fingerprint WHERE id = @id ";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@ssh_key_fingerprint";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "ssh_key_fingerprint";
+            this._commandCollection[5].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            this._commandCollection[5].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5959,6 +5974,36 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             else {
                 return ((object)(returnValue));
             }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int UpdateFingerprint(string ssh_key_fingerprint, long id) {
+            global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[5];
+            if ((ssh_key_fingerprint == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(ssh_key_fingerprint));
+            }
+            command.Parameters[1].Value = ((long)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
         }
     }
     

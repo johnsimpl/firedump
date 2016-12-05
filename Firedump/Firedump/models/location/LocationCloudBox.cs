@@ -16,12 +16,12 @@ namespace Firedump.models.location
         {
             this.listener = listener;
         }
-        public void connect()
+        public LocationConnectionResultSet connect()
         {
             throw new NotImplementedException();
         }
 
-        public void connect(object o)
+        public LocationConnectionResultSet connect(object o)
         {
             throw new NotImplementedException();
         }

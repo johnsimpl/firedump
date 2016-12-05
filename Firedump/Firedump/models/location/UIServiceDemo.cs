@@ -39,6 +39,7 @@ namespace Firedump.models.location
             config.password = "";
             config.sourcePath = "D:\\MyStuff\\DSC_0133.JPG";
             config.locationPath = "/home/cspeitch/eikona";
+            config.SshHostKeyFingerprint = "";
             config.useSFTP = true;
 
             FTPUtils ftp = new FTPUtils(config,this);

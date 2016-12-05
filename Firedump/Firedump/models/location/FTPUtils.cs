@@ -14,6 +14,7 @@ namespace Firedump.models.location
         private FTPCredentialsConfig config;
         private IFTPListener listener;
         private Session session;
+        bool firstCheck = true;
         private FTPUtils() { }
         /// <summary>
         /// Use this for listings not for transfer operations
@@ -48,7 +49,14 @@ namespace Firedump.models.location
             if (config.useSFTP)
             {
                 sessionOptions.Protocol = Protocol.Sftp;
-                sessionOptions.SshHostKeyFingerprint = config.SshHostKeyFingerprint;
+                try
+                {
+                    sessionOptions.SshHostKeyFingerprint = config.SshHostKeyFingerprint;
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
                 if (config.usePrivateKey)
                 {
                     sessionOptions.SshPrivateKeyPath = config.privateKeyPath;
@@ -69,13 +77,18 @@ namespace Firedump.models.location
             try
             {
                 session = new Session();
-                if(config.useSFTP && string.IsNullOrEmpty(sessionOptions.SshHostKeyFingerprint))
-                    sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                checkFingerprint();
                 session.Open(sessionOptions);
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
+                if (firstCheck && e.Message.StartsWith("Host key does not match configured key"))
+                {
+                    compareFingerprint();
+                    firstCheck = false;
+                    startSession();
+                }
             }
         }
 
@@ -89,6 +102,33 @@ namespace Firedump.models.location
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        private void checkFingerprint()
+        {
+            if (config.useSFTP && string.IsNullOrEmpty(sessionOptions.SshHostKeyFingerprint))
+            {
+                sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                saveFingerprint(sessionOptions.SshHostKeyFingerprint);
+            }
+        }
+
+        private void compareFingerprint()
+        {
+            if (config.useSFTP)
+            {
+                sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                if (sessionOptions.SshHostKeyFingerprint != config.SshHostKeyFingerprint)
+                {
+                    saveFingerprint(sessionOptions.SshHostKeyFingerprint);
+                }
+            }
+        }
+
+        private void saveFingerprint(string fingerprint)
+        {
+            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter adapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+            adapter.UpdateFingerprint(fingerprint, config.id);
         }
 
         /// <summary>
@@ -125,14 +165,17 @@ namespace Firedump.models.location
         /// 
         /// </summary>
         /// <returns>Empty string for success or the exception message</returns>
-        public FTPConnectionResultSet testConnection()
+        public LocationConnectionResultSet testConnection()
         {
-            FTPConnectionResultSet result = new FTPConnectionResultSet();
+            LocationConnectionResultSet result = new LocationConnectionResultSet();
             try
             {
                 session = new Session();
-                result.sshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
-                sessionOptions.SshHostKeyFingerprint = result.sshHostKeyFingerprint;
+                if (config.useSFTP)
+                {
+                    result.sshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                    sessionOptions.SshHostKeyFingerprint = result.sshHostKeyFingerprint;
+                }
                 session.Open(sessionOptions);
                 result.wasSuccessful = true;
             }
@@ -175,15 +218,15 @@ namespace Firedump.models.location
         /// To location path prepei na einai directory
         /// Location path tis morfis /home/user/filename
         /// </summary>
-        public void sendFile()
+        public LocationResultSet sendFile()
         {
+            LocationResultSet result = new LocationResultSet();
             try
             {
                 session = new Session();
 
                 session.FileTransferProgress += sessionFileTransferProgress;
-                if(config.useSFTP && string.IsNullOrEmpty(sessionOptions.SshHostKeyFingerprint))
-                    sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                checkFingerprint();
 
                 string[] locationinfo = splitPath(config.locationPath);
                 string[] sourceinfo = splitPath(config.sourcePath);
@@ -208,45 +251,69 @@ namespace Firedump.models.location
                     Console.WriteLine("Upload of {0} succeeded", transfer.FileName);
                 }*/
 
-                listener.onTransferComplete();
+                result.wasSuccessful = true;
+                result.path = locationinfo[0] + locationinfo[1] + ext;
             }
             catch(Exception ex)
             {
-                listener.onTransferError(ex.Message);
+                if (firstCheck && e.Message.StartsWith("Host key does not match configured key"))
+                {
+                    compareFingerprint();
+                    firstCheck = false;
+                    sendFile();
+                }
+                else
+                {
+                    result.wasSuccessful = false;
+                    result.errorMessage = ex.Message;
+                }
             }
             finally
             {
                 session.Dispose();
             }
+            return result;
         }
 
         /// <summary>
         /// Sto config sourcePath einai tou server kai to locationPath prepei na einai directory
         /// </summary>
-        public void getFile()
+        public LocationResultSet getFile()
         {
+            LocationResultSet result = new LocationResultSet();
             try
             {
                 session = new Session();
 
                 session.FileTransferProgress += sessionFileTransferProgress;
-                if (config.useSFTP && string.IsNullOrEmpty(sessionOptions.SshHostKeyFingerprint))
-                    sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                checkFingerprint();
 
                 session.Open(sessionOptions);
 
                 session.GetFiles(config.sourcePath, config.locationPath).Check();
 
-                listener.onTransferComplete();
+                result.wasSuccessful = true;
+                result.path = config.locationPath;
             }
             catch (Exception ex)
             {
-                listener.onTransferError(ex.Message);
+                if (firstCheck && e.Message.StartsWith("Host key does not match configured key"))
+                {
+                    compareFingerprint();
+                    firstCheck = false;
+                    sendFile();
+                }
+                else
+                {
+                    result.wasSuccessful = false;
+                    result.errorMessage = ex.Message;
+                }
             }
             finally
             {
                 session.Dispose();
             }
+            return result;
         }
 
         private void sessionFileTransferProgress(object sender, FileTransferProgressEventArgs e)
