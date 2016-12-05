@@ -256,7 +256,7 @@ namespace Firedump.models.location
             }
             catch(Exception ex)
             {
-                if (firstCheck && e.Message.StartsWith("Host key does not match configured key"))
+                if (firstCheck && ex.Message.StartsWith("Host key does not match configured key"))
                 {
                     compareFingerprint();
                     firstCheck = false;
@@ -297,7 +297,7 @@ namespace Firedump.models.location
             }
             catch (Exception ex)
             {
-                if (firstCheck && e.Message.StartsWith("Host key does not match configured key"))
+                if (firstCheck && ex.Message.StartsWith("Host key does not match configured key"))
                 {
                     compareFingerprint();
                     firstCheck = false;
