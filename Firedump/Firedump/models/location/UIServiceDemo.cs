@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinSCP;
 
 namespace Firedump.models.location
 {
@@ -34,8 +35,8 @@ namespace Firedump.models.location
             FTPCredentialsConfig config = new FTPCredentialsConfig();
             config.host = "cspeitch.com";
             config.port = 22;
-            config.username = "";
-            config.password = "";
+            config.username = "cspeitch";
+            config.password = "tragimonth5154";
             config.sourcePath = "D:\\MyStuff\\DSC_0133.JPG";
             config.locationPath = "/home/cspeitch/eikona";
             config.useSFTP = true;
@@ -47,8 +48,27 @@ namespace Firedump.models.location
             Console.WriteLine("Error Message: " + res.errorMessage);
             Console.WriteLine("SSH fingerprint: "+res.sshHostKeyFingerprint);*/
 
-            ftp.sendFile();
-
+            //ftp.sendFile();
+            ftp.startSession();
+            List<RemoteFileInfo> files = ftp.getDirectoryListing("/", false, false);
+            foreach(RemoteFileInfo file in files)
+            {
+                Console.WriteLine(file.IsDirectory+" "+file.Name);
+            }
+            Console.WriteLine();
+            files = ftp.getDirectoryListing("/home/cspeitch", false, false);
+            foreach (RemoteFileInfo file in files)
+            {
+                Console.WriteLine(file.IsDirectory + " " + file.Name);
+            }
+            Console.WriteLine();
+            files = ftp.getDirectoryListing("/home/cspeitch/animeapp", false, false);
+            foreach (RemoteFileInfo file in files)
+            {
+                Console.WriteLine(file.IsDirectory + " " + file.Name);
+            }
+            Console.WriteLine();
+            ftp.disposeSession();
 
         }
 

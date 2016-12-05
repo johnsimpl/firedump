@@ -63,7 +63,64 @@ namespace Firedump.models.location
                 sessionOptions.SshPrivateKeyPath = config.privateKeyPath;
             }
         }
-        
+
+        public void startSession()
+        {
+            try
+            {
+                session = new Session();
+                if(config.useSFTP && string.IsNullOrEmpty(sessionOptions.SshHostKeyFingerprint))
+                    sessionOptions.SshHostKeyFingerprint = session.ScanFingerprint(sessionOptions);
+                session.Open(sessionOptions);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void disposeSession()
+        {
+            try
+            {
+                session.Dispose();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// A listener is not required for this method to work properly.
+        /// startSession() must be called before this method is called.
+        /// Call disposeSession() after the job is finished.
+        /// </summary>
+        /// <param name="path">Path of the directory to list</param>
+        /// <param name="onlyDirectories">If set to true only directories in the directory will be listed</param>
+        /// <param name="showHiddenFiles">If set to true files with a name starting with . with be displayed</param>
+        /// <returns>A list of Fileinfos</returns>
+        public List<RemoteFileInfo> getDirectoryListing(string path, bool onlyDirectories, bool showHiddenFiles)
+        {
+            List<RemoteFileInfo> files = new List<RemoteFileInfo>();
+            try
+            {
+                RemoteDirectoryInfo directory = session.ListDirectory(path);
+                foreach(RemoteFileInfo file in directory.Files)
+                {   //    this part excludes files                this excludes .          this excludes files starting with . except from  ..
+                    if(!(!file.IsDirectory && onlyDirectories) && file.Name!="." && !(!showHiddenFiles && file.Name.StartsWith(".") && file.Name!=".."))
+                    {
+                        files.Add(file);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return files;
+        }
+
         /// <summary>
         /// 
         /// </summary>
