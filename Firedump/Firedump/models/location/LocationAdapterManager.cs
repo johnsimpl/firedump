@@ -87,8 +87,12 @@ namespace Firedump.models.location
                     config.port = unchecked((int)(Int64)data.Rows[0]["port"]);
                     config.username = (string)data.Rows[0]["username"];
                     config.password = (string)data.Rows[0]["password"];
-                    ((FTPCredentialsConfig)config).useSFTP = (bool)data.Rows[0]["useSFTP"];
-                    ((FTPCredentialsConfig)config).SshHostKeyFingerprint = (string)data.Rows[0]["ssh_key_fingerprint"];
+                    Int64 useSFTP = (Int64)data.Rows[0]["useSFTP"];
+                    if (useSFTP == 1)
+                    {
+                        ((FTPCredentialsConfig)config).useSFTP = true;
+                        ((FTPCredentialsConfig)config).SshHostKeyFingerprint = (string)data.Rows[0]["ssh_key_fingerprint"];
+                    }
                     string keypath = (string)data.Rows[0]["ssh_key"];
                     if (!string.IsNullOrEmpty(keypath))
                     {
