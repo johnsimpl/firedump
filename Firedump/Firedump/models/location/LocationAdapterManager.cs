@@ -87,7 +87,7 @@ namespace Firedump.models.location
                     config.port = unchecked((int)(Int64)data.Rows[0]["port"]);
                     config.username = (string)data.Rows[0]["username"];
                     config.password = (string)data.Rows[0]["password"];
-                    Int64 useSFTP = (Int64)data.Rows[0]["useSFTP"];
+                    Int64 useSFTP = (Int64)data.Rows[0]["usesftp"];
                     if (useSFTP == 1)
                     {
                         ((FTPCredentialsConfig)config).useSFTP = true;
