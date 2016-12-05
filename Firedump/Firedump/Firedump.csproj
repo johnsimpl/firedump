@@ -137,7 +137,7 @@
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
-    <Compile Include="models\location\FTPConnectionResultSet.cs" />
+    <Compile Include="models\location\LocationConnectionResultSet.cs" />
     <Compile Include="models\location\FTPUtils.cs" />
     <Compile Include="models\location\ICallBack.cs" />
     <Compile Include="models\location\IFTPListener.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class FTPConnectionResultSet
+    class LocationConnectionResultSet
     {
         public bool wasSuccessful { set; get; }
         public string errorMessage { set; get; }

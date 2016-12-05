@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationFtp : Location,ILocation
+    class LocationFtp : Location,ILocation,IFTPListener
     {
         public LocationCredentialsConfig config { set; get; }
         private ILocationProgressListener listener;
@@ -16,29 +16,35 @@ namespace Firedump.models.location
         {
             this.listener = listener;
         }
-        public void connect()
+        public LocationConnectionResultSet connect()
         {
-            throw new NotImplementedException();
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config, this);
+            LocationConnectionResultSet result = ftputils.testConnection();
+            return result;
         }
 
-        void test()
-        {
-        }
-
-        public void connect(object o)
+        public LocationConnectionResultSet connect(object o)
         {
             throw new NotImplementedException();
         }
 
         public LocationResultSet getFile()
         {
-            throw new NotImplementedException();
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config, this);
+            LocationResultSet result = ftputils.getFile();
+            return result;
         }
 
         public LocationResultSet send()
         {
-            throw new NotImplementedException();
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config,this);
+            LocationResultSet result = ftputils.sendFile();
+            return result;
         }
-       
+
+        public void onProgress(int progress, int speed) //den xrisimopoiw to speed
+        {
+            listener.setProgress(progress);
+        }
     }
 }
