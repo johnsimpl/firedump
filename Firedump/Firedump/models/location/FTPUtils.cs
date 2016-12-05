@@ -107,8 +107,8 @@ namespace Firedump.models.location
             {
                 RemoteDirectoryInfo directory = session.ListDirectory(path);
                 foreach(RemoteFileInfo file in directory.Files)
-                {   //    this part excludes files                this excludes .          this excludes files starting with . except from  ..
-                    if(!(!file.IsDirectory && onlyDirectories) && file.Name!="." && !(!showHiddenFiles && file.Name.StartsWith(".") && file.Name!=".."))
+                {   //    this part excludes files                this excludes . and ..                     this excludes files starting with . 
+                    if(!(!file.IsDirectory && onlyDirectories) && file.Name!="." && file.Name!=".." && !(!showHiddenFiles && file.Name.StartsWith(".")))
                     {
                         files.Add(file);
                     }

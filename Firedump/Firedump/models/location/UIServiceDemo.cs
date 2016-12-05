@@ -35,8 +35,8 @@ namespace Firedump.models.location
             FTPCredentialsConfig config = new FTPCredentialsConfig();
             config.host = "cspeitch.com";
             config.port = 22;
-            config.username = "cspeitch";
-            config.password = "tragimonth5154";
+            config.username = "";
+            config.password = "";
             config.sourcePath = "D:\\MyStuff\\DSC_0133.JPG";
             config.locationPath = "/home/cspeitch/eikona";
             config.useSFTP = true;
