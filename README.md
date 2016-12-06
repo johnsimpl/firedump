@@ -1,4 +1,6 @@
 # firedump 
+<img src="https://raw.githubusercontent.com/avraampiperidis/firedump/master/Firedump/Firedump/resources/firedump.png" width="450"/>
+<br>
 #### Ergasia gia ADOPSE
 ========
 Download and check this http://mysqlbackupftp.com/ (it will be our guide!) <br>
