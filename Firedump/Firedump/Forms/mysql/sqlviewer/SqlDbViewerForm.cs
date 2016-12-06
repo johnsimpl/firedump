@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace Firedump.Forms.mysql.sqlviewer
 {
     
-    public partial class SqlDbViewerForm : Form
+    public partial class SqlDbViewerForm : Form, IIntelliSense
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -24,6 +24,8 @@ namespace Firedump.Forms.mysql.sqlviewer
         static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
         private bool skip = false;
+        private string lastQuery = "";
+        private string currentWord = "";
         private Stack<string> undoList = new Stack<string>();
         private Stack<string> redoList = new Stack<string>();
         private CaretPosition.frmTooltip.GUITHREADINFO guiInfo = new CaretPosition.frmTooltip.GUITHREADINFO();
@@ -87,6 +89,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             toolStripComboBox1.SelectedIndex = 2;
 
             intellform = new IntelliSense();
+            intellform.setListener(this);
             intellform.Location = point;
             intellform.Show();
             intellform.Visible = false;
@@ -127,10 +130,44 @@ namespace Firedump.Forms.mysql.sqlviewer
 
         private void executesql_click(object sender, EventArgs e)
         {
-            executeQuery(richTextBox1.Text);
-            
+            string queryText = richTextBox1.Text.ToUpper();
+            if (queryText.Contains( "UPDATE ") || queryText.Contains(" INSERT ") || queryText.StartsWith("UPDATE ") || queryText.StartsWith("INSERT "))
+                executeUpdateOrInsertQuery(richTextBox1.Text);
+            else
+                executeQuery(richTextBox1.Text);                    
         }
         
+        private void executeUpdateOrInsertQuery(string query)
+        {
+            if(!String.IsNullOrEmpty(query))
+            {
+                undoList.Push(query);
+                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
+                using (MySqlConnection con = new MySqlConnection(connectionString))
+                {                   
+                    MySqlCommand command = new MySqlCommand();
+                    command.Connection = con;
+                    command.CommandText = query;
+                    con.Open();
+                    int numofrowsupdated = command.ExecuteNonQuery();
+                    command.Dispose();
+
+                    if(!String.IsNullOrEmpty(lastQuery))
+                    {
+                        string[] sqlarr = lastQuery.Split(' ');
+                        richTextBox1.Text = "";
+                        for (int i = 0; i < sqlarr.Length; i++)
+                        {
+                            richTextBox1.AppendText(sqlarr[i] + " ");
+                            richTextBox1.SelectionStart = richTextBox1.TextLength;
+                            setSqlHighlight();
+                        }
+                        executeQuery(lastQuery);
+                    }
+                   
+                }
+            }
+        }
 
         private void executeQuery(string query)
         {
@@ -185,6 +222,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 string table = e.Node.Text;
                 string sql = "SELECT * FROM "+table + " ";
+                lastQuery = sql;
                 string[] sqlarr = sql.Split(' ');
                 richTextBox1.Text = "";
                 for(int i =0; i < sqlarr.Length; i++)
@@ -270,7 +308,8 @@ namespace Firedump.Forms.mysql.sqlviewer
                 //richTextBox1.SelectionColor = richTextBox1.ForeColor;
             }
 
-            string word = getCurrentWord().ToUpper();
+            currentWord = getCurrentWord();
+            string word = currentWord.ToUpper();
             if(word.Length >= 3)
             {
                 List<string> words = MysqlWords.words;
@@ -401,5 +440,18 @@ namespace Firedump.Forms.mysql.sqlviewer
         }
 
 
+
+
+        //---interface method
+        public void onValueSelected(string value)
+        {
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
+                intellform.Visible = false;
+            });
+                
+        }
     }
 }

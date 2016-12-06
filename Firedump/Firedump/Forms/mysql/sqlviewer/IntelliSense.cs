@@ -12,14 +12,16 @@ namespace Firedump.Forms.mysql.sqlviewer
 {
     public partial class IntelliSense : Form
     {
+        private IIntelliSense listener;
         public IntelliSense()
         {
-            InitializeComponent();
-            this.listView1.Items.Add("Item one");
-            this.listView1.Items.Add("Item two");
-            this.listView1.Items.Add("Item three");
+            InitializeComponent();           
         }
 
+        public void setListener(IIntelliSense listener)
+        {
+            this.listener = listener;
+        }
 
 
         public void setItemsToListView(List<string> items)
@@ -27,8 +29,23 @@ namespace Firedump.Forms.mysql.sqlviewer
             this.listView1.Items.Clear();
             foreach (string item in items)
                 this.listView1.Items.Add(item);
+
+            this.Focus();
+            listView1.Focus();
+            
+            listView1.Items[0].Selected = true;
+            listView1.Select();
+
         }
 
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string value = listView1.SelectedItems[0].Text;
 
+            if(listener != null)
+            {
+                listener.onValueSelected(value);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Firedump.models.databaseUtils;
+using Firedump.models.dbinfo;
 
 namespace Firedump.Forms.mysql.status
 {
@@ -28,10 +29,10 @@ namespace Firedump.Forms.mysql.status
 
             setTableNamesTab();
             setColumnNamesTab();
-
+            setIndexesTab();
         }
 
-
+       
 
         private void setInfoTab(string database)
         {
@@ -109,7 +110,51 @@ namespace Firedump.Forms.mysql.status
 
         private void setTableNamesTab()
         {
-            datagridviewTables.DataSource = tables.Select(x => new { Value = x }).ToList();
+            //datagridviewTables.DataSource = tables.Select(x => new { Value = x }).ToList();
+            List<TableInfo> tableInfoList = new List<TableInfo>();
+            foreach(MyTable table in tables)
+            {
+                string connectionString = DbConnection.conStringBuilder(server.host,server.username,server.password,database);
+                using (MySqlConnection con = new MySqlConnection(connectionString))
+                {
+                    con.Open();
+                    string sql = "SHOW TABLE STATUS WHERE NAME = '"+table.TableName+"' ";
+                    using (MySqlCommand command = new MySqlCommand(sql,con))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            if(reader.Read())
+                            {
+                                TableInfo tableInfo = new TableInfo();
+                                tableInfo.Table = table.TableName;
+                                string engine = reader.GetString("Engine");
+                                int version = reader.GetInt32("Version");
+                                string rowFormat = reader.GetString("Row_format");
+                                Int64 rows = reader.GetInt32("Rows");
+                                Int64 avgrowLength = reader.GetInt32("Avg_row_length");
+                                Int64 dataLength = reader.GetInt32("Data_length");
+                                Int64 indexLength = reader.GetInt32("Index_length");
+                                string createTime = reader.GetString("Create_time");
+                                string collation = reader.GetString("Collation");
+
+                                tableInfo.Engine = engine;
+                                tableInfo.Version = version;
+                                tableInfo.RowFormat = rowFormat;
+                                tableInfo.Rows = rows;
+                                tableInfo.AvgRowLength = avgrowLength;
+                                tableInfo.DataLength = dataLength;
+                                tableInfo.IndexLength = indexLength;
+                                tableInfo.CreateTime = createTime;
+                                tableInfo.Collation = collation;
+
+                                tableInfoList.Add(tableInfo);
+                            }
+                        }
+                    }
+                }
+            }
+
+            datagridviewTables.DataSource = tableInfoList;
         }
 
         private void setColumnNamesTab()
@@ -142,13 +187,53 @@ namespace Firedump.Forms.mysql.status
                             }
                         }
                     }
-                }
-
-                datagridviewColumns.DataSource = columnInfoList;
-
+                }              
             }
+
+            datagridviewColumns.DataSource = columnInfoList;
         }
 
+
+        private void setIndexesTab()
+        {
+            List<Indexes> indexesList = new List<Indexes>();
+            foreach (MyTable table in tables)
+            {
+                string connectionString = DbConnection.conStringBuilder(server.host, server.username, server.password, database);
+                using (MySqlConnection con = new MySqlConnection(connectionString))
+                {
+                    con.Open();
+                    string sql = "SHOW INDEX FROM "+table.TableName;
+                    using (MySqlCommand command = new MySqlCommand(sql, con))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Indexes index = new Indexes();
+                                index.Table = table.TableName;
+                                string unique;
+                                if (reader.GetInt32("Non_unique") == 0)
+                                    unique = "TRUE";
+                                else
+                                    unique = "FALSE";
+                                index.Unique = unique;
+                                index.KeyName = reader.GetString("Key_name");
+                                index.SeqInIndex = reader.GetInt32("Seq_in_index");
+                                index.ColumnName = reader.GetString("Column_name");
+                                index.Cardinality = reader.GetInt32("Cardinality");
+                                index.IndexType = reader.GetString("Index_type");
+
+                                indexesList.Add(index);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            datagridviewIndexes.DataSource = indexesList;
+        }
 
 
         private static DataTable ConvertListToDataTable(List<string[]> list)
@@ -198,24 +283,7 @@ namespace Firedump.Forms.mysql.status
         }
 
 
-        class ColumnInfo
-        {
-            public ColumnInfo()
-            {
-
-            }
-
-            public string Table { get; set; }
-
-            public string Field { get; set; }
-
-            public string Type { get; set; }
-
-            public string IsNullable  {get;set;}
-
-            public string Default { get; set; }
-
-        }
+       
 
     }
 }

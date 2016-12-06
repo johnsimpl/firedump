@@ -134,6 +134,7 @@
     <Compile Include="Forms\location\FTPLocation.Designer.cs">
       <DependentUpon>FTPLocation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\mysql\sqlviewer\IIntelliSense.cs" />
     <Compile Include="Forms\mysql\sqlviewer\IntelliSense.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +150,9 @@
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
+    <Compile Include="models\dbinfo\ColumnInfo.cs" />
+    <Compile Include="models\dbinfo\Indexes.cs" />
+    <Compile Include="models\dbinfo\TableInfo.cs" />
     <Compile Include="models\location\LocationConnectionResultSet.cs" />
     <Compile Include="models\location\FTPUtils.cs" />
     <Compile Include="models\location\ICallBack.cs" />
@@ -287,12 +291,6 @@
     <Compile Include="Forms\mysql\status\AnalyzeDbForm.Designer.cs">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\mysql\status\AnalyzeTableForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\mysql\status\AnalyzeTableForm.Designer.cs">
-      <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Test1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -364,9 +362,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mysql\status\AnalyzeDbForm.resx">
       <DependentUpon>AnalyzeDbForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\mysql\status\AnalyzeTableForm.resx">
-      <DependentUpon>AnalyzeTableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
