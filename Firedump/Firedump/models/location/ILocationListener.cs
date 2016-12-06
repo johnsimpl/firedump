@@ -15,5 +15,6 @@ namespace Firedump.models.location
         /// Gia errors se epipedo adapter oxi se epipedo task ama ginei error ekei paei sto on complete
         /// </summary>
         void onSaveError(string message);
+        void onTestConnectionComplete(LocationConnectionResultSet result);
     }
 }

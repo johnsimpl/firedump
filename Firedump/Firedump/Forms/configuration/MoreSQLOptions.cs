@@ -27,6 +27,7 @@ namespace Firedump.Forms.configuration
             cbForeignKey.Checked = configManagerInstance.mysqlDumpConfigInstance.disableForeignKeyChecks;
             if(configManagerInstance.mysqlDumpConfigInstance.singleTransaction || configManagerInstance.mysqlDumpConfigInstance.lockTables)
             {
+                cbEnableDataPreservation.Checked = true;
                 if (configManagerInstance.mysqlDumpConfigInstance.singleTransaction)
                 {
                     rbSingleTransaction.Checked = true;
@@ -39,8 +40,8 @@ namespace Firedump.Forms.configuration
             else
             {
                 cbEnableDataPreservation.Checked = false;
-                disableOrEnableRadioButtons(false);
             }
+            disableOrEnableRadioButtons(cbEnableDataPreservation.Checked);
             cbNoAutocommit.Checked = configManagerInstance.mysqlDumpConfigInstance.noAutocommit;
             tbCustomComment.Text = configManagerInstance.mysqlDumpConfigInstance.addCustomCommentInHeader;
             cbIncreasedComp.Checked = configManagerInstance.mysqlDumpConfigInstance.moreCompatible;

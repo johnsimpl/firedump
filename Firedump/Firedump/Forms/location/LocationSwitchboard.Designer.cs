@@ -66,6 +66,7 @@
             this.bFTP.TabIndex = 1;
             this.bFTP.Text = "FTP";
             this.bFTP.UseVisualStyleBackColor = true;
+            this.bFTP.Click += new System.EventHandler(this.bFTP_Click);
             // 
             // bDropbox
             // 

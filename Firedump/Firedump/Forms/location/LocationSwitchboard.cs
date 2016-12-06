@@ -95,5 +95,11 @@ namespace Firedump.Forms.location
             loc.path = tbPath.Text;
             homeinstance.addToLbSaveLocation(loc);
         }
+
+        private void bFTP_Click(object sender, EventArgs e)
+        {
+            FTPLocation ftploc = new FTPLocation(this);
+            ftploc.ShowDialog();
+        }
     }
 }

@@ -146,5 +146,10 @@ namespace Firedump.models.location
         {
             listener.setSaveProgress(currentProgress+progress);
         }
+
+        public void onTestConnectionComplete(LocationConnectionResultSet result)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

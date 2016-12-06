@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.configuration.dynamicconfig
 {
-    class FTPCredentialsConfig : LocationCredentialsConfig
+    public class FTPCredentialsConfig : LocationCredentialsConfig
     {
         public Int64 id { set; get; }
         public bool useSFTP { set; get; }

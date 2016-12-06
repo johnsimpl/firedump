@@ -12,6 +12,7 @@ namespace Firedump.models.location
 
         private ILocation location;
         private ILocationListener listener;
+        private Task task;
 
         private LocationAdapter() { }
 
@@ -41,6 +42,39 @@ namespace Firedump.models.location
             this.location = new LocationCloudDrive(this);
             ((LocationCloudDrive)this.location).config = config;
         }
+        /// <summary>
+        /// Prosoxi den einai ilopoihmeni padou mporei na petaksei not implemented exception
+        /// ama kalestei gia LocationLocal px
+        /// </summary>
+        public void testConnection()
+        {
+            if (this.location == null)
+            {
+                listener.onSaveError("Location type not set. Aborting...");
+                return;
+            }
+            if (task != null && !task.IsCompleted) //ama spammarei test connection tha stamataei edw
+            {
+                listener.onSaveError("Another test connection is running please wait");
+                return;
+            }
+
+            task = new Task(testConnectionExecutor);
+            task.Start();
+        }
+        private async void testConnectionExecutor()
+        {
+            Task<LocationConnectionResultSet> innerTestConnectionTask = new Task<LocationConnectionResultSet>(location.connect);
+            LocationConnectionResultSet res;
+            innerTestConnectionTask.Start();
+
+            try
+            {
+                res = await innerTestConnectionTask;
+                listener.onTestConnectionComplete(res);
+            }
+            catch (NullReferenceException) { }
+        }
         public void sendFile()
         {
             if (this.location == null)
@@ -48,9 +82,14 @@ namespace Firedump.models.location
                 listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
+            if (task != null && !task.IsCompleted)
+            {
+                listener.onSaveError("Another task is running. Aborting...");
+                return;
+            }
 
-            Task sendtask = new Task(sendFileTaskExecutor);
-            sendtask.Start();
+            task = new Task(sendFileTaskExecutor);
+            task.Start();
         }
 
         public void getFile()
@@ -60,9 +99,14 @@ namespace Firedump.models.location
                 listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
+            if (task != null && !task.IsCompleted)
+            {
+                listener.onSaveError("Another task is running. Aborting...");
+                return;
+            }
 
-            Task gettask = new Task(getFileTaskExecutor);
-            gettask.Start();
+            task = new Task(getFileTaskExecutor);
+            task.Start();
         }
 
         private async void sendFileTaskExecutor()
