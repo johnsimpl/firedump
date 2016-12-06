@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -179,8 +180,43 @@ namespace Firedump.Forms.location
             }
         }
 
+
         private void bPathOnServer_Click(object sender, EventArgs e)
         {
+            FTPCredentialsConfig config = new FTPCredentialsConfig();
+            config.host = tbHost.Text;
+            config.port = Convert.ToInt32(tbPort.Text);
+            config.usePrivateKey = cbPrivateKey.Checked;
+            config.privateKeyPath = tbPrivateKey.Text;
+            config.SshHostKeyFingerprint = sshKeyFingerprint;
+            config.username = tbUsername.Text;
+            config.password = tbPassword.Text;
+            config.useSFTP = true;
+            //check creds
+
+            FTPDirectory ftpdirectory = new FTPDirectory(true, config);
+            if(!String.IsNullOrEmpty(tbChooseAPath.Text))
+            {
+                ftpdirectory.path = tbChooseAPath.Text;
+            }
+
+            DialogResult res = ftpdirectory.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                
+                bool isDirectory = ftpdirectory.isDirectory;
+                //an den einai pare to telefteo filename
+                if(!isDirectory)
+                {
+                    tbFilename.Text = ftpdirectory.path.Substring(ftpdirectory.path.LastIndexOf('/')+1);
+                    tbChooseAPath.Text = ftpdirectory.path.Substring(0, ftpdirectory.path.LastIndexOf('/'));
+                } else
+                {
+                    tbChooseAPath.Text = ftpdirectory.path;
+                }
+            }
+
+            /*
             FTPFileBrowser browser = new FTPFileBrowser(true);
             if (!string.IsNullOrWhiteSpace(tbChooseAPath.Text))
             {
@@ -191,6 +227,7 @@ namespace Firedump.Forms.location
             {
                 tbChooseAPath.Text = browser.path;
             }
+            */
         }
 
         private void cbPrivateKey_CheckedChanged(object sender, EventArgs e)

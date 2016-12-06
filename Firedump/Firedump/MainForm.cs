@@ -25,8 +25,7 @@ namespace Firedump
 
         private void bDumpForm_Click(object sender, EventArgs e)
         {
-            Form form1 = new Form1();
-            form1.Show();
+           
         }
 
         private void bTest1_Click(object sender, EventArgs e)

@@ -16,6 +16,7 @@ namespace Firedump
         [STAThread]
         static void Main()
         {
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -23,6 +24,7 @@ namespace Firedump
             ConfigurationManager.getInstance().initializeConfig();
 
             Application.Run(new MainForm());
+            
             
         }
     }

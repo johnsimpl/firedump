@@ -122,6 +122,12 @@
     <Compile Include="Forms\location\FileSystem.Designer.cs">
       <DependentUpon>FileSystem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\location\FTPDirectory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\location\FTPDirectory.Designer.cs">
+      <DependentUpon>FTPDirectory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\location\FTPFileBrowser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,12 +250,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="logs.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
@@ -308,6 +308,9 @@
     <EmbeddedResource Include="Forms\location\FileSystem.resx">
       <DependentUpon>FileSystem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\location\FTPDirectory.resx">
+      <DependentUpon>FTPDirectory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\location\FTPFileBrowser.resx">
       <DependentUpon>FTPFileBrowser.cs</DependentUpon>
     </EmbeddedResource>
@@ -322,9 +325,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\email\emailconfig.resx">
       <DependentUpon>emailconfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\configuration\GeneralConfiguration.resx">
       <DependentUpon>GeneralConfiguration.cs</DependentUpon>
