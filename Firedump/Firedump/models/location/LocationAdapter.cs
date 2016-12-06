@@ -12,7 +12,9 @@ namespace Firedump.models.location
 
         private ILocation location;
         private ILocationListener listener;
-        private Task task;
+        private Task<LocationConnectionResultSet> innerconnectiontask;
+        private Task<LocationResultSet> innersendtask;
+        private Task<LocationResultSet> innergettask;
 
         private LocationAdapter() { }
 
@@ -53,24 +55,25 @@ namespace Firedump.models.location
                 listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
-            if (task != null && !task.IsCompleted) //ama spammarei test connection tha stamataei edw
+            
+
+            Task testcontask = new Task(testConnectionExecutor);
+            testcontask.Start();
+        }
+        private async void testConnectionExecutor()
+        {
+            if (innerconnectiontask != null && !innerconnectiontask.IsCompleted) //ama spammarei test connection tha stamataei edw
             {
                 listener.onSaveError("Another test connection is running please wait");
                 return;
             }
-
-            task = new Task(testConnectionExecutor);
-            task.Start();
-        }
-        private async void testConnectionExecutor()
-        {
-            Task<LocationConnectionResultSet> innerTestConnectionTask = new Task<LocationConnectionResultSet>(location.connect);
+            innerconnectiontask = new Task<LocationConnectionResultSet>(location.connect);
             LocationConnectionResultSet res;
-            innerTestConnectionTask.Start();
+            innerconnectiontask.Start();
 
             try
             {
-                res = await innerTestConnectionTask;
+                res = await innerconnectiontask;
                 listener.onTestConnectionComplete(res);
             }
             catch (NullReferenceException) { }
@@ -82,13 +85,8 @@ namespace Firedump.models.location
                 listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
-            if (task != null && !task.IsCompleted)
-            {
-                listener.onSaveError("Another task is running. Aborting...");
-                return;
-            }
 
-            task = new Task(sendFileTaskExecutor);
+            Task task = new Task(sendFileTaskExecutor);
             task.Start();
         }
 
@@ -99,20 +97,20 @@ namespace Firedump.models.location
                 listener.onSaveError("Location type not set. Aborting...");
                 return;
             }
-            if (task != null && !task.IsCompleted)
-            {
-                listener.onSaveError("Another task is running. Aborting...");
-                return;
-            }
 
-            task = new Task(getFileTaskExecutor);
+            Task task = new Task(getFileTaskExecutor);
             task.Start();
         }
 
         private async void sendFileTaskExecutor()
         {
+            if (innersendtask != null && !innersendtask.IsCompleted)
+            {
+                listener.onSaveError("Another task is running. Aborting...");
+                return;
+            }
 
-            Task<LocationResultSet> innersendtask = new Task<LocationResultSet>(location.send);
+            innersendtask = new Task<LocationResultSet>(location.send);
             LocationResultSet res;
             innersendtask.Start();  
                     
@@ -127,7 +125,13 @@ namespace Firedump.models.location
 
         private async void getFileTaskExecutor()
         {
-            Task<LocationResultSet> innergettask = new Task<LocationResultSet>(location.getFile);
+            if (innergettask != null && !innergettask.IsCompleted)
+            {
+                listener.onSaveError("Another task is running. Aborting...");
+                return;
+            }
+
+            innergettask = new Task<LocationResultSet>(location.getFile);
             LocationResultSet res;
             innergettask.Start();
             try
