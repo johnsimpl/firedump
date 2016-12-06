@@ -247,7 +247,7 @@ namespace Firedump.models.location
                 TransferOptions transferOptions = new TransferOptions();
                 transferOptions.TransferMode = TransferMode.Binary;
 
-                TransferOperationResult transferResult;
+                TransferOperationResult transferResult;             
                 transferResult = session.PutFiles(config.sourcePath,locationinfo[0], false, transferOptions);
 
                 transferResult.Check(); //Prepei na kanei throw exception se periptwsi fail iparxei kai transferResult.isSuccess den to exw testarei
