@@ -45,13 +45,25 @@ namespace Firedump.Forms.location
             {
                 remoteFileInfoList = ftpUtils.getDirectoryListing("/", true, false);
             }
-
-            listView1.Items.Add("..");
+            ListViewItem headItem = new ListViewItem();
+            FileInfo finfo = new FileInfo();
+            finfo.FullName = "..";
+            finfo.IsDirectory = true;
+            headItem.Text = "..";
+            headItem.Tag = finfo;
+            listView1.Items.Add(headItem);
             foreach(RemoteFileInfo file in remoteFileInfoList)
             {               
                 ListViewItem item = new ListViewItem();
-                item.Text = file.FullName;
-                item.Tag = file.IsDirectory; 
+                
+                FileInfo fileinfo = new FileInfo();
+                fileinfo.IsDirectory = file.IsDirectory;
+                fileinfo.Persmissions = file.FilePermissions.Text;
+                fileinfo.FullName = file.FullName;
+                fileinfo.Owner = file.Owner;
+                fileinfo.Group = file.Group;
+                item.Tag = fileinfo;
+                item.Text = fileinfo.ToString(); 
                 listView1.Items.Add(item);
             }
             
@@ -61,13 +73,26 @@ namespace Firedump.Forms.location
         private void setDirectoryList(string path)
         {
             listView1.Items.Clear();
-            listView1.Items.Add("..");
+            ListViewItem headItem = new ListViewItem();
+            FileInfo finfo = new FileInfo();
+            finfo.FullName = "..";
+            finfo.IsDirectory = true;
+            headItem.Text = "..";
+            headItem.Tag = finfo;
+            listView1.Items.Add(headItem);
             remoteFileInfoList = ftpUtils.getDirectoryListing(path, onlyDirectories, showHidenFiles);
             foreach (RemoteFileInfo file in remoteFileInfoList)
             {
                 ListViewItem item = new ListViewItem();
-                item.Text = file.FullName;
-                item.Tag = file.IsDirectory;
+                FileInfo fileinfo = new FileInfo();
+                fileinfo.IsDirectory = file.IsDirectory;
+                fileinfo.Persmissions = file.FilePermissions.Text;
+                fileinfo.FullName = file.FullName;
+                fileinfo.Owner = file.Owner;
+                fileinfo.Group = file.Group;
+
+                item.Text = file.ToString();
+                item.Tag = fileinfo;
                 listView1.Items.Add(item);
             }
         }
@@ -85,15 +110,16 @@ namespace Firedump.Forms.location
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            path = listView1.SelectedItems[0].Text;
-            isDirectory = (bool)listView1.SelectedItems[0].Tag;
+            path = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            FileInfo fileinfo = (FileInfo)listView1.SelectedItems[0].Tag;
+            isDirectory = fileinfo.IsDirectory;
             lpath.Text = path;
             if(isDirectory)
             {
-                if (!(listView1.SelectedItems[0].Text == ".."))
+                if (!(((FileInfo)listView1.SelectedItems[0].Tag).FullName == ".."))
                 {
-                    previousPath = listView1.SelectedItems[0].Text;
-                    setDirectoryList(listView1.SelectedItems[0].Text);
+                    previousPath = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+                    setDirectoryList(((FileInfo)listView1.SelectedItems[0].Tag).FullName);
                 }
                 else
                 {
@@ -134,10 +160,33 @@ namespace Firedump.Forms.location
 
         private void btusepath_Click(object sender, EventArgs e)
         {
-            path = listView1.SelectedItems[0].Text;
-            isDirectory = (bool)listView1.SelectedItems[0].Tag;
+            path = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            FileInfo fileinfo = (FileInfo)listView1.SelectedItems[0].Tag;
+            isDirectory = fileinfo.IsDirectory;
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+
+
+        class FileInfo
+        {
+            public FileInfo() { }
+
+            public string FullName { get; set; }
+
+            public bool IsDirectory { get; set; }
+
+            public string Persmissions { get; set; }
+
+            public string Owner { get; set; }
+
+            public string Group { get; set; }
+
+            public string ToString()
+            {
+                return FullName+"   "+Persmissions;
+            }
         }
     }
 }
