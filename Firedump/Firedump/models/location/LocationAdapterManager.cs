@@ -81,7 +81,7 @@ namespace Firedump.models.location
                 case 1: //FTP
                     config = new FTPCredentialsConfig();
                     config.sourcePath = sourcePath;
-                    config.locationPath = (string)data.Rows[0]["path"];
+                    config.locationPath = (string)data.Rows[0]["path"]+(string)data.Rows[0]["filename"];
                     ((FTPCredentialsConfig)config).id = (Int64)data.Rows[0]["id"];
                     ((FTPCredentialsConfig)config).host = (string)data.Rows[0]["host"];
                     config.port = unchecked((int)(Int64)data.Rows[0]["port"]);

@@ -189,8 +189,12 @@ namespace Firedump.models.location
             }
             return result;
         }
-
-        private string[] splitPath(string path)
+        /// <summary>
+        /// Works for both paths with \ and /
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>String array of size 2 where 0 is the path and 1 is the filename</returns>
+        public static string[] splitPath(string path)
         {
             string[] splitpath = new string[2];
             char splitchar = '\\';
@@ -208,7 +212,12 @@ namespace Firedump.models.location
             return splitpath;
         }
 
-        private string getExtension(string filename)
+        /// <summary>
+        /// The file can have many dots in the filename but it must have an extension or this is redundunt
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns>The extension of the file with . (.sql)</returns>
+        public static string getExtension(string filename)
         {
             string[] temp = filename.Split('.');
             return "."+temp[temp.Length - 1];

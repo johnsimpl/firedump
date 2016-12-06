@@ -4789,460 +4789,150 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [main].[sqlite_default_schema].[backup_locations] SET [name] = @name, [use" +
-                "rname] = @username, [password] = @password, [path] = @path, [filename] = @filena" +
-                "me, [service_type] = @service_type, [protocol] = @protocol, [ssh_key] = @ssh_key" +
-                ", [ssh_key_fingerprint] = @ssh_key_fingerprint, [key] = @key, [email] = @email, " +
-                "[account] = @account, [api_key] = @api_key, [api_name] = @api_name, [api_id] = @" +
-                "api_id, [client_id] = @client_id, [access_token] = @access_token, [refresh_token" +
-                "] = @refresh_token, [port] = @port, [host] = @host, [usesftp] = @usesftp WHERE (" +
-                "([id] = @Original_id) AND ((@IsNull_name = 1 AND [name] IS NULL) OR ([name] = @O" +
-                "riginal_name)) AND ((@IsNull_username = 1 AND [username] IS NULL) OR ([username]" +
-                " = @Original_username)) AND ((@IsNull_password = 1 AND [password] IS NULL) OR ([" +
-                "password] = @Original_password)) AND ((@IsNull_path = 1 AND [path] IS NULL) OR (" +
-                "[path] = @Original_path)) AND ((@IsNull_filename = 1 AND [filename] IS NULL) OR " +
-                "([filename] = @Original_filename)) AND ((@IsNull_service_type = 1 AND [service_t" +
-                "ype] IS NULL) OR ([service_type] = @Original_service_type)) AND ((@IsNull_protoc" +
-                "ol = 1 AND [protocol] IS NULL) OR ([protocol] = @Original_protocol)) AND ((@IsNu" +
-                "ll_ssh_key = 1 AND [ssh_key] IS NULL) OR ([ssh_key] = @Original_ssh_key)) AND ((" +
-                "@IsNull_ssh_key_fingerprint = 1 AND [ssh_key_fingerprint] IS NULL) OR ([ssh_key_" +
-                "fingerprint] = @Original_ssh_key_fingerprint)) AND ((@IsNull_key = 1 AND [key] I" +
-                "S NULL) OR ([key] = @Original_key)) AND ((@IsNull_email = 1 AND [email] IS NULL)" +
-                " OR ([email] = @Original_email)) AND ((@IsNull_account = 1 AND [account] IS NULL" +
-                ") OR ([account] = @Original_account)) AND ((@IsNull_api_key = 1 AND [api_key] IS" +
-                " NULL) OR ([api_key] = @Original_api_key)) AND ((@IsNull_api_name = 1 AND [api_n" +
-                "ame] IS NULL) OR ([api_name] = @Original_api_name)) AND ((@IsNull_api_id = 1 AND" +
-                " [api_id] IS NULL) OR ([api_id] = @Original_api_id)) AND ((@IsNull_client_id = 1" +
-                " AND [client_id] IS NULL) OR ([client_id] = @Original_client_id)) AND ((@IsNull_" +
-                "access_token = 1 AND [access_token] IS NULL) OR ([access_token] = @Original_acce" +
-                "ss_token)) AND ((@IsNull_refresh_token = 1 AND [refresh_token] IS NULL) OR ([ref" +
-                "resh_token] = @Original_refresh_token)) AND ((@IsNull_port = 1 AND [port] IS NUL" +
-                "L) OR ([port] = @Original_port)) AND ((@IsNull_host = 1 AND [host] IS NULL) OR (" +
-                "[host] = @Original_host)) AND ((@IsNull_usesftp = 1 AND [usesftp] IS NULL) OR ([" +
-                "usesftp] = @Original_usesftp)))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE       backup_locations
+SET                name = @name, username = @username, password = @password, path = @path, filename = @filename, service_type = @service_type, protocol = @protocol, ssh_key = @ssh_key, 
+                         ssh_key_fingerprint = @ssh_key_fingerprint, [key] = @key, email = @email, account = @account, api_key = @api_key, api_name = @api_name, api_id = @api_id, client_id = @client_id, 
+                         access_token = @access_token, refresh_token = @refresh_token, port = @port, host = @host, usesftp = @usesftp
+WHERE        (id = @Original_id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 45;
             param.SourceColumn = "name";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@username";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 45;
             param.SourceColumn = "username";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@password";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 45;
             param.SourceColumn = "password";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@path";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "path";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@filename";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "filename";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@service_type";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "service_type";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@protocol";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "protocol";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@ssh_key";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "ssh_key";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@ssh_key_fingerprint";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "ssh_key_fingerprint";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@key";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "key";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@email";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "email";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@account";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "account";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@api_key";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "api_key";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@api_name";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "api_name";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@api_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "api_id";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@client_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "client_id";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@access_token";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "access_token";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@refresh_token";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "refresh_token";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@port";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "port";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@host";
             param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
             param.SourceColumn = "host";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@usesftp";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "usesftp";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
             param.SourceColumn = "id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_name";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "name";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_name";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.SourceColumn = "name";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_username";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "username";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_username";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.SourceColumn = "username";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_password";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "password";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_password";
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.DbType = global::System.Data.DbType.AnsiString;
-            param.SourceColumn = "password";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_path";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "path";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_path";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "path";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_filename";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "filename";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_filename";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "filename";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_service_type";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "service_type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_service_type";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "service_type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_protocol";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "protocol";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_protocol";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "protocol";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_ssh_key";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "ssh_key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_ssh_key";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "ssh_key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_ssh_key_fingerprint";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "ssh_key_fingerprint";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_ssh_key_fingerprint";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "ssh_key_fingerprint";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_key";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_key";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_email";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "email";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_email";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "email";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_account";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "account";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_account";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "account";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_api_key";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "api_key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_api_key";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "api_key";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_api_name";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "api_name";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_api_name";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "api_name";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_api_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "api_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_api_id";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "api_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_client_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "client_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_client_id";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "client_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_access_token";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "access_token";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_access_token";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "access_token";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_refresh_token";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "refresh_token";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_refresh_token";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "refresh_token";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_port";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "port";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_port";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "port";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_host";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "host";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_host";
-            param.DbType = global::System.Data.DbType.String;
-            param.SourceColumn = "host";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@IsNull_usesftp";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.DbType = global::System.Data.DbType.Int32;
-            param.SourceColumn = "usesftp";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::System.Data.SQLite.SQLiteParameter();
-            param.ParameterName = "@Original_usesftp";
-            param.DbType = global::System.Data.DbType.Int64;
-            param.DbType = global::System.Data.DbType.Int64;
-            param.SourceColumn = "usesftp";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -5790,28 +5480,7 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
                     global::System.Nullable<long> port, 
                     string host, 
                     global::System.Nullable<long> usesftp, 
-                    long Original_id, 
-                    string Original_name, 
-                    string Original_username, 
-                    string Original_password, 
-                    string Original_path, 
-                    string Original_filename, 
-                    global::System.Nullable<long> Original_service_type, 
-                    global::System.Nullable<long> Original_protocol, 
-                    string Original_ssh_key, 
-                    string Original_ssh_key_fingerprint, 
-                    string Original_key, 
-                    string Original_email, 
-                    string Original_account, 
-                    string Original_api_key, 
-                    string Original_api_name, 
-                    global::System.Nullable<long> Original_api_id, 
-                    global::System.Nullable<long> Original_client_id, 
-                    string Original_access_token, 
-                    string Original_refresh_token, 
-                    global::System.Nullable<long> Original_port, 
-                    string Original_host, 
-                    global::System.Nullable<long> Original_usesftp) {
+                    long Original_id) {
             if ((name == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -5939,174 +5608,6 @@ namespace Firedump.firedumpdbDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[21].Value = ((long)(Original_id));
-            if ((Original_name == null)) {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_name));
-            }
-            if ((Original_username == null)) {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((string)(Original_username));
-            }
-            if ((Original_password == null)) {
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(Original_password));
-            }
-            if ((Original_path == null)) {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((string)(Original_path));
-            }
-            if ((Original_filename == null)) {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(Original_filename));
-            }
-            if ((Original_service_type.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[33].Value = ((long)(Original_service_type.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            if ((Original_protocol.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[35].Value = ((long)(Original_protocol.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            if ((Original_ssh_key == null)) {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((string)(Original_ssh_key));
-            }
-            if ((Original_ssh_key_fingerprint == null)) {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[39].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[39].Value = ((string)(Original_ssh_key_fingerprint));
-            }
-            if ((Original_key == null)) {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(Original_key));
-            }
-            if ((Original_email == null)) {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Original_email));
-            }
-            if ((Original_account == null)) {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[45].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[45].Value = ((string)(Original_account));
-            }
-            if ((Original_api_key == null)) {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[47].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[47].Value = ((string)(Original_api_key));
-            }
-            if ((Original_api_name == null)) {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[49].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[49].Value = ((string)(Original_api_name));
-            }
-            if ((Original_api_id.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((long)(Original_api_id.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[51].Value = global::System.DBNull.Value;
-            }
-            if ((Original_client_id.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[53].Value = ((long)(Original_client_id.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[53].Value = global::System.DBNull.Value;
-            }
-            if ((Original_access_token == null)) {
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[55].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[55].Value = ((string)(Original_access_token));
-            }
-            if ((Original_refresh_token == null)) {
-                this.Adapter.UpdateCommand.Parameters[56].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[57].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[56].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[57].Value = ((string)(Original_refresh_token));
-            }
-            if ((Original_port.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[58].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[59].Value = ((long)(Original_port.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[58].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[59].Value = global::System.DBNull.Value;
-            }
-            if ((Original_host == null)) {
-                this.Adapter.UpdateCommand.Parameters[60].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[61].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[60].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((string)(Original_host));
-            }
-            if ((Original_usesftp.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[62].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[63].Value = ((long)(Original_usesftp.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[62].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[63].Value = global::System.DBNull.Value;
-            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
