@@ -191,7 +191,18 @@ namespace Firedump.Forms.location
             config.SshHostKeyFingerprint = sshKeyFingerprint;
             config.username = tbUsername.Text;
             config.password = tbPassword.Text;
-            config.useSFTP = true;
+            switch (cmbProtocol.SelectedIndex)
+            {
+                case 0:
+                    config.useSFTP = false;
+                    break;
+                case 1:
+                    config.useSFTP = true;
+                    break;
+                default:
+                    config.useSFTP = false;
+                    break;
+            }
             //check creds
 
             FTPDirectory ftpdirectory = new FTPDirectory(true, config);
