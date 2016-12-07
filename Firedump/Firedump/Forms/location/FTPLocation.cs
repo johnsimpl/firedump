@@ -206,7 +206,7 @@ namespace Firedump.Forms.location
             }
             //check creds
 
-            FTPDirectory ftpdirectory = new FTPDirectory(true, config);
+            FTPDirectory ftpdirectory = new FTPDirectory(false, config);
             if(!String.IsNullOrEmpty(tbChooseAPath.Text))
             {
                 ftpdirectory.path = tbChooseAPath.Text;
@@ -228,18 +228,7 @@ namespace Firedump.Forms.location
                 }
             }
 
-            /*
-            FTPFileBrowser browser = new FTPFileBrowser(true);
-            if (!string.IsNullOrWhiteSpace(tbChooseAPath.Text))
-            {
-                browser.path = tbChooseAPath.Text;
-            }
-            DialogResult res = browser.ShowDialog();
-            if(res == DialogResult.OK)
-            {
-                tbChooseAPath.Text = browser.path;
-            }
-            */
+          
         }
 
         private void cbPrivateKey_CheckedChanged(object sender, EventArgs e)
