@@ -10,6 +10,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Firedump.utils;
 
 namespace Firedump.Forms.location
 {
@@ -205,7 +206,7 @@ namespace Firedump.Forms.location
             }
             //check creds
 
-            FTPDirectory ftpdirectory = new FTPDirectory(true, config);
+            FTPDirectory ftpdirectory = new FTPDirectory(false, config);
             if(!String.IsNullOrEmpty(tbChooseAPath.Text))
             {
                 ftpdirectory.path = tbChooseAPath.Text;
@@ -226,19 +227,7 @@ namespace Firedump.Forms.location
                     tbChooseAPath.Text = ftpdirectory.path;
                 }
             }
-
-            /*
-            FTPFileBrowser browser = new FTPFileBrowser(true);
-            if (!string.IsNullOrWhiteSpace(tbChooseAPath.Text))
-            {
-                browser.path = tbChooseAPath.Text;
-            }
-            DialogResult res = browser.ShowDialog();
-            if(res == DialogResult.OK)
-            {
-                tbChooseAPath.Text = browser.path;
-            }
-            */
+            
         }
 
         private void cbPrivateKey_CheckedChanged(object sender, EventArgs e)
@@ -285,7 +274,7 @@ namespace Firedump.Forms.location
             tbPort.Text = Convert.ToString((Int64)ftplocation["port"]);
             tbUsername.Text = (string)ftplocation["username"];
             tbPassword.Text = (string)ftplocation["password"];
-            string[] splitpath = FTPUtils.splitPath((string)ftplocation["path"]);
+            string[] splitpath = StringUtils.splitPath((string)ftplocation["path"]);
             tbFilename.Text = splitpath[1];
             tbChooseAPath.Text = splitpath[0];
 

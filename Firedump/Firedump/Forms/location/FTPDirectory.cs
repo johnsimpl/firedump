@@ -20,8 +20,9 @@ namespace Firedump.Forms.location
         private bool isFolderPicker;
         private FTPCredentialsConfig credentials;
         private FTPUtils ftpUtils;
-        private bool showHidenFiles;
-        private bool onlyDirectories;
+
+        //default
+        private bool showHidenFiles = false;
         private string previousPath = "/";
 
         private List<RemoteFileInfo> remoteFileInfoList;
@@ -38,16 +39,17 @@ namespace Firedump.Forms.location
 
             if (!String.IsNullOrEmpty(path))
             {
-                remoteFileInfoList = ftpUtils.getDirectoryListing(path, true, false);
+                remoteFileInfoList = ftpUtils.getDirectoryListing(path, isFolderPicker, false);
                 previousPath = path;
             }    
             else
             {
-                remoteFileInfoList = ftpUtils.getDirectoryListing("/", true, false);
+                remoteFileInfoList = ftpUtils.getDirectoryListing("/", isFolderPicker, false);
             }
             ListViewItem headItem = new ListViewItem();
             FileInfo finfo = new FileInfo();
             finfo.FullName = "..";
+            finfo.Name = "..";
             finfo.IsDirectory = true;
             headItem.Text = "..";
             headItem.Tag = finfo;
@@ -60,13 +62,18 @@ namespace Firedump.Forms.location
                 fileinfo.IsDirectory = file.IsDirectory;
                 fileinfo.Persmissions = file.FilePermissions.Text;
                 fileinfo.FullName = file.FullName;
+                fileinfo.Type = file.FileType;
+                fileinfo.Owner = file.Owner;
+                fileinfo.Name = file.Name;
                 fileinfo.Owner = file.Owner;
                 fileinfo.Group = file.Group;
                 item.Tag = fileinfo;
                 item.Text = fileinfo.ToString(); 
                 listView1.Items.Add(item);
             }
-            
+
+
+            tbpath.Text = previousPath;
         }
 
 
@@ -76,46 +83,43 @@ namespace Firedump.Forms.location
             ListViewItem headItem = new ListViewItem();
             FileInfo finfo = new FileInfo();
             finfo.FullName = "..";
+            finfo.Name = "..";
             finfo.IsDirectory = true;
+            finfo.Persmissions = "";
             headItem.Text = "..";
-            headItem.Tag = finfo;
+            headItem.Tag = finfo;         
             listView1.Items.Add(headItem);
-            remoteFileInfoList = ftpUtils.getDirectoryListing(path, onlyDirectories, showHidenFiles);
+            remoteFileInfoList = ftpUtils.getDirectoryListing(path, isFolderPicker, showHidenFiles);
             foreach (RemoteFileInfo file in remoteFileInfoList)
             {
                 ListViewItem item = new ListViewItem();
-                FileInfo fileinfo = new FileInfo();
+                FileInfo fileinfo = new FileInfo();              
                 fileinfo.IsDirectory = file.IsDirectory;
                 fileinfo.Persmissions = file.FilePermissions.Text;
                 fileinfo.FullName = file.FullName;
+                fileinfo.Type = file.FileType;
+                fileinfo.Owner = file.Owner;
+                fileinfo.Name = file.Name;
                 fileinfo.Owner = file.Owner;
                 fileinfo.Group = file.Group;
 
-                item.Text = file.ToString();
+                item.Text = fileinfo.ToString();
                 item.Tag = fileinfo;
                 listView1.Items.Add(item);
             }
         }
 
-
-        private void cbShowFolders_CheckedChanged(object sender, EventArgs e)
-        {
-            onlyDirectories = cbShowFolders.Checked;
-        }
-
-        private void cbshowHidenFiles_CheckedChanged(object sender, EventArgs e)
-        {
-            showHidenFiles = cbshowHidenFiles.Checked;
-        }
+        
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             path = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
             FileInfo fileinfo = (FileInfo)listView1.SelectedItems[0].Tag;
             isDirectory = fileinfo.IsDirectory;
-            lpath.Text = path;
+
             if(isDirectory)
             {
+                tbpath.Text = path;
                 if (!(((FileInfo)listView1.SelectedItems[0].Tag).FullName == ".."))
                 {
                     previousPath = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
@@ -123,32 +127,14 @@ namespace Firedump.Forms.location
                 }
                 else
                 {
-                    try
-                    {
-                        if (previousPath.Split('/').Length != 2)
-                        {
-                            previousPath = previousPath.Substring(0, previousPath.LastIndexOf('/'));
-                            Console.WriteLine(previousPath);
-                            setDirectoryList(previousPath);
-                        }
-                        else
-                        {
-                            setDirectoryList("/");
-                        }
-
-                    }
-                    catch (ArgumentOutOfRangeException ex)
-                    {
-
-                    }
-
+                    bgoBack_Click(null, null);
                 }
             } else
             {
                 //An ginei double click panw se file
                 //btusepath_Click(null,null)
             }
-
+            
         }
 
 
@@ -160,22 +146,59 @@ namespace Firedump.Forms.location
 
         private void btusepath_Click(object sender, EventArgs e)
         {
-            path = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
-            FileInfo fileinfo = (FileInfo)listView1.SelectedItems[0].Tag;
-            isDirectory = fileinfo.IsDirectory;
+            try
+            {
+                path = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+                FileInfo fileinfo = (FileInfo)listView1.SelectedItems[0].Tag;
+                isDirectory = fileinfo.IsDirectory;
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+            }
+            
             DialogResult = DialogResult.OK;
             Close();
         }
 
+
+        private void bgoBack_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //check if we are in root
+                if (previousPath.Split('/').Length > 2)
+                {
+                    previousPath = previousPath.Substring(0, previousPath.LastIndexOf('/'));
+                    Console.WriteLine(previousPath);
+                    setDirectoryList(previousPath);
+                    tbpath.Text = previousPath;
+                }
+                else
+                {
+                    previousPath = "/";
+                    setDirectoryList("/");
+                    tbpath.Text = previousPath;
+                }
+
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+
+            }
+        }
 
 
         class FileInfo
         {
             public FileInfo() { }
 
+            public string Name { get; set; }
+
             public string FullName { get; set; }
 
             public bool IsDirectory { get; set; }
+
+            public char Type { get; set; } 
 
             public string Persmissions { get; set; }
 
@@ -183,10 +206,18 @@ namespace Firedump.Forms.location
 
             public string Group { get; set; }
 
-            public string ToString()
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public override string ToString()
             {
-                return FullName+"   "+Persmissions;
+                return Type.ToString()+" "+Persmissions+"    " +Name+"   "+Owner;
             }
         }
+
+
+        
+
     }
 }

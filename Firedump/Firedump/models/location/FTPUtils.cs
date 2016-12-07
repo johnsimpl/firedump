@@ -1,4 +1,5 @@
 ﻿using Firedump.models.configuration.dynamicconfig;
+using Firedump.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,39 +190,7 @@ namespace Firedump.models.location
             }
             return result;
         }
-        /// <summary>
-        /// Works for both paths with \ and /
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns>String array of size 2 where 0 is the path and 1 is the filename</returns>
-        public static string[] splitPath(string path)
-        {
-            string[] splitpath = new string[2];
-            char splitchar = '\\';
-            if (path.Contains('/'))
-            {
-                splitchar = '/';
-            }
-            string[] temp = path.Split(splitchar);
-            splitpath[1] = temp[temp.Length - 1];
-            splitpath[0] = "";
-            for(int i=0; i<temp.Length-1; i++)
-            {
-                splitpath[0] += temp[i] + splitchar;
-            }
-            return splitpath;
-        }
 
-        /// <summary>
-        /// The file can have many dots in the filename but it must have an extension or this is redundunt
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns>The extension of the file with . (.sql)</returns>
-        public static string getExtension(string filename)
-        {
-            string[] temp = filename.Split('.');
-            return "."+temp[temp.Length - 1];
-        }
 
         /// <summary>
         /// To location path prepei na einai directory
@@ -237,9 +206,9 @@ namespace Firedump.models.location
                 session.FileTransferProgress += sessionFileTransferProgress;
                 checkFingerprint();
 
-                string[] locationinfo = splitPath(config.locationPath);
-                string[] sourceinfo = splitPath(config.sourcePath);
-                string ext = getExtension(sourceinfo[1]);
+                string[] locationinfo = StringUtils.splitPath(config.locationPath);
+                string[] sourceinfo = StringUtils.splitPath(config.sourcePath);
+                string ext = StringUtils.getExtension(sourceinfo[1]);
 
                 session.Open(sessionOptions);
 
