@@ -674,9 +674,10 @@ namespace Firedump
             }
         }
 
-        public void setSaveProgress(int progress)
+        public void setSaveProgress(int progress, int speed)
         {
             setProgressValue(progress);
+            //edw xeirismos tou speed
         }
 
         public void onSaveInit(int maxprogress)
@@ -705,12 +706,14 @@ namespace Firedump
             MessageBox.Show("Save to locations failed:\n"+message,"Locations Save",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
 
-        public void onInnerSaveInit(string location)
+        public void onInnerSaveInit(string location_name, int location_type)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
-                lStatus.Text = "Saving to: "+location;
+                lStatus.Text = "Saving to: "+ location_name;
                 tableRowCount(-1);
             });
+
+            //Edw na bei ena label na fenete ti location einai kai na ginete visible to speed
         }
 
 

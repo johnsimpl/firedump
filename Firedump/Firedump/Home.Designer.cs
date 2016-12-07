@@ -170,7 +170,7 @@
             this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
             this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
             this.bDeleteSaveLocation.TabIndex = 2;
-            this.bDeleteSaveLocation.Text = "Delete Save Location";
+            this.bDeleteSaveLocation.Text = "Remove Save Location";
             this.bDeleteSaveLocation.UseVisualStyleBackColor = true;
             this.bDeleteSaveLocation.Click += new System.EventHandler(this.bDeleteSaveLocation_Click);
             // 

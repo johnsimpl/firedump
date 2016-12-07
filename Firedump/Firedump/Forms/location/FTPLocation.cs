@@ -10,7 +10,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Firedump.utils;
 
 namespace Firedump.Forms.location
 {
@@ -143,7 +142,7 @@ namespace Firedump.Forms.location
 
             if (!testConnectionSucceded)
             {
-                DialogResult res = MessageBox.Show("Test connection wasn't successful. Save anyway?","FTP Location Save",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                DialogResult res = MessageBox.Show("Connection wasn't tested or the test wasn't successful. Save anyway?","FTP Location Save",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                 if(res != DialogResult.Yes)
                 {
                     return;
@@ -167,6 +166,7 @@ namespace Firedump.Forms.location
             }catch(Exception ex)
             {
                 MessageBox.Show("Error occured trying to save:\n"+ex.Message, "FTP Location Save",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Firedump.Forms.location
             }
             //check creds
 
-            FTPDirectory ftpdirectory = new FTPDirectory(false, config);
+            FTPDirectory ftpdirectory = new FTPDirectory(true, config);
             if(!String.IsNullOrEmpty(tbChooseAPath.Text))
             {
                 ftpdirectory.path = tbChooseAPath.Text;
@@ -227,7 +227,19 @@ namespace Firedump.Forms.location
                     tbChooseAPath.Text = ftpdirectory.path;
                 }
             }
-            
+
+            /*
+            FTPFileBrowser browser = new FTPFileBrowser(true);
+            if (!string.IsNullOrWhiteSpace(tbChooseAPath.Text))
+            {
+                browser.path = tbChooseAPath.Text;
+            }
+            DialogResult res = browser.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                tbChooseAPath.Text = browser.path;
+            }
+            */
         }
 
         private void cbPrivateKey_CheckedChanged(object sender, EventArgs e)
@@ -251,32 +263,39 @@ namespace Firedump.Forms.location
                 Console.WriteLine("FTPLocation: ftplocation not set cannot load config!");
                 return;
             }
-            tbName.Text = (string)ftplocation["name"];
-            Int64 usesftp = (Int64)ftplocation["usesftp"];
-            switch (usesftp)
+            try
             {
-                case 0:
-                    cmbProtocol.SelectedIndex = 0;
-                    break;
-                case 1:
-                    cmbProtocol.SelectedIndex = 1;
-                    break;
-                default:
-                    cmbProtocol.SelectedIndex = 0;
-                    break;
+                tbName.Text = (string)ftplocation["name"];
+                Int64 usesftp = (Int64)ftplocation["usesftp"];
+                switch (usesftp)
+                {
+                    case 0:
+                        cmbProtocol.SelectedIndex = 0;
+                        break;
+                    case 1:
+                        cmbProtocol.SelectedIndex = 1;
+                        break;
+                    default:
+                        cmbProtocol.SelectedIndex = 0;
+                        break;
+                }
+                string privateKey = (string)ftplocation["ssh_key"];
+                if (!string.IsNullOrEmpty(privateKey))
+                {
+                    cbPrivateKey.Checked = true;
+                    tbPrivateKey.Text = privateKey;
+                }
+                tbPort.Text = Convert.ToString((Int64)ftplocation["port"]);
+                tbHost.Text = (string)ftplocation["host"];
+                tbUsername.Text = (string)ftplocation["username"];
+                tbPassword.Text = (string)ftplocation["password"];
+                tbFilename.Text = (string)ftplocation["filename"];
+                tbChooseAPath.Text = (string)ftplocation["path"];
             }
-            string privateKey = (string)ftplocation["ssh_key"];
-            if (!string.IsNullOrEmpty(privateKey))
+            catch (InvalidCastException ex)
             {
-                cbPrivateKey.Checked = true;
-                tbPrivateKey.Text = privateKey;
+                MessageBox.Show("Error occured trying to load from the database:\n" + ex.Message, "FTP Location Load", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            tbPort.Text = Convert.ToString((Int64)ftplocation["port"]);
-            tbUsername.Text = (string)ftplocation["username"];
-            tbPassword.Text = (string)ftplocation["password"];
-            string[] splitpath = StringUtils.splitPath((string)ftplocation["path"]);
-            tbFilename.Text = splitpath[1];
-            tbChooseAPath.Text = splitpath[0];
 
             setPort();
             enableOrDisablePrivateKey(cbPrivateKey.Checked);
@@ -341,7 +360,7 @@ namespace Firedump.Forms.location
             adapter.testConnection();
         }
 
-        public void setSaveProgress(int progress)
+        public void setSaveProgress(int progress, int speed)
         {
             throw new NotImplementedException();
         }

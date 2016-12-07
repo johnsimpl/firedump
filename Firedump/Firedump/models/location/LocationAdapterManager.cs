@@ -116,8 +116,7 @@ namespace Firedump.models.location
                     return;
             }
 
-            listener.onInnerSaveInit((string)data.Rows[0]["name"]);
-
+            listener.onInnerSaveInit((string)data.Rows[0]["name"],unchecked((int)type));
             Task managersendtask = new Task(adapter.sendFile);
             managersendtask.Start();
         }
@@ -142,9 +141,9 @@ namespace Firedump.models.location
             throw new NotImplementedException();
         }
 
-        public void setSaveProgress(int progress)
+        public void setSaveProgress(int progress, int speed)
         {
-            listener.setSaveProgress(currentProgress+progress);
+            listener.setSaveProgress(currentProgress+progress, speed);
         }
 
         public void onTestConnectionComplete(LocationConnectionResultSet result)

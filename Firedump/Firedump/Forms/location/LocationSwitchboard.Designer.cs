@@ -43,6 +43,7 @@
             this.lPath = new System.Windows.Forms.Label();
             this.bDelete = new System.Windows.Forms.Button();
             this.backup_locationsTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+            this.bEdit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backuplocationsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
@@ -159,7 +160,7 @@
             // 
             // bDelete
             // 
-            this.bDelete.Location = new System.Drawing.Point(12, 191);
+            this.bDelete.Location = new System.Drawing.Point(15, 191);
             this.bDelete.Name = "bDelete";
             this.bDelete.Size = new System.Drawing.Size(140, 23);
             this.bDelete.TabIndex = 9;
@@ -171,11 +172,22 @@
             // 
             this.backup_locationsTableAdapter.ClearBeforeFill = true;
             // 
+            // bEdit
+            // 
+            this.bEdit.Location = new System.Drawing.Point(234, 191);
+            this.bEdit.Name = "bEdit";
+            this.bEdit.Size = new System.Drawing.Size(140, 23);
+            this.bEdit.TabIndex = 10;
+            this.bEdit.Text = "Edit Save Location";
+            this.bEdit.UseVisualStyleBackColor = true;
+            this.bEdit.Click += new System.EventHandler(this.bEdit_Click);
+            // 
             // LocationSwitchboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 466);
+            this.Controls.Add(this.bEdit);
             this.Controls.Add(this.bDelete);
             this.Controls.Add(this.lPath);
             this.Controls.Add(this.lName);
@@ -210,5 +222,6 @@
         private firedumpdbDataSet firedumpdbDataSet;
         private System.Windows.Forms.BindingSource backuplocationsBindingSource;
         private firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_locationsTableAdapter;
+        private System.Windows.Forms.Button bEdit;
     }
 }

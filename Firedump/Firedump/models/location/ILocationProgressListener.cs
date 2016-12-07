@@ -8,6 +8,6 @@ namespace Firedump.models.location
 {
     interface ILocationProgressListener
     {
-        void setProgress(int progress);
+        void setProgress(int progress, int speed);
     }
 }

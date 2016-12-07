@@ -118,6 +118,7 @@
             this.Controls.Add(this.tbName);
             this.Name = "FileSystem";
             this.Text = "FileSystem";
+            this.Load += new System.EventHandler(this.FileSystem_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

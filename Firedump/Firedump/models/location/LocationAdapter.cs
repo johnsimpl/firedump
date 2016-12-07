@@ -142,9 +142,9 @@ namespace Firedump.models.location
             catch (NullReferenceException) { }
         }
 
-        public void setProgress(int progress)
+        public void setProgress(int progress, int speed)
         {
-            listener.setSaveProgress(progress);
+            listener.setSaveProgress(progress,speed);
         }
     }
 }

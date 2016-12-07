@@ -15,11 +15,23 @@ namespace Firedump.Forms.location
 {
     public partial class FileSystem : Form
     {
-        LocationSwitchboard locswitch;
+        private LocationSwitchboard locswitch;
+        private DataRow locallocation;
+        public bool isEditor { set; get; }
+        public bool loadData { set; get; }
+        private FileSystem() { }
         public FileSystem(LocationSwitchboard locswitch)
         {
             InitializeComponent();
             this.locswitch = locswitch;
+        }
+        public FileSystem(LocationSwitchboard locswitch, bool isEditor, DataRow locallocation)
+        {
+            InitializeComponent();
+            this.locswitch = locswitch;
+            this.isEditor = isEditor;
+            this.locallocation = locallocation;
+            loadData = true;
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -50,10 +62,24 @@ namespace Firedump.Forms.location
                 MessageBox.Show("A save location with this name already exists", "New file system location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            adapter.Insert(tbName.Text,"","",tbPath.Text,"",0,0,"","","","","","","",0,0,"","",0,"",0);
-            locswitch.reloadDataset(); //callback stin klasi pou to kalese na kanei refresh to combobox
-            this.Close();
+            try
+            {
+                if (isEditor)
+                {
+                    adapter.Update(tbName.Text, "", "", tbPath.Text, "", 0, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0, (Int64)locallocation["id"]);
+                }
+                else
+                {
+                    adapter.Insert(tbName.Text, "", "", tbPath.Text, "", 0, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0);
+                }
+                locswitch.reloadDataset(); //callback stin klasi pou to kalese na kanei refresh to combobox
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error occured trying to save to the database:\n" + ex.Message, "File system Location Save", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+                     
 
         }
 
@@ -69,6 +95,22 @@ namespace Firedump.Forms.location
                 tbPath.Text = sfd.FileName;
             }
             
+        }
+
+        private void FileSystem_Load(object sender, EventArgs e)
+        {
+            if (loadData)
+            {
+                try
+                {
+                    tbName.Text = (string)locallocation["name"];
+                    tbPath.Text = (string)locallocation["path"];
+                }
+                catch(InvalidCastException ex)
+                {
+                    MessageBox.Show("Error occured trying to load from the database:\n" + ex.Message, "File system Location Load", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

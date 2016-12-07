@@ -37,6 +37,14 @@ namespace Firedump.Forms.location
             cmbName.DataSource = backuplocationsBindingSource;
             cmbName.Refresh();*/ //mou evgale ti pisti mexri na vrw pws ginete ...
             this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+            try
+            {
+                cmbName.SelectedIndex = cmbName.Items.Count - 1;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void reloadPath()
@@ -100,6 +108,36 @@ namespace Firedump.Forms.location
         {
             FTPLocation ftploc = new FTPLocation(this);
             ftploc.ShowDialog();
+        }
+
+        private void bEdit_Click(object sender, EventArgs e)
+        {
+            if(cmbName.Items.Count == 0)
+            {
+                MessageBox.Show("No save locations to edit. Add a new save location.","Edit save location",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                return;
+            }
+            DataRow row = ((DataRowView)cmbName.Items[cmbName.SelectedIndex]).Row;
+            Int64 service_type = (Int64)row["service_type"];
+            switch (service_type)
+            {
+                case 0: //local
+                    FileSystem fs = new FileSystem(this, true, row);
+                    fs.ShowDialog();
+                    break;
+                case 1: //ftp
+                    FTPLocation ftploc = new FTPLocation(this, true, row);
+                    ftploc.ShowDialog();
+                    break;
+                case 2: //dropbox
+                    break;
+                case 3: //google drive
+                    break;
+                default: //error
+                    MessageBox.Show("Unknown location service type", "Edit save location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
+            
         }
     }
 }

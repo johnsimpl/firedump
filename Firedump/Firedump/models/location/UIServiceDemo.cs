@@ -73,7 +73,7 @@ namespace Firedump.models.location
 
         }
 
-        public void onInnerSaveInit(string location)
+        public void onInnerSaveInit(string location, int location_type)
         {
             Console.WriteLine("Inner save init: "+location);
         }
@@ -126,7 +126,7 @@ namespace Firedump.models.location
             Console.WriteLine("Transfer error: "+message);
         }
 
-        public void setSaveProgress(int progress)
+        public void setSaveProgress(int progress, int speed)
         {
             Console.WriteLine(progress);
             //throw new NotImplementedException();

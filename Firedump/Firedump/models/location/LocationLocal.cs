@@ -98,7 +98,7 @@ namespace Firedump.models.location
 
                         dest.Write(buffer, 0, currentBlockSize);
                         
-                        listener.setProgress(percentage);
+                        listener.setProgress(percentage,0); //to speed den to ipologizw apo local
 
                         if (cancelFlag == true)
                         {

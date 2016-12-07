@@ -8,7 +8,7 @@ namespace Firedump.models.location
 {
     interface ILocationListener
     {
-        void setSaveProgress(int progress);
+        void setSaveProgress(int progress, int speed);
         void onSaveInit();
         void onSaveComplete(LocationResultSet result);
         /// <summary>
