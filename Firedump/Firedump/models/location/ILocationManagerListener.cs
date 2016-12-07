@@ -8,10 +8,10 @@ namespace Firedump.models.location
 {
     interface ILocationManagerListener
     {
-        void setSaveProgress(int progress);
+        void setSaveProgress(int progress, int speed);
         void onSaveInit(int maxprogress);
         void onSaveComplete(List<LocationResultSet> results);
         void onSaveError(string message);
-        void onInnerSaveInit(string location);
+        void onInnerSaveInit(string location_name, int location_type);
     }
 }
