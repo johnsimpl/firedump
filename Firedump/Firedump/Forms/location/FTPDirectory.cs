@@ -21,7 +21,7 @@ namespace Firedump.Forms.location
         private FTPCredentialsConfig credentials;
         private FTPUtils ftpUtils;
 
-        //default
+        //default comment
         private bool showHidenFiles = false;
         private string previousPath = "/";
 
