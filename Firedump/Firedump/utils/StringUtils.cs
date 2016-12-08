@@ -51,7 +51,7 @@ namespace Firedump.utils
         /// <returns> 
         /// returns the last / name
         /// eg.in /home/staff/folderOrFile
-        /// out  folder
+        /// out  folderOrFile
         /// </returns>
         public static string getLastPathName(string path)
         {

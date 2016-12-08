@@ -1,4 +1,5 @@
-﻿using Firedump.Forms;
+﻿using Firedump;
+using Firedump.Forms;
 using Firedump.Forms.configuration;
 using Firedump.Forms.email;
 using Firedump.Forms.mysql;
@@ -12,6 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Firedump
@@ -65,7 +67,7 @@ namespace Firedump
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            SplashScreen sc = new SplashScreen();
+            Firedump.Forms.SplashScreen sc = new Firedump.Forms.SplashScreen();
             sc.Show();
         }
     }

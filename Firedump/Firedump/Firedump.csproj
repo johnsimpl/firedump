@@ -301,6 +301,12 @@
     <Compile Include="tests\IFireDumpContext.cs" />
     <Compile Include="tests\TestContext.cs" />
     <Compile Include="tests\TestMysql_serverDbSet.cs" />
+    <Compile Include="usercontrols\CredentialsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="usercontrols\CredentialsUserControl.Designer.cs">
+      <DependentUpon>CredentialsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="userinfo.cs">
       <DependentUpon>firedumpDataModel.tt</DependentUpon>
     </Compile>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Test1.resx">
       <DependentUpon>Test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="usercontrols\CredentialsUserControl.resx">
+      <DependentUpon>CredentialsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="firedumpdbDataSet.xsc">
       <DependentUpon>firedumpdbDataSet.xsd</DependentUpon>
