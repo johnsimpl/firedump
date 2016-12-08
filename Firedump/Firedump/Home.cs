@@ -44,7 +44,7 @@ namespace Firedump
         {
             if (newMysqlServer == null)
             {
-                newMysqlServer = new NewMySQLServer();
+                newMysqlServer = new NewMySQLServer(this);
             }
             return newMysqlServer;
         }
@@ -88,13 +88,21 @@ namespace Firedump
         {
             try
             {
-                getNewMysqlServerInstance().Show();
+                getNewMysqlServerInstance().ShowDialog();
             }
             catch (ObjectDisposedException ex)
             {
-                newMysqlServer = new NewMySQLServer();
+                newMysqlServer = new NewMySQLServer(this);
                 bAddServer_Click(null, null);
             }
+        }
+
+        public void reloadServerData()
+        {
+            mysql_serversAdapter.Fill(serverData);
+            //edw kanei select to teleutaio item (auto pou molis egine insert kai to fortwnei)
+            cmbServers.SelectedIndex = cmbServers.Items.Count - 1;
+            cmbServers_SelectionChangeCommitted(null,null);
         }
 
         private void loadServerData()
@@ -238,11 +246,17 @@ namespace Firedump
 
         private void bDelete_Click(object sender, EventArgs e)
         {
+            if (cmbServers.Items.Count == 0)
+            {
+                MessageBox.Show("There are no servers to delete","Server Delete",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
             DialogResult result = MessageBox.Show("Are you sure you want to delete server: " + ((DataRowView)cmbServers.Items[cmbServers.SelectedIndex])["name"], "Server Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(result == DialogResult.Yes)
             {
                 serverData.Rows[cmbServers.SelectedIndex].Delete();
                 mysql_serversAdapter.Update(serverData); //fernei to table sto database stin katastasi tou datatable
+                cmbServers_SelectionChangeCommitted(null,null);
             }
         }
 
@@ -674,10 +688,48 @@ namespace Firedump
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="progress">Progress int 1-100</param>
+        /// <param name="speed">Speed in B/s -1 to ignore</param>
         public void setSaveProgress(int progress, int speed)
         {
             setProgressValue(progress);
-            //edw xeirismos tou speed
+            Console.WriteLine(speed);
+            if(speed == -1) { return; }
+            Console.WriteLine(speed);
+            string speedlabelext = "B/s";
+            double tspeed = 0;
+            if(speed <= 1050)
+            {
+                speedlabelext = "B/s";
+                tspeed = speed;
+            }
+            else if (speed <= 1050000)
+            {
+                speedlabelext = "kB/s";
+                tspeed = speed / 1000;
+            }
+            else
+            {
+                speedlabelext = "mB/s";
+                tspeed = speed / 1000000;
+            }
+            string printedspeed = "";
+            if (tspeed < 10)
+            {
+                //kanei format to double se ena dekadiko psifio se morfi string alliws den ginete stin c#
+                printedspeed = string.Format("{0:0.0}", tspeed);
+            }
+            else
+            {
+                printedspeed = Convert.ToInt32(tspeed).ToString();
+            }
+            ltable.Invoke((MethodInvoker)delegate () {                          
+                ltable.Text = printedspeed+" "+speedlabelext;
+            });
+
         }
 
         public void onSaveInit(int maxprogress)
@@ -695,10 +747,26 @@ namespace Firedump
                 lStatus.Text = "Save complete!";
                 tableRowCount(-1);
             });
-            
-            //XEIRISMOS RESULTS EDW!!!
-
-            MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string errorsToOutput = "";
+            bool koble = true;
+            int errorcounter = 0;
+            foreach (LocationResultSet result in results)
+            {
+                if (!result.wasSuccessful)
+                {
+                    errorcounter++;
+                    koble = false;
+                    errorsToOutput += result.errorMessage + "\n";
+                }
+            }
+            if (koble)
+            {
+                MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Saving to "+errorcounter+" out of "+results.Count+" save location(s) failed:\n"+errorsToOutput, "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public void onSaveError(string message)
@@ -708,12 +776,31 @@ namespace Firedump
 
         public void onInnerSaveInit(string location_name, int location_type)
         {
+            string location = "";
+            switch (location_type)
+            {
+                case 0: //file system
+                    location = "FileSystem";
+                    break;
+                case 1: //ftp
+                    location = "FTP";
+                    break;
+                case 2: //dropbox
+                    location = "Dropbox";
+                    break;
+                case 3: //google drive
+                    location = "Google Drive";
+                    break;
+                default:
+                    break;
+            }
+            if (location_name.Length>20) //ama einai poli megalo to name to kovei
+            {
+                location_name = location_name.Substring(0, 17) + "...";
+            }
             lStatus.Invoke((MethodInvoker)delegate () {
-                lStatus.Text = "Saving to: "+ location_name;
-                tableRowCount(-1);
+                lStatus.Text = "Saving to: "+location_name + " ("+location+")";
             });
-
-            //Edw na bei ena label na fenete ti location einai kai na ginete visible to speed
         }
 
 

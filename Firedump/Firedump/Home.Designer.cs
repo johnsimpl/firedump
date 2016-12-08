@@ -247,7 +247,7 @@
             // ltable
             // 
             this.ltable.AutoSize = true;
-            this.ltable.Location = new System.Drawing.Point(256, 442);
+            this.ltable.Location = new System.Drawing.Point(303, 442);
             this.ltable.Name = "ltable";
             this.ltable.Size = new System.Drawing.Size(37, 13);
             this.ltable.TabIndex = 8;
