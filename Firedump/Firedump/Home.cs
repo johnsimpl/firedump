@@ -794,6 +794,10 @@ namespace Firedump
                 default:
                     break;
             }
+            if (location_name.Length>20) //ama einai poli megalo to name to kovei
+            {
+                location_name = location_name.Substring(0, 17) + "...";
+            }
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Saving to: "+location_name + " ("+location+")";
             });
