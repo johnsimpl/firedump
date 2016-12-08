@@ -14,10 +14,15 @@ namespace Firedump.Forms.mysql
     public partial class NewMySQLServer : Form
     {
         DbConnection con = new DbConnection();
+        Home listener;
         public NewMySQLServer()
         {
+            InitializeComponent();            
+        }
+        public NewMySQLServer(Home listener)
+        {
             InitializeComponent();
-            
+            this.listener = listener;
         }
 
         private void bTestConnection_Click(object sender, EventArgs e)
@@ -111,6 +116,10 @@ namespace Firedump.Forms.mysql
                 }
 
                 adapter.Insert(tbName.Text, con.port, con.Host, con.username, tbPassword.Text); //prepei na bei kai database
+                if (listener != null)
+                {
+                    listener.reloadServerData();
+                }
                 this.Close();
                 return;
             }

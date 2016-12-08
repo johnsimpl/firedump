@@ -44,7 +44,7 @@ namespace Firedump
         {
             if (newMysqlServer == null)
             {
-                newMysqlServer = new NewMySQLServer();
+                newMysqlServer = new NewMySQLServer(this);
             }
             return newMysqlServer;
         }
@@ -88,13 +88,21 @@ namespace Firedump
         {
             try
             {
-                getNewMysqlServerInstance().Show();
+                getNewMysqlServerInstance().ShowDialog();
             }
             catch (ObjectDisposedException ex)
             {
-                newMysqlServer = new NewMySQLServer();
+                newMysqlServer = new NewMySQLServer(this);
                 bAddServer_Click(null, null);
             }
+        }
+
+        public void reloadServerData()
+        {
+            mysql_serversAdapter.Fill(serverData);
+            //edw kanei select to teleutaio item (auto pou molis egine insert kai to fortwnei)
+            cmbServers.SelectedIndex = cmbServers.Items.Count - 1;
+            cmbServers_SelectionChangeCommitted(null,null);
         }
 
         private void loadServerData()
@@ -238,11 +246,17 @@ namespace Firedump
 
         private void bDelete_Click(object sender, EventArgs e)
         {
+            if (cmbServers.Items.Count == 0)
+            {
+                MessageBox.Show("There are no servers to delete","Server Delete",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
             DialogResult result = MessageBox.Show("Are you sure you want to delete server: " + ((DataRowView)cmbServers.Items[cmbServers.SelectedIndex])["name"], "Server Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(result == DialogResult.Yes)
             {
                 serverData.Rows[cmbServers.SelectedIndex].Delete();
                 mysql_serversAdapter.Update(serverData); //fernei to table sto database stin katastasi tou datatable
+                cmbServers_SelectionChangeCommitted(null,null);
             }
         }
 
