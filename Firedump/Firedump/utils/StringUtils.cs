@@ -86,5 +86,33 @@ namespace Firedump.utils
             return "/";
         }
 
+        /// <summary>
+        /// Counts the occurances of a char within a string
+        /// </summary>
+        /// <param name="thestring">The string</param>
+        /// <param name="thechar">The char to search for</param>
+        /// <returns></returns>
+        public static int countOccurances(string thestring, char thechar)
+        {
+            int occurances = 0;
+            foreach (char c in thestring)
+            {
+                if (c == thechar) occurances++;
+            }
+            return occurances;
+        }
+
+        /// <summary>
+        /// Counts the occurances of a string within a string
+        /// </summary>
+        /// <param name="thestring">The string</param>
+        /// <param name="searchstring">The string to search for within the first param</param>
+        /// <returns></returns>
+        public static int countOccurances(string thestring, string searchstring)
+        {
+            int counter = (thestring.Length - thestring.Replace(searchstring, "").Length) / searchstring.Length;
+            return counter;
+        }
+
     }
 }

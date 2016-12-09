@@ -10,5 +10,6 @@ namespace Firedump.models.configuration.dynamicconfig
     {
         public string database { set; get; }
         public string scriptPath { set; get; }
+        public char scriptDelimeter { set; get; } = ';';
     }
 }

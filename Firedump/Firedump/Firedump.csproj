@@ -160,6 +160,7 @@
     <Compile Include="models\sqlimport\IImportAdapterListener.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
     <Compile Include="models\sqlimport\ImportResultSet.cs" />
+    <Compile Include="models\sqlimport\ISQLImportListener.cs" />
     <Compile Include="models\sqlimport\SQLImport.cs" />
     <Compile Include="models\dbinfo\ColumnInfo.cs" />
     <Compile Include="models\dbinfo\Indexes.cs" />
