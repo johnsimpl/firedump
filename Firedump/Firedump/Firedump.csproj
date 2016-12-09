@@ -155,7 +155,12 @@
     </Compile>
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
+    <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
+    <Compile Include="models\sqlimport\IImportAdapterListener.cs" />
+    <Compile Include="models\sqlimport\ImportAdapter.cs" />
+    <Compile Include="models\sqlimport\ImportResultSet.cs" />
+    <Compile Include="models\sqlimport\SQLImport.cs" />
     <Compile Include="models\dbinfo\ColumnInfo.cs" />
     <Compile Include="models\dbinfo\Indexes.cs" />
     <Compile Include="models\dbinfo\TableInfo.cs" />
