@@ -57,15 +57,6 @@ namespace Firedump
         {
             InitializeComponent();       
             adapter = new MySqlDumpAdapter();
-
-            firedumpdbDataSetTableAdapters.backup_locationsTableAdapter ad = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
-
-            //Button b = null;          
-            for(int i =0; i < 25; i++)
-            {
-                
-            }
-            
         }
         
 
