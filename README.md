@@ -23,10 +23,10 @@ mysqlftp backup .net desktop app <br>
 http://mysqlbackupnet.codeplex.com/ <br>
 <br>
 some early pics.<br>
-<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic1.PNG" width="450" />
+<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic1.PNG?raw=true" width="450" />
 <br>
-<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic2.PNG" width="450" />
+<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic2.PNG?raw=true" width="450" />
 <br>
-<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic3.PNG" width="450" />
+<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic3.PNG?raw=true" width="450" />
 <br>
-<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic4.PNG" width="450" />
+<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic4.PNG?raw=true" width="450" />
