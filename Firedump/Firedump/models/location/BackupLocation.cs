@@ -11,6 +11,8 @@ namespace Firedump.models.location
         public int id { set; get; }
         public string path { set; get; }
 
+        public object Tag { get; set; }
+
         public BackupLocation() { }
         public override bool Equals(object obj) //dokimasa na kanw impement to equitable kai to icomparable alla gia kapoio logo mono me override doulepse
         {

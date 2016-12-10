@@ -55,9 +55,14 @@
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btEditServer = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // bAddServer
@@ -154,9 +159,9 @@
             this.gbSaveLocations.Controls.Add(this.lbSaveLocations);
             this.gbSaveLocations.Controls.Add(this.bDeleteSaveLocation);
             this.gbSaveLocations.Controls.Add(this.bAddSaveLoc);
-            this.gbSaveLocations.Location = new System.Drawing.Point(353, 37);
+            this.gbSaveLocations.Location = new System.Drawing.Point(327, 37);
             this.gbSaveLocations.Name = "gbSaveLocations";
-            this.gbSaveLocations.Size = new System.Drawing.Size(346, 305);
+            this.gbSaveLocations.Size = new System.Drawing.Size(319, 305);
             this.gbSaveLocations.TabIndex = 0;
             this.gbSaveLocations.TabStop = false;
             this.gbSaveLocations.Text = "Save Locations";
@@ -166,12 +171,12 @@
             this.lbSaveLocations.FormattingEnabled = true;
             this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
             this.lbSaveLocations.Name = "lbSaveLocations";
-            this.lbSaveLocations.Size = new System.Drawing.Size(334, 225);
+            this.lbSaveLocations.Size = new System.Drawing.Size(307, 225);
             this.lbSaveLocations.TabIndex = 3;
             // 
             // bDeleteSaveLocation
             // 
-            this.bDeleteSaveLocation.Location = new System.Drawing.Point(213, 36);
+            this.bDeleteSaveLocation.Location = new System.Drawing.Point(186, 36);
             this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
             this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
             this.bDeleteSaveLocation.TabIndex = 2;
@@ -188,7 +193,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(730, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1014, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -249,7 +254,7 @@
             // 
             this.pbDumpExec.Location = new System.Drawing.Point(18, 470);
             this.pbDumpExec.Name = "pbDumpExec";
-            this.pbDumpExec.Size = new System.Drawing.Size(681, 23);
+            this.pbDumpExec.Size = new System.Drawing.Size(941, 23);
             this.pbDumpExec.TabIndex = 6;
             // 
             // lStatusLabel
@@ -284,8 +289,9 @@
             // 
             // bcancel
             // 
+            this.bcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.bcancel.ForeColor = System.Drawing.Color.Red;
-            this.bcancel.Location = new System.Drawing.Point(624, 437);
+            this.bcancel.Location = new System.Drawing.Point(884, 437);
             this.bcancel.Name = "bcancel";
             this.bcancel.Size = new System.Drawing.Size(75, 23);
             this.bcancel.TabIndex = 10;
@@ -312,11 +318,43 @@
             this.btEditServer.UseVisualStyleBackColor = true;
             this.btEditServer.Click += new System.EventHandler(this.btEditServer_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.location,
+            this.progress,
+            this.cancel});
+            this.dataGridView1.Location = new System.Drawing.Point(652, 73);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(350, 269);
+            this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            // 
+            // location
+            // 
+            this.location.HeaderText = "Location";
+            this.location.Name = "location";
+            // 
+            // progress
+            // 
+            this.progress.HeaderText = "Speed/Status";
+            this.progress.Name = "progress";
+            // 
+            // cancel
+            // 
+            this.cancel.DataPropertyName = "Cancel";
+            this.cancel.HeaderText = "Cancel";
+            this.cancel.Name = "cancel";
+            this.cancel.Text = "cancel";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 505);
+            this.ClientSize = new System.Drawing.Size(1014, 505);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bcancel);
             this.Controls.Add(this.lStatus);
@@ -336,6 +374,7 @@
             this.gbSaveLocations.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,5 +409,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importSQLFileToolStripMenuItem;
         private System.Windows.Forms.Button btEditServer;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn location;
+        private System.Windows.Forms.DataGridViewTextBoxColumn progress;
+        private System.Windows.Forms.DataGridViewButtonColumn cancel;
     }
 }

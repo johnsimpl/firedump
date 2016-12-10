@@ -221,10 +221,10 @@ namespace Firedump.Forms.location
                 if(!isDirectory)
                 {
                     tbFilename.Text = ftpdirectory.path.Substring(ftpdirectory.path.LastIndexOf('/')+1);
-                    tbChooseAPath.Text = ftpdirectory.path.Substring(0, ftpdirectory.path.LastIndexOf('/'));
+                    tbChooseAPath.Text = ftpdirectory.path.Substring(0, ftpdirectory.path.LastIndexOf('/'))+"/";
                 } else
                 {
-                    tbChooseAPath.Text = ftpdirectory.path;
+                    tbChooseAPath.Text = ftpdirectory.path+"/";
                 }
             }
 

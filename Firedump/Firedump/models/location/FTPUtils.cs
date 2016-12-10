@@ -211,6 +211,7 @@ namespace Firedump.models.location
                 string ext = StringUtils.getExtension(sourceinfo[1]);
 
                 session.Open(sessionOptions);
+                
 
                 //mporeis na peirakseis ta dikaiwmata tou arxeiou
                 TransferOptions transferOptions = new TransferOptions();
@@ -220,7 +221,14 @@ namespace Firedump.models.location
                 transferResult = session.PutFiles(config.sourcePath,locationinfo[0], false, transferOptions);
 
                 transferResult.Check(); //Prepei na kanei throw exception se periptwsi fail iparxei kai transferResult.isSuccess den to exw testarei
+                try
+                {
+                    session.ExecuteCommand("rm "+ locationinfo[0] + locationinfo[1] + ext);
+                }
+                catch(Exception ex)
+                {
 
+                }
                 session.MoveFile(locationinfo[0]+sourceinfo[1],locationinfo[0]+locationinfo[1]+ext);
 
                 /* ama ithela na xeiristw results apo transfers polaplwn arxeiwn

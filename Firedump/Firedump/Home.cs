@@ -24,11 +24,14 @@ namespace Firedump
     public partial class Home : Form , IDumpProgressListener,ILocationManagerListener
     {
         private firedumpdbDataSet.mysql_serversDataTable serverData;
-        private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter;
+        private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter = new firedumpdbDataSetTableAdapters.mysql_serversTableAdapter();
+        private List<firedumpdbDataSet.backup_locationsRow> backuplocations;
+        private LocationAdapterManager adapterLocation;
         private MySqlDumpAdapter adapter;
         private List<string> databaseList;
         private List<String> tableList = new List<string>();
         private bool hideSystemDatabases = true;
+        private string locationName = "";
         //form instances
         private static GeneralConfiguration genConfig;
         private GeneralConfiguration getGenConfigInstance()
@@ -36,7 +39,7 @@ namespace Firedump
             if(genConfig == null)
             {
                 genConfig = new GeneralConfiguration();
-            }
+            }            
             return genConfig;
         }
 
@@ -56,13 +59,19 @@ namespace Firedump
             adapter = new MySqlDumpAdapter();
 
             firedumpdbDataSetTableAdapters.backup_locationsTableAdapter ad = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
+
+            //Button b = null;          
+            for(int i =0; i < 25; i++)
+            {
+                
+            }
             
         }
         
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
+             
         }
 
 
@@ -229,7 +238,7 @@ namespace Firedump
             {
                 return;
             }
-            lbSaveLocations.Items.Add(loc);
+            lbSaveLocations.Items.Add(loc);            
         }
 
        
@@ -497,7 +506,20 @@ namespace Firedump
                 resetPbarValue();
                 tableList = new List<string>();
                 bStartDump.Enabled = true;
+
+                //cancel all the other locations
+                if(backuplocations != null && backuplocations.Count > 0)
+                {
+                    foreach(firedumpdbDataSet.backup_locationsRow row in backuplocations)
+                    {
+                        if (!adapterLocation.isLocationFinished(row))
+                        {
+                            adapterLocation.cancelSaveLocation(row);
+                        }
+                    }
+                }
             }
+
         }
 
 
@@ -573,13 +595,23 @@ namespace Firedump
                 {
                     //EDW KALEITAI TO SAVE STA LOCATIONS
                     List<int> locations = new List<int>();
+                    backuplocations = new List<firedumpdbDataSet.backup_locationsRow>();
+                    dataGridView1.Invoke((MethodInvoker)delegate ()
+                    {
+                        dataGridView1.Rows.Clear();
+                        dataGridView1.Refresh();
+                    });
+                    
                     foreach (object item in lbSaveLocations.Items)
                     {
                         BackupLocation loc = (BackupLocation)item;
                         locations.Add(loc.id);
+                        backuplocations.Add((firedumpdbDataSet.backup_locationsRow)loc.Tag);
+                        addToGridView(loc.Tag);
                     }
-                    LocationAdapterManager adapter = new LocationAdapterManager(this,locations,status.fileAbsPath);
-                    adapter.startSave();
+
+                    adapterLocation = new LocationAdapterManager(this,locations,status.fileAbsPath);
+                    adapterLocation.startSave();
                     //MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -609,7 +641,7 @@ namespace Firedump
             }
         }
 
-
+       
         public void onTableDumpStart(string table)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
@@ -716,7 +748,10 @@ namespace Firedump
                 ltable.Text = printedspeed+" "+speedlabelext;
             });
 
+            updateGridView(progress,printedspeed,speedlabelext);
         }
+
+       
 
         public void onSaveInit(int maxprogress)
         {
@@ -750,6 +785,7 @@ namespace Firedump
             {
                 bStartDump.Enabled = true;
             });
+            backuplocations = new List<firedumpdbDataSet.backup_locationsRow>();
 
             if (koble)
             {
@@ -760,7 +796,12 @@ namespace Firedump
                 MessageBox.Show("Saving to "+errorcounter+" out of "+results.Count+" save location(s) failed:\n"+errorsToOutput, "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            
+            dataGridView1.Invoke((MethodInvoker)delegate ()
+            {
+                dataGridView1.Rows.Clear();
+                dataGridView1.Refresh();
+            });
+
         }
 
         public void onSaveError(string message)
@@ -788,6 +829,7 @@ namespace Firedump
                 default:
                     break;
             }
+            this.locationName = location_name;
             if (location_name.Length>20) //ama einai poli megalo to name to kovei
             {
                 location_name = location_name.Substring(0, 17) + "...";
@@ -803,12 +845,77 @@ namespace Firedump
             importinstance.Show();
         }
 
-        
         //-----------------------------------------------------------------------
         //------------END INTERFACE METHODS--------------------------------------
         //
 
 
+
+        /// <summary>
+        /// gets called for every cell
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            //set cancel on buttons
+            dataGridView1.Rows[e.RowIndex].Cells[2].Value = "Cancel";
+        }
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //click on the cancel button
+            if(e.ColumnIndex == 2)
+            {
+                
+                if ((string)dataGridView1.Rows[e.RowIndex].Cells[1].Value != "Cancelled")
+                {
+                    firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)dataGridView1.Rows[e.RowIndex].Tag;
+                    if (row != null)
+                    {
+                        if (!adapterLocation.isLocationFinished(row))
+                        {
+                            adapterLocation.cancelSaveLocation(row);
+                            dataGridView1.Rows[e.RowIndex].Cells[1].Value = "Cancelled";
+                        }
+                    }
+                    dataGridView1.Rows[e.RowIndex].Cells[1].Value = "Cancelled";
+
+                }
+                
+            }
+        }
+
+
+        private void addToGridView(object tag)
+        {
+            DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+            dataRow.Tag = tag;
+            firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)tag;
+            dataRow.Cells[0].Value = row.name;
+            dataGridView1.Invoke((MethodInvoker)delegate ()
+            {
+                dataGridView1.Rows.Add(dataRow);
+            });
+            
+        }
+
+        private void updateGridView(int progress,string printedspeed, string speedlabelext)
+        {
+            for(int i =0; i < dataGridView1.RowCount; i++)
+            {
+                firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow) dataGridView1.Rows[i].Tag;
+                if(row.name == locationName)
+                {
+                    dataGridView1.Invoke((MethodInvoker)delegate ()
+                    {
+                        dataGridView1.Rows[i].Cells[1].Value = ":" + printedspeed + ":" + speedlabelext;
+                    });                    
+                    break;
+                }
+            }
+        }
 
     }
 }

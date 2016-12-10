@@ -15,6 +15,7 @@ namespace Firedump.models.location
         private Task<LocationConnectionResultSet> innerconnectiontask;
         private Task<LocationResultSet> innersendtask;
         private Task<LocationResultSet> innergettask;
+        private int locationId = -1;
 
         private LocationAdapter() { }
 
@@ -78,6 +79,12 @@ namespace Firedump.models.location
             }
             catch (NullReferenceException) { }
         }
+
+        internal void setLocationId(int v)
+        {
+            locationId = v;
+        }
+
         public void sendFile()
         {
             if (this.location == null)
@@ -145,6 +152,11 @@ namespace Firedump.models.location
         public void setProgress(int progress, int speed)
         {
             listener.setSaveProgress(progress,speed);
+        }
+
+        internal bool isLocationRunning(long id)
+        {
+            return locationId == id;
         }
     }
 }

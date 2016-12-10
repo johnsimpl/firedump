@@ -98,10 +98,13 @@ namespace Firedump.Forms.location
                 MessageBox.Show("There are no save locations. Please create a new save location and try again.", "Add save location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            Console.WriteLine(cmbName.SelectedValue);
             BackupLocation loc = new BackupLocation();
             loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
             loc.path = tbPath.Text;
-            homeinstance.addToLbSaveLocation(loc);
+            firedumpdbDataSet.backup_locationsRow backloc = backup_locationsTableAdapter.GetDataByID(loc.id)[0];
+            loc.Tag = backloc;
+            homeinstance.addToLbSaveLocation(loc);           
         }
 
         private void bFTP_Click(object sender, EventArgs e)

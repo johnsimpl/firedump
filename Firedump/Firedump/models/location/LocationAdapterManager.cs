@@ -15,6 +15,7 @@ namespace Firedump.models.location
         private ILocationManagerListener listener;
         private List<int> locations;
         private List<LocationResultSet> results;
+        private LocationAdapter adapter;
         private firedumpdbDataSetTableAdapters.backup_locationsTableAdapter backup_adapter = new firedumpdbDataSetTableAdapters.backup_locationsTableAdapter(); //malon tha xreiastei adapter pou tha einai join pinakwn tha doume
         private int currentProgress = 0;
         private string sourcePath;
@@ -69,7 +70,8 @@ namespace Firedump.models.location
                 return;
             }
             long type = (Int64)data.Rows[0]["service_type"];
-            LocationAdapter adapter = new LocationAdapter(this);
+            adapter = new LocationAdapter(this);
+            adapter.setLocationId(locations[0]);
             switch (type) //edw gemizei to config apo to database prepei na kanei diaforetiko query gia kathe diaforetiko type kai na gemisei to config prin to settarei ston adapter
             {              
                 case 0: //file system
@@ -149,6 +151,26 @@ namespace Firedump.models.location
         public void onTestConnectionComplete(LocationConnectionResultSet result)
         {
             throw new NotImplementedException();
+        }
+
+        internal void cancelSaveLocation(firedumpdbDataSet.backup_locationsRow tag)
+        {           
+                if (locations.Contains((Int32)tag.id))
+                {
+                    locations.Remove((Int32)tag.id);
+                    currentProgress += 100;
+                }                 
+        }
+
+        internal bool isLocationFinished(firedumpdbDataSet.backup_locationsRow row)
+        {
+            
+            return (!locations.Contains((int)row.id) && !adapter.isLocationRunning((int)row.id));
+        }
+
+        internal bool isLocationRunning(firedumpdbDataSet.backup_locationsRow row)
+        {
+            return adapter.isLocationRunning(row.id);
         }
     }
 }
