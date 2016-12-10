@@ -357,6 +357,11 @@ namespace Firedump
             {
                 return;
             }
+            if(adapter.isDumpRunning())
+            {
+                MessageBox.Show("dump is running...");
+                return;
+            }
 
             List<string> databases = new List<string>();
             List<string> excludedTables = new List<string>();
@@ -384,20 +389,7 @@ namespace Firedump
                     excludedTables.Add(tables);
                 }
             }
-
-            /* proxeiro testing
-            Console.WriteLine("Databases:");
-            foreach(string database in databases)
-            {
-                Console.WriteLine(database);
-            }
-
-            Console.WriteLine("Tables:");
-            foreach (string table in excludedTables)
-            {
-                Console.WriteLine(table);
-            }*/
-
+            
             DumpCredentialsConfig config = new DumpCredentialsConfig();
             config.host = (string)serverData.Rows[cmbServers.SelectedIndex]["host"];
             config.port = unchecked((int)(long)serverData.Rows[cmbServers.SelectedIndex]["port"]);
@@ -427,22 +419,10 @@ namespace Firedump
 
             pbDumpExec.Value = 0;
 
-            //EDW KALEITAI TO ADAPTER kai tou pernas to config
-            //xriazontai kialoi elenxoi
-            //tha iparxei koumpei Cancel?
-            //gia oso trexei to dump to button Start Dump tha einai disable?
-            //I tha to elenxoume sto performChecks ?
-
-            if (!adapter.isDumpRunning())
-            {
-                adapter.setTableList(tableList);
-                adapter.startDump(config, this);
-            }else
-            {
-                //inform user...
-                MessageBox.Show("dump is running...");
-            }
-               
+            bStartDump.Enabled = false;
+            adapter.setTableList(tableList);
+            adapter.startDump(config, this);
+            
         }
 
 
@@ -453,11 +433,6 @@ namespace Firedump
             if(!backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
-            }
-            else
-            {
-                //backgroundWorker1.CancelAsync();
-                //backgroundWorker1.RunWorkerAsync();
             }
             
         }
@@ -521,6 +496,7 @@ namespace Firedump
                 lStatus.Text = "Cancelled";               
                 resetPbarValue();
                 tableList = new List<string>();
+                bStartDump.Enabled = true;
             }
         }
 
@@ -760,6 +736,12 @@ namespace Firedump
                     errorsToOutput += result.errorMessage + "\n";
                 }
             }
+
+            bStartDump.Invoke((MethodInvoker)delegate ()
+            {
+                bStartDump.Enabled = true;
+            });
+
             if (koble)
             {
                 MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -768,6 +750,8 @@ namespace Firedump
             {
                 MessageBox.Show("Saving to "+errorcounter+" out of "+results.Count+" save location(s) failed:\n"+errorsToOutput, "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            
         }
 
         public void onSaveError(string message)
