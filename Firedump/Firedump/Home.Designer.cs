@@ -52,6 +52,8 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -179,6 +181,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -281,6 +284,21 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importSQLFileToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // importSQLFileToolStripMenuItem
+            // 
+            this.importSQLFileToolStripMenuItem.Name = "importSQLFileToolStripMenuItem";
+            this.importSQLFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.importSQLFileToolStripMenuItem.Text = "Import SQL file...";
+            this.importSQLFileToolStripMenuItem.Click += new System.EventHandler(this.importSQLFileToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,5 +354,7 @@
         private System.Windows.Forms.CheckBox cbShowSysDB;
         private System.Windows.Forms.ListBox lbSaveLocations;
         private System.Windows.Forms.Button bDeleteSaveLocation;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importSQLFileToolStripMenuItem;
     }
 }

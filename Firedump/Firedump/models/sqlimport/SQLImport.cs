@@ -68,7 +68,8 @@ namespace Firedump.models.sqlimport
 
         private void scriptStatementExecuted(object sender, MySqlScriptEventArgs e)
         {
-            commandCounter += StringUtils.countOccurances(e.StatementText, config.scriptDelimeter); 
+            //to testara ligo to apo katw fenete na doulevei swsta
+            commandCounter += StringUtils.countOccurances(e.StatementText, config.scriptDelimeter) + 1; //to +1 einai to delimeter(semicolon) sto telos kathe statement 
             listener.onProgress(commandCounter);
         }
         

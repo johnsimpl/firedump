@@ -53,8 +53,8 @@ namespace Firedump
             ImportCredentialsConfig config = new ImportCredentialsConfig();
             config.host = "127.0.0.1";
             config.port = 3306;
-            config.username = "";
-            config.password = "";
+            config.username = "root";
+            config.password = "poisodagger9598";
             config.scriptPath = "D:\\MyStuff\\desktop\\anime.sql";
             ImportAdapter adapter = new ImportAdapter(this,config);
             adapter.executeScript();

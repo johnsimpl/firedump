@@ -17,6 +17,7 @@ using Firedump.Forms.configuration;
 using Firedump.Forms.mysql;
 using Firedump.Forms.location;
 using Firedump.models.location;
+using Firedump.Forms.sqlimport;
 
 namespace Firedump
 {
@@ -801,6 +802,12 @@ namespace Firedump
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Saving to: "+location_name + " ("+location+")";
             });
+        }
+
+        private void importSQLFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SQLImport importinstance = new SQLImport();
+            importinstance.Show();
         }
 
 
