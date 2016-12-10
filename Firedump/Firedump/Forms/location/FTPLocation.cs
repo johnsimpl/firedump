@@ -214,17 +214,20 @@ namespace Firedump.Forms.location
 
             DialogResult res = ftpdirectory.ShowDialog();
             if(res == DialogResult.OK)
-            {
-                
+            {               
                 bool isDirectory = ftpdirectory.isDirectory;
                 //an den einai pare to telefteo filename
                 if(!isDirectory)
                 {
                     tbFilename.Text = ftpdirectory.path.Substring(ftpdirectory.path.LastIndexOf('/')+1);
-                    tbChooseAPath.Text = ftpdirectory.path.Substring(0, ftpdirectory.path.LastIndexOf('/'))+"/";
+                    tbChooseAPath.Text = ftpdirectory.path.Substring(0, ftpdirectory.path.LastIndexOf('/'));
+                    if (!tbChooseAPath.Text.EndsWith("/"))
+                        tbChooseAPath.Text = tbChooseAPath.Text + "/";
                 } else
                 {
-                    tbChooseAPath.Text = ftpdirectory.path+"/";
+                    tbChooseAPath.Text = ftpdirectory.path;
+                    if (!tbChooseAPath.Text.EndsWith("/"))
+                        tbChooseAPath.Text = tbChooseAPath.Text + "/";
                 }
             }
 

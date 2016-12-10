@@ -910,7 +910,7 @@ namespace Firedump
                 {
                     dataGridView1.Invoke((MethodInvoker)delegate ()
                     {
-                        dataGridView1.Rows[i].Cells[1].Value = ":" + printedspeed + ":" + speedlabelext;
+                        dataGridView1.Rows[i].Cells[1].Value = progress+"% " + printedspeed + ":" + speedlabelext;
                     });                    
                     break;
                 }

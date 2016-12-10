@@ -31,6 +31,7 @@
             this.bAddServer = new System.Windows.Forms.Button();
             this.bAddSaveLoc = new System.Windows.Forms.Button();
             this.gbConnection = new System.Windows.Forms.GroupBox();
+            this.btEditServer = new System.Windows.Forms.Button();
             this.cbShowSysDB = new System.Windows.Forms.CheckBox();
             this.tvDatabases = new System.Windows.Forms.TreeView();
             this.bDelete = new System.Windows.Forms.Button();
@@ -54,7 +55,6 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.btEditServer = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,6 +102,16 @@
             this.gbConnection.TabStop = false;
             this.gbConnection.Text = "Connection";
             this.gbConnection.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // btEditServer
+            // 
+            this.btEditServer.Location = new System.Drawing.Point(109, 36);
+            this.btEditServer.Name = "btEditServer";
+            this.btEditServer.Size = new System.Drawing.Size(75, 23);
+            this.btEditServer.TabIndex = 6;
+            this.btEditServer.Text = "Edit Server";
+            this.btEditServer.UseVisualStyleBackColor = true;
+            this.btEditServer.Click += new System.EventHandler(this.btEditServer_Click);
             // 
             // cbShowSysDB
             // 
@@ -308,16 +318,6 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
             // 
-            // btEditServer
-            // 
-            this.btEditServer.Location = new System.Drawing.Point(109, 36);
-            this.btEditServer.Name = "btEditServer";
-            this.btEditServer.Size = new System.Drawing.Size(75, 23);
-            this.btEditServer.TabIndex = 6;
-            this.btEditServer.Text = "Edit Server";
-            this.btEditServer.UseVisualStyleBackColor = true;
-            this.btEditServer.Click += new System.EventHandler(this.btEditServer_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -339,7 +339,7 @@
             // 
             // progress
             // 
-            this.progress.HeaderText = "Speed/Status";
+            this.progress.HeaderText = "Progress";
             this.progress.Name = "progress";
             // 
             // cancel
