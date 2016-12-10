@@ -1,6 +1,6 @@
 ﻿namespace Firedump.Forms.sqlimport
 {
-    partial class SQLImport
+    partial class ImportSQL
     {
         /// <summary>
         /// Required designer variable.

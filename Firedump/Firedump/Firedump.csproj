@@ -153,11 +153,11 @@
     <Compile Include="Forms\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\sqlimport\SQLImport.cs">
+    <Compile Include="Forms\sqlimport\ImportSQL.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\sqlimport\SQLImport.Designer.cs">
-      <DependentUpon>SQLImport.cs</DependentUpon>
+    <Compile Include="Forms\sqlimport\ImportSQL.Designer.cs">
+      <DependentUpon>ImportSQL.cs</DependentUpon>
     </Compile>
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
@@ -354,8 +354,8 @@
     <EmbeddedResource Include="Forms\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\sqlimport\SQLImport.resx">
-      <DependentUpon>SQLImport.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\sqlimport\ImportSQL.resx">
+      <DependentUpon>ImportSQL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

@@ -806,7 +806,7 @@ namespace Firedump
 
         private void importSQLFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SQLImport importinstance = new SQLImport();
+            ImportSQL importinstance = new ImportSQL();
             importinstance.Show();
         }
 

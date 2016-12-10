@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Firedump.Forms.sqlimport
 {
-    public partial class SQLImport : Form
+    public partial class ImportSQL : Form
     {
-        public SQLImport()
+        public ImportSQL()
         {
             InitializeComponent();
         }
