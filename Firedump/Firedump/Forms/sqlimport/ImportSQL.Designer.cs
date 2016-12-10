@@ -34,42 +34,43 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
+            this.mysqlserversBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.firedumpdbDataSet = new Firedump.firedumpdbDataSet();
             this.cmbDatabases = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.gbDatabase = new System.Windows.Forms.GroupBox();
             this.gbFile = new System.Windows.Forms.GroupBox();
-            this.cmbSaveLocations = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.tbFilePathSv = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tbFilePathFs = new System.Windows.Forms.TextBox();
-            this.bChoosePathSv = new System.Windows.Forms.Button();
+            this.linfo = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.bChoosePathFs = new System.Windows.Forms.Button();
+            this.bChoosePathSv = new System.Windows.Forms.Button();
+            this.tbFilePathFs = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbFilePathSv = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbSaveLocations = new System.Windows.Forms.ComboBox();
+            this.backuplocationsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bStartImport = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
-            this.firedumpdbDataSet = new Firedump.firedumpdbDataSet();
-            this.mysqlserversBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mysql_serversTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.mysql_serversTableAdapter();
-            this.backuplocationsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.backup_locationsTableAdapter = new Firedump.firedumpdbDataSetTableAdapters.backup_locationsTableAdapter();
-            this.label10 = new System.Windows.Forms.Label();
             this.gbCompressed = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.linfo = new System.Windows.Forms.Label();
-            this.cbEncryptedFile = new System.Windows.Forms.CheckBox();
-            this.lbPassHelp = new System.Windows.Forms.Label();
+            this.lPassHelp = new System.Windows.Forms.Label();
             this.tbConfirmPass = new System.Windows.Forms.TextBox();
             this.tbPass = new System.Windows.Forms.TextBox();
-            this.lbConfirmPass = new System.Windows.Forms.Label();
-            this.lbPass = new System.Windows.Forms.Label();
+            this.lConfirmPass = new System.Windows.Forms.Label();
+            this.lPass = new System.Windows.Forms.Label();
+            this.cbEncryptedFile = new System.Windows.Forms.CheckBox();
+            this.cbShowSysDb = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
             this.gbDatabase.SuspendLayout();
             this.gbFile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backuplocationsBindingSource)).BeginInit();
             this.gbCompressed.SuspendLayout();
             this.SuspendLayout();
@@ -118,6 +119,17 @@
             this.cmbServers.Size = new System.Drawing.Size(276, 21);
             this.cmbServers.TabIndex = 4;
             this.cmbServers.ValueMember = "id";
+            this.cmbServers.SelectedIndexChanged += new System.EventHandler(this.cmbServers_SelectedIndexChanged);
+            // 
+            // mysqlserversBindingSource
+            // 
+            this.mysqlserversBindingSource.DataMember = "mysql_servers";
+            this.mysqlserversBindingSource.DataSource = this.firedumpdbDataSet;
+            // 
+            // firedumpdbDataSet
+            // 
+            this.firedumpdbDataSet.DataSetName = "firedumpdbDataSet";
+            this.firedumpdbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // cmbDatabases
             // 
@@ -147,6 +159,7 @@
             // 
             // gbDatabase
             // 
+            this.gbDatabase.Controls.Add(this.cbShowSysDb);
             this.gbDatabase.Controls.Add(this.cmbServers);
             this.gbDatabase.Controls.Add(this.label1);
             this.gbDatabase.Controls.Add(this.label2);
@@ -182,163 +195,14 @@
             this.gbFile.TabStop = false;
             this.gbFile.Text = "Pick a file";
             // 
-            // cmbSaveLocations
+            // linfo
             // 
-            this.cmbSaveLocations.DataSource = this.backuplocationsBindingSource;
-            this.cmbSaveLocations.DisplayMember = "name";
-            this.cmbSaveLocations.FormattingEnabled = true;
-            this.cmbSaveLocations.Location = new System.Drawing.Point(73, 56);
-            this.cmbSaveLocations.Name = "cmbSaveLocations";
-            this.cmbSaveLocations.Size = new System.Drawing.Size(276, 21);
-            this.cmbSaveLocations.TabIndex = 8;
-            this.cmbSaveLocations.ValueMember = "id";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 59);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Name:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 93);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "File path: ";
-            // 
-            // tbFilePathSv
-            // 
-            this.tbFilePathSv.Location = new System.Drawing.Point(73, 90);
-            this.tbFilePathSv.Name = "tbFilePathSv";
-            this.tbFilePathSv.ReadOnly = true;
-            this.tbFilePathSv.Size = new System.Drawing.Size(276, 20);
-            this.tbFilePathSv.TabIndex = 11;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(51, 148);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Local file:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(177, 127);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "OR";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 182);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 13);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "File path: ";
-            // 
-            // tbFilePathFs
-            // 
-            this.tbFilePathFs.Location = new System.Drawing.Point(73, 179);
-            this.tbFilePathFs.Name = "tbFilePathFs";
-            this.tbFilePathFs.ReadOnly = true;
-            this.tbFilePathFs.Size = new System.Drawing.Size(276, 20);
-            this.tbFilePathFs.TabIndex = 15;
-            // 
-            // bChoosePathSv
-            // 
-            this.bChoosePathSv.Location = new System.Drawing.Point(355, 88);
-            this.bChoosePathSv.Name = "bChoosePathSv";
-            this.bChoosePathSv.Size = new System.Drawing.Size(36, 23);
-            this.bChoosePathSv.TabIndex = 16;
-            this.bChoosePathSv.Text = "...";
-            this.bChoosePathSv.UseVisualStyleBackColor = true;
-            // 
-            // bChoosePathFs
-            // 
-            this.bChoosePathFs.Location = new System.Drawing.Point(355, 177);
-            this.bChoosePathFs.Name = "bChoosePathFs";
-            this.bChoosePathFs.Size = new System.Drawing.Size(36, 23);
-            this.bChoosePathFs.TabIndex = 17;
-            this.bChoosePathFs.Text = "...";
-            this.bChoosePathFs.UseVisualStyleBackColor = true;
-            // 
-            // bStartImport
-            // 
-            this.bStartImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.bStartImport.Location = new System.Drawing.Point(12, 578);
-            this.bStartImport.Name = "bStartImport";
-            this.bStartImport.Size = new System.Drawing.Size(171, 42);
-            this.bStartImport.TabIndex = 10;
-            this.bStartImport.Text = "Start Import";
-            this.bStartImport.UseVisualStyleBackColor = true;
-            // 
-            // bCancel
-            // 
-            this.bCancel.ForeColor = System.Drawing.Color.Red;
-            this.bCancel.Location = new System.Drawing.Point(623, 622);
-            this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 11;
-            this.bCancel.Text = "Cancel";
-            this.bCancel.UseVisualStyleBackColor = true;
-            // 
-            // firedumpdbDataSet
-            // 
-            this.firedumpdbDataSet.DataSetName = "firedumpdbDataSet";
-            this.firedumpdbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // mysqlserversBindingSource
-            // 
-            this.mysqlserversBindingSource.DataMember = "mysql_servers";
-            this.mysqlserversBindingSource.DataSource = this.firedumpdbDataSet;
-            // 
-            // mysql_serversTableAdapter
-            // 
-            this.mysql_serversTableAdapter.ClearBeforeFill = true;
-            // 
-            // backuplocationsBindingSource
-            // 
-            this.backuplocationsBindingSource.DataMember = "backup_locations";
-            this.backuplocationsBindingSource.DataSource = this.firedumpdbDataSet;
-            // 
-            // backup_locationsTableAdapter
-            // 
-            this.backup_locationsTableAdapter.ClearBeforeFill = true;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(369, 18);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(251, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Selected file must have extension.  Works for types:";
-            // 
-            // gbCompressed
-            // 
-            this.gbCompressed.Controls.Add(this.lbPassHelp);
-            this.gbCompressed.Controls.Add(this.tbConfirmPass);
-            this.gbCompressed.Controls.Add(this.tbPass);
-            this.gbCompressed.Controls.Add(this.lbConfirmPass);
-            this.gbCompressed.Controls.Add(this.lbPass);
-            this.gbCompressed.Controls.Add(this.cbEncryptedFile);
-            this.gbCompressed.Enabled = false;
-            this.gbCompressed.Location = new System.Drawing.Point(15, 405);
-            this.gbCompressed.Name = "gbCompressed";
-            this.gbCompressed.Size = new System.Drawing.Size(683, 157);
-            this.gbCompressed.TabIndex = 12;
-            this.gbCompressed.TabStop = false;
-            this.gbCompressed.Text = "Compressed file";
+            this.linfo.AutoSize = true;
+            this.linfo.Location = new System.Drawing.Point(369, 48);
+            this.linfo.Name = "linfo";
+            this.linfo.Size = new System.Drawing.Size(26, 13);
+            this.linfo.TabIndex = 20;
+            this.linfo.Text = "linfo";
             // 
             // label11
             // 
@@ -350,36 +214,169 @@
             this.label11.TabIndex = 19;
             this.label11.Text = ".sql .7z .rar .gzip .zip .bzip2 .tar .iso .udf";
             // 
-            // linfo
+            // label10
             // 
-            this.linfo.AutoSize = true;
-            this.linfo.Location = new System.Drawing.Point(369, 48);
-            this.linfo.Name = "linfo";
-            this.linfo.Size = new System.Drawing.Size(26, 13);
-            this.linfo.TabIndex = 20;
-            this.linfo.Text = "linfo";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(369, 18);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(251, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Selected file must have extension.  Works for types:";
             // 
-            // cbEncryptedFile
+            // bChoosePathFs
             // 
-            this.cbEncryptedFile.AutoSize = true;
-            this.cbEncryptedFile.Location = new System.Drawing.Point(11, 20);
-            this.cbEncryptedFile.Name = "cbEncryptedFile";
-            this.cbEncryptedFile.Size = new System.Drawing.Size(102, 17);
-            this.cbEncryptedFile.TabIndex = 0;
-            this.cbEncryptedFile.Text = "File is encrypted";
-            this.cbEncryptedFile.UseVisualStyleBackColor = true;
+            this.bChoosePathFs.Location = new System.Drawing.Point(355, 177);
+            this.bChoosePathFs.Name = "bChoosePathFs";
+            this.bChoosePathFs.Size = new System.Drawing.Size(36, 23);
+            this.bChoosePathFs.TabIndex = 17;
+            this.bChoosePathFs.Text = "...";
+            this.bChoosePathFs.UseVisualStyleBackColor = true;
+            this.bChoosePathFs.Click += new System.EventHandler(this.bChoosePathFs_Click);
             // 
-            // lbPassHelp
+            // bChoosePathSv
             // 
-            this.lbPassHelp.AutoSize = true;
-            this.lbPassHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.lbPassHelp.ForeColor = System.Drawing.Color.Red;
-            this.lbPassHelp.Location = new System.Drawing.Point(124, 122);
-            this.lbPassHelp.Name = "lbPassHelp";
-            this.lbPassHelp.Size = new System.Drawing.Size(145, 13);
-            this.lbPassHelp.TabIndex = 11;
-            this.lbPassHelp.Text = "Passwords do not match";
-            this.lbPassHelp.Visible = false;
+            this.bChoosePathSv.Location = new System.Drawing.Point(355, 88);
+            this.bChoosePathSv.Name = "bChoosePathSv";
+            this.bChoosePathSv.Size = new System.Drawing.Size(36, 23);
+            this.bChoosePathSv.TabIndex = 16;
+            this.bChoosePathSv.Text = "...";
+            this.bChoosePathSv.UseVisualStyleBackColor = true;
+            this.bChoosePathSv.Click += new System.EventHandler(this.bChoosePathSv_Click);
+            // 
+            // tbFilePathFs
+            // 
+            this.tbFilePathFs.Location = new System.Drawing.Point(73, 179);
+            this.tbFilePathFs.Name = "tbFilePathFs";
+            this.tbFilePathFs.ReadOnly = true;
+            this.tbFilePathFs.Size = new System.Drawing.Size(276, 20);
+            this.tbFilePathFs.TabIndex = 15;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(14, 182);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "File path: ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(177, 127);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "OR";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(51, 148);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Local file:";
+            // 
+            // tbFilePathSv
+            // 
+            this.tbFilePathSv.Location = new System.Drawing.Point(73, 90);
+            this.tbFilePathSv.Name = "tbFilePathSv";
+            this.tbFilePathSv.ReadOnly = true;
+            this.tbFilePathSv.Size = new System.Drawing.Size(276, 20);
+            this.tbFilePathSv.TabIndex = 11;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 93);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "File path: ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(29, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Name:";
+            // 
+            // cmbSaveLocations
+            // 
+            this.cmbSaveLocations.DataSource = this.backuplocationsBindingSource;
+            this.cmbSaveLocations.DisplayMember = "name";
+            this.cmbSaveLocations.FormattingEnabled = true;
+            this.cmbSaveLocations.Location = new System.Drawing.Point(73, 56);
+            this.cmbSaveLocations.Name = "cmbSaveLocations";
+            this.cmbSaveLocations.Size = new System.Drawing.Size(276, 21);
+            this.cmbSaveLocations.TabIndex = 8;
+            this.cmbSaveLocations.ValueMember = "id";
+            // 
+            // backuplocationsBindingSource
+            // 
+            this.backuplocationsBindingSource.DataMember = "backup_locations";
+            this.backuplocationsBindingSource.DataSource = this.firedumpdbDataSet;
+            // 
+            // bStartImport
+            // 
+            this.bStartImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.bStartImport.Location = new System.Drawing.Point(12, 577);
+            this.bStartImport.Name = "bStartImport";
+            this.bStartImport.Size = new System.Drawing.Size(171, 42);
+            this.bStartImport.TabIndex = 10;
+            this.bStartImport.Text = "Start Import";
+            this.bStartImport.UseVisualStyleBackColor = true;
+            this.bStartImport.Click += new System.EventHandler(this.bStartImport_Click);
+            // 
+            // bCancel
+            // 
+            this.bCancel.ForeColor = System.Drawing.Color.Red;
+            this.bCancel.Location = new System.Drawing.Point(623, 622);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.TabIndex = 11;
+            this.bCancel.Text = "Cancel";
+            this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
+            // 
+            // mysql_serversTableAdapter
+            // 
+            this.mysql_serversTableAdapter.ClearBeforeFill = true;
+            // 
+            // backup_locationsTableAdapter
+            // 
+            this.backup_locationsTableAdapter.ClearBeforeFill = true;
+            // 
+            // gbCompressed
+            // 
+            this.gbCompressed.Controls.Add(this.lPassHelp);
+            this.gbCompressed.Controls.Add(this.tbConfirmPass);
+            this.gbCompressed.Controls.Add(this.tbPass);
+            this.gbCompressed.Controls.Add(this.lConfirmPass);
+            this.gbCompressed.Controls.Add(this.lPass);
+            this.gbCompressed.Controls.Add(this.cbEncryptedFile);
+            this.gbCompressed.Enabled = false;
+            this.gbCompressed.Location = new System.Drawing.Point(15, 405);
+            this.gbCompressed.Name = "gbCompressed";
+            this.gbCompressed.Size = new System.Drawing.Size(683, 157);
+            this.gbCompressed.TabIndex = 12;
+            this.gbCompressed.TabStop = false;
+            this.gbCompressed.Text = "Compressed file";
+            // 
+            // lPassHelp
+            // 
+            this.lPassHelp.AutoSize = true;
+            this.lPassHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.lPassHelp.ForeColor = System.Drawing.Color.Red;
+            this.lPassHelp.Location = new System.Drawing.Point(124, 122);
+            this.lPassHelp.Name = "lPassHelp";
+            this.lPassHelp.Size = new System.Drawing.Size(145, 13);
+            this.lPassHelp.TabIndex = 11;
+            this.lPassHelp.Text = "Passwords do not match";
+            this.lPassHelp.Visible = false;
             // 
             // tbConfirmPass
             // 
@@ -389,6 +386,7 @@
             this.tbConfirmPass.PasswordChar = '*';
             this.tbConfirmPass.Size = new System.Drawing.Size(172, 21);
             this.tbConfirmPass.TabIndex = 10;
+            this.tbConfirmPass.Leave += new System.EventHandler(this.tbConfirmPass_Leave);
             // 
             // tbPass
             // 
@@ -399,25 +397,47 @@
             this.tbPass.Size = new System.Drawing.Size(172, 21);
             this.tbPass.TabIndex = 9;
             // 
-            // lbConfirmPass
+            // lConfirmPass
             // 
-            this.lbConfirmPass.AutoSize = true;
-            this.lbConfirmPass.Location = new System.Drawing.Point(29, 92);
-            this.lbConfirmPass.Name = "lbConfirmPass";
-            this.lbConfirmPass.Size = new System.Drawing.Size(93, 13);
-            this.lbConfirmPass.TabIndex = 8;
-            this.lbConfirmPass.Text = "Confirm password:";
+            this.lConfirmPass.AutoSize = true;
+            this.lConfirmPass.Location = new System.Drawing.Point(29, 92);
+            this.lConfirmPass.Name = "lConfirmPass";
+            this.lConfirmPass.Size = new System.Drawing.Size(93, 13);
+            this.lConfirmPass.TabIndex = 8;
+            this.lConfirmPass.Text = "Confirm password:";
             // 
-            // lbPass
+            // lPass
             // 
-            this.lbPass.AutoSize = true;
-            this.lbPass.Location = new System.Drawing.Point(66, 55);
-            this.lbPass.Name = "lbPass";
-            this.lbPass.Size = new System.Drawing.Size(56, 13);
-            this.lbPass.TabIndex = 7;
-            this.lbPass.Text = "Password:";
+            this.lPass.AutoSize = true;
+            this.lPass.Location = new System.Drawing.Point(66, 55);
+            this.lPass.Name = "lPass";
+            this.lPass.Size = new System.Drawing.Size(56, 13);
+            this.lPass.TabIndex = 7;
+            this.lPass.Text = "Password:";
             // 
-            // SQLImport
+            // cbEncryptedFile
+            // 
+            this.cbEncryptedFile.AutoSize = true;
+            this.cbEncryptedFile.Location = new System.Drawing.Point(11, 20);
+            this.cbEncryptedFile.Name = "cbEncryptedFile";
+            this.cbEncryptedFile.Size = new System.Drawing.Size(102, 17);
+            this.cbEncryptedFile.TabIndex = 0;
+            this.cbEncryptedFile.Text = "File is encrypted";
+            this.cbEncryptedFile.UseVisualStyleBackColor = true;
+            this.cbEncryptedFile.CheckedChanged += new System.EventHandler(this.cbEncryptedFile_CheckedChanged);
+            // 
+            // cbShowSysDb
+            // 
+            this.cbShowSysDb.AutoSize = true;
+            this.cbShowSysDb.Location = new System.Drawing.Point(372, 88);
+            this.cbShowSysDb.Name = "cbShowSysDb";
+            this.cbShowSysDb.Size = new System.Drawing.Size(140, 17);
+            this.cbShowSysDb.TabIndex = 7;
+            this.cbShowSysDb.Text = "Show system databases";
+            this.cbShowSysDb.UseVisualStyleBackColor = true;
+            this.cbShowSysDb.CheckedChanged += new System.EventHandler(this.cbShowSysDb_CheckedChanged);
+            // 
+            // ImportSQL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -429,15 +449,15 @@
             this.Controls.Add(this.gbDatabase);
             this.Controls.Add(this.lStatus);
             this.Controls.Add(this.pbMainProgress);
-            this.Name = "SQLImport";
+            this.Name = "ImportSQL";
             this.Text = "SQLImport";
             this.Load += new System.EventHandler(this.SQLImport_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).EndInit();
             this.gbDatabase.ResumeLayout(false);
             this.gbDatabase.PerformLayout();
             this.gbFile.ResumeLayout(false);
             this.gbFile.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backuplocationsBindingSource)).EndInit();
             this.gbCompressed.ResumeLayout(false);
             this.gbCompressed.PerformLayout();
@@ -480,10 +500,11 @@
         private System.Windows.Forms.GroupBox gbCompressed;
         private System.Windows.Forms.Label linfo;
         private System.Windows.Forms.CheckBox cbEncryptedFile;
-        private System.Windows.Forms.Label lbPassHelp;
+        private System.Windows.Forms.Label lPassHelp;
         private System.Windows.Forms.TextBox tbConfirmPass;
         private System.Windows.Forms.TextBox tbPass;
-        private System.Windows.Forms.Label lbConfirmPass;
-        private System.Windows.Forms.Label lbPass;
+        private System.Windows.Forms.Label lConfirmPass;
+        private System.Windows.Forms.Label lPass;
+        private System.Windows.Forms.CheckBox cbShowSysDb;
     }
 }
