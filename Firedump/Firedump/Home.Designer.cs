@@ -43,6 +43,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miConfiguration = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bStartDump = new System.Windows.Forms.Button();
             this.pbDumpExec = new System.Windows.Forms.ProgressBar();
@@ -52,8 +54,7 @@
             this.lStatus = new System.Windows.Forms.Label();
             this.bcancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importSQLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btEditServer = new System.Windows.Forms.Button();
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -63,7 +64,7 @@
             // 
             this.bAddServer.Location = new System.Drawing.Point(6, 36);
             this.bAddServer.Name = "bAddServer";
-            this.bAddServer.Size = new System.Drawing.Size(124, 23);
+            this.bAddServer.Size = new System.Drawing.Size(101, 23);
             this.bAddServer.TabIndex = 0;
             this.bAddServer.TabStop = false;
             this.bAddServer.Text = "Add New Server";
@@ -82,6 +83,7 @@
             // 
             // gbConnection
             // 
+            this.gbConnection.Controls.Add(this.btEditServer);
             this.gbConnection.Controls.Add(this.cbShowSysDB);
             this.gbConnection.Controls.Add(this.tvDatabases);
             this.gbConnection.Controls.Add(this.bDelete);
@@ -118,9 +120,10 @@
             // 
             // bDelete
             // 
-            this.bDelete.Location = new System.Drawing.Point(148, 36);
+            this.bDelete.ForeColor = System.Drawing.Color.Red;
+            this.bDelete.Location = new System.Drawing.Point(190, 36);
             this.bDelete.Name = "bDelete";
-            this.bDelete.Size = new System.Drawing.Size(131, 23);
+            this.bDelete.Size = new System.Drawing.Size(89, 23);
             this.bDelete.TabIndex = 3;
             this.bDelete.Text = "Delete Server";
             this.bDelete.UseVisualStyleBackColor = true;
@@ -210,6 +213,21 @@
             this.miConfiguration.Text = "Configuration...";
             this.miConfiguration.Click += new System.EventHandler(this.miConfiguration_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importSQLFileToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // importSQLFileToolStripMenuItem
+            // 
+            this.importSQLFileToolStripMenuItem.Name = "importSQLFileToolStripMenuItem";
+            this.importSQLFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.importSQLFileToolStripMenuItem.Text = "Import SQL file...";
+            this.importSQLFileToolStripMenuItem.Click += new System.EventHandler(this.importSQLFileToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -284,20 +302,15 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "<-right click on database";
             // 
-            // toolsToolStripMenuItem
+            // btEditServer
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importSQLFileToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // importSQLFileToolStripMenuItem
-            // 
-            this.importSQLFileToolStripMenuItem.Name = "importSQLFileToolStripMenuItem";
-            this.importSQLFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.importSQLFileToolStripMenuItem.Text = "Import SQL file...";
-            this.importSQLFileToolStripMenuItem.Click += new System.EventHandler(this.importSQLFileToolStripMenuItem_Click);
+            this.btEditServer.Location = new System.Drawing.Point(109, 36);
+            this.btEditServer.Name = "btEditServer";
+            this.btEditServer.Size = new System.Drawing.Size(75, 23);
+            this.btEditServer.TabIndex = 6;
+            this.btEditServer.Text = "Edit Server";
+            this.btEditServer.UseVisualStyleBackColor = true;
+            this.btEditServer.Click += new System.EventHandler(this.btEditServer_Click);
             // 
             // Home
             // 
@@ -356,5 +369,6 @@
         private System.Windows.Forms.Button bDeleteSaveLocation;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importSQLFileToolStripMenuItem;
+        private System.Windows.Forms.Button btEditServer;
     }
 }

@@ -13,12 +13,31 @@ namespace Firedump.Forms.mysql
 {
     public partial class NewMySQLServer : Form
     {
-        DbConnection con = new DbConnection();
-        Home listener;
+        private DbConnection con = new DbConnection();
+        private Home listener;
+        private bool isUpdate = false;
+        private firedumpdbDataSet.mysql_serversRow mysqlserver; 
+
         public NewMySQLServer()
         {
-            InitializeComponent();            
+            InitializeComponent();           
         }
+
+        public NewMySQLServer(bool update,firedumpdbDataSet.mysql_serversRow server)
+        {
+            InitializeComponent();
+            bSave.Text = "Update";
+            this.isUpdate = update;
+            this.mysqlserver = server;
+            tbName.Text = server.name;
+            tbHost.Text = server.host;
+            if (server.port != 0)
+                tbPort.Text = server.port.ToString();
+            tbUsername.Text = server.username;
+            tbPassword.Text = server.password;
+            tbDatabase.Text = server.database;
+        }
+
         public NewMySQLServer(Home listener)
         {
             InitializeComponent();
@@ -99,6 +118,7 @@ namespace Firedump.Forms.mysql
 
             return true;
         }
+        
 
         private void bSave_Click(object sender, EventArgs e)
         {
@@ -115,7 +135,11 @@ namespace Firedump.Forms.mysql
                     return;
                 }
 
-                adapter.Insert(tbName.Text, con.port, con.Host, con.username, tbPassword.Text); //prepei na bei kai database
+                if (isUpdate)
+                    adapter.UpdateMySqlServerById(tbName.Text,con.port,con.Host,con.username,con.password,tbDatabase.Text, mysqlserver.id);
+                else
+                    adapter.Insert(tbName.Text, con.port, con.Host, con.username, tbPassword.Text, tbDatabase.Text); //prepei na bei kai database
+                
                 if (listener != null)
                 {
                     listener.reloadServerData();
@@ -123,7 +147,15 @@ namespace Firedump.Forms.mysql
                 this.Close();
                 return;
             }
+
             MessageBox.Show("Name "+tbName.Text+ " already exists", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            tbUsername.Text = "";
+            tbPassword.Text = "";
+            tbHost.Text = "";
+            tbName.Text = "";
+            tbDatabase.Text = "";
+            isUpdate = false;
         }
 
         private void bCancel_Click(object sender, EventArgs e)

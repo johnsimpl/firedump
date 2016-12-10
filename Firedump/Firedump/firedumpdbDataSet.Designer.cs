@@ -1629,14 +1629,18 @@ namespace Firedump {
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
                 this.columnname.AllowDBNull = false;
+                this.columnname.DefaultValue = ((string)(""));
                 this.columnname.MaxLength = 80;
                 this.columnport.AllowDBNull = false;
+                this.columnport.DefaultValue = ((long)(0));
                 this.columnhost.AllowDBNull = false;
                 this.columnhost.MaxLength = 2147483647;
                 this.columnusername.AllowDBNull = false;
                 this.columnusername.MaxLength = 45;
                 this.columnpassword.AllowDBNull = false;
+                this.columnpassword.DefaultValue = ((string)(""));
                 this.columnpassword.MaxLength = 45;
+                this.columndatabase.DefaultValue = ((string)(""));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6473,13 +6477,11 @@ WHERE        (id = @Original_id)";
             tableMapping.ColumnMappings.Add("host", "host");
             tableMapping.ColumnMappings.Add("username", "username");
             tableMapping.ColumnMappings.Add("password", "password");
+            tableMapping.ColumnMappings.Add("database", "database");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [main].[sqlite_default_schema].[mysql_servers] WHERE (([id] = @Origin" +
-                "al_id) AND ([name] = @Original_name) AND ([port] = @Original_port) AND ([host] =" +
-                " @Original_host) AND ([username] = @Original_username) AND ([password] = @Origin" +
-                "al_password))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [main].[sqlite_default_schema].[mysql_servers] WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([port] = @Original_port) AND ([host] = @Original_host) AND ([username] = @Original_username) AND ([password] = @Original_password) AND ((@IsNull_database = 1 AND [database] IS NULL) OR ([database] = @Original_database)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::System.Data.SQLite.SQLiteParameter param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
@@ -6522,10 +6524,25 @@ WHERE        (id = @Original_id)";
             param.SourceColumn = "password";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_database";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "database";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_database";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "database";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [main].[sqlite_default_schema].[mysql_servers] ([name], [port], [host" +
-                "], [username], [password]) VALUES (@name, @port, @host, @username, @password)";
+                "], [username], [password], [database]) VALUES (@name, @port, @host, @username, @" +
+                "password, @database)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -6556,9 +6573,14 @@ WHERE        (id = @Original_id)";
             param.DbType = global::System.Data.DbType.AnsiString;
             param.SourceColumn = "password";
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@database";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "database";
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::System.Data.SQLite.SQLiteCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [main].[sqlite_default_schema].[mysql_servers] SET [name] = @name, [port] = @port, [host] = @host, [username] = @username, [password] = @password WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([port] = @Original_port) AND ([host] = @Original_host) AND ([username] = @Original_username) AND ([password] = @Original_password))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [main].[sqlite_default_schema].[mysql_servers] SET [name] = @name, [port] = @port, [host] = @host, [username] = @username, [password] = @password, [database] = @database WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([port] = @Original_port) AND ([host] = @Original_host) AND ([username] = @Original_username) AND ([password] = @Original_password) AND ((@IsNull_database = 1 AND [database] IS NULL) OR ([database] = @Original_database)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -6588,6 +6610,11 @@ WHERE        (id = @Original_id)";
             param.DbType = global::System.Data.DbType.AnsiString;
             param.DbType = global::System.Data.DbType.AnsiString;
             param.SourceColumn = "password";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@database";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "database";
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@Original_id";
@@ -6630,6 +6657,20 @@ WHERE        (id = @Original_id)";
             param.SourceColumn = "password";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@IsNull_database";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.SourceColumn = "database";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@Original_database";
+            param.DbType = global::System.Data.DbType.String;
+            param.SourceColumn = "database";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6642,10 +6683,10 @@ WHERE        (id = @Original_id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[3];
+            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[4];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, name, port, host, username, password FROM mysql_servers";
+            this._commandCollection[0].CommandText = "SELECT        mysql_servers.*\r\nFROM            mysql_servers";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -6670,6 +6711,57 @@ WHERE        (id = @Original_id)";
             param.Size = 80;
             param.SourceColumn = "name";
             this._commandCollection[2].Parameters.Add(param);
+            this._commandCollection[3] = new global::System.Data.SQLite.SQLiteCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "UPDATE       mysql_servers\r\nSET                name =@name, port =@port, host =@h" +
+                "ost, username =@username, password =@password, [database] =@database\r\nWHERE id =" +
+                " @id";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@name";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 80;
+            param.SourceColumn = "name";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@port";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
+            param.SourceColumn = "port";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@host";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
+            param.SourceColumn = "host";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@username";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 45;
+            param.SourceColumn = "username";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@password";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 45;
+            param.SourceColumn = "password";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@database";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 2147483647;
+            param.SourceColumn = "database";
+            this._commandCollection[3].Parameters.Add(param);
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@id";
+            param.DbType = global::System.Data.DbType.Int64;
+            param.DbType = global::System.Data.DbType.Int64;
+            param.Size = 8;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._commandCollection[3].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6729,7 +6821,7 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(long Original_id, string Original_name, long Original_port, string Original_host, string Original_username, string Original_password) {
+        public virtual int Delete(long Original_id, string Original_name, long Original_port, string Original_host, string Original_username, string Original_password, string Original_database) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((long)(Original_id));
             if ((Original_name == null)) {
                 throw new global::System.ArgumentNullException("Original_name");
@@ -6756,6 +6848,14 @@ WHERE        (id = @Original_id)";
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_password));
             }
+            if ((Original_database == null)) {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_database));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6776,7 +6876,7 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string name, long port, string host, string username, string password) {
+        public virtual int Insert(string name, long port, string host, string username, string password, string database) {
             if ((name == null)) {
                 throw new global::System.ArgumentNullException("name");
             }
@@ -6802,6 +6902,12 @@ WHERE        (id = @Original_id)";
             else {
                 this.Adapter.InsertCommand.Parameters[4].Value = ((string)(password));
             }
+            if ((database == null)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(database));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6822,7 +6928,7 @@ WHERE        (id = @Original_id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string name, long port, string host, string username, string password, long Original_id, string Original_name, long Original_port, string Original_host, string Original_username, string Original_password) {
+        public virtual int Update(string name, long port, string host, string username, string password, string database, long Original_id, string Original_name, long Original_port, string Original_host, string Original_username, string Original_password, string Original_database) {
             if ((name == null)) {
                 throw new global::System.ArgumentNullException("name");
             }
@@ -6848,31 +6954,45 @@ WHERE        (id = @Original_id)";
             else {
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(password));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((long)(Original_id));
+            if ((database == null)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(database));
+            }
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((long)(Original_id));
             if ((Original_name == null)) {
                 throw new global::System.ArgumentNullException("Original_name");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_name));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_name));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((long)(Original_port));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((long)(Original_port));
             if ((Original_host == null)) {
                 throw new global::System.ArgumentNullException("Original_host");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_host));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_host));
             }
             if ((Original_username == null)) {
                 throw new global::System.ArgumentNullException("Original_username");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_username));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_username));
             }
             if ((Original_password == null)) {
                 throw new global::System.ArgumentNullException("Original_password");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_password));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_password));
+            }
+            if ((Original_database == null)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_database));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -6946,6 +7066,61 @@ WHERE        (id = @Original_id)";
             else {
                 return ((object)(returnValue));
             }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int UpdateMySqlServerById(string name, long port, string host, string username, string password, string database, long id) {
+            global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[3];
+            if ((name == null)) {
+                throw new global::System.ArgumentNullException("name");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(name));
+            }
+            command.Parameters[1].Value = ((long)(port));
+            if ((host == null)) {
+                throw new global::System.ArgumentNullException("host");
+            }
+            else {
+                command.Parameters[2].Value = ((string)(host));
+            }
+            if ((username == null)) {
+                throw new global::System.ArgumentNullException("username");
+            }
+            else {
+                command.Parameters[3].Value = ((string)(username));
+            }
+            if ((password == null)) {
+                throw new global::System.ArgumentNullException("password");
+            }
+            else {
+                command.Parameters[4].Value = ((string)(password));
+            }
+            if ((database == null)) {
+                command.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[5].Value = ((string)(database));
+            }
+            command.Parameters[6].Value = ((long)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
         }
     }
     

@@ -516,6 +516,15 @@ namespace Firedump
             }
         }
 
+        private void btEditServer_Click(object sender, EventArgs e)
+        {
+            if (cmbServers.Items.Count > 0 && cmbServers.SelectedIndex >= 0)
+            {
+                firedumpdbDataSet.mysql_serversRow server = ((firedumpdbDataSet.mysql_serversDataTable)cmbServers.DataSource).ElementAt(cmbServers.SelectedIndex);
+                NewMySQLServer newServer = new NewMySQLServer(true, server);
+                newServer.Show();
+            }
+        }
 
         //
         //-------------------------------------------------------------------------
@@ -794,9 +803,7 @@ namespace Firedump
             importinstance.Show();
         }
 
-
-
-
+        
         //-----------------------------------------------------------------------
         //------------END INTERFACE METHODS--------------------------------------
         //

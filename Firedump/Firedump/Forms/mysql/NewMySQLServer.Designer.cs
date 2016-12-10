@@ -111,6 +111,7 @@
             this.tbPort.Name = "tbPort";
             this.tbPort.Size = new System.Drawing.Size(47, 20);
             this.tbPort.TabIndex = 7;
+            this.tbPort.Text = "3306";
             // 
             // bTestConnection
             // 
