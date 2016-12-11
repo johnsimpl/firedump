@@ -164,7 +164,9 @@
     <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
     <Compile Include="models\sqlimport\IImportAdapterListener.cs" />
+    <Compile Include="models\sqlimport\IImportAdapterManagerListener.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
+    <Compile Include="models\sqlimport\ImportAdapterManager.cs" />
     <Compile Include="models\sqlimport\ImportResultSet.cs" />
     <Compile Include="models\sqlimport\ISQLImportListener.cs" />
     <Compile Include="models\sqlimport\SQLImport.cs" />

@@ -1,4 +1,7 @@
-﻿using Firedump.models.databaseUtils;
+﻿using Firedump.Forms.location;
+using Firedump.models.configuration.dynamicconfig;
+using Firedump.models.databaseUtils;
+using Firedump.models.sqlimport;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,10 +14,16 @@ using System.Windows.Forms;
 
 namespace Firedump.Forms.sqlimport
 {
-    public partial class ImportSQL : Form
+    public partial class ImportSQL : Form,IImportAdapterManagerListener
     {
         private Task<List<string>> reloadDatabasesTask;
         private List<string> databases = new List<string>();
+        private DataRow location;
+        private ImportAdapterManager adapter;
+        private bool isLocal;
+        private bool isCompressed;
+        private bool isEncrypted;
+        private TextBox tb = new TextBox();
         public ImportSQL()
         {
             InitializeComponent();
@@ -37,25 +46,146 @@ namespace Firedump.Forms.sqlimport
         private bool performChecks()
         {
             //checks before import here
+            tb = tbFilePathFs;
+            if(string.IsNullOrWhiteSpace(tbFilePathFs.Text) && string.IsNullOrWhiteSpace(tbFilePathSv.Text))
+            {
+                MessageBox.Show("No file selected", "Import SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(tbFilePathFs.Text))
+            {
+                tb = tbFilePathSv;
+            }
+            else if (string.IsNullOrWhiteSpace(tbFilePathSv.Text))
+            {
+                tb = tbFilePathFs;
+            }
+            else
+            {
+                MessageBox.Show("Both paths are set", "Import SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!(tb.Text.EndsWith(".sql")|| tb.Text.EndsWith(".7z") || tb.Text.EndsWith(".rar") || tb.Text.EndsWith(".gzip") || tb.Text.EndsWith(".zip") || tb.Text.EndsWith(".bzip2") || tb.Text.EndsWith(".tar") || tb.Text.EndsWith(".iso") || tb.Text.EndsWith(".udf")))
+            {
+                MessageBox.Show("File must end with one of these extensions:\n.sql .7z .rar .gzip .zip .bzip2 .tar .iso .udf", "Import SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (gbCompressed.Enabled)
+            {
+                if (cbEncryptedFile.Checked)
+                {
+                    isEncrypted = true;
+                    if (string.IsNullOrWhiteSpace(tbPass.Text))
+                    {
+                        MessageBox.Show("Encyption is enabled and password field is empty or consists of only spaces", "Import SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    if(tbPass.Text != tbConfirmPass.Text)
+                    {
+                        MessageBox.Show("Encyption is enabled and passwords do not match", "Import SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+                isEncrypted = cbEncryptedFile.Checked;
+            }
+            else
+            {
+                isEncrypted = false;
+            }
             return true;
         }
 
         private void bChoosePathSv_Click(object sender, EventArgs e)
         {
-            //EDW THA TRAVAEI TO ARXEIO APO OPOIODHPOTE LOCATION
+            if (cmbDatabases.Items.Count == 0) { MessageBox.Show("No save locations available.","File browser",MessageBoxButtons.OK,MessageBoxIcon.Error); return; }
+            try
+            {
+                DataRow row = firedumpdbDataSet.backup_locations.Rows[cmbSaveLocations.SelectedIndex];
+                long type = (Int64)row["service_type"];
+                location = row;
+                switch (type)
+                {
+                    case 0: //local
+                        pathChooser(tbFilePathFs, tbFilePathSv);
+                        break;
+                    case 1: //ftp
+                        FTPCredentialsConfig config = new FTPCredentialsConfig();
+                        ((FTPCredentialsConfig)config).id = (Int64)row["id"];
+                        ((FTPCredentialsConfig)config).host = (string)row["host"];
+                        config.port = unchecked((int)(Int64)row["port"]);
+                        config.username = (string)row["username"];
+                        config.password = (string)row["password"];
+                        Int64 useSFTP = (Int64)row["usesftp"];
+                        if (useSFTP == 1)
+                        {
+                            ((FTPCredentialsConfig)config).useSFTP = true;
+                            ((FTPCredentialsConfig)config).SshHostKeyFingerprint = (string)row["ssh_key_fingerprint"];
+                        }
+                        string keypath = (string)row["ssh_key"];
+                        if (!string.IsNullOrEmpty(keypath))
+                        {
+                            ((FTPCredentialsConfig)config).usePrivateKey = true;
+                            ((FTPCredentialsConfig)config).privateKeyPath = keypath;
+                        }
+                        FTPDirectory ftpdir = new FTPDirectory(false, config);
+                        DialogResult res = ftpdir.ShowDialog();
+                        if(res == DialogResult.OK)
+                        {
+                            tbFilePathFs.Text = "";
+                            tbFilePathSv.Text = ftpdir.path;
+                            isLocal = false;
+                            checkCompressed(tbFilePathSv);
+                        }
+                                           
+                        break; //set to is local kai check compressed mi ksexastoun apo katw
+                    case 2: //dropbox
+                        break;
+                    case 3: //google drive
+                        break;
+                    default:
+                        MessageBox.Show("Unknown save location type", "File browser", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error occured:\n"+ex.Message, "File browser", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void checkCompressed(TextBox settb)
+        {
+            if (settb.Text.EndsWith(".7z")||settb.Text.EndsWith(".rar") || settb.Text.EndsWith(".gzip") || settb.Text.EndsWith(".zip") || settb.Text.EndsWith(".bzip2") || settb.Text.EndsWith(".tar") || settb.Text.EndsWith(".iso") || settb.Text.EndsWith(".udf"))
+            {
+                gbCompressed.Enabled = true;
+                isCompressed = true;
+            }
+            else
+            {
+                gbCompressed.Enabled = false;
+            }
+        }
+
+        private void pathChooser(TextBox clearedtb, TextBox settb)
+        {
+            OpenFileDialog ofd = new OpenFileDialog(); //.sql .7z .rar .gzip .zip .bzip2 .tar .iso .udf
+            ofd.Filter = "All allowed types|*.sql;*.7z;*.rar;*.gzip;*.zip;*.bzip2;*.tar;*.iso;*.udf|" +
+                "SQL files|*.sql|7z files|*.7z|Rar files|*.rar|Gzip files|*.gzip|Zip files|*.zip|Bzip2 files|*.bzip2|Tar files|*.tar|Iso files|*.iso|Udf files|*.udf";
+            DialogResult res = ofd.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                clearedtb.Text = "";
+                settb.Text = ofd.FileName;
+                isLocal = true;
+                checkCompressed(settb);
+            }        
         }
 
         private void bChoosePathFs_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog(); //.sql .7z .rar .gzip .zip .bzip2 .tar .iso .udf
-            ofd.Filter = "All allowed types|*.sql;*.7z;*.rar;*.gzip;*.zip;*.bzip2;*.tar;*.iso;*.udf|"+
-                "SQL files|*.sql|7z files|*.7z|Rar files|*.rar|Gzip files|*.gzip|Zip files|*.zip|Bzip2 files|*.bzip2|Tar files|*.tar|Iso files|*.iso|Udf files|*.udf";
-            DialogResult res = ofd.ShowDialog();
-            if(res == DialogResult.OK)
-            {
-                tbFilePathSv.Text = "";
-                tbFilePathFs.Text = ofd.FileName;
-            }
+            pathChooser(tbFilePathSv,tbFilePathFs);
         }
 
         private void cbEncryptedFile_CheckedChanged(object sender, EventArgs e)
@@ -161,16 +291,49 @@ namespace Firedump.Forms.sqlimport
         private void bStartImport_Click(object sender, EventArgs e)
         {
             if (!performChecks()) return;
+
+            bStartImport.Enabled = false;
+
+            adapter = new ImportAdapterManager(this,tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location);
+            adapter.startImport();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
-
+            if (adapter != null)
+            {
+                adapter.cancel();
+            }
         }
 
         private void cbShowSysDb_CheckedChanged(object sender, EventArgs e)
         {
             cmbServers_SelectedIndexChanged(null,null);
+        }
+
+        public void onInnerProccessInit(int proc_type, int maxprogress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onImportInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onImportComplete(ImportResultSet result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onImportProgress(int progress, int speed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onImportError(string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }
