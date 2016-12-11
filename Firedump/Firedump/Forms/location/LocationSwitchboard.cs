@@ -60,8 +60,7 @@ namespace Firedump.Forms.location
         {
             // TODO: This line of code loads data into the 'firedumpdbDataSet.backup_locations' table. You can move, or remove it, as needed.
             this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
-            // TODO: This line of code loads data into the 'firedumpdbDataSet.backup_locations' table. You can move, or remove it, as needed.
-            this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+            
             if (cmbName.Items.Count != 0)
             {
                 cmbName.SelectedIndex = 0;

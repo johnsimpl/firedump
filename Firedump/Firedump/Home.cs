@@ -42,17 +42,7 @@ namespace Firedump
             }            
             return genConfig;
         }
-
-        private static NewMySQLServer newMysqlServer;
-        private NewMySQLServer getNewMysqlServerInstance()
-        {
-            if (newMysqlServer == null)
-            {
-                newMysqlServer = new NewMySQLServer(this);
-            }
-            return newMysqlServer;
-        }
-
+        
         public Home()
         {
             InitializeComponent();       
@@ -87,15 +77,8 @@ namespace Firedump
 
         private void bAddServer_Click(object sender, EventArgs e)
         {
-            try
-            {
-                getNewMysqlServerInstance().ShowDialog();
-            }
-            catch (ObjectDisposedException ex)
-            {
-                newMysqlServer = new NewMySQLServer(this);
-                bAddServer_Click(null, null);
-            }
+            NewMySQLServer newMysqlServer = new NewMySQLServer(this);
+            newMysqlServer.ShowDialog();
         }
 
         public void reloadServerData()
@@ -906,7 +889,7 @@ namespace Firedump
                 {
                     dataGridView1.Invoke((MethodInvoker)delegate ()
                     {
-                        dataGridView1.Rows[i].Cells[1].Value = progress+"%";
+                        dataGridView1.Rows[i].Cells[1].Value = progress+"% ";
                     });                    
                     break;
                 }
