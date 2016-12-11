@@ -385,5 +385,7 @@ namespace Firedump.Forms.location
                 MessageBox.Show("Connection failed:\n"+result.errorMessage, "FTP test connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        
     }
 }

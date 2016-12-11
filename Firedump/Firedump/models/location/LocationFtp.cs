@@ -44,7 +44,7 @@ namespace Firedump.models.location
 
         public void onProgress(int progress, int speed) //den xrisimopoiw to speed
         {
-            listener.setProgress(progress, speed);
+            listener.setProgress(progress, speed);          
         }
     }
 }

@@ -146,6 +146,8 @@ namespace Firedump.models.location
         public void setSaveProgress(int progress, int speed)
         {
             listener.setSaveProgress(currentProgress+progress, speed);
+            //for the current location upload
+            listener.onLocationProgress(progress,speed);
         }
 
         public void onTestConnectionComplete(LocationConnectionResultSet result)
@@ -172,5 +174,7 @@ namespace Firedump.models.location
         {
             return adapter.isLocationRunning(row.id);
         }
+
+        
     }
 }

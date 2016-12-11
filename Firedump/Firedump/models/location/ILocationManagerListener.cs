@@ -13,5 +13,6 @@ namespace Firedump.models.location
         void onSaveComplete(List<LocationResultSet> results);
         void onSaveError(string message);
         void onInnerSaveInit(string location_name, int location_type);
+        void onLocationProgress(int progress,int speed);
     }
 }

@@ -739,7 +739,7 @@ namespace Firedump
                 ltable.Text = printedspeed+" "+speedlabelext;
             });
 
-            updateGridView(progress,printedspeed,speedlabelext);
+            
         }
 
        
@@ -829,17 +829,22 @@ namespace Firedump
                 lStatus.Text = "Saving to: "+location_name + " ("+location+")";
             });
         }
+        
 
-        private void importSQLFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void onLocationProgress(int progress,int speed)
         {
-            ImportSQL importinstance = new ImportSQL();
-            importinstance.Show();
+            updateGridView(progress);
         }
 
         //-----------------------------------------------------------------------
         //------------END INTERFACE METHODS--------------------------------------
         //
 
+        private void importSQLFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportSQL importinstance = new ImportSQL();
+            importinstance.Show();
+        }
 
 
         /// <summary>
@@ -892,7 +897,7 @@ namespace Firedump
             
         }
 
-        private void updateGridView(int progress,string printedspeed, string speedlabelext)
+        private void updateGridView(int progress)
         {
             for(int i =0; i < dataGridView1.RowCount; i++)
             {
@@ -901,12 +906,13 @@ namespace Firedump
                 {
                     dataGridView1.Invoke((MethodInvoker)delegate ()
                     {
-                        dataGridView1.Rows[i].Cells[1].Value = progress+"% " + printedspeed + ":" + speedlabelext;
+                        dataGridView1.Rows[i].Cells[1].Value = progress+"%";
                     });                    
                     break;
                 }
             }
         }
 
+       
     }
 }

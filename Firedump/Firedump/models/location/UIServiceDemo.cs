@@ -78,6 +78,11 @@ namespace Firedump.models.location
             Console.WriteLine("Inner save init: "+location);
         }
 
+        public void onLocationProgress(int progress,int speed)
+        {
+            throw new NotImplementedException();
+        }
+
         public void onProgress(int progress, int speed)
         {
             Console.WriteLine(progress + " " + speed);

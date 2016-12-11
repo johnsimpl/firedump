@@ -16,5 +16,6 @@ namespace Firedump.models.location
         /// </summary>
         void onSaveError(string message);
         void onTestConnectionComplete(LocationConnectionResultSet result);
+
     }
 }
