@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Firedump.Forms.sqlimport
 {
-    public partial class ImportSQL : Form,IImportAdapterManagerListener
+    public partial class ImportSQL : Form
     {
         private Task<List<string>> reloadDatabasesTask;
         private List<string> databases = new List<string>();
@@ -294,7 +294,8 @@ namespace Firedump.Forms.sqlimport
 
             bStartImport.Enabled = false;
 
-            adapter = new ImportAdapterManager(this,tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location);
+            adapter = new ImportAdapterManager(tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location);
+            //edw handle ta events
             adapter.startImport();
         }
 
@@ -311,27 +312,27 @@ namespace Firedump.Forms.sqlimport
             cmbServers_SelectedIndexChanged(null,null);
         }
 
-        public void onInnerProccessInit(int proc_type, int maxprogress)
+        private void onInnerProccessInitHandler(int proc_type, int maxprogress)
         {
             throw new NotImplementedException();
         }
 
-        public void onImportInit()
+        private void onImportInitHandler()
         {
             throw new NotImplementedException();
         }
 
-        public void onImportComplete(ImportResultSet result)
+        private void onImportCompleteHandler(ImportResultSet result)
         {
             throw new NotImplementedException();
         }
 
-        public void onImportProgress(int progress, int speed)
+        private void onImportProgressHandler(int progress, int speed)
         {
             throw new NotImplementedException();
         }
 
-        public void onImportError(string message)
+        private void onImportErrorHandler(string message)
         {
             throw new NotImplementedException();
         }

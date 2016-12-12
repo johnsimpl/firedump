@@ -10,9 +10,83 @@ using Firedump.models.databaseUtils;
 
 namespace Firedump.models.dump
 {
-    public class MySqlDumpAdapter : IAdapterListener
+    public class MySqlDumpAdapter
     {
-        private IDumpProgressListener listener;
+        //<events>
+
+        //onProgress
+        public delegate void progress(string progress);
+        public event progress Progress;
+        private void onProgress(string progress)
+        {
+            Progress?.Invoke(progress);
+        }
+
+        //onError
+        public delegate void error(int error);
+        public event error Error;
+        private void onError(int error)
+        {
+            Error?.Invoke(error);
+        }
+
+        //
+        public delegate void cancelled();
+        public event cancelled Cancelled;
+        private void onCancelled()
+        {
+            Cancelled?.Invoke();
+        }
+
+        //onCompleted
+        public delegate void completed(DumpResultSet status);
+        public event completed Completed;
+        private void onCompleted(DumpResultSet status)
+        {
+            Completed?.Invoke(status);
+        }
+
+        //onInitDumpTables
+        public delegate void initDumpTables(List<string> tables);
+        public event initDumpTables InitDumpTables;
+        private void onInitDumpTables(List<string> tables)
+        {
+            InitDumpTables?.Invoke(tables);
+        }
+
+        //onTableStartDump
+        public delegate void tableStartDump(string table);
+        public event tableStartDump TableStartDump;
+        private void onTableStartDump(string table)
+        {
+            TableStartDump?.Invoke(table);
+        }
+
+        //onCompressStart
+        public delegate void tableRowCount(int rowcount);
+        public event tableRowCount TableRowCount;
+        private void onTableRowCount(int rowcount)
+        {
+            TableRowCount?.Invoke(rowcount);
+        }
+
+        //onCompressProgress
+        public delegate void compressProgress(int progress);
+        public event compressProgress CompressProgress;
+        private void onCompressProgress(int progress)
+        {
+            CompressProgress?.Invoke(progress);
+        }
+
+        //onCompressStart
+        public delegate void compressStart();
+        public event compressStart CompressStart;
+        private void onCompressStart()
+        {
+            CompressStart?.Invoke();
+        }
+
+        //</events>
         private MysqlDump mydump;
         private DumpCredentialsConfig credentialsConfigInstance;
         private List<string> tableList;
@@ -29,10 +103,9 @@ namespace Firedump.models.dump
         /// <param name="listener">the listener interface for the notifications status of the whole job \n
         ///                       IDumpProgressListener to notify the user about the job status 
         /// </param>
-        public void startDump(DumpCredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
+        public void startDump(DumpCredentialsConfig credentialsConfigInstance)
         {
-            this.listener = listener;
-            listener.onProgress("mysql dump started!");//+options.getHost());
+            onProgress("mysql dump started!");//+options.getHost());
 
             this.credentialsConfigInstance = credentialsConfigInstance;
 
@@ -52,40 +125,43 @@ namespace Firedump.models.dump
         {
             Task<List<string>> testConnectionTask = testCon();
             List<string> tables = await testConnectionTask;
-            if(tables != null)
+            if (tables != null)
             {
-                if (listener != null)
-                {
-                    listener.onProgress("connected");
-                    listener.initDumpTables(tables);
-                }
 
-                mydump = new MysqlDump(this);
+                onProgress("connected");
+                onInitDumpTables(tables);
+
+
+                mydump = new MysqlDump();
                 mydump.credentialsConfigInstance = credentialsConfigInstance;
+                mydump.CompressProgress += onCompressProgressHandler;
+                mydump.CompressStart += onCompressStartHandler;
+                mydump.TableRowCount += onTableRowCountHandler;
+                mydump.TableStartDump += onTableStartDumpHandler;
 
                 Task<DumpResultSet> result = dumptask(mydump);
                 DumpResultSet dumpresult = null;
                 try
                 {
-                     dumpresult = await result;
-                } catch(NullReferenceException ex)
+                    dumpresult = await result;
+                }
+                catch (NullReferenceException ex)
                 {
 
                 }
-                
-                if (listener != null)
-                {
-                    listener.onCompleted(dumpresult);
-                }
+
+
+                onCompleted(dumpresult);
+
                 mydump = null;
-            } else
+            }
+            else
             {
-                if(listener != null)
-                {
-                    //we need enumaration classes for all kind of different erros
-                    //..We still need enumaration class for all kind of dif erros
-                    listener.onError(-1);
-                }
+
+                //we need enumaration classes for all kind of different erros
+                //..We still need enumaration class for all kind of dif erros
+                onError(-1);
+
                 mydump = null;
             }
             
@@ -137,37 +213,25 @@ namespace Firedump.models.dump
             return mydump.executeDump();
         }
 
-        
-        public void onTableStartDump(string table)
+
+        private void onTableStartDumpHandler(string table)
         {
-            if(listener != null)
-            {
-                listener.onTableDumpStart(table);
-            }
+            onTableStartDump(table);
         }
 
-        public void tableRowCount(int rowcount)
+        private void onTableRowCountHandler(int rowcount)
         {
-            if(listener != null)
-            {
-                listener.tableRowCount(rowcount);
-            }
+            onTableRowCount(rowcount);
         }
 
-        public void compressProgress(int progress)
+        private void onCompressProgressHandler(int progress)
         {
-            if(listener != null)
-            {
-                listener.compressProgress(progress);
-            }
+            onCompressProgress(progress);
         }
 
-        public void onCompressStart()
+        private void onCompressStartHandler()
         {
-            if(listener != null)
-            {
-                listener.onCompressStart();
-            }
+            onCompressStart();
         }
 
         internal void setTableList(List<string> tableList)

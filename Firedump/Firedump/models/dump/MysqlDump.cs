@@ -15,13 +15,48 @@ namespace Firedump.models.dump
 {
     public class MysqlDump
     {
+        //<events>
+
+        //onTableStartDump
+        public delegate void tableStartDump(string table);
+        public event tableStartDump TableStartDump;
+        private void onTableStartDump(string table)
+        {
+            TableStartDump?.Invoke(table);
+        }
+
+        //onCompressStart
+        public delegate void tableRowCount(int rowcount);
+        public event tableRowCount TableRowCount;
+        private void onTableRowCount(int rowcount)
+        {
+            TableRowCount?.Invoke(rowcount);
+        }
+
+        //onCompressProgress
+        public delegate void compressProgress(int progress);
+        public event compressProgress CompressProgress;
+        private void onCompressProgress(int progress)
+        {
+            CompressProgress?.Invoke(progress);
+        }
+
+        //onCompressStart
+        public delegate void compressStart();
+        public event compressStart CompressStart;
+        private void onCompressStart()
+        {
+            CompressStart?.Invoke();
+        }
+
+        //</events>
+
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         /// <summary>
         /// Create a new credentials instance and set it before executing mysqldump
         /// </summary>
         public DumpCredentialsConfig credentialsConfigInstance { set; get; }
 
-        private IAdapterListener listener;
         private Process proc;
         private Compression comp;
         private string tempTableName = "";
@@ -35,10 +70,7 @@ namespace Firedump.models.dump
         int insertReplace = ConfigurationManager.getInstance().mysqlDumpConfigInstance.exportType;
         bool xmlout = ConfigurationManager.getInstance().mysqlDumpConfigInstance.xml;
 
-        public MysqlDump(IAdapterListener listener)
-        {
-            this.listener = listener;
-        }
+        public MysqlDump() { }
 
         private StringBuilder calculateArguments()
         {
@@ -407,8 +439,10 @@ namespace Firedump.models.dump
                 //compression
                 if (configurationManagerInstance.compressConfigInstance.enableCompression)
                 {
-                    comp = new Compression(listener);
+                    comp = new Compression();
                     comp.absolutePath = resultObj.fileAbsPath;
+                    comp.CompressProgress += onCompressProgressHandler;
+                    comp.CompressStart += onCompressStartHandler;
                    
                     CompressionResultSet compResult = comp.doCompress7z(); //edw kaleitai to compression
 
@@ -424,6 +458,16 @@ namespace Firedump.models.dump
             }
                     
             return resultObj;
+        }
+
+        private void onCompressProgressHandler(int progress)
+        {
+            onCompressProgress(progress);
+        }
+
+        private void onCompressStartHandler()
+        {
+            onCompressStart();
         }
 
 
@@ -501,14 +545,13 @@ namespace Firedump.models.dump
                         }
 
                         Console.WriteLine(tablename);
-                        
-                        int rowcount = getDbTableRowsCount(tablename,currentDatabase);
-                        if (listener != null)
-                        {   //fire event
-                            listener.onTableStartDump(tablename);
-                            listener.tableRowCount(rowcount);
-                        }
-                       
+
+                        int rowcount = getDbTableRowsCount(tablename, currentDatabase);
+                        //fire event
+                        onTableStartDump(tablename);
+                        onTableRowCount(rowcount);
+
+
                     }
 
                 }
@@ -535,15 +578,14 @@ namespace Firedump.models.dump
                         else
                         {
                             tempTableName = tablename;
-                           
-                            int rowcount = getDbTableRowsCount(tablename,currentDatabase);
+
+                            int rowcount = getDbTableRowsCount(tablename, currentDatabase);
                             Console.WriteLine(tablename);
-                            if (listener != null)
-                            {   //fire event
-                                listener.onTableStartDump(tablename);
-                                listener.tableRowCount(rowcount);
-                            }
-                           
+                            //fire event
+                            onTableStartDump(tablename);
+                            onTableRowCount(rowcount);
+
+
                         }
 
                     }

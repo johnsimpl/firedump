@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Firedump.Forms.location
 {
-    public partial class FTPLocation : Form,ILocationListener
+    public partial class FTPLocation : Form
     {
         private LocationSwitchboard listener;
         private LocationAdapter adapter;
@@ -28,7 +28,9 @@ namespace Firedump.Forms.location
         {
             InitializeComponent();
             this.listener = listener;
-            adapter = new LocationAdapter(this);
+            adapter = new LocationAdapter();
+            adapter.SaveError += onSaveErrorHandler;
+            adapter.TestConnectionComplete += onTestConnectionCompleteHandler;
         }
         /// <summary>
         /// Call this constructor to load FTPconfig into the components
@@ -43,7 +45,9 @@ namespace Firedump.Forms.location
             this.isEditor = isEditor;
             this.ftplocation = ftplocation;
             doLoadConfig = true;
-            adapter = new LocationAdapter(this);
+            adapter = new LocationAdapter();
+            adapter.SaveError += onSaveErrorHandler;
+            adapter.TestConnectionComplete += onTestConnectionCompleteHandler;
         }
 
         private bool performChecks(bool isSave)
@@ -352,27 +356,12 @@ namespace Firedump.Forms.location
             adapter.testConnection();
         }
 
-        public void setSaveProgress(int progress, int speed)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void onSaveInit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void onSaveComplete(LocationResultSet result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void onSaveError(string message)
+        private void onSaveErrorHandler(string message)
         {
             MessageBox.Show(message, "FTP test connection", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
 
-        public void onTestConnectionComplete(LocationConnectionResultSet result)
+        private void onTestConnectionCompleteHandler(LocationConnectionResultSet result)
         {
             if (result.wasSuccessful)
             {

@@ -10,14 +10,18 @@ namespace Firedump.models.location
 {
     class LocationLocal : Location,ILocation
     {
-        public LocationCredentialsConfig config { set; get; }
-        private ILocationProgressListener listener;
-        bool cancelFlag = false;
-        private LocationLocal() { }
-        public LocationLocal(ILocationProgressListener listener)
+        //<events>
+        public delegate void progress(int progress, int speed);
+        public event progress Progress;
+        private void onProgress(int progress, int speed)
         {
-            this.listener = listener;
+            Progress?.Invoke(progress, speed);
         }
+        //</events>
+        
+        public LocationCredentialsConfig config { set; get; }
+        bool cancelFlag = false;
+        public LocationLocal() { }
         public LocationConnectionResultSet connect()
         {
             throw new NotImplementedException();
@@ -98,7 +102,7 @@ namespace Firedump.models.location
 
                         dest.Write(buffer, 0, currentBlockSize);
                         
-                        listener.setProgress(percentage,-1); //to speed den to ipologizw apo local
+                        onProgress(percentage,-1); //to speed den to ipologizw apo local
 
                         if (cancelFlag == true)
                         {

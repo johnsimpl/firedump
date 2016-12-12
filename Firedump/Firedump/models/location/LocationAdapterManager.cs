@@ -10,9 +10,59 @@ using System.Windows;
 
 namespace Firedump.models.location
 {
-    class LocationAdapterManager : ILocationListener 
+    class LocationAdapterManager 
     {
-        private ILocationManagerListener listener;
+        //<events>
+
+        //onSaveProgress
+        public delegate void saveProgress(int progress, int speed);
+        public event saveProgress SaveProgress;
+        private void onSaveProgress(int progress, int speed)
+        {
+            SaveProgress?.Invoke(progress, speed);
+        }
+
+        //onSaveInit
+        public delegate void saveInit(int maxprogress);
+        public event saveInit SaveInit;
+        private void onSaveInit(int maxprogress)
+        {
+            SaveInit?.Invoke(maxprogress);
+        }
+
+        //onSaveComplete
+        public delegate void saveComplete(List<LocationResultSet> results);
+        public event saveComplete SaveComplete;
+        private void onSaveComplete(List<LocationResultSet> results)
+        {
+            SaveComplete?.Invoke(results);
+        }
+
+        //onSaveError
+        public delegate void saveError(string message);
+        public event saveError SaveError;
+        private void onSaveError(string message)
+        {
+            SaveError?.Invoke(message);
+        }
+
+        //onInnerSaveInit
+        public delegate void innerSaveInit(string location_name, int location_type);
+        public event innerSaveInit InnerSaveInit;
+        private void onInnerSaveInit(string location_name, int location_type)
+        {
+            InnerSaveInit?.Invoke(location_name,location_type);
+        }
+
+        //onLocationProgress
+        public delegate void locationProgress(int progress, int speed);
+        public event locationProgress LocationProgress;
+        private void onLocationProgress(int progress, int speed)
+        {
+            LocationProgress?.Invoke(progress, speed);
+        }
+
+        //</events>
         private List<int> locations;
         private List<LocationResultSet> results;
         private LocationAdapter adapter;
@@ -20,9 +70,8 @@ namespace Firedump.models.location
         private int currentProgress = 0;
         private string sourcePath;
         private LocationAdapterManager() { }
-        public LocationAdapterManager(ILocationManagerListener listener, List<int> locations, string sourcePath)
+        public LocationAdapterManager(List<int> locations, string sourcePath)
         {
-            this.listener = listener;
             this.locations = locations;
             this.sourcePath = sourcePath;
             init();
@@ -30,7 +79,11 @@ namespace Firedump.models.location
         private void init()
         {
             results = new List<LocationResultSet>();
-            listener.onSaveInit(locations.Count * 100); //set to max progress px gia 2 locations 200
+        }
+
+        public void setProgress()
+        {
+            onSaveInit(locations.Count * 100); //set to max progress px gia 2 locations 200
         }
         private void setupForNewSave()
         {
@@ -51,7 +104,7 @@ namespace Firedump.models.location
                     File.Delete(sourcePath);
                 }
                 catch(Exception e){ }
-                listener.onSaveComplete(results);
+                onSaveComplete(results);
             }
         }
 
@@ -59,7 +112,7 @@ namespace Firedump.models.location
         {
             if(locations.Count == 0)
             {
-                listener.onSaveError("Save started with no locations");
+                onSaveError("Save started with no locations");
                 return;
             }
             LocationCredentialsConfig config;
@@ -70,7 +123,10 @@ namespace Firedump.models.location
                 return;
             }
             long type = (Int64)data.Rows[0]["service_type"];
-            adapter = new LocationAdapter(this);
+            adapter = new LocationAdapter();
+            adapter.Progress += onSaveProgressHandler;
+            adapter.SaveComplete += onSaveCompleteHandler;
+            adapter.SaveError += onSaveErrorHandler;
             adapter.setLocationId(locations[0]);
             switch (type) //edw gemizei to config apo to database prepei na kanei diaforetiko query gia kathe diaforetiko type kai na gemisei to config prin to settarei ston adapter
             {              
@@ -118,18 +174,18 @@ namespace Firedump.models.location
                     return;
             }
 
-            listener.onInnerSaveInit((string)data.Rows[0]["name"],unchecked((int)type));
+            onInnerSaveInit((string)data.Rows[0]["name"],unchecked((int)type));
             Task managersendtask = new Task(adapter.sendFile);
             managersendtask.Start();
         }
-       
-        public void onSaveComplete(LocationResultSet result)
+        
+        private void onSaveCompleteHandler(LocationResultSet result)
         {
             results.Add(result);
             setupForNewSave();
         }
 
-        public void onSaveError(string message)
+        private void onSaveErrorHandler(string message)
         {
             LocationResultSet result = new LocationResultSet();
             result.wasSuccessful = false;
@@ -138,21 +194,11 @@ namespace Firedump.models.location
             setupForNewSave();
         }
 
-        public void onSaveInit()
+        private void onSaveProgressHandler(int progress, int speed)
         {
-            throw new NotImplementedException();
-        }
-
-        public void setSaveProgress(int progress, int speed)
-        {
-            listener.setSaveProgress(currentProgress+progress, speed);
+            onSaveProgress(currentProgress+progress, speed);
             //for the current location upload
-            listener.onLocationProgress(progress,speed);
-        }
-
-        public void onTestConnectionComplete(LocationConnectionResultSet result)
-        {
-            throw new NotImplementedException();
+            onLocationProgress(progress,speed);
         }
 
         internal void cancelSaveLocation(firedumpdbDataSet.backup_locationsRow tag)

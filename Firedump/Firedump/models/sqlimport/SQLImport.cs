@@ -11,16 +11,22 @@ namespace Firedump.models.sqlimport
 {
     class SQLImport
     {
+        //<events>
+        public delegate void progress(int progress);
+        public event progress Progress;
+        private void onProgress(int progress)
+        {
+            Progress?.Invoke(progress);
+        }
+        //</events>
         public string script { set; get; }
         public ImportCredentialsConfig config { get; }
-        private ISQLImportListener listener;
         private int commandCounter = 0;
         private string connectionString;
         private SQLImport() { }
-        public SQLImport(ImportCredentialsConfig config, ISQLImportListener listener)
+        public SQLImport(ImportCredentialsConfig config)
         {
             this.config = config;
-            this.listener = listener;
             conStringBuilder();
         }
 
@@ -70,7 +76,7 @@ namespace Firedump.models.sqlimport
         {
             //to testara ligo to apo katw fenete na doulevei swsta
             commandCounter += StringUtils.countOccurances(e.StatementText, config.scriptDelimeter) + 1; //to +1 einai to delimeter(semicolon) sto telos kathe statement 
-            listener.onProgress(commandCounter);
+            onProgress(commandCounter);
         }
         
     }

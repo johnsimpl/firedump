@@ -21,7 +21,7 @@ using Firedump.Forms.sqlimport;
 
 namespace Firedump
 {
-    public partial class Home : Form , IDumpProgressListener,ILocationManagerListener
+    public partial class Home : Form
     {
         private firedumpdbDataSet.mysql_serversDataTable serverData;
         private firedumpdbDataSetTableAdapters.mysql_serversTableAdapter mysql_serversAdapter = new firedumpdbDataSetTableAdapters.mysql_serversTableAdapter();
@@ -404,7 +404,16 @@ namespace Firedump
 
             bStartDump.Enabled = false;
             adapter.setTableList(tableList);
-            adapter.startDump(config, this);
+            adapter.Cancelled += onCancelledHandler;
+            adapter.Completed += onCompletedHandler;
+            adapter.CompressProgress += compressProgressHandler;
+            adapter.CompressStart += onCompressStartHandler;
+            adapter.Error += onErrorHandler;
+            adapter.InitDumpTables += initDumpTablesHandler;
+            adapter.Progress += onProgressHandler;
+            adapter.TableRowCount += tableRowCountHandler;
+            adapter.TableStartDump += onTableDumpStartHandler;
+            adapter.startDump(config);
             
         }
 
@@ -525,7 +534,7 @@ namespace Firedump
         //
         //-------------------------------------------------------------------------
         //------->INTERFACE EVENT-CALLBACK METHODS START---------------------------
-        public void onProgress(string progress)
+        private void onProgressHandler(string progress)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = progress;
@@ -533,7 +542,7 @@ namespace Firedump
         }
 
 
-        public void onError(int error)
+        private void onErrorHandler(int error)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 //to error pernei sigkekrimenes times
@@ -544,7 +553,7 @@ namespace Firedump
         }
 
 
-        public void onCancelled()
+        private void onCancelledHandler()
         {
             lStatus.Invoke((MethodInvoker)delegate () {              
                 lStatus.Text = "Cancelled";
@@ -553,7 +562,7 @@ namespace Firedump
         }
 
 
-        public void onCompleted(DumpResultSet status)
+        private void onCompletedHandler(DumpResultSet status)
         {
             if(status != null)
             {
@@ -584,7 +593,16 @@ namespace Firedump
                         addToGridView(loc.Tag);
                     }
 
-                    adapterLocation = new LocationAdapterManager(this,locations,status.fileAbsPath);
+                    adapterLocation = new LocationAdapterManager(locations,status.fileAbsPath);
+                    adapterLocation.SaveInit += onSaveInitHandler;
+                    adapterLocation.InnerSaveInit += onInnerSaveInitHandler;
+                    adapterLocation.LocationProgress += onLocationProgressHandler;
+                    adapterLocation.SaveProgress += setSaveProgressHandler;
+                    adapterLocation.SaveComplete += onSaveCompleteHandler;
+                    adapterLocation.SaveError += onSaveErrorHandler;
+                    adapterLocation.setProgress();
+                    
+                    
                     adapterLocation.startSave();
                     //MessageBox.Show("Dump was completed successfully.", "MySQL Dump", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -615,8 +633,8 @@ namespace Firedump
             }
         }
 
-       
-        public void onTableDumpStart(string table)
+
+        private void onTableDumpStartHandler(string table)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "dumping table " + table;
@@ -625,12 +643,12 @@ namespace Firedump
             increaseProgressBarStep();
         }
 
-        public void initDumpTables(List<string> tables)
+        private void initDumpTablesHandler(List<string> tables)
         {
             initProgressBar(tables,0);
         }
 
-        public void tableRowCount(int rowcount)
+        private void tableRowCountHandler(int rowcount)
         {
             ltable.Invoke((MethodInvoker)delegate () {
                 if(rowcount == -1)
@@ -643,17 +661,17 @@ namespace Firedump
             });
         }
 
-        public void compressProgress(int progress)
+        private void compressProgressHandler(int progress)
         {
             setProgressValue(progress);
         }
 
-        public void onCompressStart()
+        private void onCompressStartHandler()
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Compressing...";
                 initProgressBar(null,100);
-                tableRowCount(-1);
+                tableRowCountHandler(-1);
             });
         }
 
@@ -685,7 +703,7 @@ namespace Firedump
         /// </summary>
         /// <param name="progress">Progress int 1-100</param>
         /// <param name="speed">Speed in B/s -1 to ignore</param>
-        public void setSaveProgress(int progress, int speed)
+        private void setSaveProgressHandler(int progress, int speed)
         {
             setProgressValue(progress);
             Console.WriteLine(speed);
@@ -727,20 +745,20 @@ namespace Firedump
 
        
 
-        public void onSaveInit(int maxprogress)
+        private void onSaveInitHandler(int maxprogress)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Saving to locations...";
                 initProgressBar(null, maxprogress);
-                tableRowCount(-1);
+                tableRowCountHandler(-1);
             });
         }
 
-        public void onSaveComplete(List<LocationResultSet> results)
+        private void onSaveCompleteHandler(List<LocationResultSet> results)
         {
             lStatus.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Save complete!";
-                tableRowCount(-1);
+                tableRowCountHandler(-1);
             });
             string errorsToOutput = "";
             bool koble = true;
@@ -778,12 +796,12 @@ namespace Firedump
 
         }
 
-        public void onSaveError(string message)
+        private void onSaveErrorHandler(string message)
         {
             MessageBox.Show("Save to locations failed:\n"+message,"Locations Save",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
 
-        public void onInnerSaveInit(string location_name, int location_type)
+        private void onInnerSaveInitHandler(string location_name, int location_type)
         {
             string location = "";
             switch (location_type)
@@ -814,7 +832,7 @@ namespace Firedump
         }
         
 
-        public void onLocationProgress(int progress,int speed)
+        private void onLocationProgressHandler(int progress,int speed)
         {
             updateGridView(progress);
         }

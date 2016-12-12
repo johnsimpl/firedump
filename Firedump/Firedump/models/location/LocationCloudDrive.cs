@@ -9,13 +9,16 @@ namespace Firedump.models.location
 {
     class LocationCloudDrive : Location,ILocationCloud
     {
-        public LocationCredentialsConfig config { set; get; }
-        private ILocationProgressListener listener;
-        private LocationCloudDrive() { }
-        public LocationCloudDrive(ILocationProgressListener listener)
+        //<events>
+        public delegate void progress(int progress, int speed);
+        public event progress Progress;
+        private void onProgress(int progress, int speed)
         {
-            this.listener = listener;
+            Progress?.Invoke(progress, speed);
         }
+        //</events>
+        public LocationCredentialsConfig config { set; get; }
+        public LocationCloudDrive() { }
         public LocationConnectionResultSet connect()
         {
             throw new NotImplementedException();

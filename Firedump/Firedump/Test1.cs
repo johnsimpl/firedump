@@ -15,7 +15,7 @@ using Firedump.models.configuration.dynamicconfig;
 
 namespace Firedump
 {
-    public partial class Test1 : Form,IImportAdapterListener
+    public partial class Test1 : Form
     {
         public Test1()
         {
@@ -56,28 +56,32 @@ namespace Firedump
             config.username = "root";
             config.password = "poisodagger9598";
             config.scriptPath = "D:\\MyStuff\\desktop\\anime.sql";
-            ImportAdapter adapter = new ImportAdapter(this,config);
+            ImportAdapter adapter = new ImportAdapter(config);
+            adapter.ImportComplete += onImportCompleteHandler;
+            adapter.ImportError += onImportErrorHandler;
+            adapter.ImportInit += onImportInitHandler;
+            adapter.ImportProgress += onImportProgressHandler;
             adapter.executeScript();
         }
 
-        public void onImportInit(int maxprogress)
+        private void onImportInitHandler(int maxprogress)
         {
             Console.WriteLine("Max progress: "+maxprogress);
         }
 
-        public void onImportProgress(int progress)
+        private void onImportProgressHandler(int progress)
         {
             Console.WriteLine(progress);
         }
 
-        public void onImportComplete(ImportResultSet result)
+        private void onImportCompleteHandler(ImportResultSet result)
         {
             Console.WriteLine("Import complete!");
             Console.WriteLine("Result.wasSuccessful = "+result.wasSuccessful);
             Console.WriteLine("Result errormessage = "+result.errorMessage);
         }
 
-        public void onImportError(string message)
+        private void onImportErrorHandler(string message)
         {
             Console.WriteLine(message);
         }

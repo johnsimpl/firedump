@@ -11,30 +11,23 @@ namespace Firedump.models.location
 {
     class FTPUtils
     {
+        //<events>
+        public delegate void progress(int progress, int speed);
+        public event progress Progress;
+        private void onProgress(int progress, int speed)
+        {
+            Progress?.Invoke(progress, speed);
+        }
+        //</events>
         private SessionOptions sessionOptions;
         private FTPCredentialsConfig config;
-        private IFTPListener listener;
         private Session session;
         bool firstCheck = true;
         private FTPUtils() { }
-        /// <summary>
-        /// Use this for listings not for transfer operations
-        /// </summary>
-        /// <param name="config"></param>
+
         public FTPUtils(FTPCredentialsConfig config)
         {
             this.config = config;
-            setupSessionOptions();
-        }
-        /// <summary>
-        /// This is the constructor to use for file transfer operations
-        /// </summary>
-        /// <param name="config"></param>
-        /// <param name="listener"></param>
-        public FTPUtils(FTPCredentialsConfig config, IFTPListener listener)
-        {
-            this.config = config;
-            this.listener = listener;
             setupSessionOptions();
         }
 
@@ -304,7 +297,7 @@ namespace Firedump.models.location
 
         private void sessionFileTransferProgress(object sender, FileTransferProgressEventArgs e)
         {
-            listener.onProgress(Convert.ToInt32(e.OverallProgress*100), e.CPS);
+            onProgress(Convert.ToInt32(e.OverallProgress*100), e.CPS);
         }
     }
 }

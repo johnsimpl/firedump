@@ -9,23 +9,55 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.sqlimport
 {
-    class ImportAdapter : ISQLImportListener
+    class ImportAdapter
     {
-        private IImportAdapterListener listener;
+        //onImportProgress
+        public delegate void importProgress(int progress);
+        public event importProgress ImportProgress;
+        private void onImportProgress(int progress)
+        {
+            ImportProgress?.Invoke(progress);
+        }
+
+        //onImportInit
+        public delegate void importInit(int maxprogress);
+        public event importInit ImportInit;
+        private void onImportInit(int maxprogress)
+        {
+            ImportInit?.Invoke(maxprogress);
+        }
+
+        //onImportComplete
+        public delegate void importComplete(ImportResultSet result);
+        public event importComplete ImportComplete;
+        private void onImportComplete(ImportResultSet result)
+        {
+            ImportComplete?.Invoke(result);
+        }
+
+        //onImportError
+        public delegate void importError(string message);
+        public event importError ImportError;
+        private void onImportError(string message)
+        {
+            ImportError?.Invoke(message);
+        }
+
+        //</events>
         private SQLImport sqlimportInstance;
         private Task<ImportResultSet> innertask;
         private ImportAdapter() { }
-        public ImportAdapter(IImportAdapterListener listener, ImportCredentialsConfig config)
+        public ImportAdapter(ImportCredentialsConfig config)
         {
-            this.listener = listener;
-            sqlimportInstance = new SQLImport(config, this);
+            sqlimportInstance = new SQLImport(config);
+            sqlimportInstance.Progress += onProgressHandler;
         }
 
         public void executeScript()
         {
             if(innertask != null && !innertask.IsCompleted)
             {
-                listener.onImportError("Another import is running.");
+                onImportError("Another import is running.");
                 return;
             }
 
@@ -40,25 +72,25 @@ namespace Firedump.models.sqlimport
                 sqlimportInstance.script = File.ReadAllText(sqlimportInstance.config.scriptPath);
                 int commandsCount = StringUtils.countOccurances(sqlimportInstance.script, sqlimportInstance.config.scriptDelimeter);
                 if (commandsCount == 0) commandsCount = 1;
-                listener.onImportInit(commandsCount);
+                onImportInit(commandsCount);
 
                 innertask = new Task<ImportResultSet>(sqlimportInstance.executeScript);
                 ImportResultSet result;
                 innertask.Start();
                 result = await innertask;
 
-                listener.onImportProgress(commandsCount);
-                listener.onImportComplete(result);
+                onImportProgress(commandsCount);
+                onImportComplete(result);
             }
             catch (Exception ex)
             {
-                listener.onImportError("Script import failed:\n" + ex.Message);
+                onImportError("Script import failed:\n" + ex.Message);
             }
         }
 
-        public void onProgress(int progress)
+        private void onProgressHandler(int progress)
         {
-            listener.onImportProgress(progress);
+            onImportProgress(progress);
         }
     }
 }

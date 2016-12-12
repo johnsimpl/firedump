@@ -7,43 +7,83 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationAdapter : ILocationProgressListener
+    class LocationAdapter
     {
+        //<events>
 
+        //onProgress
+        public delegate void progress(int progress, int speed);
+        public event progress Progress;
+        private void onProgress(int progress, int speed)
+        {
+            Progress?.Invoke(progress, speed);
+        }
+
+        //onSaveInit
+        public delegate void saveInit();
+        public event saveInit SaveInit;
+        private void onSaveInit()
+        {
+            SaveInit?.Invoke();
+        }
+
+        //onSaveComplete
+        public delegate void saveComplete(LocationResultSet result);
+        public event saveComplete SaveComplete;
+        private void onSaveComplete(LocationResultSet result)
+        {
+            SaveComplete?.Invoke(result);
+        }
+
+        //onSaveError
+        public delegate void saveError(string message);
+        public event saveError SaveError;
+        private void onSaveError(string message)
+        {
+            SaveError?.Invoke(message);
+        }
+
+        //onTestConnectionComplete
+        public delegate void testConnectionComplete(LocationConnectionResultSet result);
+        public event testConnectionComplete TestConnectionComplete;
+        private void onTestConnectionComplete(LocationConnectionResultSet result)
+        {
+            TestConnectionComplete?.Invoke(result);
+        }
+
+        //</events>
         private ILocation location;
-        private ILocationListener listener;
         private Task<LocationConnectionResultSet> innerconnectiontask;
         private Task<LocationResultSet> innersendtask;
         private Task<LocationResultSet> innergettask;
         private int locationId = -1;
 
-        private LocationAdapter() { }
-
-        public LocationAdapter(ILocationListener listener)
-        {
-            this.listener = listener;
-        }
+        public LocationAdapter() { }
 
         public void setLocalLocation(LocationCredentialsConfig config) //auta na kanoun try catch gia to cast kai na kaloun onError se fail
         {
-            this.location = new LocationLocal(this);
+            this.location = new LocationLocal();
             ((LocationLocal)this.location).config = config;
+            ((LocationLocal)this.location).Progress += progressHandler;
         }
 
         public void setFtpLocation(LocationCredentialsConfig config)
         {
-            this.location = new LocationFtp(this);
+            this.location = new LocationFtp();
             ((LocationFtp)this.location).config = config;
+            ((LocationFtp)this.location).Progress += progressHandler;
         }
         public void setCloudBoxLocation(LocationCredentialsConfig config)
         {
-            this.location = new LocationCloudBox(this);
+            this.location = new LocationCloudBox();
             ((LocationCloudBox)this.location).config = config;
+            ((LocationCloudBox)this.location).Progress += progressHandler;
         }
         public void setCloudDriveLocation(LocationCredentialsConfig config)
         {
-            this.location = new LocationCloudDrive(this);
+            this.location = new LocationCloudDrive();
             ((LocationCloudDrive)this.location).config = config;
+            ((LocationCloudDrive)this.location).Progress += progressHandler;
         }
         /// <summary>
         /// Prosoxi den einai ilopoihmeni padou mporei na petaksei not implemented exception
@@ -53,7 +93,7 @@ namespace Firedump.models.location
         {
             if (this.location == null)
             {
-                listener.onSaveError("Location type not set. Aborting...");
+                onSaveError("Location type not set. Aborting...");
                 return;
             }
             
@@ -65,7 +105,7 @@ namespace Firedump.models.location
         {
             if (innerconnectiontask != null && !innerconnectiontask.IsCompleted) //ama spammarei test connection tha stamataei edw
             {
-                listener.onSaveError("Another test connection is running please wait");
+                onSaveError("Another test connection is running please wait");
                 return;
             }
             innerconnectiontask = new Task<LocationConnectionResultSet>(location.connect);
@@ -75,7 +115,7 @@ namespace Firedump.models.location
             try
             {
                 res = await innerconnectiontask;
-                listener.onTestConnectionComplete(res);
+                onTestConnectionComplete(res);
             }
             catch (NullReferenceException) { }
         }
@@ -89,7 +129,7 @@ namespace Firedump.models.location
         {
             if (this.location == null)
             {
-                listener.onSaveError("Location type not set. Aborting...");
+                onSaveError("Location type not set. Aborting...");
                 return;
             }
 
@@ -101,7 +141,7 @@ namespace Firedump.models.location
         {
             if (this.location == null)
             {
-                listener.onSaveError("Location type not set. Aborting...");
+                onSaveError("Location type not set. Aborting...");
                 return;
             }
 
@@ -113,7 +153,7 @@ namespace Firedump.models.location
         {
             if (innersendtask != null && !innersendtask.IsCompleted)
             {
-                listener.onSaveError("Another task is running. Aborting...");
+                onSaveError("Another task is running. Aborting...");
                 return;
             }
 
@@ -124,7 +164,7 @@ namespace Firedump.models.location
             try
             {
                 res = await innersendtask;
-                listener.onSaveComplete(res);
+                onSaveComplete(res);
             }
             catch (NullReferenceException) { }
 
@@ -134,7 +174,7 @@ namespace Firedump.models.location
         {
             if (innergettask != null && !innergettask.IsCompleted)
             {
-                listener.onSaveError("Another task is running. Aborting...");
+                onSaveError("Another task is running. Aborting...");
                 return;
             }
 
@@ -144,14 +184,14 @@ namespace Firedump.models.location
             try
             {
                 res = await innergettask;
-                listener.onSaveComplete(res);
+                onSaveComplete(res);
             }
             catch (NullReferenceException) { }
         }
 
-        public void setProgress(int progress, int speed)
+        private void progressHandler(int progress, int speed)
         {
-            listener.setSaveProgress(progress,speed);
+            onProgress(progress, speed);
         }
 
         internal bool isLocationRunning(long id)

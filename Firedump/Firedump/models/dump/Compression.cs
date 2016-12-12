@@ -11,9 +11,27 @@ namespace Firedump.models.dump
 {
     class Compression
     {
+        //<events>
+
+        //onCompressProgress
+        public delegate void compressProgress(int progress);
+        public event compressProgress CompressProgress;
+        private void onCompressProgress(int progress)
+        {
+            CompressProgress?.Invoke(progress);
+        }
+
+        //onCompressStart
+        public delegate void compressStart();
+        public event compressStart CompressStart;
+        private void onCompressStart()
+        {
+            CompressStart?.Invoke();
+        }
+
+        //</events>
         ConfigurationManager configurationManagerInstance = ConfigurationManager.getInstance();
         private Process proc;
-        private IAdapterListener listener;
         private string fileType;
 
         /// <summary>
@@ -26,11 +44,6 @@ namespace Firedump.models.dump
         public Compression(string absolutePath)
         {
             this.absolutePath = absolutePath;
-        }
-
-        public Compression(IAdapterListener listener)
-        {
-            this.listener = listener;
         }
 
         private StringBuilder calculateArguments()
@@ -165,10 +178,7 @@ namespace Firedump.models.dump
             CompressionResultSet result = new CompressionResultSet();
             proc.Start();
 
-            if(listener != null)
-            {
-                listener.onCompressStart();
-            }
+            onCompressStart();
 
             try
             {
@@ -177,15 +187,14 @@ namespace Firedump.models.dump
                     string line = proc.StandardOutput.ReadLine();
                     Console.WriteLine("Comp:" + line);
 
-                    if (listener != null)
+
+                    if (line.Contains("%"))
                     {
-                        if (line.Contains("%"))
-                        {
-                            int per = 0;
-                            int.TryParse(line.Substring(0, 3), out per);
-                            listener.compressProgress(per);
-                        }
+                        int per = 0;
+                        int.TryParse(line.Substring(0, 3), out per);
+                        onCompressProgress(per);
                     }
+
 
                 }
 

@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace Firedump.models.location
 {
-    class LocationFtp : Location,ILocation,IFTPListener
+    class LocationFtp : Location,ILocation
     {
-        public LocationCredentialsConfig config { set; get; }
-        private ILocationProgressListener listener;
-        private LocationFtp() { }
-        public LocationFtp(ILocationProgressListener listener)
+        //<events>
+        public delegate void progress(int progress, int speed);
+        public event progress Progress;
+        private void onProgress(int progress, int speed)
         {
-            this.listener = listener;
+            Progress?.Invoke(progress, speed);
         }
+        //</events>
+        public LocationCredentialsConfig config { set; get; }
+        public LocationFtp() { }
         public LocationConnectionResultSet connect()
         {
-            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config, this);
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config);
+            ftputils.Progress += progressHandler;
             LocationConnectionResultSet result = ftputils.testConnection();
             return result;
         }
@@ -30,21 +34,23 @@ namespace Firedump.models.location
 
         public LocationResultSet getFile()
         {
-            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config, this);
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config);
+            ftputils.Progress += progressHandler;
             LocationResultSet result = ftputils.getFile();
             return result;
         }
 
         public LocationResultSet send()
         {
-            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config,this);
+            FTPUtils ftputils = new FTPUtils((FTPCredentialsConfig)config);
+            ftputils.Progress += progressHandler;
             LocationResultSet result = ftputils.sendFile();
             return result;
         }
 
-        public void onProgress(int progress, int speed) //den xrisimopoiw to speed
+        private void progressHandler(int progress, int speed)
         {
-            listener.setProgress(progress, speed);          
+            onProgress(progress, speed);
         }
     }
 }
