@@ -42,6 +42,8 @@
             this.gbDatabase = new System.Windows.Forms.GroupBox();
             this.cbShowSysDb = new System.Windows.Forms.CheckBox();
             this.gbFile = new System.Windows.Forms.GroupBox();
+            this.tbDelimeter = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.linfo = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -186,6 +188,8 @@
             // 
             // gbFile
             // 
+            this.gbFile.Controls.Add(this.tbDelimeter);
+            this.gbFile.Controls.Add(this.label12);
             this.gbFile.Controls.Add(this.linfo);
             this.gbFile.Controls.Add(this.label11);
             this.gbFile.Controls.Add(this.label10);
@@ -206,6 +210,25 @@
             this.gbFile.TabIndex = 9;
             this.gbFile.TabStop = false;
             this.gbFile.Text = "Pick a file";
+            // 
+            // tbDelimeter
+            // 
+            this.tbDelimeter.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.tbDelimeter.Location = new System.Drawing.Point(529, 174);
+            this.tbDelimeter.Name = "tbDelimeter";
+            this.tbDelimeter.Size = new System.Drawing.Size(91, 26);
+            this.tbDelimeter.TabIndex = 22;
+            this.tbDelimeter.Text = ";";
+            this.tbDelimeter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(441, 182);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(82, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Script delimeter:";
             // 
             // linfo
             // 
@@ -519,5 +542,7 @@
         private System.Windows.Forms.Label lPass;
         private System.Windows.Forms.CheckBox cbShowSysDb;
         private System.Windows.Forms.Label lbSpeed;
+        private System.Windows.Forms.TextBox tbDelimeter;
+        private System.Windows.Forms.Label label12;
     }
 }

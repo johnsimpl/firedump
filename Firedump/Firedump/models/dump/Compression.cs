@@ -160,8 +160,8 @@ namespace Firedump.models.dump
         {
             StringBuilder arguments = new StringBuilder();
             arguments.Append("x -bsp1 ");
-            arguments.Append(config.absolutePath + " ");
-            arguments.Append("-o"+config.decompressDirectory+" ");
+            arguments.Append("\""+config.absolutePath + "\" ");
+            arguments.Append("-o\""+config.decompressDirectory+"\" ");
             if (config.isEncrypted)
             {
                 arguments.Append("-p"+config.password);
@@ -259,6 +259,8 @@ namespace Firedump.models.dump
         {
             StringBuilder arguments = calculateArgumentsDecompress();
             Console.WriteLine("Compression7z arguments: " + arguments.ToString());
+
+            Directory.CreateDirectory(config.decompressDirectory);
 
             string f7zip = "resources\\7z64\\7z.exe";
             if (configurationManagerInstance.compressConfigInstance.use32bit)
