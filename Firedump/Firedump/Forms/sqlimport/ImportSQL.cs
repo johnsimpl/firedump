@@ -297,6 +297,10 @@ namespace Firedump.Forms.sqlimport
             DataRow serverdata = firedumpdbDataSet.mysql_servers.Rows[cmbServers.SelectedIndex];
             ImportCredentialsConfig config = new ImportCredentialsConfig();
             config.database = (string)serverdata["database"];
+            if (cmbDatabases.SelectedIndex != 0)
+            {
+                config.database = (string)cmbDatabases.SelectedValue;
+            }
             config.host = (string)serverdata["host"];
             config.password = (string)serverdata["password"];
             config.port = Convert.ToInt32((Int64)serverdata["port"]);
