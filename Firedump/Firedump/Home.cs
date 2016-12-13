@@ -345,6 +345,7 @@ namespace Firedump
                 MessageBox.Show("dump is running...");
                 return;
             }
+            adapter = new MySqlDumpAdapter();
 
             List<string> databases = new List<string>();
             List<string> excludedTables = new List<string>();
@@ -404,6 +405,7 @@ namespace Firedump
 
             bStartDump.Enabled = false;
             adapter.setTableList(tableList);
+
             adapter.Cancelled += onCancelledHandler;
             adapter.Completed += onCompletedHandler;
             adapter.CompressProgress += compressProgressHandler;
@@ -473,8 +475,15 @@ namespace Firedump
 
         private void setProgressValue(int progress)
         {
-            pbDumpExec.Invoke((MethodInvoker)delegate () {
-                pbDumpExec.Value = progress;
+            pbDumpExec?.Invoke((MethodInvoker)delegate () {
+                try
+                {
+                    pbDumpExec.Value = progress;
+                }
+                catch(ArgumentOutOfRangeException ex)
+                {
+                }
+                
             });
         }
 
@@ -747,7 +756,7 @@ namespace Firedump
 
         private void onSaveInitHandler(int maxprogress)
         {
-            lStatus.Invoke((MethodInvoker)delegate () {
+            lStatus?.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Saving to locations...";
                 initProgressBar(null, maxprogress);
                 tableRowCountHandler(-1);
@@ -756,7 +765,7 @@ namespace Firedump
 
         private void onSaveCompleteHandler(List<LocationResultSet> results)
         {
-            lStatus.Invoke((MethodInvoker)delegate () {
+            lStatus?.Invoke((MethodInvoker)delegate () {
                 lStatus.Text = "Save complete!";
                 tableRowCountHandler(-1);
             });
@@ -773,7 +782,7 @@ namespace Firedump
                 }
             }
 
-            bStartDump.Invoke((MethodInvoker)delegate ()
+            bStartDump?.Invoke((MethodInvoker)delegate ()
             {
                 bStartDump.Enabled = true;
             });

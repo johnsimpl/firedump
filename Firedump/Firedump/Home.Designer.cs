@@ -203,7 +203,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1014, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(662, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -233,7 +233,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importSQLFileToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // importSQLFileToolStripMenuItem
@@ -264,7 +264,7 @@
             // 
             this.pbDumpExec.Location = new System.Drawing.Point(18, 470);
             this.pbDumpExec.Name = "pbDumpExec";
-            this.pbDumpExec.Size = new System.Drawing.Size(941, 23);
+            this.pbDumpExec.Size = new System.Drawing.Size(628, 23);
             this.pbDumpExec.TabIndex = 6;
             // 
             // lStatusLabel
@@ -301,7 +301,7 @@
             // 
             this.bcancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.bcancel.ForeColor = System.Drawing.Color.Red;
-            this.bcancel.Location = new System.Drawing.Point(884, 437);
+            this.bcancel.Location = new System.Drawing.Point(571, 437);
             this.bcancel.Name = "bcancel";
             this.bcancel.Size = new System.Drawing.Size(75, 23);
             this.bcancel.TabIndex = 10;
@@ -329,6 +329,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(350, 269);
             this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
@@ -353,7 +354,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 505);
+            this.ClientSize = new System.Drawing.Size(662, 505);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bcancel);
