@@ -40,6 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.gbDatabase = new System.Windows.Forms.GroupBox();
+            this.cbShowSysDb = new System.Windows.Forms.CheckBox();
             this.gbFile = new System.Windows.Forms.GroupBox();
             this.linfo = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -66,7 +67,7 @@
             this.lConfirmPass = new System.Windows.Forms.Label();
             this.lPass = new System.Windows.Forms.Label();
             this.cbEncryptedFile = new System.Windows.Forms.CheckBox();
-            this.cbShowSysDb = new System.Windows.Forms.CheckBox();
+            this.lbSpeed = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
             this.gbDatabase.SuspendLayout();
@@ -171,6 +172,17 @@
             this.gbDatabase.TabIndex = 8;
             this.gbDatabase.TabStop = false;
             this.gbDatabase.Text = "Pick a database";
+            // 
+            // cbShowSysDb
+            // 
+            this.cbShowSysDb.AutoSize = true;
+            this.cbShowSysDb.Location = new System.Drawing.Point(372, 88);
+            this.cbShowSysDb.Name = "cbShowSysDb";
+            this.cbShowSysDb.Size = new System.Drawing.Size(140, 17);
+            this.cbShowSysDb.TabIndex = 7;
+            this.cbShowSysDb.Text = "Show system databases";
+            this.cbShowSysDb.UseVisualStyleBackColor = true;
+            this.cbShowSysDb.CheckedChanged += new System.EventHandler(this.cbShowSysDb_CheckedChanged);
             // 
             // gbFile
             // 
@@ -426,22 +438,22 @@
             this.cbEncryptedFile.UseVisualStyleBackColor = true;
             this.cbEncryptedFile.CheckedChanged += new System.EventHandler(this.cbEncryptedFile_CheckedChanged);
             // 
-            // cbShowSysDb
+            // lbSpeed
             // 
-            this.cbShowSysDb.AutoSize = true;
-            this.cbShowSysDb.Location = new System.Drawing.Point(372, 88);
-            this.cbShowSysDb.Name = "cbShowSysDb";
-            this.cbShowSysDb.Size = new System.Drawing.Size(140, 17);
-            this.cbShowSysDb.TabIndex = 7;
-            this.cbShowSysDb.Text = "Show system databases";
-            this.cbShowSysDb.UseVisualStyleBackColor = true;
-            this.cbShowSysDb.CheckedChanged += new System.EventHandler(this.cbShowSysDb_CheckedChanged);
+            this.lbSpeed.AutoSize = true;
+            this.lbSpeed.Location = new System.Drawing.Point(299, 632);
+            this.lbSpeed.Name = "lbSpeed";
+            this.lbSpeed.Size = new System.Drawing.Size(44, 13);
+            this.lbSpeed.TabIndex = 13;
+            this.lbSpeed.Text = "Speed: ";
+            this.lbSpeed.Visible = false;
             // 
             // ImportSQL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 686);
+            this.Controls.Add(this.lbSpeed);
             this.Controls.Add(this.gbCompressed);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(this.bStartImport);
@@ -506,5 +518,6 @@
         private System.Windows.Forms.Label lConfirmPass;
         private System.Windows.Forms.Label lPass;
         private System.Windows.Forms.CheckBox cbShowSysDb;
+        private System.Windows.Forms.Label lbSpeed;
     }
 }

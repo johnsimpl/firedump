@@ -159,10 +159,12 @@
     <Compile Include="Forms\sqlimport\ImportSQL.Designer.cs">
       <DependentUpon>ImportSQL.cs</DependentUpon>
     </Compile>
+    <Compile Include="models\configuration\dynamicconfig\CompressionConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\DumpCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\FTPCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\ImportCredentialsConfig.cs" />
     <Compile Include="models\configuration\dynamicconfig\LocationCredentialsConfig.cs" />
+    <Compile Include="models\dump\CompressionAdapter.cs" />
     <Compile Include="models\sqlimport\ImportAdapter.cs" />
     <Compile Include="models\sqlimport\ImportAdapterManager.cs" />
     <Compile Include="models\sqlimport\ImportResultSet.cs" />

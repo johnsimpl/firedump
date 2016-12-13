@@ -1,4 +1,5 @@
-﻿using Firedump.models.configuration.jsonconfig;
+﻿using Firedump.models.configuration.dynamicconfig;
+using Firedump.models.configuration.jsonconfig;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,12 +39,18 @@ namespace Firedump.models.dump
         /// Absolute path of the file to compress
         /// </summary>
         public string absolutePath { set; get; }
+        public CompressionConfig config { set; get; }
 
         public Compression() { }
 
         public Compression(string absolutePath)
         {
             this.absolutePath = absolutePath;
+        }
+
+        public Compression(CompressionConfig config)
+        {
+            this.config = config;
         }
 
         private StringBuilder calculateArguments()
@@ -149,6 +156,19 @@ namespace Firedump.models.dump
             return arguments;
         }
 
+        private StringBuilder calculateArgumentsDecompress()
+        {
+            StringBuilder arguments = new StringBuilder();
+            arguments.Append("x -bsp1 ");
+            arguments.Append(config.absolutePath + " ");
+            arguments.Append("-o"+config.decompressDirectory+" ");
+            if (config.isEncrypted)
+            {
+                arguments.Append("-p"+config.password);
+            }
+            return arguments;
+        }
+
         public CompressionResultSet doCompress7z()
         {
 
@@ -235,6 +255,88 @@ namespace Firedump.models.dump
             return result;
         }
 
+        public CompressionResultSet decompress7z()
+        {
+            StringBuilder arguments = calculateArgumentsDecompress();
+            Console.WriteLine("Compression7z arguments: " + arguments.ToString());
+
+            string f7zip = "resources\\7z64\\7z.exe";
+            if (configurationManagerInstance.compressConfigInstance.use32bit)
+            {
+                f7zip = "resources\\7z\\7z.exe";
+            }
+
+            proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = f7zip,
+                    Arguments = arguments.ToString(),
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true, //prepei na diavastoun me ti seira pou ginonte ta redirect alliws kolaei se endless loop
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            Console.WriteLine("Executing 7zip now.");
+            CompressionResultSet result = new CompressionResultSet();
+            proc.Start();
+
+            onCompressStart();
+
+            try
+            {
+                while (!proc.StandardOutput.EndOfStream)
+                {
+                    string line = proc.StandardOutput.ReadLine();
+                    Console.WriteLine("Comp:" + line);
+
+
+                    if (line.Contains("%"))
+                    {
+                        int per = 0;
+                        int.TryParse(line.Substring(0, 3), out per);
+                        onCompressProgress(per);
+                    }
+
+
+                }
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    result.standardError += line + "\n";
+                    Console.WriteLine(line);
+                }
+
+                proc.WaitForExit();
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine("Compression null reference exception on proccess: " + ex.Message);
+                File.Delete(config.absolutePath);
+                Directory.Delete(config.decompressDirectory, true);
+            }
+
+            if (proc == null || proc.ExitCode != 0)
+            {
+                result.wasSucessful = false;
+                if (proc == null)
+                {
+                    result.standardError = "Compression proccess was killed.";
+                }
+                //delete
+                File.Delete(config.absolutePath);
+                Directory.Delete(config.decompressDirectory, true);
+            }
+            else
+            {
+                result.wasSucessful = true;
+            }
+
+            return result;
+        }
 
         public void KillProc()
         {

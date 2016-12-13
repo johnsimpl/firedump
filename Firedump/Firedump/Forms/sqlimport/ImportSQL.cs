@@ -295,7 +295,12 @@ namespace Firedump.Forms.sqlimport
             bStartImport.Enabled = false;
 
             adapter = new ImportAdapterManager(tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location);
-            //edw handle ta events
+            adapter.ImportComplete += onImportCompleteHandler;
+            adapter.ImportInit += onImportInitHandler;
+            adapter.ImportError += onImportErrorHandler;
+            adapter.ImportProgress += onImportProgressHandler;
+            adapter.InnerProccessInit += onInnerProccessInitHandler;
+            
             adapter.startImport();
         }
 
@@ -314,27 +319,79 @@ namespace Firedump.Forms.sqlimport
 
         private void onInnerProccessInitHandler(int proc_type, int maxprogress)
         {
-            throw new NotImplementedException();
+            switch (proc_type)
+            {
+                case 1: //ftp
+                    this.Invoke((MethodInvoker)delegate () {
+                        pbMainProgress.Maximum = maxprogress;
+                        lbSpeed.Visible = true;
+                        lbSpeed.Text = "";
+                        lStatus.Text = "Status: Downloading (FTP)";
+                    });
+                    break;
+                case 2: //dropbox
+                    break;
+                case 3: //google drive
+                    break;
+            }
         }
 
-        private void onImportInitHandler()
+        private void onImportInitHandler(int maxprogress)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void onImportCompleteHandler(ImportResultSet result)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        private void setProgressValue(int progress)
+        {
+            pbMainProgress.Invoke((MethodInvoker)delegate () {
+                pbMainProgress.Value = progress;
+            });
         }
 
         private void onImportProgressHandler(int progress, int speed)
         {
-            throw new NotImplementedException();
+            setProgressValue(progress);
+            if (speed == -1) { return; }
+            string speedlabelext = "B/s";
+            double tspeed = 0;
+            if (speed <= 1050)
+            {
+                speedlabelext = "B/s";
+                tspeed = speed;
+            }
+            else if (speed <= 1050000)
+            {
+                speedlabelext = "kB/s";
+                tspeed = speed / 1000;
+            }
+            else
+            {
+                speedlabelext = "mB/s";
+                tspeed = speed / 1000000;
+            }
+            string printedspeed = "";
+            if (tspeed < 10)
+            {
+                //kanei format to double se ena dekadiko psifio se morfi string alliws den ginete stin c#
+                printedspeed = string.Format("{0:0.0}", tspeed);
+            }
+            else
+            {
+                printedspeed = Convert.ToInt32(tspeed).ToString();
+            }
+            lbSpeed.Invoke((MethodInvoker)delegate () {
+                lbSpeed.Text = printedspeed + " " + speedlabelext;
+            });
         }
 
         private void onImportErrorHandler(string message)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(message,"SQL import",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
     }
 }
