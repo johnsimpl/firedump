@@ -62,16 +62,19 @@ namespace Firedump.models.sqlimport
         private string templocalpath;
         private string templocalfilename;
         private string filename;
+        private string decompressDirectory;
+        private string filetoimport;
         private DataRow locationdata;
+        private ImportCredentialsConfig importconfig;
         private bool isLocal;
         private bool isCompressed;
         private bool isEncrypted;
         private string password;
         private LocationAdapter locationadapter;
-        //edw compression adapter pou den iparxei
+        private CompressionAdapter compressionadapter;
         private ImportAdapter importadapter;
         private ImportAdapterManager() { }
-        public ImportAdapterManager(string path, bool isLocal, bool isCompressed,bool isEncrypted, string password, DataRow locationdata)
+        public ImportAdapterManager(string path, bool isLocal, bool isCompressed,bool isEncrypted, string password, DataRow locationdata,ImportCredentialsConfig importconfig)
         {
             string[] splitpath = StringUtils.splitPath(path);
             this.path = splitpath[0];
@@ -81,6 +84,7 @@ namespace Firedump.models.sqlimport
             this.isEncrypted = isEncrypted;
             this.password = password;
             this.locationdata = locationdata;
+            this.importconfig = importconfig;
         }
 
         public void startImport()
@@ -92,6 +96,8 @@ namespace Firedump.models.sqlimport
                     onImportError("File doesnt exist, path: "+path);
                     return;
                 }
+                templocalpath = path;
+                templocalfilename = filename;
                 startDecompression();
             }
             else
@@ -186,12 +192,44 @@ namespace Firedump.models.sqlimport
 
         private void startDecompression()
         {
+            if (isCompressed)
+            {
+                CompressionConfig config = new CompressionConfig();
+                config.absolutePath = templocalpath + templocalfilename;
+                decompressDirectory = templocalpath + templocalfilename.Replace(StringUtils.getExtension(templocalfilename), "") + "\\";
+                config.decompressDirectory = decompressDirectory;
+                config.isEncrypted = isEncrypted;
+                config.password = password;
+                compressionadapter = new CompressionAdapter(config);
+                compressionadapter.CompressComplete += onCompressCompleteHandler;
+                compressionadapter.CompressError += onCompressErrorHandler;
+                compressionadapter.CompressProgress += onCompressProgressHandler;
+                compressionadapter.CompressStart += onCompressStartHandler;
 
+                compressionadapter.decompress();
+            }
+            else
+            {
+                startImportProccess();
+            }
         }
 
-        private async void importTaskExecutor()
+        private void startImportProccess()
         {
-
+            if (isCompressed)
+            {
+                importconfig.scriptPath = decompressDirectory + filetoimport;
+            }
+            else
+            {
+                importconfig.scriptPath = templocalpath + templocalfilename;
+            }
+            importadapter = new ImportAdapter(importconfig);
+            importadapter.ImportComplete += onImportCompleteHandler;
+            importadapter.ImportError += onImportErrorHandler;
+            importadapter.ImportInit += onImportInitHandler;
+            importadapter.ImportProgress += onImportProgressHandler;
+            importadapter.executeScript();
         }
 
         public void cancel()
@@ -199,8 +237,25 @@ namespace Firedump.models.sqlimport
 
         }
 
+        private void deletefiles()
+        {
+            try
+            {
+                if (!isLocal)
+                {
+                    File.Delete(templocalpath + templocalfilename);
+                }
+                if (!string.IsNullOrEmpty(decompressDirectory))
+                {
+                    Directory.Delete(decompressDirectory, true);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
         //<event handlers>
 
+        //DOWNLOAD
         private void downloadProgressHandler(int progress, int speed)
         {
             onImportProgress(progress,speed);
@@ -208,11 +263,9 @@ namespace Firedump.models.sqlimport
 
         private void downloadCompleteHandler(LocationResultSet result)
         {
-            Console.WriteLine("result.wassuccessful "+result.wasSuccessful);
-            Console.WriteLine("result.errormessage "+result.errorMessage);
             if (result.wasSuccessful)
             {
-
+                startDecompression();
             }
             else
             {               
@@ -232,6 +285,74 @@ namespace Firedump.models.sqlimport
         {
             onImportError(message);
         }
+
+        //DECOMPRESSION
+        private void onCompressProgressHandler(int progress)
+        {
+            onImportProgress(progress, -1);
+        }
+
+        private void onCompressStartHandler()
+        {
+            onInnerProccessInit(10, 100);
+        }
+
+        private void onCompressCompleteHandler(CompressionResultSet result)
+        {
+            if (result.wasSucessful)
+            {
+                string[] filesinarchive = Directory.GetFiles(decompressDirectory);
+                int sqlcounter = 0;
+                foreach (string file in filesinarchive)
+                {
+                    if (file.EndsWith(".sql"))
+                    {
+                        sqlcounter++;
+                        filetoimport = StringUtils.splitPath(file)[1];
+                    }
+                }
+                if (sqlcounter!=1)
+                {
+                    deletefiles();
+                    onImportError("Found "+sqlcounter+ " .sql files in the decompressed directory.\nThe archive must contain only one .sql file.");
+                    return;
+                }
+
+                startImportProccess();
+            }
+            else
+            {
+                onImportError("Decompression proccess exited with errors:\n"+result.standardError);
+            }
+        }
+
+        private void onCompressErrorHandler(string message)
+        {
+            onImportError(message);
+        }
+
+        //SQLIMPORT
+        private void onImportInitHandler(int maxprogress)
+        {
+            onImportInit(maxprogress);
+        }
+
+        private void onImportProgressHandler(int progress)
+        {
+            onImportProgress(progress,-1);
+        }
+
+        private void onImportCompleteHandler(ImportResultSet result)
+        {
+            deletefiles();
+            onImportComplete(result);
+        }
+
+        private void onImportErrorHandler(string message)
+        {
+            onImportError(message);
+        }
+
         //</event handlers>
     }
 }

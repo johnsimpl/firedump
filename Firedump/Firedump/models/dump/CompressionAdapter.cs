@@ -91,6 +91,7 @@ namespace Firedump.models.dump
             try
             {
                 res = await innercompresstask;
+                onCompressProgress(100);
                 onCompressComplete(res);
             }
             catch (NullReferenceException) { }
@@ -104,6 +105,7 @@ namespace Firedump.models.dump
             try
             {
                 res = await innercompresstask;
+                onCompressProgress(100);
                 onCompressComplete(res);
             }
             catch (NullReferenceException) { }

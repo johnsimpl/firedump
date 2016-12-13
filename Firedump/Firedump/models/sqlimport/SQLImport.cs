@@ -58,6 +58,7 @@ namespace Firedump.models.sqlimport
                 con.Open();
 
                 MySqlScript script = new MySqlScript(con, this.script);
+                script.Delimiter = config.scriptDelimeter;
                 script.StatementExecuted += scriptStatementExecuted;
                 script.Execute();
 

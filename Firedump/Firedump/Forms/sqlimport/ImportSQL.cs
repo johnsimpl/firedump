@@ -294,7 +294,16 @@ namespace Firedump.Forms.sqlimport
 
             bStartImport.Enabled = false;
 
-            adapter = new ImportAdapterManager(tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location);
+            DataRow serverdata = firedumpdbDataSet.mysql_servers.Rows[cmbServers.SelectedIndex];
+            ImportCredentialsConfig config = new ImportCredentialsConfig();
+            config.database = (string)serverdata["database"];
+            config.host = (string)serverdata["host"];
+            config.password = (string)serverdata["password"];
+            config.port = Convert.ToInt32((Int64)serverdata["port"]);
+            config.username = (string)serverdata["username"];
+            config.scriptDelimeter = tbDelimeter.Text;
+
+            adapter = new ImportAdapterManager(tb.Text,isLocal,isCompressed,isEncrypted,tbConfirmPass.Text,location,config);
             adapter.ImportComplete += onImportCompleteHandler;
             adapter.ImportInit += onImportInitHandler;
             adapter.ImportError += onImportErrorHandler;
@@ -333,23 +342,54 @@ namespace Firedump.Forms.sqlimport
                     break;
                 case 3: //google drive
                     break;
+                case 10: //decompression
+                    this.Invoke((MethodInvoker)delegate () {
+                        pbMainProgress.Maximum = maxprogress;
+                        lbSpeed.Visible = false;
+                        lbSpeed.Text = "";
+                        lStatus.Text = "Status: Decompressing...";
+                    });
+                    break;
             }
         }
 
         private void onImportInitHandler(int maxprogress)
         {
-            //throw new NotImplementedException();
+            this.Invoke((MethodInvoker)delegate () {
+                pbMainProgress.Maximum = maxprogress;
+                lbSpeed.Visible = false;
+                lbSpeed.Text = "";
+                lStatus.Text = "Status: Executing sql file...";
+            });
         }
 
         private void onImportCompleteHandler(ImportResultSet result)
         {
-            //throw new NotImplementedException();
+            this.Invoke((MethodInvoker)delegate () {
+                pbMainProgress.Value = pbMainProgress.Maximum;
+                lStatus.Text = "Status: Complete";
+                bStartImport.Enabled = true;
+            });
+            
+            //results handle
+            if (result.wasSuccessful)
+            {
+                MessageBox.Show("Import completed successfuly!","SQL Import",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Import completed with errors:\n"+result.errorMessage, "SQL Import", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void setProgressValue(int progress)
         {
             pbMainProgress.Invoke((MethodInvoker)delegate () {
-                pbMainProgress.Value = progress;
+                try
+                {
+                    pbMainProgress.Value = progress;
+                }
+                catch(Exception ex) { }
             });
         }
 
