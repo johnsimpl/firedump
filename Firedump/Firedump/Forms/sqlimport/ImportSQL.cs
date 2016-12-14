@@ -269,9 +269,8 @@ namespace Firedump.Forms.sqlimport
                 DialogResult res = MessageBox.Show("Databases load failed:\n"+ex.Message,"Databases load",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
                 if(res == DialogResult.Retry)
                 {
-                    cmbServers.Invoke((MethodInvoker)delegate () {
-                        cmbServers_SelectedIndexChanged(null, null);
-                    });                   
+                    reloadDatabasesTask = new Task(reloadDatabasesCombobox);
+                    reloadDatabasesTask.Start();
                 }
             }
 
