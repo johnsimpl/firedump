@@ -99,7 +99,7 @@ namespace Firedump.Forms.sqlimport
 
         private void bChoosePathSv_Click(object sender, EventArgs e)
         {
-            if (cmbDatabases.Items.Count == 0) { MessageBox.Show("No save locations available.","File browser",MessageBoxButtons.OK,MessageBoxIcon.Error); return; }
+            if (cmbSaveLocations.Items.Count == 0) { MessageBox.Show("No save locations available.","File browser",MessageBoxButtons.OK,MessageBoxIcon.Error); return; }
             try
             {
                 DataRow row = firedumpdbDataSet.backup_locations.Rows[cmbSaveLocations.SelectedIndex];
@@ -269,9 +269,8 @@ namespace Firedump.Forms.sqlimport
                 DialogResult res = MessageBox.Show("Databases load failed:\n"+ex.Message,"Databases load",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
                 if(res == DialogResult.Retry)
                 {
-                    cmbServers.Invoke((MethodInvoker)delegate () {
-                        cmbServers_SelectedIndexChanged(null, null);
-                    });                   
+                    reloadDatabasesTask = new Task(reloadDatabasesCombobox);
+                    reloadDatabasesTask.Start();
                 }
             }
 

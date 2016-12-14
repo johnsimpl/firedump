@@ -33,16 +33,28 @@
             this.tbpath = new System.Windows.Forms.TextBox();
             this.bgoBack = new System.Windows.Forms.Button();
             this.cbhiden = new System.Windows.Forms.CheckBox();
+            this.fileCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.userCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.permissionsCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.fileCol,
+            this.userCol,
+            this.groupCol,
+            this.permissionsCol});
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(2, 74);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(712, 369);
+            this.listView1.Size = new System.Drawing.Size(722, 367);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.List;
+            this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // btusepath
@@ -59,7 +71,7 @@
             // 
             this.tbpath.Location = new System.Drawing.Point(103, 18);
             this.tbpath.Name = "tbpath";
-            this.tbpath.Size = new System.Drawing.Size(611, 20);
+            this.tbpath.Size = new System.Drawing.Size(621, 20);
             this.tbpath.TabIndex = 6;
             // 
             // bgoBack
@@ -83,6 +95,24 @@
             this.cbhiden.UseVisualStyleBackColor = true;
             this.cbhiden.CheckedChanged += new System.EventHandler(this.cbhiden_CheckedChanged);
             // 
+            // fileCol
+            // 
+            this.fileCol.Text = "Name";
+            this.fileCol.Width = 150;
+            // 
+            // userCol
+            // 
+            this.userCol.Text = "Owner";
+            // 
+            // permissionsCol
+            // 
+            this.permissionsCol.Text = "Permissions";
+            this.permissionsCol.Width = 100;
+            // 
+            // groupCol
+            // 
+            this.groupCol.Text = "Group";
+            // 
             // FTPDirectory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,7 +124,7 @@
             this.Controls.Add(this.btusepath);
             this.Controls.Add(this.listView1);
             this.Name = "FTPDirectory";
-            this.Text = "FTPDirectory";
+            this.Text = "FTP File Browser";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FTPDirectory_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -107,5 +137,9 @@
         private System.Windows.Forms.TextBox tbpath;
         private System.Windows.Forms.Button bgoBack;
         private System.Windows.Forms.CheckBox cbhiden;
+        private System.Windows.Forms.ColumnHeader fileCol;
+        private System.Windows.Forms.ColumnHeader userCol;
+        private System.Windows.Forms.ColumnHeader permissionsCol;
+        private System.Windows.Forms.ColumnHeader groupCol;
     }
 }
