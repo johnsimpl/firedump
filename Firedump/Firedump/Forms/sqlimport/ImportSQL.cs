@@ -215,7 +215,7 @@ namespace Firedump.Forms.sqlimport
             try
             {
                 databases.Clear();
-
+                
                 if(reloadDatabasesTask != null && !reloadDatabasesTask.IsCompleted)
                 {
                     reloadDatabasesTask.Wait();
