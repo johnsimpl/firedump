@@ -50,7 +50,8 @@
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(2, 74);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(712, 369);
+            this.listView1.Size = new System.Drawing.Size(722, 367);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -70,7 +71,7 @@
             // 
             this.tbpath.Location = new System.Drawing.Point(103, 18);
             this.tbpath.Name = "tbpath";
-            this.tbpath.Size = new System.Drawing.Size(611, 20);
+            this.tbpath.Size = new System.Drawing.Size(621, 20);
             this.tbpath.TabIndex = 6;
             // 
             // bgoBack
@@ -123,7 +124,7 @@
             this.Controls.Add(this.btusepath);
             this.Controls.Add(this.listView1);
             this.Name = "FTPDirectory";
-            this.Text = "FTPDirectory";
+            this.Text = "FTP File Browser";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FTPDirectory_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();

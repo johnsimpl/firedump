@@ -33,6 +33,11 @@ namespace Firedump.Forms.location
             this.isFolderPicker = isFolderPicker;
             this.credentials = ftpcreds;
 
+            ImageList smallimagelist = new ImageList();
+            smallimagelist.Images.Add(Bitmap.FromFile("resources\\icons\\folderimage.bmp"));
+            smallimagelist.Images.Add(Bitmap.FromFile("resources\\icons\\fileimage.bmp"));
+            listView1.SmallImageList = smallimagelist;
+
             ftpUtils = new FTPUtils(ftpcreds);
             
             ftpUtils.startSession();
@@ -73,7 +78,9 @@ namespace Firedump.Forms.location
                 fileinfo.Name = file.Name;
                 fileinfo.Owner = file.Owner;
                 fileinfo.Group = file.Group;
-                ListViewItem item = new ListViewItem(fileinfo.Name);
+                int imageindex = 1;
+                if (fileinfo.IsDirectory) imageindex = 0;
+                ListViewItem item = new ListViewItem(fileinfo.Name, imageindex);
                 item.Tag = fileinfo;
                 item.SubItems.Add(fileinfo.Owner);
                 item.SubItems.Add(fileinfo.Group);
