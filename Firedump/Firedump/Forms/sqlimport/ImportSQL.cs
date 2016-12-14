@@ -99,7 +99,7 @@ namespace Firedump.Forms.sqlimport
 
         private void bChoosePathSv_Click(object sender, EventArgs e)
         {
-            if (cmbDatabases.Items.Count == 0) { MessageBox.Show("No save locations available.","File browser",MessageBoxButtons.OK,MessageBoxIcon.Error); return; }
+            if (cmbSaveLocations.Items.Count == 0) { MessageBox.Show("No save locations available.","File browser",MessageBoxButtons.OK,MessageBoxIcon.Error); return; }
             try
             {
                 DataRow row = firedumpdbDataSet.backup_locations.Rows[cmbSaveLocations.SelectedIndex];

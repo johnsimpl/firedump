@@ -54,10 +54,16 @@ namespace Firedump.Forms.location
             headItem.Text = "..";
             headItem.Tag = finfo;
             listView1.Items.Add(headItem);
-            foreach(RemoteFileInfo file in remoteFileInfoList)
-            {               
-                ListViewItem item = new ListViewItem();
-                
+            loadDataToListview();
+
+
+            tbpath.Text = previousPath;
+        }
+
+        private void loadDataToListview()
+        {
+            foreach (RemoteFileInfo file in remoteFileInfoList)
+            {
                 FileInfo fileinfo = new FileInfo();
                 fileinfo.IsDirectory = file.IsDirectory;
                 fileinfo.Persmissions = file.FilePermissions.Text;
@@ -67,13 +73,14 @@ namespace Firedump.Forms.location
                 fileinfo.Name = file.Name;
                 fileinfo.Owner = file.Owner;
                 fileinfo.Group = file.Group;
+                ListViewItem item = new ListViewItem(fileinfo.Name);
                 item.Tag = fileinfo;
-                item.Text = fileinfo.ToString(); 
+                item.SubItems.Add(fileinfo.Owner);
+                item.SubItems.Add(fileinfo.Group);
+                item.SubItems.Add(fileinfo.Persmissions);
                 listView1.Items.Add(item);
+                //listView1.Items.AddRange(new ListViewItem[] { item });
             }
-
-
-            tbpath.Text = previousPath;
         }
 
 
@@ -90,23 +97,7 @@ namespace Firedump.Forms.location
             headItem.Tag = finfo;         
             listView1.Items.Add(headItem);
             remoteFileInfoList = ftpUtils.getDirectoryListing(path, isFolderPicker, showHidenFiles);
-            foreach (RemoteFileInfo file in remoteFileInfoList)
-            {
-                ListViewItem item = new ListViewItem();
-                FileInfo fileinfo = new FileInfo();              
-                fileinfo.IsDirectory = file.IsDirectory;
-                fileinfo.Persmissions = file.FilePermissions.Text;
-                fileinfo.FullName = file.FullName;
-                fileinfo.Type = file.FileType;
-                fileinfo.Owner = file.Owner;
-                fileinfo.Name = file.Name;
-                fileinfo.Owner = file.Owner;
-                fileinfo.Group = file.Group;
-
-                item.Text = fileinfo.ToString();
-                item.Tag = fileinfo;
-                listView1.Items.Add(item);
-            }
+            loadDataToListview();
         }
 
         
