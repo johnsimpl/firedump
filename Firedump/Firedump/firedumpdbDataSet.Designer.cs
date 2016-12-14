@@ -6683,7 +6683,7 @@ WHERE        (id = @Original_id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[4];
+            this._commandCollection = new global::System.Data.SQLite.SQLiteCommand[5];
             this._commandCollection[0] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        mysql_servers.*\r\nFROM            mysql_servers";
@@ -6702,20 +6702,17 @@ WHERE        (id = @Original_id)";
             this._commandCollection[1].Parameters.Add(param);
             this._commandCollection[2] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT        COUNT(*) AS Expr1\r\nFROM            mysql_servers\r\nWHERE        (nam" +
-                "e = @name)";
+            this._commandCollection[2].CommandText = "SELECT        mysql_servers.id\r\nFROM            mysql_servers\r\nWHERE mysql_server" +
+                "s.name = @name";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
             param.DbType = global::System.Data.DbType.String;
-            param.Size = 80;
-            param.SourceColumn = "name";
             this._commandCollection[2].Parameters.Add(param);
             this._commandCollection[3] = new global::System.Data.SQLite.SQLiteCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "UPDATE       mysql_servers\r\nSET                name =@name, port =@port, host =@h" +
-                "ost, username =@username, password =@password, [database] =@database\r\nWHERE id =" +
-                " @id";
+            this._commandCollection[3].CommandText = "SELECT        COUNT(*) AS Expr1\r\nFROM            mysql_servers\r\nWHERE        (nam" +
+                "e = @name)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@name";
@@ -6723,37 +6720,49 @@ WHERE        (id = @Original_id)";
             param.Size = 80;
             param.SourceColumn = "name";
             this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4] = new global::System.Data.SQLite.SQLiteCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = "UPDATE       mysql_servers\r\nSET                name =@name, port =@port, host =@h" +
+                "ost, username =@username, password =@password, [database] =@database\r\nWHERE id =" +
+                " @id";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            param = new global::System.Data.SQLite.SQLiteParameter();
+            param.ParameterName = "@name";
+            param.DbType = global::System.Data.DbType.String;
+            param.Size = 80;
+            param.SourceColumn = "name";
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@port";
             param.DbType = global::System.Data.DbType.Int64;
             param.DbType = global::System.Data.DbType.Int64;
             param.Size = 8;
             param.SourceColumn = "port";
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@host";
             param.DbType = global::System.Data.DbType.String;
             param.Size = 2147483647;
             param.SourceColumn = "host";
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@username";
             param.DbType = global::System.Data.DbType.String;
             param.Size = 45;
             param.SourceColumn = "username";
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@password";
             param.DbType = global::System.Data.DbType.String;
             param.Size = 45;
             param.SourceColumn = "password";
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@database";
             param.DbType = global::System.Data.DbType.String;
             param.Size = 2147483647;
             param.SourceColumn = "database";
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
             param = new global::System.Data.SQLite.SQLiteParameter();
             param.ParameterName = "@id";
             param.DbType = global::System.Data.DbType.Int64;
@@ -6761,7 +6770,7 @@ WHERE        (id = @Original_id)";
             param.Size = 8;
             param.SourceColumn = "id";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._commandCollection[3].Parameters.Add(param);
+            this._commandCollection[4].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7037,8 +7046,42 @@ WHERE        (id = @Original_id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual object numberOfOccurances(string name) {
+        public virtual object GetIdByName(string name) {
             global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[2];
+            if ((name == null)) {
+                throw new global::System.ArgumentNullException("name");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(name));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual object numberOfOccurances(string name) {
+            global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[3];
             if ((name == null)) {
                 throw new global::System.ArgumentNullException("name");
             }
@@ -7073,7 +7116,7 @@ WHERE        (id = @Original_id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
         public virtual int UpdateMySqlServerById(string name, long port, string host, string username, string password, string database, long id) {
-            global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[3];
+            global::System.Data.SQLite.SQLiteCommand command = this.CommandCollection[4];
             if ((name == null)) {
                 throw new global::System.ArgumentNullException("name");
             }
