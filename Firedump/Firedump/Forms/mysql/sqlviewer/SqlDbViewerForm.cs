@@ -134,7 +134,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             if (queryText.Contains( "UPDATE ") || queryText.Contains(" INSERT ") || queryText.StartsWith("UPDATE ") || queryText.StartsWith("INSERT "))
                 executeUpdateOrInsertQuery(richTextBox1.Text);
             else
-                executeQuery(richTextBox1.Text);                    
+                executeQuery(richTextBox1.Text);         
         }
         
         private void executeUpdateOrInsertQuery(string query)
@@ -267,8 +267,9 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 if (i == -1)
                     i = 0;
-
-                richTextBox1.Select(i, word.Length + 1);
+              
+                richTextBox1.Select(i, word.Length + 1);              
+                    
                 if (MysqlWords.words.Contains(word))
                 {
                     richTextBox1.SelectionColor = Color.Blue;
@@ -279,7 +280,6 @@ namespace Firedump.Forms.mysql.sqlviewer
                 }
                 else if (MysqlWords.operators.Contains(word))
                 {
-                    richTextBox1.Select(i, word.Length + 1);
                     richTextBox1.SelectionColor = Color.Red;
                 }
                 else
@@ -300,7 +300,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             //space
             if (((char)e.KeyCode) == ' ' && ((char)e.KeyCode) != (char)Keys.Back)
             {
-                setSqlHighlight();
+               setSqlHighlight();
             }
             else if (((char)e.KeyCode) == (char)Keys.Back)
             {
@@ -332,7 +332,6 @@ namespace Firedump.Forms.mysql.sqlviewer
                     intellform.Visible = false;
                     intellform.setItemsToListView(candidatewords);
                     intellform.Show(this);
-                    //richTextBox1.Focus();
                 }
             } else
             {
@@ -341,22 +340,7 @@ namespace Firedump.Forms.mysql.sqlviewer
         
         }
 
-        public void MyOnKeyUp(KeyEventArgs e,string value)
-        {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
-            {
-
-            } else if (e.KeyCode == Keys.Enter) {
-                richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
-                intellform.Visible = false;
-                richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            } else
-            {
-                richTextBox1.Focus();
-
-            }
-            
-        }
+        
 
 
         private string limitQuery(string query)
@@ -457,6 +441,52 @@ namespace Firedump.Forms.mysql.sqlviewer
         }
 
 
+        public void MyOnKeyUp(KeyPressEventArgs e, string value)
+        {
+            if (e.KeyChar == (char)Keys.Up || e.KeyChar == (char)Keys.Down)
+            {
+
+            }
+            else if (e.KeyChar == (char)Keys.Enter)
+            {
+                richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
+                intellform.Visible = false;
+                richTextBox1.SelectionStart = richTextBox1.Text.Length;
+
+                initText();
+            }
+            else
+            {               
+                if(e.KeyChar != (char)Keys.Back)
+                {
+                    Console.WriteLine(e.KeyChar.ToString());
+                    richTextBox1.Focus();
+                    richTextBox1.AppendText(e.KeyChar.ToString());
+                } else
+                {
+                    richTextBox1.Focus();
+                    richTextBox1.Text = richTextBox1.Text.Substring(0,richTextBox1.Text.Length-1);
+                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+
+                    //initText();
+                    string[] sqlarr = richTextBox1.Text.Split(' ');
+                    richTextBox1.Text = "";
+                    for (int i = 0; i < sqlarr.Length; i++)
+                    {
+                        int n = i;
+                        int t = ++n;
+                        if (t == sqlarr.Length)
+                            richTextBox1.AppendText(sqlarr[i]);
+                        else
+                            richTextBox1.AppendText(sqlarr[i] + " ");
+
+                        richTextBox1.SelectionStart = richTextBox1.TextLength;
+                        setSqlHighlight();
+                    }
+                }                
+            }
+
+        }
 
 
         //---interface method
@@ -467,9 +497,27 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
                 intellform.Visible = false;
-                richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                richTextBox1.SelectionStart = richTextBox1.Text.Length + 1;
+
+                initText();
             });
                 
         }
+
+
+
+
+        private void initText()
+        {
+            string[] sqlarr = richTextBox1.Text.Split(' ');
+            richTextBox1.Text = "";
+            for (int i = 0; i < sqlarr.Length; i++)
+            {              
+                richTextBox1.AppendText(sqlarr[i] + " ");
+                richTextBox1.SelectionStart = richTextBox1.TextLength;
+                setSqlHighlight();
+            }
+        }
+
     }
 }

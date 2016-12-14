@@ -17,7 +17,7 @@ namespace Firedump.Forms.mysql.sqlviewer
         public IntelliSense()
         {
             InitializeComponent();
-            this.listView1.KeyUp += IntelliSense_KeyUp;
+            this.listView1.KeyPress += IntelliSense_KeyUp;
         }
 
         public void setListener(IIntelliSense listener, SqlDbViewerForm form)
@@ -46,7 +46,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             }
         }
 
-        private void IntelliSense_KeyUp(object sender, KeyEventArgs e)
+        private void IntelliSense_KeyUp(object sender, KeyPressEventArgs e)
         {
             string value = listView1.SelectedItems[0].Text;
             form.MyOnKeyUp(e,value);
