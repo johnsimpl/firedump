@@ -210,7 +210,7 @@ namespace Firedump.Forms.location
             }
             //check creds
 
-            FTPDirectory ftpdirectory = new FTPDirectory(false, config);
+            FTPDirectory ftpdirectory = new FTPDirectory(true, config);
             if(!String.IsNullOrEmpty(tbChooseAPath.Text))
             {
                 ftpdirectory.path = tbChooseAPath.Text;
