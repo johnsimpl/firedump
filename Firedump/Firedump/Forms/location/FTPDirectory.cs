@@ -51,14 +51,7 @@ namespace Firedump.Forms.location
             {
                 remoteFileInfoList = ftpUtils.getDirectoryListing("/", isFolderPicker, false);
             }
-            ListViewItem headItem = new ListViewItem();
-            FileInfo finfo = new FileInfo();
-            finfo.FullName = "..";
-            finfo.Name = "..";
-            finfo.IsDirectory = true;
-            headItem.Text = "..";
-            headItem.Tag = finfo;
-            listView1.Items.Add(headItem);
+            
             loadDataToListview();
 
 
@@ -67,6 +60,16 @@ namespace Firedump.Forms.location
 
         private void loadDataToListview()
         {
+            ListViewItem headItem = new ListViewItem();
+            FileInfo finfo = new FileInfo();
+            finfo.FullName = "..";
+            finfo.Name = "..";
+            finfo.IsDirectory = true;
+            headItem.Text = "..";
+            headItem.Tag = finfo;
+            headItem.ImageIndex = 0;
+            listView1.Items.Add(headItem);
+
             foreach (RemoteFileInfo file in remoteFileInfoList)
             {
                 FileInfo fileinfo = new FileInfo();
@@ -94,15 +97,7 @@ namespace Firedump.Forms.location
         private void setDirectoryList(string path)
         {
             listView1.Items.Clear();
-            ListViewItem headItem = new ListViewItem();
-            FileInfo finfo = new FileInfo();
-            finfo.FullName = "..";
-            finfo.Name = "..";
-            finfo.IsDirectory = true;
-            finfo.Persmissions = "";
-            headItem.Text = "..";
-            headItem.Tag = finfo;         
-            listView1.Items.Add(headItem);
+
             remoteFileInfoList = ftpUtils.getDirectoryListing(path, isFolderPicker, showHidenFiles);
             loadDataToListview();
         }
