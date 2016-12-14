@@ -32,6 +32,7 @@
             this.btusepath = new System.Windows.Forms.Button();
             this.tbpath = new System.Windows.Forms.TextBox();
             this.bgoBack = new System.Windows.Forms.Button();
+            this.cbhiden = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listView1
@@ -71,11 +72,23 @@
             this.bgoBack.UseVisualStyleBackColor = true;
             this.bgoBack.Click += new System.EventHandler(this.bgoBack_Click);
             // 
+            // cbhiden
+            // 
+            this.cbhiden.AutoSize = true;
+            this.cbhiden.Location = new System.Drawing.Point(104, 51);
+            this.cbhiden.Name = "cbhiden";
+            this.cbhiden.Size = new System.Drawing.Size(103, 17);
+            this.cbhiden.TabIndex = 8;
+            this.cbhiden.Text = "Show hiden files";
+            this.cbhiden.UseVisualStyleBackColor = true;
+            this.cbhiden.CheckedChanged += new System.EventHandler(this.cbhiden_CheckedChanged);
+            // 
             // FTPDirectory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(726, 445);
+            this.Controls.Add(this.cbhiden);
             this.Controls.Add(this.bgoBack);
             this.Controls.Add(this.tbpath);
             this.Controls.Add(this.btusepath);
@@ -93,5 +106,6 @@
         private System.Windows.Forms.Button btusepath;
         private System.Windows.Forms.TextBox tbpath;
         private System.Windows.Forms.Button bgoBack;
+        private System.Windows.Forms.CheckBox cbhiden;
     }
 }

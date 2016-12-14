@@ -216,8 +216,10 @@ namespace Firedump.Forms.location
             }
         }
 
-
-        
-
+        private void cbhiden_CheckedChanged(object sender, EventArgs e)
+        {
+            showHidenFiles = cbhiden.Checked;
+            setDirectoryList(previousPath);
+        }
     }
 }
