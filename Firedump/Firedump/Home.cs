@@ -77,17 +77,12 @@ namespace Firedump
 
         private void bAddServer_Click(object sender, EventArgs e)
         {
-            NewMySQLServer newMysqlServer = new NewMySQLServer(this);
+            NewMySQLServer newMysqlServer = new NewMySQLServer();
+            newMysqlServer.ReloadServerData += reloadserverData;
             newMysqlServer.ShowDialog();
         }
 
-        public void reloadServerData()
-        {
-            mysql_serversAdapter.Fill(serverData);
-            //edw kanei select to teleutaio item (auto pou molis egine insert kai to fortwnei)
-            cmbServers.SelectedIndex = cmbServers.Items.Count - 1;
-            cmbServers_SelectionChangeCommitted(null,null);
-        }
+        
 
         private void loadServerData()
         {
@@ -530,14 +525,34 @@ namespace Firedump
             }
         }
 
+        
         private void btEditServer_Click(object sender, EventArgs e)
         {
             if (cmbServers.Items.Count > 0 && cmbServers.SelectedIndex >= 0)
             {
                 firedumpdbDataSet.mysql_serversRow server = ((firedumpdbDataSet.mysql_serversDataTable)cmbServers.DataSource).ElementAt(cmbServers.SelectedIndex);
                 NewMySQLServer newServer = new NewMySQLServer(true, server);
+                newServer.ReloadServerData += reloadserverData;
                 newServer.Show();
+               
             }
+        }
+
+        private void reloadserverData(int id)
+        {            
+            mysql_serversAdapter.Fill(serverData);
+            int i = 0;
+            foreach(firedumpdbDataSet.mysql_serversRow row in serverData)
+            {
+                if(row.id == id)
+                {
+                    cmbServers.SelectedIndex = i;
+                    cmbServers_SelectionChangeCommitted(null, null);
+                    break;
+                }
+                i++;
+            }
+            
         }
 
         //

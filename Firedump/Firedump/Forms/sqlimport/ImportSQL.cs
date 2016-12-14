@@ -16,7 +16,7 @@ namespace Firedump.Forms.sqlimport
 {
     public partial class ImportSQL : Form
     {
-        private Task<List<string>> reloadDatabasesTask;
+        private Task reloadDatabasesTask;
         private List<string> databases = new List<string>();
         private DataRow location;
         private ImportAdapterManager adapter;
@@ -206,8 +206,10 @@ namespace Firedump.Forms.sqlimport
         {
             if (cmbServers.Items.Count == 0) return;
 
-            Task task = new Task(reloadDatabasesCombobox);
-            task.Start();
+            if (reloadDatabasesTask != null && !reloadDatabasesTask.IsCompleted) return;
+
+            reloadDatabasesTask = new Task(reloadDatabasesCombobox);
+            reloadDatabasesTask.Start();
         }
 
         private async void reloadDatabasesCombobox()
@@ -215,11 +217,6 @@ namespace Firedump.Forms.sqlimport
             try
             {
                 databases.Clear();
-
-                if(reloadDatabasesTask != null && !reloadDatabasesTask.IsCompleted)
-                {
-                    reloadDatabasesTask.Wait();
-                }
 
                 int selectedindex = 0;
                 cmbServers.Invoke((MethodInvoker)delegate () {
@@ -248,10 +245,7 @@ namespace Firedump.Forms.sqlimport
                     return;
                 }
 
-                reloadDatabasesTask = new Task<List<string>>(con.getDatabases);
-                reloadDatabasesTask.Start();
-                
-                List<string> tempdbs = await reloadDatabasesTask;
+                List<string> tempdbs = con.getDatabases();
                 
                 if (!cbShowSysDb.Checked)
                 {

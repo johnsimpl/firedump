@@ -89,7 +89,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             toolStripComboBox1.SelectedIndex = 2;
 
             intellform = new IntelliSense();
-            intellform.setListener(this);
+            intellform.setListener(this,this);
             intellform.Location = point;
             intellform.Show();
             intellform.Visible = false;
@@ -332,13 +332,30 @@ namespace Firedump.Forms.mysql.sqlviewer
                     intellform.Visible = false;
                     intellform.setItemsToListView(candidatewords);
                     intellform.Show(this);
-                    richTextBox1.Focus();
+                    //richTextBox1.Focus();
                 }
             } else
             {
                 intellform.Visible = false;
             }
         
+        }
+
+        public void MyOnKeyUp(KeyEventArgs e,string value)
+        {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+
+            } else if (e.KeyCode == Keys.Enter) {
+                richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
+                intellform.Visible = false;
+                richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            } else
+            {
+                richTextBox1.Focus();
+
+            }
+            
         }
 
 
@@ -450,6 +467,7 @@ namespace Firedump.Forms.mysql.sqlviewer
             {
                 richTextBox1.Text = richTextBox1.Text.Replace(currentWord, value);
                 intellform.Visible = false;
+                richTextBox1.SelectionStart = richTextBox1.Text.Length;
             });
                 
         }

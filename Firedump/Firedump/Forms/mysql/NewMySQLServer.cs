@@ -13,8 +13,14 @@ namespace Firedump.Forms.mysql
 {
     public partial class NewMySQLServer : Form
     {
+        public delegate void reloadserverdata(int id);
+        public event reloadserverdata ReloadServerData;
+        private void onReloadServerData(int id)
+        {
+            ReloadServerData?.Invoke(id);
+        }
+
         private DbConnection con = new DbConnection();
-        private Home listener;
         private bool isUpdate = false;
         private firedumpdbDataSet.mysql_serversRow mysqlserver; 
 
@@ -36,13 +42,10 @@ namespace Firedump.Forms.mysql
             tbUsername.Text = server.username;
             tbPassword.Text = server.password;
             tbDatabase.Text = server.database;
+
         }
 
-        public NewMySQLServer(Home listener)
-        {
-            InitializeComponent();
-            this.listener = listener;
-        }
+        
 
         private void bTestConnection_Click(object sender, EventArgs e)
         {
@@ -128,7 +131,7 @@ namespace Firedump.Forms.mysql
                 MessageBox.Show("Type a name for the new server", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if ((Int64)adapter.numberOfOccurances(tbName.Text) == 0)
+            if ((Int64)adapter.numberOfOccurances(tbName.Text) == 0 || isUpdate)
             {
                 if(!performChecks())
                 {
@@ -139,14 +142,13 @@ namespace Firedump.Forms.mysql
                     adapter.UpdateMySqlServerById(tbName.Text,con.port,con.Host,con.username,con.password,tbDatabase.Text, mysqlserver.id);
                 else
                     adapter.Insert(tbName.Text, con.port, con.Host, con.username, tbPassword.Text, tbDatabase.Text); //prepei na bei kai database
-                
-                if (listener != null)
-                {
-                    listener.reloadServerData();
-                }
+
+                int id = Convert.ToInt32((Int64)adapter.GetIdByName(tbName.Text));
+                onReloadServerData(id);
                 this.Close();
                 return;
             }
+
 
             MessageBox.Show("Name "+tbName.Text+ " already exists", "Test Connection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
