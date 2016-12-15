@@ -28,6 +28,8 @@ some early pics.<br>
 <br>
 <img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic2.PNG?raw=true" width="450" />
 <br>
+<img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic5.PNG?raw=true" width="450" />
+<br>
 <img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic3.PNG?raw=true" width="450" />
 <br>
 <img src="https://github.com/avraampiperidis/firedump/blob/master/icons/pic4.PNG?raw=true" width="450" />
