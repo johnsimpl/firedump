@@ -208,7 +208,7 @@ namespace Firedump
 
         public void addToLbSaveLocation(BackupLocation loc)
         {
-            firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)loc.Tag;
+            firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)loc.Tag;          
             int imageindex;
             switch (row.service_type)
             {
@@ -232,11 +232,13 @@ namespace Firedump
             ListViewItem item = new ListViewItem(row.name,imageindex);
             item.SubItems.Add(loc.path);
             item.Tag = (firedumpdbDataSet.backup_locationsRow)loc.Tag;
-            if (lbSaveLocations.Items.Contains(findItemSaveLoc(loc.id)))
+            ListViewItem saveItem = findItemSaveLoc(loc);
+            if (lbSaveLocations.Items.Contains(saveItem))
             {
                 return;
             }
-            lbSaveLocations.Items.Add(item);            
+            lbSaveLocations.Items.Add(item);         
+               
         }
 
        
@@ -765,26 +767,30 @@ namespace Firedump
 
         public void deleteSaveLocation(BackupLocation loc)
         {
-            ListViewItem item = findItemSaveLoc(loc.id);
+            ListViewItem item = findItemSaveLoc(loc);
             if(lbSaveLocations.Items.Contains(item))
                 lbSaveLocations.Items.Remove(item);
 
         }
 
-        private ListViewItem findItemSaveLoc(int id)
+        private ListViewItem findItemSaveLoc(BackupLocation loc)
         {
             ListViewItem item = new ListViewItem();
             int i = 0;
             bool foundflag = false;
-            while(!foundflag && i < lbSaveLocations.Items.Count)
+            
+          
+            while (!foundflag && i < lbSaveLocations.Items.Count)
             {
-                object Tag = lbSaveLocations.Items[i].Tag;
-                if (((firedumpdbDataSet.backup_locationsRow)Tag).id == id)
+                firedumpdbDataSet.backup_locationsRow tag = (firedumpdbDataSet.backup_locationsRow)lbSaveLocations.Items[i].Tag;
+                tag.BeginEdit();
+                if (tag.id == loc.id)
                 {
                     item = lbSaveLocations.Items[i];
                     foundflag = true;
                 }
                 i++;
+                tag.CancelEdit();
             }
             return item;
         }
