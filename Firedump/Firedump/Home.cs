@@ -191,16 +191,19 @@ namespace Firedump
                 
             } else
             {
-                string database = tvDatabases.SelectedNode.Parent.Text;
-                if (sender.ToString() == "browse data")
+                if(tvDatabases.SelectedNode != null && tvDatabases.SelectedNode.Parent != null)
                 {
-                    SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
-                    sqlform.Show();
-                }
-                else if (sender.ToString() == "inspect database")
-                {
-                    AnalyzeDbForm adbf = new AnalyzeDbForm(server, database);
-                    adbf.Show();
+                    string database = tvDatabases.SelectedNode.Parent.Text;
+                    if (sender.ToString() == "browse data")
+                    {
+                        SqlDbViewerForm sqlform = new SqlDbViewerForm(server, database);
+                        sqlform.Show();
+                    }
+                    else if (sender.ToString() == "inspect database")
+                    {
+                        AnalyzeDbForm adbf = new AnalyzeDbForm(server, database);
+                        adbf.Show();
+                    }
                 }
                
             }

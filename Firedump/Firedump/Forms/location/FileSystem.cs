@@ -72,7 +72,7 @@ namespace Firedump.Forms.location
                 else
                 {
                     adapter.Insert(tbName.Text, "", "", tbPath.Text, "", 0, 0, "", "", "", "", "", "", "", 0, 0, "", "", 0, "", 0);
-                }
+                }                
                 locswitch.reloadDataset(); //callback stin klasi pou to kalese na kanei refresh to combobox
                 this.Close();
             }
