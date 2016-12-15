@@ -495,6 +495,7 @@
       <DependentUpon>firedumpDataModel.edmx</DependentUpon>
       <LastGenOutput>firedumpDataModel.cs</LastGenOutput>
     </Content>
+    <None Include="resources\icons\Database-128.png" />
     <Content Include="resources\icons\databaseimage.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
