@@ -57,13 +57,14 @@ namespace FiredumpTest
             config.password = Const.password;
             config.database = Const.database;
 
-            adapter.startDump(config,form);
+            adapter.startDump(config);
+
         }
 
 
 
 
-        class MockFormProgressListener : IDumpProgressListener
+        class MockFormProgressListener
         {
             public List<string> tables { get; set; }
             public int progressCallCount { get; set; }
@@ -130,9 +131,8 @@ namespace FiredumpTest
         }
 
 
-        class MockAdapterListener : IAdapterListener
+        class MockAdapterListener 
         {
-            public IDumpProgressListener listener;
             public List<string> tables = new List<string>();
             public MockAdapterListener()
             {
@@ -144,10 +144,7 @@ namespace FiredumpTest
                 Assert.IsNotNull(table);
                 NumOfTables++;
                 tables.Remove(table);
-                if (listener != null)
-                {
-                    listener.onTableDumpStart(table);
-                }
+               
             }
 
             public void validateOnTableStartDump(int actual)
@@ -156,14 +153,11 @@ namespace FiredumpTest
                 Assert.AreEqual(0, tables.Count);
             }
 
-            public void startDump(DumpCredentialsConfig credentialsConfigInstance, IDumpProgressListener listener)
+            public void startDump(DumpCredentialsConfig credentialsConfigInstance)
             {
-                this.listener = listener;
-                listener.onProgress("mysql dump started!from server:");
-                MysqlDump mysqldump = new MysqlDump(this);
+                MysqlDump mysqldump = new MysqlDump();
                 mysqldump.credentialsConfigInstance = credentialsConfigInstance;
                 DumpResultSet dumpresult = mysqldump.executeDump();
-                listener.onCompleted(dumpresult);
             }
 
             public void tableRowCount(int rowcount)

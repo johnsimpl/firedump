@@ -7,13 +7,16 @@ using System.IO;
 using Firedump.Forms.mysql;
 using System.Collections.Generic;
 using Firedump.models.databaseUtils;
+using log4net;
+using log4net.Config;
 
 namespace FiredumpTest
 {
     [TestClass]
     public class TestMysqlDump
     {
-        
+        private static readonly ILog log = LogManager.GetLogger(typeof(TestMysqlDump));
+        public List<string> tables = new List<string>();
         /// <summary>
         /// runs only once at class init
         /// </summary>
@@ -23,6 +26,7 @@ namespace FiredumpTest
             //num of rows to create for the dumptest to run
             //it will be deleted as the whle database at the end of the run
             //calling clearDb()
+            BasicConfigurator.Configure();
             TestDbConnection.populateDb(150);
         }
 
@@ -54,13 +58,12 @@ namespace FiredumpTest
         }
 
 
-
         [TestMethod]
         public void TestExecuteDump()
         {
             ConfigurationManager.getInstance().initializeConfig();
 
-            MysqlDump mysqldump = new MysqlDump(null);
+            MysqlDump mysqldump = new MysqlDump();
             DumpCredentialsConfig creconfig = new DumpCredentialsConfig();
             creconfig.host = Const.host;
             creconfig.port = 3306;
@@ -79,8 +82,6 @@ namespace FiredumpTest
             Assert.AreEqual(true,File.Exists(absfilepath));
             File.Delete(absfilepath);
             Assert.AreEqual(false, File.Exists(absfilepath));
-
-            
             
         }
 
@@ -97,71 +98,70 @@ namespace FiredumpTest
             creconfig.password = Const.password;
             creconfig.database = Const.database;
 
+            ConfigurationManager.getInstance().initializeConfig();
             ConfigurationManager.getInstance().mysqlDumpConfigInstance.includeCreateSchema = false;
             ConfigurationManager.getInstance().compressConfigInstance.enableCompression = true;
 
-            MockAdapterListener mockadapter = new MockAdapterListener();
             DbConnection connection = DbConnection.Instance();
             connection.Host = Const.host;
             connection.password = Const.password;
             connection.username = Const.username;
             List<string> tables = connection.getTables(Const.database);
             int actualNumOfTables = tables.Count;
-            mockadapter.tables = tables;
 
-            MysqlDump mysqldump = new MysqlDump(mockadapter);
-
+            MysqlDump mysqldump = new MysqlDump();          
             mysqldump.credentialsConfigInstance = creconfig;
+            
+            mysqldump.CompressProgress += compressProgress;
+            mysqldump.CompressStart += onCompressStart;
+            mysqldump.TableRowCount += tableRowCount;
+            mysqldump.TableStartDump += onTableStartDump;
             DumpResultSet dumpresult = mysqldump.executeDump();
-            Console.WriteLine(dumpresult.fileAbsPath);
+
+            Assert.IsTrue(dumpresult.wasSuccessful);
             Assert.IsTrue(File.Exists(dumpresult.fileAbsPath));
             File.Delete(dumpresult.fileAbsPath);
             Assert.AreEqual(false, File.Exists(dumpresult.fileAbsPath));
-            mockadapter.validateOnTableStartDump(actualNumOfTables);
+            validateOnTableStartDump(actualNumOfTables);
         }
 
 
-        class MockAdapterListener : IAdapterListener
+        public int NumOfTables { get; set; }
+
+
+        public void onTableStartDump(string table)
         {
-            public List<string> tables = new List<string>();
-            public MockAdapterListener()
-            {
-                NumOfTables = 0;
-            }
-            public int NumOfTables { get; set; }
-            
+            Console.WriteLine("table:" + table);
+            log.Info("table:"+table);
+            Assert.IsNotNull(table);
+            NumOfTables++;
+            tables.Remove(table);
+        }
 
-            public void onTableStartDump(string table)
-            {
-                Assert.IsNotNull(table);
-                NumOfTables++;
-                tables.Remove(table);
-            }
-
-            public void tableRowCount(int rowcount)
-            {
-                
-            }
-
-            public void validateOnTableStartDump(int actual)
-            {
-                Assert.AreEqual(actual,NumOfTables);
-                Assert.AreEqual(0,tables.Count);
-            }
-
-            public void compressProgress(int progress)
-            {
-
-            }
-
-            public void onCompressStart()
-            {
-
-            }
-
+        public void tableRowCount(int rowcount)
+        {
 
         }
 
+        public void validateOnTableStartDump(int actual)
+        {
+            Console.WriteLine("actual:" + actual);
+            log.Info("actual:"+actual);
+            Assert.AreEqual(actual, NumOfTables);
+            Assert.AreEqual(0, tables.Count);
+        }
+
+        public void compressProgress(int progress)
+        {
+
+        }
+
+        public void onCompressStart()
+        {
+
+        }
+
+        
 
     }
 }
