@@ -13,6 +13,14 @@ namespace Firedump.Forms.location
 {
     public partial class LocationSwitchboard : Form
     {
+        //<events>
+        public delegate void saveLocationAdded();
+        public event saveLocationAdded SaveLocationAdded;
+        private void onSaveLocationAdded()
+        {
+            SaveLocationAdded?.Invoke();
+        }
+        //</events>
         private Home homeinstance;
         public LocationSwitchboard(Home homeinstance)
         {
@@ -28,16 +36,8 @@ namespace Firedump.Forms.location
 
         public void reloadDataset()
         {
-            /*
-            backuplocationsBindingSource.DataSource = firedumpdbDataSet.backup_locations;
-            backuplocationsBindingSource.ResetBindings(false);
-            /*
-            backuplocationsBindingSource.ResetBindings(false);
-            cmbName.DataSource = backuplocationsBindingSource;
-            cmbName.DataSource = backuplocationsBindingSource;
-            cmbName.Refresh();*/ //mou evgale ti pisti mexri na vrw pws ginete ...
             this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
-            try
+            try //AFTO EDW THELEI ALLAGI
             {
                 cmbName.SelectedIndex = cmbName.Items.Count - 1;
             }
@@ -45,6 +45,7 @@ namespace Firedump.Forms.location
             {
 
             }
+            onSaveLocationAdded();
         }
 
         private void reloadPath()
@@ -75,14 +76,40 @@ namespace Firedump.Forms.location
                 return;
             }
 
-            BackupLocation loc = new BackupLocation();
-            loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
+            try
+            {
+                BackupLocation loc = new BackupLocation();
+                loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
+                
+                
+                loc.Tag = findRow(loc.id);
 
-            this.backup_locationsTableAdapter.DeleteQuery((Int64)cmbName.SelectedValue);
-            this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+                homeinstance.deleteSaveLocation(loc); //kanei delete kai apo to listbox sto home an tixon auto to location exei ginei eidh add
 
-            homeinstance.deleteSaveLocation(loc); //kanei delete kai apo to listbox sto home an tixon auto to location exei ginei eidh add
-            reloadPath();
+                this.backup_locationsTableAdapter.DeleteQuery((Int64)cmbName.SelectedValue);
+                this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+
+                reloadPath();
+            }
+            catch(Exception ex) { }
+        }
+
+        private firedumpdbDataSet.backup_locationsRow findRow(int id)
+        {
+            int i = 0;
+            bool foundflag = false;
+            firedumpdbDataSet.backup_locationsRow row = firedumpdbDataSet.backup_locations[0];
+            while (!foundflag && i < firedumpdbDataSet.backup_locations.Count)
+            {
+                firedumpdbDataSet.backup_locationsRow temprow = firedumpdbDataSet.backup_locations[i];
+                if (temprow.id == id)
+                {
+                    row = temprow;
+                    foundflag = true;
+                }
+                i++;
+            }
+            return row;
         }
 
         private void cmbName_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,8 +128,7 @@ namespace Firedump.Forms.location
             BackupLocation loc = new BackupLocation();
             loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
             loc.path = tbPath.Text;
-            firedumpdbDataSet.backup_locationsRow backloc = backup_locationsTableAdapter.GetDataByID(loc.id)[0];
-            loc.Tag = backloc;
+            loc.Tag = findRow(loc.id);
             homeinstance.addToLbSaveLocation(loc);           
         }
 

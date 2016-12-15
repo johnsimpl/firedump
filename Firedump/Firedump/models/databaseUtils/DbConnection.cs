@@ -46,14 +46,20 @@ namespace Firedump.models.databaseUtils
 
 
         private string conStringBuilder()
-        {
-            if (!String.IsNullOrEmpty(database))
+        {            
+            connectionString = "Server=" + Host + ";UID=" + username;
+            if (!string.IsNullOrWhiteSpace(password))
             {
-                connectionString = string.Format("Server=" + Host + ";database={0};UID=" + username + ";password=" + password, database);
+                connectionString += ";password=" + password;
             }
-            else
+            if (port != 3306)
             {
-                connectionString = "Server=" + Host + ";UID=" + username + ";password=" + password;
+                connectionString += ";port="+port;
+            }
+            connectionString += ";SslMode=Preferred";
+            if (!string.IsNullOrWhiteSpace(database))
+            {
+                connectionString += ";database=" + database;
             }
             return connectionString;
         }

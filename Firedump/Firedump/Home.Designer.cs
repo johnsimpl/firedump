@@ -38,7 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
             this.gbSaveLocations = new System.Windows.Forms.GroupBox();
-            this.lbSaveLocations = new System.Windows.Forms.ListBox();
             this.bDeleteSaveLocation = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +58,9 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lbSaveLocations = new System.Windows.Forms.ListView();
+            this.nameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pathCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -175,14 +177,6 @@
             this.gbSaveLocations.TabIndex = 0;
             this.gbSaveLocations.TabStop = false;
             this.gbSaveLocations.Text = "Save Locations";
-            // 
-            // lbSaveLocations
-            // 
-            this.lbSaveLocations.FormattingEnabled = true;
-            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
-            this.lbSaveLocations.Name = "lbSaveLocations";
-            this.lbSaveLocations.Size = new System.Drawing.Size(307, 225);
-            this.lbSaveLocations.TabIndex = 3;
             // 
             // bDeleteSaveLocation
             // 
@@ -350,6 +344,30 @@
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
             // 
+            // lbSaveLocations
+            // 
+            this.lbSaveLocations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nameCol,
+            this.pathCol});
+            this.lbSaveLocations.FullRowSelect = true;
+            this.lbSaveLocations.GridLines = true;
+            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
+            this.lbSaveLocations.Name = "lbSaveLocations";
+            this.lbSaveLocations.Size = new System.Drawing.Size(307, 234);
+            this.lbSaveLocations.TabIndex = 3;
+            this.lbSaveLocations.UseCompatibleStateImageBehavior = false;
+            this.lbSaveLocations.View = System.Windows.Forms.View.Details;
+            // 
+            // nameCol
+            // 
+            this.nameCol.Text = "Name";
+            this.nameCol.Width = 120;
+            // 
+            // pathCol
+            // 
+            this.pathCol.Text = "Path";
+            this.pathCol.Width = 180;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,7 +423,6 @@
         private System.Windows.Forms.Button bcancel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbShowSysDB;
-        private System.Windows.Forms.ListBox lbSaveLocations;
         private System.Windows.Forms.Button bDeleteSaveLocation;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importSQLFileToolStripMenuItem;
@@ -414,5 +431,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn location;
         private System.Windows.Forms.DataGridViewTextBoxColumn progress;
         private System.Windows.Forms.DataGridViewButtonColumn cancel;
+        private System.Windows.Forms.ListView lbSaveLocations;
+        private System.Windows.Forms.ColumnHeader nameCol;
+        private System.Windows.Forms.ColumnHeader pathCol;
     }
 }

@@ -27,6 +27,10 @@ namespace Firedump.models.sqlimport
         public SQLImport(ImportCredentialsConfig config)
         {
             this.config = config;
+            if(config.port == 0)
+            {
+                this.config.port = 3306;
+            }
             conStringBuilder();
         }
 
@@ -37,6 +41,11 @@ namespace Firedump.models.sqlimport
             {
                 connectionString += ";password=" + config.password;
             }
+            if (config.port != 3306)
+            {
+                connectionString += ";port=" + config.port;
+            }
+            connectionString += ";SslMode=Preferred";
             if (!string.IsNullOrWhiteSpace(config.database))
             {
                 connectionString += ";database=" + config.database;

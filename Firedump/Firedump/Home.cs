@@ -129,10 +129,13 @@ namespace Firedump
                 {
                     this.Invoke((MethodInvoker)delegate () {
                         TreeNode node = new TreeNode(database);
+                        node.ImageIndex = 0;
                         List<string> tables = con.getTables(database);
                         foreach (string table in tables)
                         {
-                            node.Nodes.Add(table);
+                            TreeNode tablenode = new TreeNode(table);
+                            tablenode.ImageIndex = 1;
+                            node.Nodes.Add(tablenode);
                         }
                         tvDatabases.Nodes.Add(node);
                     });                   
@@ -203,20 +206,56 @@ namespace Firedump
 
         public void addToLbSaveLocation(BackupLocation loc)
         {
-            if (lbSaveLocations.Items.Contains(loc))
+            firedumpdbDataSet.backup_locationsRow row = (firedumpdbDataSet.backup_locationsRow)loc.Tag;
+            int imageindex;
+            switch (row.service_type)
+            {
+                case 0: //local
+                    imageindex = 0;
+                    break;
+                case 1: //ftp
+                    imageindex = 1;
+                    break;
+                case 2: //dropbox
+                    imageindex = 2;
+                    break;
+                case 3: //google drive
+                    imageindex = 3;
+                    break;
+                default:
+                    imageindex = 0;
+                    break;
+
+            }
+            ListViewItem item = new ListViewItem(row.name,imageindex);
+            item.SubItems.Add(loc.path);
+            item.Tag = (firedumpdbDataSet.backup_locationsRow)loc.Tag;
+            if (lbSaveLocations.Items.Contains(findItemSaveLoc(loc.id)))
             {
                 return;
             }
-            lbSaveLocations.Items.Add(loc);            
+            lbSaveLocations.Items.Add(item);            
         }
 
        
 
         private void Home_Load(object sender, EventArgs e)
         {
-            lbSaveLocations.DisplayMember = "path";
-            lbSaveLocations.ValueMember = "id";
             loadServerData();
+
+            ImageList imagelist = new ImageList();
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\databaseimage.bmp"));
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\tableimage.bmp"));
+            tvDatabases.ImageList = imagelist;
+
+            imagelist = new ImageList();
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\thispc.bmp"));
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\ftpimage.bmp"));
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\dropboximage.bmp"));
+            imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\googledriveicon.bmp"));
+            lbSaveLocations.SmallImageList = imagelist;
+            
+
             backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker1.DoWork += treeview_work;
@@ -608,14 +647,19 @@ namespace Firedump
                         dataGridView1.Rows.Clear();
                         dataGridView1.Refresh();
                     });
-                    
-                    foreach (object item in lbSaveLocations.Items)
+
+                    lbSaveLocations.Invoke((MethodInvoker)delegate ()
                     {
-                        BackupLocation loc = (BackupLocation)item;
-                        locations.Add(loc.id);
-                        backuplocations.Add((firedumpdbDataSet.backup_locationsRow)loc.Tag);
-                        addToGridView(loc.Tag);
-                    }
+                        foreach (ListViewItem item in lbSaveLocations.Items)
+                        {
+                            Object loc = item.Tag;
+                            locations.Add(Convert.ToInt32(((firedumpdbDataSet.backup_locationsRow)loc).id));
+                            backuplocations.Add((firedumpdbDataSet.backup_locationsRow)loc);
+                            addToGridView(loc);
+                        }
+                    });
+                    
+                    
 
                     adapterLocation = new LocationAdapterManager(locations,status.fileAbsPath);
                     adapterLocation.SaveInit += onSaveInitHandler;
@@ -707,19 +751,40 @@ namespace Firedump
 
         private void bDeleteSaveLocation_Click(object sender, EventArgs e)
         {
-            if (lbSaveLocations.Items.Count == 0 || lbSaveLocations.SelectedIndex==-1) //-1 einai ama den exei tpt selected
+            if (lbSaveLocations.Items.Count == 0 || lbSaveLocations.SelectedItems.Count == 0) 
             {
                 return;
             }
-            lbSaveLocations.Items.RemoveAt(lbSaveLocations.SelectedIndex);
+            foreach(ListViewItem selecteditem in lbSaveLocations.SelectedItems)
+            {
+                lbSaveLocations.Items.Remove(selecteditem);
+            }
         }
 
         public void deleteSaveLocation(BackupLocation loc)
         {
-            if (lbSaveLocations.Items.Contains(loc))
+            ListViewItem item = findItemSaveLoc(loc.id);
+            if(lbSaveLocations.Items.Contains(item))
+                lbSaveLocations.Items.Remove(item);
+
+        }
+
+        private ListViewItem findItemSaveLoc(int id)
+        {
+            ListViewItem item = new ListViewItem();
+            int i = 0;
+            bool foundflag = false;
+            while(!foundflag && i < lbSaveLocations.Items.Count)
             {
-                lbSaveLocations.Items.Remove(loc);
+                object Tag = lbSaveLocations.Items[i].Tag;
+                if (((firedumpdbDataSet.backup_locationsRow)Tag).id == id)
+                {
+                    item = lbSaveLocations.Items[i];
+                    foundflag = true;
+                }
+                i++;
             }
+            return item;
         }
 
         /// <summary>
