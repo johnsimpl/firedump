@@ -64,19 +64,30 @@ namespace Firedump.Forms.mysql.sqlviewer
                 TreeNode[] nodearray = new TreeNode[tables.Count];
                 for (int i = 0; i < tables.Count; i++)
                 {
-                    nodearray[i] = new TreeNode(tables[i]);
+                    TreeNode treenode = new TreeNode(tables[i]);
+                    treenode.ImageIndex = 1;
+                    nodearray[i] = treenode;
                 }
                 for (int i = 0; i < MysqlWords.tables.Count; i++)
                 {
                     MysqlWords.tables[i] = MysqlWords.tables[i].ToUpper();
                 }
-
+                
+                ImageList imagelist = new ImageList();
+                imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\databaseimage.bmp"));
+                imagelist.Images.Add(Bitmap.FromFile("resources\\icons\\tableimage.bmp"));
+                
                 TreeNode rootNode = new TreeNode("database:" + database, nodearray);
+                rootNode.ImageIndex = 1;
+                rootNode.ImageIndex = 0;
                 rootNode.Expand();
+                
                 treeView1.Nodes.Add(rootNode);
 
-                treeView1.ImageList = imageList1;
-            } else
+                treeView1.ImageIndex = 0;
+                treeView1.ImageList = imagelist;
+            }
+            else
             {
                 MessageBox.Show("Couldent connect to "+database+" database");                
             }
