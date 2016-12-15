@@ -70,6 +70,8 @@
             this.lPass = new System.Windows.Forms.Label();
             this.cbEncryptedFile = new System.Windows.Forms.CheckBox();
             this.lbSpeed = new System.Windows.Forms.Label();
+            this.bManageSaveLocs = new System.Windows.Forms.Button();
+            this.bManageServers = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mysqlserversBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firedumpdbDataSet)).BeginInit();
             this.gbDatabase.SuspendLayout();
@@ -162,6 +164,7 @@
             // 
             // gbDatabase
             // 
+            this.gbDatabase.Controls.Add(this.bManageServers);
             this.gbDatabase.Controls.Add(this.cbShowSysDb);
             this.gbDatabase.Controls.Add(this.cmbServers);
             this.gbDatabase.Controls.Add(this.label1);
@@ -188,6 +191,7 @@
             // 
             // gbFile
             // 
+            this.gbFile.Controls.Add(this.bManageSaveLocs);
             this.gbFile.Controls.Add(this.tbDelimeter);
             this.gbFile.Controls.Add(this.label12);
             this.gbFile.Controls.Add(this.linfo);
@@ -471,6 +475,26 @@
             this.lbSpeed.Text = "Speed: ";
             this.lbSpeed.Visible = false;
             // 
+            // bManageSaveLocs
+            // 
+            this.bManageSaveLocs.Location = new System.Drawing.Point(444, 87);
+            this.bManageSaveLocs.Name = "bManageSaveLocs";
+            this.bManageSaveLocs.Size = new System.Drawing.Size(136, 23);
+            this.bManageSaveLocs.TabIndex = 23;
+            this.bManageSaveLocs.Text = "Manage Save Locations";
+            this.bManageSaveLocs.UseVisualStyleBackColor = true;
+            this.bManageSaveLocs.Click += new System.EventHandler(this.bManageSaveLocs_Click);
+            // 
+            // bManageServers
+            // 
+            this.bManageServers.Location = new System.Drawing.Point(444, 52);
+            this.bManageServers.Name = "bManageServers";
+            this.bManageServers.Size = new System.Drawing.Size(136, 23);
+            this.bManageServers.TabIndex = 24;
+            this.bManageServers.Text = "Manage Servers";
+            this.bManageServers.UseVisualStyleBackColor = true;
+            this.bManageServers.Visible = false;
+            // 
             // ImportSQL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -544,5 +568,7 @@
         private System.Windows.Forms.Label lbSpeed;
         private System.Windows.Forms.TextBox tbDelimeter;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button bManageServers;
+        private System.Windows.Forms.Button bManageSaveLocs;
     }
 }

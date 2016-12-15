@@ -28,6 +28,13 @@ namespace Firedump.Forms.location
             SaveLocationDeleted?.Invoke(loc);
         }
 
+        public delegate void saveLocationDeletedAfter(BackupLocation loc);
+        public event saveLocationDeletedAfter SaveLocationDeletedAfter;
+        private void onSaveLocationDeletedAfter(BackupLocation loc)
+        {
+            SaveLocationDeletedAfter?.Invoke(loc);
+        }
+
         public delegate void saveLocationEdited(BackupLocation loc);
         public event saveLocationEdited SaveLocationEdited;
         private void onSaveLocationEdited(BackupLocation loc)
@@ -115,6 +122,8 @@ namespace Firedump.Forms.location
 
                 this.backup_locationsTableAdapter.DeleteQuery((Int64)cmbName.SelectedValue);
                 this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+
+                onSaveLocationDeletedAfter(loc);
 
                 reloadPath();
             }

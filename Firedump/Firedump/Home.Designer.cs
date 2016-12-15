@@ -38,6 +38,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbServers = new System.Windows.Forms.ComboBox();
             this.gbSaveLocations = new System.Windows.Forms.GroupBox();
+            this.lbSaveLocations = new System.Windows.Forms.ListView();
+            this.nameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pathCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bDeleteSaveLocation = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,9 +61,6 @@
             this.location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cancel = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lbSaveLocations = new System.Windows.Forms.ListView();
-            this.nameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pathCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbConnection.SuspendLayout();
             this.gbSaveLocations.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -178,13 +178,37 @@
             this.gbSaveLocations.TabStop = false;
             this.gbSaveLocations.Text = "Save Locations";
             // 
+            // lbSaveLocations
+            // 
+            this.lbSaveLocations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nameCol,
+            this.pathCol});
+            this.lbSaveLocations.FullRowSelect = true;
+            this.lbSaveLocations.GridLines = true;
+            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
+            this.lbSaveLocations.Name = "lbSaveLocations";
+            this.lbSaveLocations.Size = new System.Drawing.Size(307, 234);
+            this.lbSaveLocations.TabIndex = 3;
+            this.lbSaveLocations.UseCompatibleStateImageBehavior = false;
+            this.lbSaveLocations.View = System.Windows.Forms.View.Details;
+            // 
+            // nameCol
+            // 
+            this.nameCol.Text = "Name";
+            this.nameCol.Width = 120;
+            // 
+            // pathCol
+            // 
+            this.pathCol.Text = "Path";
+            this.pathCol.Width = 180;
+            // 
             // bDeleteSaveLocation
             // 
-            this.bDeleteSaveLocation.Location = new System.Drawing.Point(186, 36);
+            this.bDeleteSaveLocation.Location = new System.Drawing.Point(173, 36);
             this.bDeleteSaveLocation.Name = "bDeleteSaveLocation";
-            this.bDeleteSaveLocation.Size = new System.Drawing.Size(127, 23);
+            this.bDeleteSaveLocation.Size = new System.Drawing.Size(140, 23);
             this.bDeleteSaveLocation.TabIndex = 2;
-            this.bDeleteSaveLocation.Text = "Remove Save Location";
+            this.bDeleteSaveLocation.Text = "Remove Save Location(s)";
             this.bDeleteSaveLocation.UseVisualStyleBackColor = true;
             this.bDeleteSaveLocation.Click += new System.EventHandler(this.bDeleteSaveLocation_Click);
             // 
@@ -343,30 +367,6 @@
             this.cancel.HeaderText = "Cancel";
             this.cancel.Name = "cancel";
             this.cancel.Text = "cancel";
-            // 
-            // lbSaveLocations
-            // 
-            this.lbSaveLocations.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.nameCol,
-            this.pathCol});
-            this.lbSaveLocations.FullRowSelect = true;
-            this.lbSaveLocations.GridLines = true;
-            this.lbSaveLocations.Location = new System.Drawing.Point(6, 65);
-            this.lbSaveLocations.Name = "lbSaveLocations";
-            this.lbSaveLocations.Size = new System.Drawing.Size(307, 234);
-            this.lbSaveLocations.TabIndex = 3;
-            this.lbSaveLocations.UseCompatibleStateImageBehavior = false;
-            this.lbSaveLocations.View = System.Windows.Forms.View.Details;
-            // 
-            // nameCol
-            // 
-            this.nameCol.Text = "Name";
-            this.nameCol.Width = 120;
-            // 
-            // pathCol
-            // 
-            this.pathCol.Text = "Path";
-            this.pathCol.Width = 180;
             // 
             // Home
             // 

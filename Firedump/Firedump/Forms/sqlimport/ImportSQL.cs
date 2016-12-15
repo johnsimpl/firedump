@@ -1,6 +1,7 @@
 ﻿using Firedump.Forms.location;
 using Firedump.models.configuration.dynamicconfig;
 using Firedump.models.databaseUtils;
+using Firedump.models.location;
 using Firedump.models.sqlimport;
 using System;
 using System.Collections.Generic;
@@ -429,6 +430,26 @@ namespace Firedump.Forms.sqlimport
         private void onImportErrorHandler(string message)
         {
             MessageBox.Show(message,"SQL import",MessageBoxButtons.OK,MessageBoxIcon.Error);
+        }
+
+        private void onSaveLocationDeletedHandler(BackupLocation loc)
+        {
+            this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+            //EDW NA KANEI SELECT OTI ALLAKSE TELEUTAIO
+        }
+
+        private void onSaveLocationAddedHandler()
+        {
+            this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
+            //gia na doulepsei edw prepei na allaksei kai stis klaseis pou epikoinwnoun me ti locationswitchboard
+        }
+
+        private void bManageSaveLocs_Click(object sender, EventArgs e)
+        {
+            LocationSwitchboard locswitch = new LocationSwitchboard(true);
+            locswitch.SaveLocationAdded += onSaveLocationAddedHandler;
+            locswitch.SaveLocationDeletedAfter += onSaveLocationDeletedHandler;
+            locswitch.ShowDialog();
         }
     }
 }
