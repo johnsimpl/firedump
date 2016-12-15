@@ -58,7 +58,9 @@ namespace Firedump
 
         private void btAddDestClick(object sender, EventArgs e)
         {
-            LocationSwitchboard locswitch = new LocationSwitchboard(this);
+            LocationSwitchboard locswitch = new LocationSwitchboard();
+            locswitch.AddSaveLocation += addToLbSaveLocation;
+            locswitch.SaveLocationDeleted += deleteSaveLocation;
             locswitch.ShowDialog();
         }
 

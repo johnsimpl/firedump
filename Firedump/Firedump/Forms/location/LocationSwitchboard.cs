@@ -20,12 +20,34 @@ namespace Firedump.Forms.location
         {
             SaveLocationAdded?.Invoke();
         }
+
+        public delegate void saveLocationDeleted(BackupLocation loc);
+        public event saveLocationDeleted SaveLocationDeleted;
+        private void onSaveLocationDeleted(BackupLocation loc)
+        {
+            SaveLocationDeleted?.Invoke(loc);
+        }
+
+        public delegate void saveLocationEdited(BackupLocation loc);
+        public event saveLocationEdited SaveLocationEdited;
+        private void onSaveLocationEdited(BackupLocation loc)
+        {
+            SaveLocationEdited?.Invoke(loc);
+        }
+
+        public delegate void addSaveLocation(BackupLocation loc);
+        public event addSaveLocation AddSaveLocation;
+        private void onAddSaveLocation(BackupLocation loc)
+        {
+            AddSaveLocation?.Invoke(loc);
+        }
+
         //</events>
-        private Home homeinstance;
-        public LocationSwitchboard(Home homeinstance)
+        public LocationSwitchboard() { InitializeComponent(); }
+        public LocationSwitchboard(bool isManager)
         {
             InitializeComponent();
-            this.homeinstance = homeinstance;
+            if (isManager) bAdd.Visible = false;
         }
 
         private void bFileSystem_Click(object sender, EventArgs e)
@@ -75,16 +97,21 @@ namespace Firedump.Forms.location
             {
                 return;
             }
-
+            
             try
             {
                 BackupLocation loc = new BackupLocation();
                 loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
-                
-                
+                            
                 loc.Tag = findRow(loc.id);
 
-                homeinstance.deleteSaveLocation(loc); //kanei delete kai apo to listbox sto home an tixon auto to location exei ginei eidh add
+                DialogResult res = MessageBox.Show("Are you sure you want to delete save location: "+ ((firedumpdbDataSet.backup_locationsRow)loc.Tag).name, "Delete Save Location", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                onSaveLocationDeleted(loc);
 
                 this.backup_locationsTableAdapter.DeleteQuery((Int64)cmbName.SelectedValue);
                 this.backup_locationsTableAdapter.Fill(this.firedumpdbDataSet.backup_locations);
@@ -129,7 +156,7 @@ namespace Firedump.Forms.location
             loc.id = unchecked((int)(Int64)cmbName.SelectedValue);
             loc.path = tbPath.Text;
             loc.Tag = findRow(loc.id);
-            homeinstance.addToLbSaveLocation(loc);           
+            onAddSaveLocation(loc);           
         }
 
         private void bFTP_Click(object sender, EventArgs e)
