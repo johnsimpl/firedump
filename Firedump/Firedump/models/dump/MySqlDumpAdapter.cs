@@ -145,9 +145,14 @@ namespace Firedump.models.dump
                 {
                     dumpresult = await result;
                 }
-                catch (NullReferenceException ex)
+                catch (Exception ex)
                 {
-
+                    if (!(ex is NullReferenceException))
+                    {
+                        DumpResultSet res = new DumpResultSet();
+                        res.wasSuccessful = false;
+                        res.mysqldumpexeStandardError = "Exception in adapter: " + ex.Message;
+                    }
                 }
 
 
