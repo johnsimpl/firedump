@@ -147,7 +147,14 @@ namespace Firedump.models.dump
                 }
                 catch (Exception ex)
                 {
-
+                    if (!(ex is NullReferenceException))
+                    {
+                        dumpresult = new DumpResultSet();
+                        dumpresult.wasSuccessful = false;
+                        dumpresult.mysqldumpexeStandardError = "Error in MySQLDumpAdapter:\n" + ex.Message;
+                        onCompleted(dumpresult);
+                        return;
+                    }
                 }
 
 
