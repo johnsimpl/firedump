@@ -688,17 +688,25 @@ namespace Firedump
                     {
                         case 1:
                             errorMessage = "Connection credentials not set correctly:\n"+status.errorMessage;
+                            Console.WriteLine(errorMessage);
                             break;
                         case 2:
                             errorMessage = "MySQL dump failed:\n" + status.mysqldumpexeStandardError;
+                            Console.WriteLine(errorMessage);
                             break;
                         case 3:
                             errorMessage = "Compression failed:\n" + status.mysqldumpexeStandardError;
+                            Console.WriteLine(errorMessage);
                             break;
                         default:
                             break;
                     }
                     MessageBox.Show(errorMessage, "Dump failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    bStartDump.Invoke((MethodInvoker)delegate ()
+                    {
+                        bStartDump.Enabled = true;
+                    });
                 }
 
                 //kiala pramata na kanei edo, afta pou meleges

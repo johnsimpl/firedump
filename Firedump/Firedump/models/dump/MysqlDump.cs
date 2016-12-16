@@ -583,9 +583,7 @@ namespace Firedump.models.dump
                             Console.WriteLine(tablename);
                             //fire event
                             onTableStartDump(tablename);
-                            onTableRowCount(rowcount);
-
-
+                            onTableRowCount(rowcount);                            
                         }
 
                     }
